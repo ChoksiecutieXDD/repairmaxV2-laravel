@@ -7,7 +7,11 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 
-#[Layout('components.layouts.auth')]
+// Moved the heading and subheading up here so the layout catches them perfectly!
+#[Layout('components.layouts.auth', [
+    'heading' => 'Welcome back.',
+    'subheading' => 'Log in to your account to book appointments and track your device repairs.'
+])]
 #[Title('Log In | Repairmax')]
 class Login extends Component
 {
@@ -36,16 +40,22 @@ class Login extends Component
             // Check if the account is active before letting them in
             if (Auth::user()->is_active == 0) {
                 Auth::logout();
-                $this->addError('email', 'This account has been deactivated.');
+
+                $this->dispatch(
+                    'open-modal',
+                    title: 'Account Deactivated',
+                    message: 'Your Repairmax account has been deactivated. Please contact support to restore access.'
+                );
                 return;
             }
 
-            // Route based on the role enum from your database
-            if (Auth::user()->role === 'admin') {
-                return $this->redirect('/admin/dashboard', navigate: true);
-            }
+            // Determine the correct route based on role
+            $redirectUrl = Auth::user()->role === 'admin' ? '/admin/dashboard' : '/user/dashboard';
 
-            return $this->redirect('/user/dashboard', navigate: true);
+            // 🔥 Instead of redirecting instantly, trigger the success modal!
+            $this->dispatch('login-success', url: $redirectUrl);
+
+            return;
         }
 
         // If auth fails, throw an error
@@ -54,10 +64,6 @@ class Login extends Component
 
     public function render()
     {
-        // Variables passed here are automatically shared with your layout file!
-        return view('auth.login', [
-            'heading' => 'Welcome back.',
-            'subheading' => 'Log in to your account to book appointments and track your device repairs.'
-        ]);
+        return view('auth.login');
     }
 }

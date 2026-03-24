@@ -2,8 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+// Livewire Components
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\Login;
+use App\Livewire\Auth\ForgotPassword;
+use App\Livewire\Auth\ResetPassword;
 
 // ==========================================
 // PUBLIC ROUTES (Accessible to everyone)
@@ -32,6 +37,8 @@ Route::get('/legal-policy', function () {
 Route::get('/booking', function () {
     return view('booking');
 })->name('booking');
+
+// Track Status
 Route::get('/track-status', function () {
     return view('track-status');
 })->name('track-status');
@@ -44,13 +51,13 @@ Route::post('/track-status', function () {
 // GUEST ROUTES (Only for logged-out users)
 // ==========================================
 Route::middleware('guest')->group(function () {
-    // Livewire handles these routes directly
+    // Livewire handles the display and the form submission for all of these automatically
     Route::get('/register', Register::class)->name('register');
     Route::get('/login', Login::class)->name('login');
 
-    Route::get('/forgot-password', function () {
-        return view('auth.forgot-password');
-    })->name('password.request');
+    // We name this 'password.request' because Laravel's core auth system looks for this specific name
+    Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
+    Route::get('/reset-password', ResetPassword::class)->name('password.reset');
 });
 
 
@@ -69,7 +76,6 @@ Route::get('/logout', function () {
 // ADMIN ROUTES (Protected: Must be logged in AND an admin)
 // ==========================================
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-
     Route::get('/dashboard', function () {
         return view('admin-profile.dashboard');
     })->name('dashboard');
@@ -77,7 +83,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         return view('admin-profile.user-management');
     })->name('user-management');
 
-    // As you build the rest of your admin pages, add them inside this group!
+    // Future admin pages go here...
 });
 
 
@@ -85,10 +91,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // USER ROUTES (Protected: Must be logged in AND a standard user)
 // ==========================================
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
-
     Route::get('/dashboard', function () {
         return view('user-profile.dashboard');
     })->name('dashboard');
 
-    // As you build the rest of your user pages, add them inside this group!
+    // Future user pages go here...
 });

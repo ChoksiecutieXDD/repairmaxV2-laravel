@@ -1,4 +1,21 @@
 <div>
+    @if($isRegistered)
+    <div class="flex flex-col items-center text-center mt-8">
+        <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-3xl text-gray-700">check_circle</span>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Account created successfully</h2>
+
+        <p class="text-gray-600 mb-8 max-w-sm">
+            Welcome to Repairmax! Your account for <span class="font-medium text-gray-900">{{ $email }}</span> has been successfully created.
+        </p>
+
+        <a href="/login" wire:navigate class="w-full bg-[#0B1120] text-white font-medium rounded-md px-4 py-3 hover:bg-gray-800 transition-colors shadow-sm block">
+            Return to Log in
+        </a>
+    </div>
+    @else
     <div class="mb-10 text-center sm:text-left">
         <h2 class="text-2xl font-semibold text-gray-900">Create an account</h2>
         <p class="text-gray-600 mt-2">Enter your details below to register.</p>
@@ -29,7 +46,36 @@
             @error('email') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
         </div>
 
-        <div class="mt-4" x-data="{ show: false, pwd: '' }">
+        <div class="mt-4" x-data="{ 
+                show: false, 
+                pwd: '',
+                get score() {
+                    let s = 0;
+                    if (this.pwd.length >= 8) s++;
+                    if (/[A-Z]/.test(this.pwd) && /[a-z]/.test(this.pwd)) s++;
+                    if (/[0-9]/.test(this.pwd)) s++;
+                    if (/[\W_]/.test(this.pwd)) s++;
+                    return s;
+                },
+                get strengthLabel() {
+                    if (this.score === 0) return '';
+                    if (this.score === 1) return 'Weak';
+                    if (this.score === 2 || this.score === 3) return 'Medium';
+                    if (this.score === 4) return 'Strong';
+                },
+                get meterColor() {
+                    if (this.score <= 1) return 'bg-red-500';
+                    if (this.score <= 3) return 'bg-yellow-500';
+                    return 'bg-green-500';
+                },
+                get meterWidth() {
+                    if (this.score === 0) return '0%';
+                    if (this.score === 1) return '25%';
+                    if (this.score === 2) return '50%';
+                    if (this.score === 3) return '75%';
+                    return '100%';
+                }
+            }">
             <div class="flex items-center justify-between mb-2">
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
             </div>
@@ -40,8 +86,8 @@
                     class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-md px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
 
                 <button type="button" @click="show = !show"
-                    class="absolute inset-y-0 right-0 flex items-center px-4 bg-transparent border-0 outline-none focus:outline-none focus:ring-0 text-gray-500 hover:text-gray-700 cursor-pointer">
-                    <span class="material-symbols-outlined select-none" x-text="show ? 'visibility' : 'visibility_off'">
+                    class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
+                    <span class="material-symbols-outlined select-none text-2xl" x-text="show ? 'visibility' : 'visibility_off'">
                         visibility_off
                     </span>
                 </button>
@@ -58,7 +104,20 @@
                 x-transition:leave-start="opacity-100 translate-y-0"
                 x-transition:leave-end="opacity-0 -translate-y-2"
                 style="display: none;">
-                <p class="mb-2 font-medium">Password requirements:</p>
+
+                <div class="mb-4">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-medium text-gray-700">Password Strength:</span>
+                        <span class="font-bold transition-colors duration-300"
+                            :class="{ 'text-red-500': score <= 1, 'text-yellow-600': score > 1 && score <= 3, 'text-green-500': score === 4 }"
+                            x-text="strengthLabel"></span>
+                    </div>
+                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full transition-all duration-300 rounded-full" :class="meterColor" :style="`width: ${meterWidth}`"></div>
+                    </div>
+                </div>
+
+                <p class="mb-2 font-medium">Requirements:</p>
                 <ul class="space-y-1.5">
                     <li class="flex items-center gap-2 transition-colors duration-300" :class="pwd.length >= 8 ? 'text-green-600' : 'text-gray-500'">
                         <span class="material-symbols-outlined text-[18px] select-none" x-text="pwd.length >= 8 ? 'check_circle' : 'radio_button_unchecked'">
@@ -89,13 +148,18 @@
                     </li>
                 </ul>
             </div>
-        </div>
 
-        <div class="pt-6">
-            <button type="submit" class="w-full bg-gray-900 text-gray-100 hover:bg-gray-800 font-medium rounded-md px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center disabled:opacity-50" wire:loading.attr="disabled">
-                <span wire:loading.remove>Register Account</span>
-                <span wire:loading>Creating Account...</span>
-            </button>
+            <div class="pt-6">
+                <button type="submit"
+                    :disabled="score < 2"
+                    :class="score < 2 ? 'opacity-50 cursor-not-allowed bg-gray-600' : 'bg-gray-900 hover:bg-gray-800 text-gray-100'"
+                    class="w-full font-medium rounded-md px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center text-white"
+                    wire:loading.attr="disabled">
+                    <span wire:loading.remove>Register Account</span>
+                    <span wire:loading>Creating Account...</span>
+                </button>
+            </div>
+
         </div>
     </form>
 
@@ -105,4 +169,5 @@
             Log in here
         </a>
     </div>
+    @endif
 </div>

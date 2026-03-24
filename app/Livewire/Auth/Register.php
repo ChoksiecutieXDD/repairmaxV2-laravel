@@ -3,14 +3,16 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Layout;
 
-#[Layout('components.layouts.auth')]
+#[Layout('components.layouts.auth', [
+    'heading' => 'Create an account.',
+    'subheading' => 'Join Repairmax today to easily track your device repairs and manage service tickets.'
+])]
 #[Title('Register | Repairmax')]
 class Register extends Component
 {
@@ -18,6 +20,9 @@ class Register extends Component
     public $last_name = '';
     public $email = '';
     public $password = '';
+
+    // Controls the UI state
+    public $isRegistered = false;
 
     protected function rules()
     {
@@ -35,34 +40,24 @@ class Register extends Component
         ];
     }
 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-
     public function register()
     {
         $this->validate();
 
-        $user = User::create([
+        // 1. Create the user
+        User::create([
             'first_name' => $this->first_name,
             'last_name'  => $this->last_name,
             'email'      => $this->email,
             'password'   => Hash::make($this->password),
         ]);
 
-        Auth::login($user);
-
-        session()->flash('message', 'Registration successful! Welcome to Repairmax.');
-
-        return $this->redirect('/user/dashboard', navigate: true);
+        // 2. Trigger the success UI
+        $this->isRegistered = true;
     }
 
     public function render()
     {
-        return view('auth.register', [
-            'heading'    => 'Join Repairmax.',
-            'subheading' => 'Create an account today to easily book appointments and get real-time updates on your device repairs.'
-        ]);
+        return view('livewire.auth.register');
     }
 }
