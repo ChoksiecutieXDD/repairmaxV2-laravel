@@ -28,13 +28,16 @@ class ResetPassword extends Component
 
     public $password_confirmation;
 
-    // 🔥 Added to control the sliding success UI
+    // 🔥 Added to control the sliding success UI in your blade file
     public $isReset = false;
 
-    public function mount()
+    // 🔥 FIX: Added $token as a parameter so Livewire catches it from the /reset-password/{token} route
+    public function mount($token)
     {
-        // Grab the token and email from the URL query string
-        $this->token = request()->query('token');
+        // Grab the token from the URL route parameter
+        $this->token = $token;
+
+        // Grab the email from the URL query string (?email=...)
         $this->email = request()->query('email');
     }
 
@@ -66,7 +69,7 @@ class ResetPassword extends Component
         // 4. Delete the token so it can't be used again
         DB::table('password_reset_tokens')->where('email', $this->email)->delete();
 
-        // 🔥 5. Instead of redirecting, trigger the sliding success screen
+        // 5. Trigger the success UI state instead of an instant redirect
         $this->isReset = true;
     }
 
