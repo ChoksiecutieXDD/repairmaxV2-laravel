@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <style>
@@ -8,12 +9,14 @@
             line-height: 1.6;
             color: #333;
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f9fafb;
         }
+
         .header {
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             color: white;
@@ -21,24 +24,29 @@
             border-radius: 8px 8px 0 0;
             text-align: center;
         }
+
         .header h1 {
             margin: 0;
             font-size: 28px;
             font-weight: bold;
         }
+
         .content {
             background-color: white;
             padding: 30px;
             border: 1px solid #e5e7eb;
         }
+
         .field {
             margin-bottom: 20px;
             border-bottom: 1px solid #f3f4f6;
             padding-bottom: 15px;
         }
+
         .field:last-child {
             border-bottom: none;
         }
+
         .label {
             font-size: 12px;
             color: #6b7280;
@@ -47,11 +55,13 @@
             letter-spacing: 0.5px;
             margin-bottom: 5px;
         }
+
         .value {
             font-size: 16px;
             color: #1f2937;
             font-weight: 500;
         }
+
         .message-box {
             background-color: #f3f4f6;
             padding: 15px;
@@ -60,6 +70,7 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         .footer {
             background-color: #f9fafb;
             padding: 20px;
@@ -71,10 +82,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <h1>📧 New Contact Enquiry</h1>
+            <h1>New Contact Enquiry</h1>
         </div>
 
         <div class="content">
@@ -106,4 +118,5 @@
         </div>
     </div>
 </body>
+
 </html>

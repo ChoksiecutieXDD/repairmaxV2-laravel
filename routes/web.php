@@ -3,13 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
-// Livewire Components
+// Mails
+use App\Mail\ContactEnquiry;
+
+// Livewire Components (Auth)
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
 
+<<<<<<< HEAD
 // Admin Livewire Components
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\DashboardOverview;
@@ -28,32 +33,49 @@ use App\Livewire\Admin\SystemSettings;
 
 // Controllers
 use App\Http\Controllers\ContactController;
+=======
+// Livewire Components (User)
+use App\Livewire\User\Dashboard as UserDashboard;
+use App\Livewire\User\Profile;
+use App\Livewire\User\BookAppointment;
+use App\Livewire\User\UpcomingAppointments;
+use App\Livewire\User\AppointmentHistory;
+use App\Livewire\User\AiSupport;
+use App\Livewire\User\SystemSettings;
+use App\Livewire\User\Notifications;
+>>>>>>> 51efcf33180f6f138828f2651afe4412399850cd
 
-// ==========================================
-// PUBLIC ROUTES (Accessible to everyone)
-// ==========================================
+// Livewire Components (Admin)
+use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\SystemOverview;
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC ROUTES (Accessible to everyone)
+|--------------------------------------------------------------------------
+*/
+
+// Core & Info Pages
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 Route::get('/about-us', function () {
     return view('about-us');
 })->name('about');
+Route::get('/faq', function () {
+    return view('faq');
+})->name('faq');
+Route::get('/legal-policy', function () {
+    return view('legal-policy');
+})->name('legal');
+
+// Services & Booking Info
 Route::get('/services', function () {
     return view('services');
 })->name('services');
 Route::get('/repairs', function () {
     return view('repairs');
 })->name('repairs');
-Route::get('/faq', function () {
-    return view('faq');
-})->name('faq');
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
-Route::post('/contact/send', [ContactController::class, 'store'])->name('contact.send');
-Route::get('/legal-policy', function () {
-    return view('legal-policy');
-})->name('legal');
 Route::get('/booking', function () {
     return view('booking');
 })->name('booking');
@@ -66,24 +88,47 @@ Route::post('/track-status', function () {
     return view('track-status', ['status' => 'In Progress']);
 });
 
+// Contact & Enquiries
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+Route::post('/contact/send', function (Request $request) {
+    $validated = $request->validate([
+        'from_email' => 'required|email',
+        'subject' => 'required|string|max:255',
+        'message' => 'required|string',
+    ]);
 
-// ==========================================
-// GUEST ROUTES (Only for logged-out users)
-// ==========================================
+    Mail::to('repairmaxsample@gmail.com')->send(
+        new ContactEnquiry(
+            $validated['from_email'],
+            $validated['subject'],
+            $validated['message']
+        )
+    );
+
+    return back()->with('success', 'Your enquiry has been sent! Our technicians will get back to you shortly.');
+})->name('contact.send');
+
+
+/*
+|--------------------------------------------------------------------------
+| GUEST ROUTES (Only for logged-out users)
+|--------------------------------------------------------------------------
+*/
 Route::middleware('guest')->group(function () {
-    // Livewire handles the display and the form submission for all of these automatically
     Route::get('/register', Register::class)->name('register');
     Route::get('/login', Login::class)->name('login');
-
-    // We name this 'password.request' because Laravel's core auth system looks for this specific name
     Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
     Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
 
 
-// ==========================================
-// AUTHENTICATED LOGOUT
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| AUTHENTICATED ROUTES (General Logged-In Actions)
+|--------------------------------------------------------------------------
+*/
 Route::get('/logout', function () {
     Auth::logout();
     session()->invalidate();
@@ -92,10 +137,13 @@ Route::get('/logout', function () {
 })->name('logout');
 
 
-// ==========================================
-// ADMIN ROUTES (Protected: Must be logged in AND an admin)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES (Protected: Must be logged in AND an admin)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+<<<<<<< HEAD
     // Main
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/dashboard-overview', DashboardOverview::class)->name('dashboard-overview');
@@ -123,16 +171,44 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // System
     Route::get('/settings', Settings::class)->name('settings');
     Route::get('/system-settings', SystemSettings::class)->name('system-settings');
+=======
+    Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
+    Route::get('/overview', SystemOverview::class)->name('overview');
+    Route::get('/user-management', function () {
+        return view('admin-profile.user-management');
+    })->name('user-management');
+>>>>>>> 51efcf33180f6f138828f2651afe4412399850cd
 });
 
 
-// ==========================================
-// USER ROUTES (Protected: Must be logged in AND a standard user)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| USER ROUTES (Protected: Must be logged in AND a standard user)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('user-profile.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', UserDashboard::class)->name('dashboard');
+    Route::get('/profile', Profile::class)->name('profile');
 
-    // Future user pages go here...
+    // Appointments
+    Route::get('/book-appointment', BookAppointment::class)->name('book-appointment');
+    Route::get('/upcoming-appointments', UpcomingAppointments::class)->name('upcoming-appointments');
+    Route::get('/appointment-history', AppointmentHistory::class)->name('appointment-history');
+
+    // Support
+    Route::get('/support', AiSupport::class)->name('ai-support');
+    Route::get('/system-settings', SystemSettings::class)->name('system-settings');
+
+    // Notifications
+    Route::get('/notifications', Notifications::class)->name('notifications');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| FALLBACK ROUTE (Catch-all for 404s)
+|--------------------------------------------------------------------------
+*/
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
 });

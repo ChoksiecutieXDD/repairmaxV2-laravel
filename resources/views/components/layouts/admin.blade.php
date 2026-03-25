@@ -15,12 +15,17 @@
 <body class="font-sans antialiased text-gray-800 bg-gray-50">
     <div x-data="{ sidebarOpen: false, sidebarCollapsed: false }"
         @resize.window="if(window.innerWidth >= 1024) sidebarOpen = false"
-        class="min-h-screen">
+        class="min-h-screen flex flex-col">
 
         <div x-show="sidebarOpen"
-            x-transition.opacity.duration.300ms
+            x-transition:enter="transition-opacity ease-linear duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity ease-linear duration-300"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
             @click="sidebarOpen = false"
-            class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm lg:hidden z-30" style="display: none;"></div>
+            class="fixed inset-0 bg-gray-900/40 backdrop-blur-sm lg:hidden z-30" style="display: none;"></div>
 
         <aside :class="{ 
                 'translate-x-0': sidebarOpen, 
@@ -28,20 +33,24 @@
                 'lg:-translate-x-full': sidebarCollapsed, 
                 'lg:translate-x-0': !sidebarCollapsed 
             }"
-            class="fixed left-0 top-0 h-screen w-64 bg-gray-900 border-r border-gray-800 transition-transform duration-300 ease-in-out z-40 flex flex-col">
+            class="fixed left-0 top-0 h-screen w-64 bg-gray-900 border-r border-gray-800 transition-transform duration-300 ease-in-out z-40 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.1)] lg:shadow-none">
 
-            <div class="h-20 flex items-center px-6 bg-gray-900 border-b border-gray-800 shrink-0">
+            <div class="h-20 flex items-center justify-between px-6 bg-gray-900 border-b border-gray-800 shrink-0">
                 <a href="/" class="text-2xl font-bold text-white hover:text-gray-300 transition-colors tracking-tight flex items-center">
                     Repairmax
                     <span class="text-[10px] text-blue-500 font-mono ml-2 uppercase border border-blue-500 rounded px-1.5 py-0.5">Admin</span>
                 </a>
+
+                <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white focus:outline-none">
+                    <span class="material-symbols-outlined text-[24px]">close</span>
+                </button>
             </div>
 
             <nav class="flex-1 overflow-y-auto py-6 space-y-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Main</h3>
                     <x-sidebar.link href="/admin/dashboard" icon="dashboard" :active="request()->is('admin/dashboard')">Dashboard</x-sidebar.link>
-                    <x-sidebar.link href="/admin/dashboard-overview" icon="overview" :active="request()->is('admin/dashboard-overview')">Overview</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.overview') }}" icon="dashboard" :active="request()->routeIs('admin.overview')">Overview</x-sidebar.link>
                     <x-sidebar.link href="/admin/profile" icon="person" :active="request()->is('admin/profile')">Profile</x-sidebar.link>
                 </div>
 
@@ -78,46 +87,66 @@
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">System</h3>
                     <x-sidebar.link href="/admin/settings" icon="tune" :active="request()->is('admin/settings')">Settings</x-sidebar.link>
                     <x-sidebar.link href="/admin/system-settings" icon="settings" :active="request()->is('admin/system-settings')">System</x-sidebar.link>
-
-                    <a href="/logout" class="flex items-center gap-3 mx-3 mt-4 px-3 py-2.5 text-red-400 hover:text-white hover:bg-red-500/20 rounded-lg transition-all duration-200 group">
-                        <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">logout</span>
-                        <span class="font-medium text-sm">Logout</span>
-                    </a>
                 </div>
             </nav>
+
+            <div class="shrink-0 p-4 border-t border-gray-800 bg-gray-900">
+                @auth
+                <div class="flex items-center justify-between mb-4 px-2">
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Admin') }}&background=2563eb&color=ffffff&bold=true"
+                            alt="Profile"
+                            class="w-10 h-10 rounded-full border border-gray-600 object-cover shadow-sm bg-blue-600 shrink-0">
+                        <div class="flex flex-col overflow-hidden">
+                            <span class="text-sm font-semibold text-gray-100 leading-tight truncate">
+                                {{ auth()->user()->first_name ?? auth()->user()->name ?? 'Admin User' }}
+                            </span>
+                            <span class="text-xs text-blue-400 capitalize truncate font-mono tracking-tighter">
+                                {{ auth()->user()->role ?? 'Administrator' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="relative p-1.5 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white focus:outline-none shrink-0" aria-label="Notifications">
+                        <span class="material-symbols-outlined text-[24px]">notifications</span>
+                        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 border border-gray-900 rounded-full"></span>
+                    </button>
+                </div>
+                @endauth
+
+                <a href="{{ route('logout') }}" class="flex items-center gap-3 px-3 py-2.5 text-red-400 hover:text-white hover:bg-red-500/20 rounded-lg transition-all duration-200 group">
+                    <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">logout</span>
+                    <span class="font-medium text-sm">Logout</span>
+                </a>
+            </div>
+
         </aside>
 
         <header :class="{ 'lg:left-0': sidebarCollapsed, 'lg:left-64': !sidebarCollapsed }"
-            class="fixed top-0 right-0 left-0 bg-white/80 backdrop-blur-md border-b border-gray-200 z-20 transition-all duration-300 h-20">
-            <div class="flex items-center justify-between px-4 md:px-8 h-full">
+            class="fixed top-0 right-0 left-0 bg-gray-50/90 backdrop-blur-md z-20 transition-all duration-300 h-20 flex items-center">
+            <div class="flex items-center px-4 md:px-8 w-full">
 
                 <button @click="window.innerWidth >= 1024 ? sidebarCollapsed = !sidebarCollapsed : sidebarOpen = !sidebarOpen"
-                    class="inline-flex items-center justify-center w-10 h-10 hover:bg-gray-100 rounded-lg transition-colors text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200">
-                    <span class="material-symbols-outlined text-[26px]">menu</span>
+                    class="inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-200/50 rounded-lg transition-colors text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 shrink-0">
+                    <span class="material-symbols-outlined text-[26px] transition-transform duration-200 hover:scale-110"
+                        x-text="(window.innerWidth >= 1024 ? !sidebarCollapsed : sidebarOpen) ? 'menu_open' : 'menu'">
+                    </span>
                 </button>
 
-                <div class="flex items-center gap-3 md:gap-5 ml-auto">
-                    <button class="relative p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600 focus:outline-none" aria-label="Notifications">
-                        <span class="material-symbols-outlined text-[26px]">notifications</span>
-                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
-                    </button>
-
-                    <div class="flex items-center gap-3 pl-3 md:pl-5 border-l border-gray-200 cursor-pointer hover:opacity-80 transition-opacity">
-                        <div class="hidden md:block text-right">
-                            <p class="text-sm font-semibold text-gray-900 leading-tight">Admin User</p>
-                            <p class="text-xs text-gray-500">Administrator</p>
-                        </div>
-                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=ffffff&bold=true" alt="Admin" class="w-10 h-10 rounded-full border border-gray-200 object-cover shadow-sm bg-blue-600">
-                    </div>
+                <div class="ml-4 font-medium text-gray-600 truncate hidden sm:block">
+                    {{ $title ?? '' }}
                 </div>
+
             </div>
         </header>
 
         <main :class="{ 'lg:ml-0': sidebarCollapsed, 'lg:ml-64': !sidebarCollapsed }"
-            class="pt-20 transition-all duration-300 min-h-screen">
-            <div class="p-6 md:p-8 animate-fade-in">
+            class="pt-20 transition-all duration-300 flex-1 flex flex-col">
+
+            <div class="p-4 md:p-8 animate-fade-in flex-1 w-full max-w-7xl mx-auto">
                 {{ $slot }}
             </div>
+
         </main>
     </div>
 

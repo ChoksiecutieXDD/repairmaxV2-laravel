@@ -69,4 +69,13 @@ class User extends Authenticatable
             'reset_token_expiry' => 'datetime',
         ];
     }
+    // Add this method inside your User class!
+    public function repairs()
+    {
+        return $this->hasMany(Repair::class);
+    }
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

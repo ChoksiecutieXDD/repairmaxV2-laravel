@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+<<<<<<< HEAD
 use App\Models\User;
 
 #[Layout('components.layouts.admin')]
@@ -24,6 +25,13 @@ class Dashboard extends Component
         $this->monthlyRevenue = 5240;
     }
 
+=======
+
+#[Layout('layouts.admin')]
+#[Title('Admin Dashboard | Repairmax')]
+class Dashboard extends Component
+{
+>>>>>>> 51efcf33180f6f138828f2651afe4412399850cd
     public function render()
     {
         return view('livewire.admin.dashboard');
