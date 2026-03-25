@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
         User::create([
             'first_name' => 'Admin',
             'last_name' => 'Repairmax',
-            'email' => 'admin@repairmax.com',
+            'email' => 'repairmaxsample@gmail.com',
             'phone' => '1234567890',
             'password' => Hash::make('Admin@12345'), // Use strong password
             'address' => 'Admin Office',
