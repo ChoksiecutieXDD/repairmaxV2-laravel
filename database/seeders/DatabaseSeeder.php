@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             SettingSeeder::class,
+            \Database\Seeders\InventoryItemSeeder::class,
         ]);
     }
 }

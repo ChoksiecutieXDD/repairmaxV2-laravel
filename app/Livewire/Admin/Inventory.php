@@ -12,6 +12,11 @@ class Inventory extends Component
 {
     public function render()
     {
-        return view('livewire.admin.inventory');
+        $totalItems = \App\Models\InventoryItem::count();
+        $lowStock = \App\Models\InventoryItem::where('quantity', '<=', 10)->count();
+        $outOfStock = \App\Models\InventoryItem::where('quantity', '<=', 0)->count();
+        $totalValue = \App\Models\InventoryItem::sum(\DB::raw('quantity * unit_price'));
+
+        return view('livewire.admin.inventory', compact('totalItems', 'lowStock', 'outOfStock', 'totalValue'));
     }
 }
