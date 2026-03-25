@@ -50,7 +50,7 @@
                 <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Main</h3>
                     <x-sidebar.link href="/admin/dashboard" icon="dashboard" :active="request()->is('admin/dashboard')">Dashboard</x-sidebar.link>
-                    <x-sidebar.link href="/admin/dashboard-overview" icon="overview" :active="request()->is('admin/dashboard-overview')">Overview</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.overview') }}" icon="dashboard" :active="request()->routeIs('admin.overview')">Overview</x-sidebar.link>
                     <x-sidebar.link href="/admin/profile" icon="person" :active="request()->is('admin/profile')">Profile</x-sidebar.link>
                 </div>
 

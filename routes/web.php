@@ -24,6 +24,10 @@ use App\Livewire\User\AiSupport;
 use App\Livewire\User\SystemSettings;
 use App\Livewire\User\Notifications;
 
+// Livewire Components (Admin)
+use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\SystemOverview;
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC ROUTES (Accessible to everyone)
@@ -118,9 +122,8 @@ Route::get('/logout', function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin-profile.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
+    Route::get('/overview', SystemOverview::class)->name('overview');
     Route::get('/user-management', function () {
         return view('admin-profile.user-management');
     })->name('user-management');
