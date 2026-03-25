@@ -136,6 +136,9 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     // Pointing directly to the new Livewire Component we just built
     Route::get('/dashboard', UserDashboard::class)->name('dashboard');
     Route::get('/profile', \App\Livewire\User\Profile::class)->name('profile');
+    Route::get('/book-appointment', \App\Livewire\User\BookAppointment::class)->name('book-appointment');
+    Route::get('/upcoming-appointments', \App\Livewire\User\UpcomingAppointments::class)->name('upcoming-appointments');
+    Route::get('/appointment-history', \App\Livewire\User\AppointmentHistory::class)->name('appointment-history');
     // Future routes will go here! (e.g., Profile, Bookings)
 });
 
