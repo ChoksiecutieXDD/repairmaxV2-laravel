@@ -79,8 +79,12 @@
                                 <td class="px-3 py-2">{{ $item->name }}</td>
                                 <td class="px-3 py-2">{{ $item->sku }}</td>
                                 <td class="px-3 py-2">{{ $item->quantity }}</td>
-                                <td class="px-3 py-2">₱{{ number_format($item->unit_price, 2) }}</td>
-                                <td class="px-3 py-2">₱{{ number_format($item->total_value, 2) }}</td>
+                                @php
+                                    $unitDecimals = fmod($item->unit_price, 1) > 0 ? 2 : 0;
+                                    $totalItemDecimals = fmod($item->total_value, 1) > 0 ? 2 : 0;
+                                @endphp
+                                <td class="px-3 py-2">₱{{ number_format($item->unit_price, $unitDecimals, '.', ',') }}</td>
+                                <td class="px-3 py-2">₱{{ number_format($item->total_value, $totalItemDecimals, '.', ',') }}</td>
                                 <td class="px-3 py-2">
                                     <button wire:click="editItem({{ $item->id }})" class="text-blue-600 hover:text-blue-800 text-xs font-medium">Edit</button>
                                     <button wire:click="deleteItem({{ $item->id }})" class="text-red-600 hover:text-red-800 text-xs font-medium ml-2">Delete</button>

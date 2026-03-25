@@ -54,7 +54,11 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Value</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">₱{{ number_format($totalValue, 2) }}</h3>
+                    @php
+                        $priceDecimals = fmod($totalValue, 1) > 0 ? 2 : 0;
+                        $displayTotalValue = number_format($totalValue, $priceDecimals, '.', ',');
+                    @endphp
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">₱{{ $displayTotalValue }}</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-green-50 text-green-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">price_tag</span>
