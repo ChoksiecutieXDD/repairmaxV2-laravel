@@ -10,6 +10,22 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
 
+// Admin Livewire Components
+use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\DashboardOverview;
+use App\Livewire\Admin\Profile;
+use App\Livewire\Admin\UserManagement;
+use App\Livewire\Admin\Appointment;
+use App\Livewire\Admin\AppointmentManagement;
+use App\Livewire\Admin\Inventory;
+use App\Livewire\Admin\InventoryManagement;
+use App\Livewire\Admin\Messages;
+use App\Livewire\Admin\MessagesSupport;
+use App\Livewire\Admin\Reports;
+use App\Livewire\Admin\ReportsAnalytics;
+use App\Livewire\Admin\Settings;
+use App\Livewire\Admin\SystemSettings;
+
 // Controllers
 use App\Http\Controllers\ContactController;
 
@@ -80,14 +96,33 @@ Route::get('/logout', function () {
 // ADMIN ROUTES (Protected: Must be logged in AND an admin)
 // ==========================================
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin-profile.dashboard');
-    })->name('dashboard');
-    Route::get('/user-management', function () {
-        return view('admin-profile.user-management');
-    })->name('user-management');
+    // Main
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/dashboard-overview', DashboardOverview::class)->name('dashboard-overview');
+    Route::get('/profile', Profile::class)->name('profile');
 
-    // Future admin pages go here...
+    // Appointments
+    Route::get('/appointment', Appointment::class)->name('appointment');
+    Route::get('/appointment-management', AppointmentManagement::class)->name('appointment-management');
+
+    // Inventory
+    Route::get('/inventory', Inventory::class)->name('inventory');
+    Route::get('/inventory-management', InventoryManagement::class)->name('inventory-management');
+
+    // Users
+    Route::get('/user-management', UserManagement::class)->name('user-management');
+
+    // Communications
+    Route::get('/messages', Messages::class)->name('messages');
+    Route::get('/messages-support', MessagesSupport::class)->name('messages-support');
+
+    // Reporting
+    Route::get('/reports', Reports::class)->name('reports');
+    Route::get('/reports-analytics', ReportsAnalytics::class)->name('reports-analytics');
+
+    // System
+    Route::get('/settings', Settings::class)->name('settings');
+    Route::get('/system-settings', SystemSettings::class)->name('system-settings');
 });
 
 
