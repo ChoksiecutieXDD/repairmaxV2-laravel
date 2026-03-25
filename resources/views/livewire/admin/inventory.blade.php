@@ -61,7 +61,7 @@
                     <h3 class="text-3xl font-extrabold text-gray-900 mt-1">₱{{ $displayTotalValue }}</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-green-50 text-green-600 rounded-xl">
-                    <span class="material-symbols-outlined text-2xl">price_tag</span>
+                    <span class="material-symbols-outlined text-2xl">attach_money</span>
                 </div>
             </div>
             <p class="text-sm text-green-600 font-medium">Total inventory value</p>
