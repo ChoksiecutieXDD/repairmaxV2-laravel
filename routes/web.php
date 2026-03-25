@@ -16,59 +16,57 @@ use App\Livewire\Auth\ResetPassword;
 
 // Livewire Components (User)
 use App\Livewire\User\Dashboard as UserDashboard;
+use App\Livewire\User\Profile;
+use App\Livewire\User\BookAppointment;
+use App\Livewire\User\UpcomingAppointments;
+use App\Livewire\User\AppointmentHistory;
+use App\Livewire\User\AiSupport;
+use App\Livewire\User\SystemSettings;
+use App\Livewire\User\Notifications;
 
-
-// ==========================================
-// PUBLIC ROUTES (Accessible to everyone)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| PUBLIC ROUTES (Accessible to everyone)
+|--------------------------------------------------------------------------
+*/
 
 // Core & Info Pages
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-
 Route::get('/about-us', function () {
     return view('about-us');
 })->name('about');
-
 Route::get('/faq', function () {
     return view('faq');
 })->name('faq');
-
 Route::get('/legal-policy', function () {
     return view('legal-policy');
 })->name('legal');
 
-
-// Services & Booking
+// Services & Booking Info
 Route::get('/services', function () {
     return view('services');
 })->name('services');
-
 Route::get('/repairs', function () {
     return view('repairs');
 })->name('repairs');
-
 Route::get('/booking', function () {
     return view('booking');
 })->name('booking');
-
 
 // Track Status
 Route::get('/track-status', function () {
     return view('track-status');
 })->name('track-status');
-
 Route::post('/track-status', function () {
     return view('track-status', ['status' => 'In Progress']);
 });
-
 
 // Contact & Enquiries
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
-
 Route::post('/contact/send', function (Request $request) {
     $validated = $request->validate([
         'from_email' => 'required|email',
@@ -88,10 +86,11 @@ Route::post('/contact/send', function (Request $request) {
 })->name('contact.send');
 
 
-
-// ==========================================
-// GUEST ROUTES (Only for logged-out users)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| GUEST ROUTES (Only for logged-out users)
+|--------------------------------------------------------------------------
+*/
 Route::middleware('guest')->group(function () {
     Route::get('/register', Register::class)->name('register');
     Route::get('/login', Login::class)->name('login');
@@ -100,10 +99,11 @@ Route::middleware('guest')->group(function () {
 });
 
 
-
-// ==========================================
-// AUTHENTICATED ROUTES (General Logged-In Actions)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| AUTHENTICATED ROUTES (General Logged-In Actions)
+|--------------------------------------------------------------------------
+*/
 Route::get('/logout', function () {
     Auth::logout();
     session()->invalidate();
@@ -112,40 +112,49 @@ Route::get('/logout', function () {
 })->name('logout');
 
 
-
-// ==========================================
-// ADMIN ROUTES (Protected: Must be logged in AND an admin)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES (Protected: Must be logged in AND an admin)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin-profile.dashboard');
     })->name('dashboard');
-
     Route::get('/user-management', function () {
         return view('admin-profile.user-management');
     })->name('user-management');
 });
 
 
-
-// ==========================================
-// USER ROUTES (Protected: Must be logged in AND a standard user)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| USER ROUTES (Protected: Must be logged in AND a standard user)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
-
-    // Pointing directly to the new Livewire Component we just built
     Route::get('/dashboard', UserDashboard::class)->name('dashboard');
-    Route::get('/profile', \App\Livewire\User\Profile::class)->name('profile');
-    Route::get('/book-appointment', \App\Livewire\User\BookAppointment::class)->name('book-appointment');
-    Route::get('/upcoming-appointments', \App\Livewire\User\UpcomingAppointments::class)->name('upcoming-appointments');
-    Route::get('/appointment-history', \App\Livewire\User\AppointmentHistory::class)->name('appointment-history');
-    // Future routes will go here! (e.g., Profile, Bookings)
+    Route::get('/profile', Profile::class)->name('profile');
+
+    // Appointments
+    Route::get('/book-appointment', BookAppointment::class)->name('book-appointment');
+    Route::get('/upcoming-appointments', UpcomingAppointments::class)->name('upcoming-appointments');
+    Route::get('/appointment-history', AppointmentHistory::class)->name('appointment-history');
+
+    // Support
+    Route::get('/support', AiSupport::class)->name('ai-support');
+    Route::get('/system-settings', SystemSettings::class)->name('system-settings');
+
+    // Notifications
+    Route::get('/notifications', Notifications::class)->name('notifications');
 });
 
 
-// ==========================================
-// FALLBACK ROUTE (Catch-all for 404s)
-// ==========================================
+/*
+|--------------------------------------------------------------------------
+| FALLBACK ROUTE (Catch-all for 404s)
+|--------------------------------------------------------------------------
+*/
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });

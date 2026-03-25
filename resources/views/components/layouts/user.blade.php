@@ -61,7 +61,7 @@
 
                 <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Services</h3>
-                    <x-sidebar.link href="/user/ai-message-support" icon="smart_toy" :active="request()->is('user/ai-message-support')">AI Support</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('user.ai-support') }}" icon="smart_toy" :active="request()->routeIs('user.ai-support')">AI Support</x-sidebar.link>
                 </div>
 
                 <div>
@@ -87,10 +87,10 @@
                         </div>
                     </div>
 
-                    <button class="relative p-1.5 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white focus:outline-none shrink-0" aria-label="Notifications">
+                    <a href="{{ route('user.notifications') }}" class="relative p-1.5 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white focus:outline-none shrink-0" aria-label="Notifications">
                         <span class="material-symbols-outlined text-[24px]">notifications</span>
-                        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 border border-gray-900 rounded-full"></span>
-                    </button>
+                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 border-2 border-gray-900 rounded-full animate-pulse"></span>
+                    </a>
                 </div>
                 @endauth
 
