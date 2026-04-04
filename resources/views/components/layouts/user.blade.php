@@ -7,6 +7,11 @@
     <title>{{ $title ?? 'User Dashboard | Repairmax' }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+    
+    <!-- Cropper.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @livewireStyles
@@ -14,10 +19,50 @@
         .no-transition * {
             transition: none !important;
         }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 
-<body class="font-sans antialiased text-gray-800 bg-gray-50 no-transition">
+<body class="font-sans antialiased text-gray-800 bg-gray-50 no-transition"
+    x-data="{ 
+        toasts: [],
+        addToast(message, type = 'success') {
+            const id = Date.now();
+            this.toasts.push({ id, message, type });
+            setTimeout(() => {
+                this.toasts = this.toasts.filter(t => t.id !== id);
+            }, 6000); 
+        }
+    }"
+    @toast.window="addToast($event.detail.message || $event.detail[0].message, $event.detail.type || $event.detail[0].type)">
+
+    <!-- Toast Container -->
+    <div class="fixed bottom-8 right-8 z-[100] flex flex-col gap-3 pointer-events-none">
+        <template x-for="toast in toasts" :key="toast.id">
+            <div x-show="true"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-8"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0 scale-90"
+                :class="{
+                    'bg-gray-900 border-gray-800 shadow-[0_20px_50px_rgba(0,0,0,0.3)]': toast.type === 'success',
+                    'bg-red-600 border-red-500 shadow-[0_20px_50px_rgba(220,38,38,0.2)]': toast.type === 'error',
+                    'bg-blue-600 border-blue-500 shadow-[0_20px_50px_rgba(37,99,235,0.2)]': toast.type === 'info',
+                    'bg-yellow-500 border-yellow-400': toast.type === 'warning'
+                }"
+                class="pointer-events-auto min-w-[320px] max-w-sm px-5 py-4 rounded-2xl border text-white flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[22px]" x-text="toast.type === 'success' ? 'check_circle' : (toast.type === 'error' ? 'error' : 'info')"></span>
+                    <span class="text-sm font-bold" x-text="toast.message"></span>
+                </div>
+                <button @click="toasts = toasts.filter(t => t.id !== toast.id)" class="opacity-50 hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            </div>
+        </template>
+    </div>
     <div x-data="{ 
             sidebarOpen: false, 
             sidebarCollapsed: localStorage.getItem('sidebar-collapsed') === 'true' 
@@ -83,9 +128,15 @@
                 @auth
                 <div class="flex items-center justify-between mb-4 px-2">
                     <div class="flex items-center gap-3 overflow-hidden">
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'User') }}&background=f3f4f6&color=374151&bold=true"
-                            alt="Profile"
-                            class="w-10 h-10 rounded-full border border-gray-600 object-cover shadow-sm bg-gray-800 shrink-0">
+                        @if(auth()->user()->profile_picture)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}"
+                                alt="Profile"
+                                class="w-10 h-10 rounded-full border border-gray-600 object-cover shadow-sm bg-gray-800 shrink-0">
+                        @else
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->first_name ?? auth()->user()->name) }}&background=f3f4f6&color=374151&bold=true"
+                                alt="Profile"
+                                class="w-10 h-10 rounded-full border border-gray-600 object-cover shadow-sm bg-gray-800 shrink-0">
+                        @endif
                         <div class="flex flex-col overflow-hidden">
                             <span class="text-sm font-semibold text-gray-100 leading-tight truncate">
                                 {{ auth()->user()->first_name ?? auth()->user()->name }}

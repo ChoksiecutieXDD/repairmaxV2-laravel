@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 #[Layout('components.layouts.admin')]
 #[Title('Admin Profile | Repairmax')]
@@ -37,48 +38,38 @@ class Profile extends Component
 
     public function mount()
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
         $this->phone = $user->phone;
-        $this->bio = $user->profile?->bio ?? '';
         
-        if($user->adminProfile) {
-            $this->department = $user->adminProfile->department;
-            $this->job_title = $user->adminProfile->job_title;
-        }
+        // Consolidated fields
+        $this->bio = $user->bio ?? '';
+        $this->department = $user->department ?? '';
+        $this->job_title = $user->job_title ?? '';
     }
 
     public function saveChanges()
     {
         $rules = $this->rules;
-        $rules['email'] = 'required|email|unique:users,email,' . auth()->id();
+        $rules['email'] = 'required|email|unique:users,email,' . Auth::id();
 
         $validated = $this->validate($rules);
 
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         $user->update([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'bio' => $this->bio,
+            'department' => $this->department,
+            'job_title' => $this->job_title,
         ]);
-
-        // Update profile if exists
-        if($user->profile) {
-            $user->profile->update(['bio' => $this->bio]);
-        } else {
-            $user->profile()->create(['bio' => $this->bio]);
-        }
-
-        // Update admin profile
-        if($user->adminProfile) {
-            $user->adminProfile->update([
-                'department' => $this->department,
-                'job_title' => $this->job_title,
-            ]);
-        }
 
         session()->flash('success', 'Profile updated successfully!');
         $this->isEditing = false;
@@ -88,13 +79,14 @@ class Profile extends Component
     {
         $this->validate([
             'currentPassword' => 'required',
-            'newPassword' => 'required|min:8|confirmed',
+            'newPassword' => 'required|min:8|same:confirmPassword',
             'confirmPassword' => 'required',
         ], [
-            'newPassword.confirmed' => 'New password and confirm password do not match.',
+            'newPassword.same' => 'New password and confirm password do not match.',
         ]);
 
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
         if(!Hash::check($this->currentPassword, $user->password)) {
             $this->addError('currentPassword', 'Current password is incorrect.');

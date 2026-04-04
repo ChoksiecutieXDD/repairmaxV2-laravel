@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use App\Models\Notification;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 #[Layout('layouts.user')]
 #[Title('Notifications | Repairmax')]
@@ -18,7 +19,9 @@ class Notifications extends Component
     
     public function getNotifications()
     {
-        $query = Notification::where('user_id', auth()->id());
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $query = Notification::where('user_id', $user->id);
 
         if ($this->filterRead === 'unread') {
             $query->where('is_read', false);
@@ -31,27 +34,35 @@ class Notifications extends Component
 
     public function markAsRead($notificationId)
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         Notification::where('id', $notificationId)
-            ->where('user_id', auth()->id())
+            ->where('user_id', $user->id)
             ->update(['is_read' => true]);
     }
 
     public function markAllAsRead()
     {
-        Notification::where('user_id', auth()->id())
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        Notification::where('user_id', $user->id)
             ->update(['is_read' => true]);
     }
 
     public function deleteNotification($notificationId)
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         Notification::where('id', $notificationId)
-            ->where('user_id', auth()->id())
+            ->where('user_id', $user->id)
             ->delete();
     }
 
     public function deleteAllNotifications()
     {
-        Notification::where('user_id', auth()->id())->delete();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        Notification::where('user_id', $user->id)->delete();
     }
 
     public function getIconForNotification($notification)
@@ -82,7 +93,9 @@ class Notifications extends Component
 
     public function getUnreadCount()
     {
-        return Notification::where('user_id', auth()->id())
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        return Notification::where('user_id', $user->id)
             ->where('is_read', false)
             ->count();
     }

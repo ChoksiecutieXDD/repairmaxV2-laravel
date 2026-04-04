@@ -33,6 +33,7 @@ class User extends Authenticatable
         'city',
         'state',
         'postal_code',
+        'country',
         'role',
         'is_verified',
         'verification_token',
@@ -41,6 +42,27 @@ class User extends Authenticatable
         'profile_picture',
         'is_active',
         'remember_token',
+        // Consolidated Fields
+        'bio',
+        'date_of_birth',
+        'gender',
+        'alternative_phone',
+        'emergency_contact',
+        'email_notifications',
+        'sms_notifications',
+        'push_notifications',
+        'status',
+        'suspension_reason',
+        'suspended_at',
+        'preferred_language',
+        'timezone',
+        'last_login_ip',
+        'last_login_at',
+        'admin_level',
+        'permissions',
+        'department',
+        'job_title',
+        'admin_notes',
     ];
 
     /**
@@ -68,6 +90,12 @@ class User extends Authenticatable
             'is_verified' => 'boolean',
             'is_active' => 'boolean',
             'reset_token_expiry' => 'datetime',
+            'date_of_birth' => 'date',
+            'suspended_at' => 'datetime',
+            'last_login_at' => 'datetime',
+            'email_notifications' => 'boolean',
+            'sms_notifications' => 'boolean',
+            'push_notifications' => 'boolean',
         ];
     }
     // Relationships
@@ -79,16 +107,6 @@ class User extends Authenticatable
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
-    }
-
-    public function profile()
-    {
-        return $this->hasOne(UserProfile::class);
-    }
-
-    public function adminProfile()
-    {
-        return $this->hasOne(AdminProfile::class);
     }
 
     public function notifications()
