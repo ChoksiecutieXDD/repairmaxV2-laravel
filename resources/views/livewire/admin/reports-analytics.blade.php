@@ -6,12 +6,13 @@
         </div>
     </div>
 
+    <!-- Key Metrics -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Avg Repair Time</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">1.5hr</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $metrics['avgRepairTime'] }}h</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-blue-50 text-blue-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">schedule</span>
@@ -24,7 +25,7 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Customer Satisfaction</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">96%</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $metrics['satisfaction'] }}%</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-green-50 text-green-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">sentiment_satisfied</span>
@@ -37,7 +38,7 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Repeat Customers</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">42%</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $metrics['repeatCustomers'] }}%</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-purple-50 text-purple-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">people</span>
@@ -50,7 +51,7 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Warranty Claims</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">2.1%</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $metrics['warrantyRate'] }}%</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-red-50 text-red-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">verified</span>
@@ -59,4 +60,166 @@
             <p class="text-sm text-gray-600">Return rate</p>
         </div>
     </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+        <!-- Revenue Trend -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-6">Revenue Trend (7 Days)</h3>
+            <canvas id="revenueChart"></canvas>
+        </div>
+
+        <!-- Repair Status Distribution -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-6">Repair Status Distribution</h3>
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Service Type Trends -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-6">Service Type Trends (7 Days)</h3>
+        <canvas id="serviceChart"></canvas>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script>
+    // Revenue Trend Chart
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    new Chart(revenueCtx, {
+        type: 'line',
+        data: {
+            labels: @json($metrics['revenueTrend']['labels']),
+            datasets: [{
+                label: 'Revenue ($)',
+                data: @json($metrics['revenueTrend']['data']),
+                borderColor: '#3B82F6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#3B82F6',
+                pointBorderColor: '#fff',
+                pointRadius: 5,
+                pointHoverRadius: 7,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#6B7280',
+                        font: { size: 12, weight: '600' }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#E5E7EB' },
+                    ticks: { color: '#6B7280' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#6B7280' }
+                }
+            }
+        }
+    });
+
+    // Repair Status Distribution Chart
+    const statusCtx = document.getElementById('statusChart').getContext('2d');
+    new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+            labels: @json($metrics['statusDistribution']['labels']),
+            datasets: [{
+                data: @json($metrics['statusDistribution']['data']),
+                backgroundColor: @json($metrics['statusDistribution']['backgroundColor']),
+                borderColor: '#fff',
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#6B7280',
+                        font: { size: 12, weight: '600' },
+                        padding: 15
+                    }
+                }
+            }
+        }
+    });
+
+    // Service Type Trends Chart
+    const serviceCtx = document.getElementById('serviceChart').getContext('2d');
+    new Chart(serviceCtx, {
+        type: 'line',
+        data: {
+            labels: @json($metrics['serviceTrends']['labels']),
+            datasets: [
+                {
+                    label: 'Phones',
+                    data: @json($metrics['serviceTrends']['phones']),
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointBackgroundColor: '#3B82F6',
+                    pointRadius: 4,
+                },
+                {
+                    label: 'Laptops',
+                    data: @json($metrics['serviceTrends']['laptops']),
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointBackgroundColor: '#10B981',
+                    pointRadius: 4,
+                },
+                {
+                    label: 'Tablets',
+                    data: @json($metrics['serviceTrends']['tablets']),
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointBackgroundColor: '#F59E0B',
+                    pointRadius: 4,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#6B7280',
+                        font: { size: 12, weight: '600' }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#E5E7EB' },
+                    ticks: { color: '#6B7280' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#6B7280' }
+                }
+            }
+        }
+    });
+</script>
+

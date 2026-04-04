@@ -84,6 +84,35 @@ class AdminNotifications extends Component
             ->count();
     }
 
+    public function navigateToRelated($notificationId)
+    {
+        $notification = Notification::find($notificationId);
+        
+        if (!$notification) {
+            return;
+        }
+
+        // Mark as read
+        $this->markAsRead($notificationId);
+
+        // Navigate based on model type
+        if ($notification->related_model && $notification->related_id) {
+            $routes = [
+                'appointment' => '/admin/appointment-management',
+                'user' => '/admin/user-management',
+                'message' => '/admin/messages',
+                'inventory' => '/admin/inventory-management',
+            ];
+
+            $model = strtolower($notification->related_model);
+            $route = $routes[$model] ?? '/admin/dashboard';
+            
+            return redirect($route);
+        }
+
+        return redirect('/admin/dashboard');
+    }
+
     public function render()
     {
         return view('livewire.admin.admin-notifications', [

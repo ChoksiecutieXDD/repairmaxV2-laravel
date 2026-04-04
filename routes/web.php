@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Appointment;
+use App\Models\User;
 
 // Mails
 use App\Mail\ContactEnquiry;
@@ -28,7 +30,7 @@ use App\Livewire\User\Notifications;
 use App\Livewire\Admin\Dashboard as AdminDashboard;
 use App\Livewire\Admin\SystemOverview;
 use App\Livewire\Admin\Profile as AdminProfile;
-use App\Livewire\Admin\Appointment;
+use App\Livewire\Admin\Appointment as AppointmentComponent;
 use App\Livewire\Admin\AppointmentManagement;
 use App\Livewire\Admin\Inventory;
 use App\Livewire\Admin\InventoryManagement;
@@ -40,6 +42,9 @@ use App\Livewire\Admin\Reports;
 use App\Livewire\Admin\ReportsAnalytics;
 use App\Livewire\Admin\Settings;
 use App\Livewire\Admin\SystemSettings as AdminSystemSettings;
+
+// Controllers
+use App\Http\Controllers\AppointmentDownloadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +77,61 @@ Route::get('/booking', function () {
     return view('booking');
 })->name('booking');
 
+Route::post('/booking', function (Request $request) {
+    $validated = $request->validate([
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'required|string|max:20',
+        'device_type' => 'required|string',
+        'brand' => 'required|string|max:255',
+        'model' => 'nullable|string|max:255',
+        'issue' => 'required|string',
+        'device_image' => 'nullable|image|max:2048',
+    ]);
+
+    try {
+        // Create or find user
+        $user = User::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'phone' => $validated['phone'],
+                'role' => 'user',
+                'is_verified' => false,
+            ]
+        );
+
+        // Handle image upload
+        $photoPath = null;
+        if ($request->hasFile('device_image')) {
+            $photoPath = $request->file('device_image')->store('repairs', 'public');
+        }
+
+        // Create appointment
+        $appointment = Appointment::create([
+            'user_id' => $user->id,
+            'tracking_code' => 'RPR-' . strtoupper(uniqid()),
+            'device_brand' => $validated['brand'],
+            'device_model' => $validated['model'] ?? 'Not Specified',
+            'fault_category' => $validated['device_type'],
+            'description' => $validated['issue'],
+            'photo_paths' => $photoPath ? [$photoPath] : [],
+            'status' => 'Pending',
+            'pref_date' => now()->addDay(),
+            'pref_time' => '10:00:00',
+        ]);
+
+        return redirect('/booking')
+            ->with('success', 'Thank you! Your repair booking has been received.')
+            ->with('success_message', 'Tracking Code: ' . $appointment->tracking_code . '. Our team will contact you shortly to confirm the appointment details.');
+    } catch (\Exception $e) {
+        \Log::error('Booking error: ' . $e->getMessage());
+        return back()->with('error', 'There was an error processing your booking. Please try again.');
+    }
+})->name('booking.store');
+
 // Track Status
 Route::get('/track-status', function () {
     return view('track-status');
@@ -101,6 +161,39 @@ Route::post('/contact/send', function (Request $request) {
 
     return back()->with('success', 'Your enquiry has been sent! Our technicians will get back to you shortly.');
 })->name('contact.send');
+
+// DEBUG ROUTE - Remove in production
+Route::get('/debug/appointments', function () {
+    if (!Auth::check()) {
+        return response('Not authenticated', 401);
+    }
+    
+    $user = Auth::user();
+    $all = $user->appointments()->get();
+    $completed = $user->appointments()->whereIn('status', ['Completed', 'Cancelled'])->get();
+    
+    dd([
+        'user' => [
+            'id' => $user->id,
+            'name' => $user->first_name . ' ' . $user->last_name,
+            'email' => $user->email,
+        ],
+        'total_appointments' => $all->count(),
+        'completed_appointments' => $completed->count(),
+        'all_appointments' => $all->map(fn($a) => [
+            'tracking_code' => $a->tracking_code,
+            'status' => $a->status,
+            'final_cost' => $a->final_cost,
+            'completed_at' => $a->completed_at,
+            'created_at' => $a->created_at,
+        ]),
+        'completed_only' => $completed->map(fn($a) => [
+            'tracking_code' => $a->tracking_code,
+            'status' => $a->status,
+            'final_cost' => $a->final_cost,
+        ]),
+    ]);
+});
 
 
 /*
@@ -140,7 +233,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/profile', AdminProfile::class)->name('profile');
     
     // Appointments
-    Route::get('/appointment', Appointment::class)->name('appointment');
+    Route::get('/appointment', AppointmentComponent::class)->name('appointment');
     Route::get('/appointment-management', AppointmentManagement::class)->name('appointment-management');
     
     // Inventory
@@ -178,6 +271,10 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::get('/book-appointment', BookAppointment::class)->name('book-appointment');
     Route::get('/upcoming-appointments', UpcomingAppointments::class)->name('upcoming-appointments');
     Route::get('/appointment-history', AppointmentHistory::class)->name('appointment-history');
+    Route::get('/appointment/{id}/receipt', [AppointmentDownloadController::class, 'downloadReceipt'])->name('appointment.receipt');
+    Route::get('/appointment/{id}/invoice', [AppointmentDownloadController::class, 'downloadInvoice'])->name('appointment.invoice');
+    Route::get('/appointment/{id}/receipt-view', [AppointmentDownloadController::class, 'viewReceipt'])->name('appointment.receipt-view');
+    Route::get('/appointment/{id}/invoice-view', [AppointmentDownloadController::class, 'viewInvoice'])->name('appointment.invoice-view');
 
     // Support
     Route::get('/support', AiSupport::class)->name('ai-support');

@@ -27,7 +27,13 @@ class SystemOverview extends Component
             ->take(5)
             ->get();
 
-        // 3. Static Stats (Update these later with real server logic if needed)
+        // 3. Chart Data - Last 7 Days Appointments
+        $appointmentTrend = $this->getAppointmentTrend();
+
+        // 4. Chart Data - User Growth
+        $userGrowth = $this->getUserGrowth();
+
+        // 5. Static Stats (Update these later with real server logic if needed)
         $systemUptime = "99.8%";
         $storageUsed = "42.5GB";
 
@@ -39,6 +45,46 @@ class SystemOverview extends Component
             'todaysAppointments' => $todaysAppointments,
             'systemUptime' => $systemUptime,
             'storageUsed' => $storageUsed,
+            'appointmentTrend' => json_encode($appointmentTrend),
+            'userGrowth' => json_encode($userGrowth),
         ]);
+    }
+
+    private function getAppointmentTrend()
+    {
+        $days = [];
+        $counts = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $count = Appointment::whereDate('pref_date', $date)->count();
+            
+            $days[] = $date->format('M d');
+            $counts[] = $count;
+        }
+
+        return [
+            'labels' => $days,
+            'data' => $counts,
+        ];
+    }
+
+    private function getUserGrowth()
+    {
+        $days = [];
+        $counts = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $count = User::whereDate('created_at', '<=', $date)->count();
+            
+            $days[] = $date->format('M d');
+            $counts[] = $count;
+        }
+
+        return [
+            'labels' => $days,
+            'data' => $counts,
+        ];
     }
 }

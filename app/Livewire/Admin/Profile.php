@@ -7,11 +7,15 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.admin')]
 #[Title('Admin Profile | Repairmax')]
 class Profile extends Component
 {
+    use WithFileUploads;
+
     public $first_name;
     public $last_name;
     public $email;
@@ -19,6 +23,11 @@ class Profile extends Component
     public $department;
     public $job_title;
     public $bio;
+
+    // Photo Upload & Cropping
+    public $profile_picture;
+    public $cropped_image;
+    public $current_profile_picture;
 
     public $currentPassword;
     public $newPassword;
@@ -50,6 +59,7 @@ class Profile extends Component
         $this->bio = $user->bio ?? '';
         $this->department = $user->department ?? '';
         $this->job_title = $user->job_title ?? '';
+        $this->current_profile_picture = $user->profile_picture;
     }
 
     public function saveChanges()
@@ -73,6 +83,56 @@ class Profile extends Component
 
         session()->flash('success', 'Profile updated successfully!');
         $this->isEditing = false;
+    }
+
+    public function uploadProfile()
+    {
+        $this->validate(['profile_picture' => 'required|image|max:5120']);
+        $this->dispatch('openCropperModal');
+    }
+
+    public function handleCroppedImage($base64String)
+    {
+        try {
+            // Remove data:image/jpeg;base64, prefix
+            $imageData = str_replace('data:image/jpeg;base64,', '', $base64String);
+            $imageData = str_replace(' ', '+', $imageData);
+            
+            // Decode and save
+            $imageBinary = base64_decode($imageData);
+            $filename = 'admin_profile_' . Auth::id() . '_' . time() . '.jpg';
+            Storage::disk('public')->put('profile_pictures/' . $filename, $imageBinary);
+            
+            // Update user
+            $user = Auth::user();
+            $oldPicture = $user->profile_picture;
+            $user->update(['profile_picture' => 'profile_pictures/' . $filename]);
+            
+            // Delete old picture if exists
+            if ($oldPicture && Storage::disk('public')->exists($oldPicture)) {
+                Storage::disk('public')->delete($oldPicture);
+            }
+            
+            $this->current_profile_picture = 'profile_pictures/' . $filename;
+            $this->profile_picture = null;
+            
+            session()->flash('success', 'Profile picture updated successfully!');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Failed to update profile picture: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteProfilePicture()
+    {
+        $user = Auth::user();
+        if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
+            Storage::disk('public')->delete($user->profile_picture);
+        }
+        
+        $user->update(['profile_picture' => null]);
+        $this->current_profile_picture = null;
+        
+        session()->flash('success', 'Profile picture deleted successfully!');
     }
 
     public function updatePassword()
@@ -101,8 +161,18 @@ class Profile extends Component
         $this->confirmPassword = '';
     }
 
+    public function deleteAccount()
+    {
+        $user = Auth::user();
+        Auth::logout();
+        $user->delete();
+        
+        return redirect('/');
+    }
+
     public function render()
     {
         return view('livewire.admin.profile');
     }
 }
+

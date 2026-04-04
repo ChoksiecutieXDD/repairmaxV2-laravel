@@ -8,7 +8,9 @@
             <p class="text-gray-500 mt-1">Review all your past repair appointments and invoices.</p>
         </div>
 
-        <button class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-bold shadow-sm transition-colors shrink-0">
+        <button
+            wire:click="exportRecords()"
+            class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-bold shadow-sm transition-colors shrink-0">
             <span class="material-symbols-outlined text-[20px]">download</span>
             Export Records
         </button>
@@ -24,7 +26,7 @@
                         <th class="px-6 py-5">Date</th>
                         <th class="px-6 py-5">Status</th>
                         <th class="px-6 py-5">Final Cost</th>
-                        <th class="px-6 py-5 text-right">Action</th>
+                        <th class="px-6 py-5 text-right">Downloads</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-sm">
@@ -60,13 +62,31 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 font-bold text-gray-900">
-                            {{ $item->status == 'Completed' ? '₱' . number_format($item->quote ?? 0, 2) : '₱0.00' }}
+                            {{ $item->status == 'Completed' ? '₱' . number_format($item->final_cost ?? $item->quote ?? 0, 2) : '₱0.00' }}
                         </td>
                         <td class="px-6 py-4 text-right">
-                            <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-bold group-hover:underline">
-                                View Receipt
-                                <span class="material-symbols-outlined text-[16px] ml-1">receipt_long</span>
-                            </a>
+                            <div class="flex items-center justify-end gap-2">
+                                @if($item->status == 'Completed' && $item->invoice_number)
+                                <div class="group relative">
+                                    <button class="inline-flex items-center text-emerald-600 hover:text-emerald-800 font-bold hover:underline">
+                                        <span class="material-symbols-outlined text-[18px]">receipt</span>
+                                    </button>
+                                    <div class="absolute right-0 bottom-full mb-2 hidden group-hover:flex flex-col gap-1 bg-gray-900 text-white text-xs rounded-lg shadow-lg z-10 whitespace-nowrap">
+                                        <a href="{{ route('user.appointment.invoice-view', $item->id) }}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 hover:bg-gray-800">View Invoice</a>
+                                        <a href="{{ route('user.appointment.invoice', $item->id) }}" class="px-3 py-1.5 hover:bg-gray-800">Download PDF</a>
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="group relative">
+                                    <button class="inline-flex items-center text-blue-600 hover:text-blue-800 font-bold hover:underline">
+                                        <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+                                    </button>
+                                    <div class="absolute right-0 bottom-full mb-2 hidden group-hover:flex flex-col gap-1 bg-gray-900 text-white text-xs rounded-lg shadow-lg z-10 whitespace-nowrap">
+                                        <a href="{{ route('user.appointment.receipt-view', $item->id) }}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 hover:bg-gray-800">View Receipt</a>
+                                        <a href="{{ route('user.appointment.receipt', $item->id) }}" class="px-3 py-1.5 hover:bg-gray-800">Download PDF</a>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     @empty

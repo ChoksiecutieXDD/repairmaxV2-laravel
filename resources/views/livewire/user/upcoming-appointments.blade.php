@@ -89,8 +89,22 @@
                         Cancel
                     </button>
                     @endif
-                    <a href="#" class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">Reschedule</a>
-                    <a href="#" class="px-4 py-2 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-lg hover:bg-blue-100 transition-colors">View Details</a>
+                    <button
+                        wire:click="openEdit({{ $app->id }})"
+                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                        Edit
+                    </button>
+                    <button
+                        wire:click="openReschedule({{ $app->id }})"
+                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        Reschedule
+                    </button>
+                    <button
+                        wire:click="showDetails({{ $app->id }})"
+                        class="px-4 py-2 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-lg hover:bg-blue-100 transition-colors">
+                        View Details
+                    </button>
                 </div>
             </div>
         </div>
@@ -108,4 +122,246 @@
         @endforelse
 
     </div>
+
+    <!-- View Details Modal -->
+    @if($showDetailsModal && $selectedAppointment)
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-5 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900">Appointment Details</h2>
+                <button
+                    wire:click="closeModals()"
+                    class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <span class="material-symbols-outlined text-[28px]">close</span>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-6">
+                <!-- Device Information -->
+                <div>
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Device Information</h3>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold mb-1">Brand</p>
+                                <p class="font-bold text-gray-900">{{ $selectedAppointment->device_brand }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold mb-1">Model</p>
+                                <p class="font-bold text-gray-900">{{ $selectedAppointment->device_model }}</p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="text-xs text-gray-500 font-semibold mb-1">Issue Category</p>
+                                <p class="font-bold text-gray-900">{{ $selectedAppointment->fault_category }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Description</h3>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <p class="text-gray-700">{{ $selectedAppointment->description ?? 'No description provided' }}</p>
+                    </div>
+                </div>
+
+                <!-- Appointment Schedule -->
+                <div>
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Scheduled Appointment</h3>
+                    <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-blue-600">calendar_today</span>
+                            <p class="font-bold text-gray-900">{{ \Carbon\Carbon::parse($selectedAppointment->pref_date)->format('M d, Y') }}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-blue-600">schedule</span>
+                            <p class="font-bold text-gray-900">{{ \Carbon\Carbon::parse($selectedAppointment->pref_time)->format('h:i A') }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status & Tracking -->
+                <div>
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Status & Reference</h3>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3">
+                        <div>
+                            <p class="text-xs text-gray-500 font-semibold mb-1">Tracking Code</p>
+                            <p class="font-mono font-bold text-gray-900">{{ $selectedAppointment->tracking_code }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-semibold mb-1">Status</p>
+                            @php
+                            $statusClasses = [
+                            'In Progress' => 'bg-orange-50 text-orange-700 border-orange-200',
+                            'Pending' => 'bg-gray-100 text-gray-700 border-gray-200',
+                            'Approved' => 'bg-green-50 text-green-700 border-green-200',
+                            'Cancelled' => 'bg-red-50 text-red-700 border-red-200',
+                            ];
+                            $badgeClass = $statusClasses[$selectedAppointment->status] ?? $statusClasses['Pending'];
+                            @endphp
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border {{ $badgeClass }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ $selectedAppointment->status == 'In Progress' ? 'bg-orange-500 animate-pulse' : 'bg-current' }}"></span>
+                                {{ $selectedAppointment->status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attached Photos -->
+                @if($selectedAppointment->photo_paths && count($selectedAppointment->photo_paths) > 0)
+                <div>
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Attached Photos</h3>
+                    <div class="grid grid-cols-3 gap-3">
+                        @foreach($selectedAppointment->photo_paths as $photo)
+                        <div class="aspect-square bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
+                            <img src="{{ asset('storage/' . $photo) }}" alt="Device photo" class="w-full h-full object-cover">
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <div class="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
+                <button
+                    wire:click="closeModals()"
+                    class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <!-- Reschedule Modal -->
+    @if($showRescheduleModal && $selectedAppointment)
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div class="border-b border-gray-200 px-6 py-5 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900">Reschedule Appointment</h2>
+                <button
+                    wire:click="closeModals()"
+                    class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <span class="material-symbols-outlined text-[28px]">close</span>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Select New Date</label>
+                    <input
+                        type="date"
+                        wire:model="rescheduleDate"
+                        min="{{ now()->format('Y-m-d') }}"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Select New Time</label>
+                    <input
+                        type="time"
+                        wire:model="rescheduleTime"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                @if($rescheduleDate && $rescheduleTime)
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <p class="text-xs text-blue-600 font-semibold mb-1">New Appointment Time</p>
+                    <p class="font-bold text-blue-900">
+                        {{ \Carbon\Carbon::parse($rescheduleDate)->format('M d, Y') }} at {{ \Carbon\Carbon::parse($rescheduleTime)->format('h:i A') }}
+                    </p>
+                </div>
+                @endif
+            </div>
+
+            <div class="bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
+                <button
+                    wire:click="closeModals()"
+                    class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    Cancel
+                </button>
+                <button
+                    wire:click="saveReschedule()"
+                    class="px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <!-- Edit Modal -->
+    @if($showEditModal && $selectedAppointment)
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div class="border-b border-gray-200 px-6 py-5 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900">Edit Appointment</h2>
+                <button
+                    wire:click="closeModals()"
+                    class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <span class="material-symbols-outlined text-[28px]">close</span>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Device Brand <span class="text-red-500">*</span></label>
+                    <input
+                        type="text"
+                        wire:model="editDeviceBrand"
+                        placeholder="e.g., Apple, Samsung"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Device Model</label>
+                    <input
+                        type="text"
+                        wire:model="editDeviceModel"
+                        placeholder="e.g., iPhone 14, Galaxy S23"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Issue Category <span class="text-red-500">*</span></label>
+                    <select
+                        wire:model="editFaultCategory"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select issue category</option>
+                        <option value="Screen">Screen</option>
+                        <option value="Battery">Battery</option>
+                        <option value="Charging">Charging</option>
+                        <option value="Software">Software</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Water Damage">Water Damage</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Description</label>
+                    <textarea
+                        wire:model="editDescription"
+                        placeholder="Describe the issue in detail..."
+                        rows="3"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
+                <button
+                    wire:click="closeModals()"
+                    class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    Cancel
+                </button>
+                <button
+                    wire:click="saveEdit()"
+                    class="px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>

@@ -41,7 +41,7 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Repairs</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ ($activeRepairsCount ?? 0) + ($completedCount ?? 0) }}</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $totalCount ?? 0 }}</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-blue-50 text-blue-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">calendar_today</span>
@@ -133,10 +133,10 @@
                                 <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
                                     <span class="material-symbols-outlined text-[20px] text-gray-600">smartphone</span>
                                 </div>
-                                <span class="font-bold text-gray-900">{{ $repair->device_name ?? 'Unknown Device' }}</span>
+                                <span class="font-bold text-gray-900">{{ $repair->device_brand ?? 'Unknown Device' }} {{ $repair->device_model ?? '' }}</span>
                             </div>
                         </td>
-                        <td class="px-6 py-4 text-gray-600 font-medium">{{ $repair->issue_type ?? 'General Service' }}</td>
+                        <td class="px-6 py-4 text-gray-600 font-medium">{{ $repair->fault_category ?? 'General Service' }}</td>
                         <td class="px-6 py-4 text-gray-500">
                             {{ $repair->created_at ? \Carbon\Carbon::parse($repair->created_at)->format('M d, Y') : 'Unknown Date' }}
                         </td>
@@ -145,9 +145,9 @@
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-green-50 text-green-700 border border-green-200">
                                 <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Completed
                             </span>
-                            @elseif(isset($repair->status) && strtolower($repair->status) === 'in progress')
+                            @elseif(isset($repair->status) && (strtolower($repair->status) === 'in progress' || strtolower($repair->status) === 'scheduled'))
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-50 text-orange-700 border border-orange-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span> In Progress
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span> {{ ucfirst($repair->status) }}
                             </span>
                             @else
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200">
@@ -157,7 +157,7 @@
                         </td>
                         <td class="px-6 py-4 font-bold text-gray-900">₱{{ number_format($repair->quote ?? 0, 2) }}</td>
                         <td class="px-6 py-4 text-right">
-                            <a href="/user/appointment/{{ $repair->id ?? 1 }}" class="text-blue-600 hover:text-blue-800 font-bold group-hover:underline">Details</a>
+                            <button wire:click="viewDetails({{ $repair->id }})" class="text-blue-600 hover:text-blue-800 font-bold group-hover:underline">Details</button>
                         </td>
                     </tr>
                     @empty
@@ -179,5 +179,149 @@
         </div>
 
     </div>
+
+    <!-- Appointment Details Modal -->
+    @if($showDetailsModal && $selectedAppointment)
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900">Appointment Details</h2>
+                <button wire:click="closeDetails()" class="text-gray-400 hover:text-gray-600">
+                    <span class="material-symbols-outlined text-[24px]">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-6">
+                <!-- Device Information Section -->
+                <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                    <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">Device Information</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Brand</p>
+                            <p class="text-gray-900 font-semibold">{{ $selectedAppointment->device_brand ?? 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Model</p>
+                            <p class="text-gray-900 font-semibold">{{ $selectedAppointment->device_model ?? 'N/A' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Information Section -->
+                <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                    <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">Service Information</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Issue Category</p>
+                            <p class="text-gray-900 font-semibold">{{ $selectedAppointment->fault_category ?? 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Description</p>
+                            <p class="text-gray-700">{{ $selectedAppointment->description ?? 'No description provided' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointment Details Section -->
+                <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                    <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">Appointment Details</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Tracking Code</p>
+                            <p class="text-gray-900 font-mono font-semibold">{{ $selectedAppointment->tracking_code ?? 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Status</p>
+                            <div class="mt-1">
+                                @if($selectedAppointment->status == 'Completed')
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-green-50 text-green-700 border border-green-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                    Completed
+                                </span>
+                                @elseif($selectedAppointment->status == 'In Progress' || $selectedAppointment->status == 'Scheduled')
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-50 text-orange-700 border border-orange-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                                    {{ $selectedAppointment->status }}
+                                </span>
+                                @else
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                                    {{ $selectedAppointment->status ?? 'Pending' }}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Scheduled Date & Time</p>
+                            <p class="text-gray-900 font-semibold">
+                                {{ $selectedAppointment->pref_date ? \Carbon\Carbon::parse($selectedAppointment->pref_date)->format('M d, Y') : 'N/A' }}
+                                <br>
+                                <span class="text-sm">{{ $selectedAppointment->pref_time ? \Carbon\Carbon::parse($selectedAppointment->pref_time)->format('h:i A') : 'N/A' }}</span>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Quote Amount</p>
+                            <p class="text-gray-900 font-semibold text-lg">₱{{ number_format($selectedAppointment->quote ?? 0, 2) }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cost Information (if completed) -->
+                @if($selectedAppointment->status == 'Completed')
+                <div class="bg-blue-50 rounded-lg p-5 border border-blue-200">
+                    <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">Completion Details</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Final Cost</p>
+                            <p class="text-gray-900 font-semibold text-lg">₱{{ number_format($selectedAppointment->final_cost ?? 0, 2) }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Completed Date</p>
+                            <p class="text-gray-900 font-semibold">
+                                {{ $selectedAppointment->completed_at ? \Carbon\Carbon::parse($selectedAppointment->completed_at)->format('M d, Y') : 'N/A' }}
+                            </p>
+                        </div>
+                        @if($selectedAppointment->invoice_number)
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium mb-1">Invoice Number</p>
+                            <p class="text-gray-900 font-mono font-semibold">{{ $selectedAppointment->invoice_number }}</p>
+                        </div>
+                        @endif
+                        @if($selectedAppointment->completion_notes)
+                        <div class="col-span-2">
+                            <p class="text-xs text-gray-500 font-medium mb-1">Technician Notes</p>
+                            <p class="text-gray-700 text-sm">{{ $selectedAppointment->completion_notes }}</p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 flex items-center justify-between gap-3 flex-wrap">
+                <div class="flex gap-2 flex-wrap">
+                    @if($selectedAppointment->status == 'Completed' && $selectedAppointment->invoice_number)
+                    <a href="{{ route('user.appointment.invoice-view', $selectedAppointment->id) }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">receipt</span>
+                        View Invoice
+                    </a>
+                    @endif
+                    @if($selectedAppointment->status == 'Completed')
+                    <a href="{{ route('user.appointment.receipt-view', $selectedAppointment->id) }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+                        View Receipt
+                    </a>
+                    @endif
+                </div>
+                <button wire:click="closeDetails()" class="bg-gray-200 hover:bg-gray-300 text-gray-900 px-4 py-2 rounded-lg font-semibold transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
 
 </div>

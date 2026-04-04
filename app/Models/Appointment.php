@@ -19,7 +19,12 @@ class Appointment extends Model
         'photo_paths',
         'pref_date',
         'pref_time',
-        'status'
+        'status',
+        'quote',
+        'final_cost',
+        'completion_notes',
+        'invoice_number',
+        'completed_at'
     ];
 
     protected function casts(): array
@@ -27,6 +32,9 @@ class Appointment extends Model
         return [
             'pref_date' => 'date',
             'photo_paths' => 'array',
+            'quote' => 'decimal:2',
+            'final_cost' => 'decimal:2',
+            'completed_at' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];

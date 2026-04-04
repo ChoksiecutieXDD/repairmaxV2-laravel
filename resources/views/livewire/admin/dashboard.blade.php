@@ -22,7 +22,7 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Users</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">1,247</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ number_format($totalUsers) }}</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-blue-50 text-blue-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">group</span>
@@ -30,7 +30,7 @@
             </div>
             <p class="text-sm font-medium text-blue-600 flex items-center gap-1">
                 <span class="material-symbols-outlined text-[16px]">trending_up</span>
-                +45 new members
+                Active users
             </p>
         </div>
 
@@ -38,20 +38,20 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Appointments</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">3,892</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ number_format($totalAppointments) }}</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-green-50 text-green-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">calendar_month</span>
                 </div>
             </div>
-            <p class="text-sm font-medium text-gray-500">421 completed today</p>
+            <p class="text-sm font-medium text-gray-500">{{ $recentAppointments->count() ?? 0 }} recent bookings</p>
         </div>
 
         <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm transition-shadow hover:shadow-md">
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Monthly Revenue</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">₱145k</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">₱{{ number_format($monthlyRevenue) }}</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-yellow-50 text-yellow-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">payments</span>
@@ -59,7 +59,7 @@
             </div>
             <p class="text-sm font-medium text-green-600 flex items-center gap-1">
                 <span class="material-symbols-outlined text-[16px]">north</span>
-                12% growth
+                Growth
             </p>
         </div>
 
@@ -67,7 +67,7 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">System Health</p>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">99.8%</h3>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ number_format($systemHealth, 1) }}%</h3>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center bg-purple-50 text-purple-600 rounded-xl">
                     <span class="material-symbols-outlined text-2xl">dns</span>
@@ -90,23 +90,36 @@
                 </h2>
             </div>
             <div class="divide-y divide-gray-100">
+                @forelse($recentAppointments as $appointment)
                 <div class="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer group">
                     <div>
-                        <p class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">iPhone 14 Pro - Screen</p>
-                        <p class="text-xs text-gray-500">John Doe • <span class="font-medium">Feb 25, 2026</span></p>
+                        <p class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                            {{ $appointment->device_brand ?? 'Device' }} {{ $appointment->device_model ?? '' }} - {{ $appointment->fault_category ?? 'Service' }}
+                        </p>
+                        <p class="text-xs text-gray-500">
+                            {{ $appointment->user->first_name ?? 'User' }} • 
+                            <span class="font-medium">{{ \Carbon\Carbon::parse($appointment->pref_date)->format('M d, Y') }}</span>
+                        </p>
                     </div>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 border border-green-100 rounded-lg text-xs font-bold">Completed</span>
+                    @php
+                    $statusColor = match($appointment->status) {
+                        'Completed' => 'bg-green-50 text-green-700 border-green-100',
+                        'In Progress' => 'bg-orange-50 text-orange-700 border-orange-100',
+                        'Pending' => 'bg-gray-100 text-gray-700 border-gray-200',
+                        'Approved' => 'bg-blue-50 text-blue-700 border-blue-100',
+                        default => 'bg-gray-100 text-gray-700 border-gray-200'
+                    };
+                    @endphp
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 {{ $statusColor }} rounded-lg text-xs font-bold border">{{ $appointment->status }}</span>
                 </div>
-                <div class="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer group">
-                    <div>
-                        <p class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Galaxy S23 - Battery</p>
-                        <p class="text-xs text-gray-500">Jane Smith • <span class="font-medium">Feb 26, 2026</span></p>
-                    </div>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 text-orange-700 border border-orange-100 rounded-lg text-xs font-bold">In Progress</span>
+                @empty
+                <div class="px-6 py-8 text-center text-gray-500">
+                    <p class="text-sm">No recent appointments</p>
                 </div>
+                @endforelse
             </div>
             <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50">
-                <a href="#" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                <a href="{{ route('admin.appointment') }}" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
                     View All Appointments <span class="material-symbols-outlined text-sm">arrow_forward</span>
                 </a>
             </div>
@@ -120,16 +133,28 @@
                 </h2>
             </div>
             <div class="divide-y divide-gray-100">
+                @forelse($newRegistrations as $user)
                 <div class="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer">
                     <div class="flex items-center gap-3">
-                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=f3f4f6&color=212529" class="w-10 h-10 rounded-full border border-gray-200">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($user->first_name . ' ' . $user->last_name) }}&background=f3f4f6&color=212529" class="w-10 h-10 rounded-full border border-gray-200">
                         <div>
-                            <p class="text-sm font-bold text-gray-900">John Doe</p>
-                            <p class="text-xs text-gray-500 font-medium">Joined 2 days ago</p>
+                            <p class="text-sm font-bold text-gray-900">{{ $user->first_name }} {{ $user->last_name }}</p>
+                            <p class="text-xs text-gray-500 font-medium">
+                                Joined {{ \Carbon\Carbon::parse($user->created_at)->diffForHumans() }}
+                            </p>
                         </div>
                     </div>
+                    @if($user->is_verified)
                     <span class="px-2.5 py-1 bg-green-50 text-green-700 border border-green-100 rounded-lg text-[10px] uppercase font-extrabold tracking-wider">Verified</span>
+                    @else
+                    <span class="px-2.5 py-1 bg-yellow-50 text-yellow-700 border border-yellow-100 rounded-lg text-[10px] uppercase font-extrabold tracking-wider">Pending</span>
+                    @endif
                 </div>
+                @empty
+                <div class="px-6 py-8 text-center text-gray-500">
+                    <p class="text-sm">No recent registrations</p>
+                </div>
+                @endforelse
             </div>
             <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50">
                 <a href="{{ route('admin.user-management') }}" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">

@@ -30,7 +30,10 @@
     <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <div class="divide-y divide-gray-100">
             @forelse($notifications as $notification)
-            <div class="p-5 sm:p-6 hover:bg-gray-50 transition-colors flex gap-4 {{ !$notification->is_read ? 'bg-blue-50/30' : '' }}">
+            <div 
+                wire:click="navigateToRelated({{ $notification->id }})" 
+                class="p-5 sm:p-6 hover:bg-blue-50 transition-colors cursor-pointer flex gap-4 {{ !$notification->is_read ? 'bg-blue-50/30' : '' }}"
+            >
                 <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 {{ !$notification->is_read ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500' }}">
                     <span class="material-symbols-outlined text-[24px]">{{ $this->getIconForNotification($notification) }}</span>
                 </div>
@@ -47,13 +50,13 @@
                         </p>
                     @endif
                 </div>
-                <div class="flex items-center gap-2 shrink-0">
+                <div class="flex items-center gap-2 shrink-0" @click.stop>
                     @if(!$notification->is_read)
-                        <button wire:click="markAsRead({{ $notification->id }})" title="Mark as read">
+                        <button wire:click.stop="markAsRead({{ $notification->id }})" title="Mark as read">
                             <div class="w-2.5 h-2.5 bg-blue-600 rounded-full"></div>
                         </button>
                     @endif
-                    <button wire:click="deleteNotification({{ $notification->id }})" class="text-gray-400 hover:text-red-600 transition-colors" title="Delete">
+                    <button wire:click.stop="deleteNotification({{ $notification->id }})" class="text-gray-400 hover:text-red-600 transition-colors" title="Delete">
                         <span class="material-symbols-outlined text-[18px]">close</span>
                     </button>
                 </div>
