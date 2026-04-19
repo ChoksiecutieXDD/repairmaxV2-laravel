@@ -45,8 +45,8 @@ class SystemOverview extends Component
             'todaysAppointments' => $todaysAppointments,
             'systemUptime' => $systemUptime,
             'storageUsed' => $storageUsed,
-            'appointmentTrend' => json_encode($appointmentTrend),
-            'userGrowth' => json_encode($userGrowth),
+            'appointmentTrend' => $appointmentTrend,
+            'userGrowth' => $userGrowth,
         ]);
     }
 

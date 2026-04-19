@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Appointment;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 // Mails
 use App\Mail\ContactEnquiry;
@@ -109,7 +110,7 @@ Route::post('/booking', function (Request $request) {
             $photoPath = $request->file('device_image')->store('repairs', 'public');
         }
 
-        // Create appointment
+        /** @var \App\Models\Appointment $appointment */
         $appointment = Appointment::create([
             'user_id' => $user->id,
             'tracking_code' => 'RPR-' . strtoupper(uniqid()),
@@ -127,7 +128,7 @@ Route::post('/booking', function (Request $request) {
             ->with('success', 'Thank you! Your repair booking has been received.')
             ->with('success_message', 'Tracking Code: ' . $appointment->tracking_code . '. Our team will contact you shortly to confirm the appointment details.');
     } catch (\Exception $e) {
-        \Log::error('Booking error: ' . $e->getMessage());
+        Log::error('Booking error: ' . $e->getMessage());
         return back()->with('error', 'There was an error processing your booking. Please try again.');
     }
 })->name('booking.store');
@@ -168,6 +169,7 @@ Route::get('/debug/appointments', function () {
         return response('Not authenticated', 401);
     }
     
+    /** @var \App\Models\User $user */
     $user = Auth::user();
     $all = $user->appointments()->get();
     $completed = $user->appointments()->whereIn('status', ['Completed', 'Cancelled'])->get();

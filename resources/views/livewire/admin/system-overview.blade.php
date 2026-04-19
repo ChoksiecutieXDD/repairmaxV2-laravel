@@ -77,13 +77,94 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" 
+         x-data="{ 
+            appointmentTrend: @js($appointmentTrend),
+            userGrowth: @js($userGrowth),
+            init() {
+                // Appointment Trend Chart
+                new Chart(this.$refs.appointmentChart, {
+                    type: 'line',
+                    data: {
+                        labels: this.appointmentTrend.labels,
+                        datasets: [{
+                            label: 'Appointments',
+                            data: this.appointmentTrend.data,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
+                                ticks: { color: '#999' }
+                            },
+                            x: {
+                                grid: { display: false, drawBorder: false },
+                                ticks: { color: '#999' }
+                            }
+                        }
+                    }
+                });
+
+                // User Growth Chart
+                new Chart(this.$refs.userGrowthChart, {
+                    type: 'line',
+                    data: {
+                        labels: this.userGrowth.labels,
+                        datasets: [{
+                            label: 'Total Users',
+                            data: this.userGrowth.data,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#10b981',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
+                                ticks: { color: '#999' }
+                            },
+                            x: {
+                                grid: { display: false, drawBorder: false },
+                                ticks: { color: '#999' }
+                            }
+                        }
+                    }
+                });
+            }
+         }">
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
             <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <span class="material-symbols-outlined">trending_up</span>
                 Appointments Last 7 Days
             </h3>
-            <canvas id="appointmentChart" height="80"></canvas>
+            <canvas x-ref="appointmentChart" height="80"></canvas>
         </div>
 
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
@@ -91,120 +172,11 @@
                 <span class="material-symbols-outlined">group</span>
                 User Growth Trend
             </h3>
-            <canvas id="userGrowthChart" height="80"></canvas>
+            <canvas x-ref="userGrowthChart" height="80"></canvas>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Appointment Trend Chart
-        const appointmentData = {!! $appointmentTrend !!};
-        const appointmentCtx = document.getElementById('appointmentChart').getContext('2d');
-        new Chart(appointmentCtx, {
-            type: 'line',
-            data: {
-                labels: appointmentData.labels,
-                datasets: [{
-                    label: 'Appointments',
-                    data: appointmentData.data,
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#3b82f6',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)',
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#999'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#999'
-                        }
-                    }
-                }
-            }
-        });
-
-        // User Growth Chart
-        const userData = {!! $userGrowth !!};
-        const userCtx = document.getElementById('userGrowthChart').getContext('2d');
-        new Chart(userCtx, {
-            type: 'line',
-            data: {
-                labels: userData.labels,
-                datasets: [{
-                    label: 'Total Users',
-                    data: userData.data,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#10b981',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)',
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#999'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#999'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
             <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <span class="material-symbols-outlined">event</span>
@@ -254,4 +226,3 @@
             </div>
         </div>
     </div>
-</div>
