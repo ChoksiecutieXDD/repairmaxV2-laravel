@@ -296,12 +296,12 @@
                 <p class="text-base md:text-lg text-gray-600 leading-relaxed">Comprehensive answers regarding our digital platform, repair processes, and policies.</p>
             </div>
 
-            <div class="max-w-4xl mx-auto flex flex-col gap-8 fade-in-element">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 fade-in-element">
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">schedule</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">schedule</span>
                             Appointment Scheduling
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -311,10 +311,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">sync</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">sync</span>
                             Real-Time Tracking
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -324,10 +324,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">timer</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">timer</span>
                             Typical Repair Times
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -337,10 +337,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">verified</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">verified</span>
                             Parts Warranty
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -350,10 +350,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">security</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">security</span>
                             Data Security & Privacy
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -363,10 +363,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">cloud_upload</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">cloud_upload</span>
                             Do I need to back up my device?
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -376,10 +376,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">directions_walk</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">directions_walk</span>
                             Do you accept walk-ins?
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -389,10 +389,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">water_damage</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">water_damage</span>
                             What if my phone has water damage?
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -402,10 +402,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">build_circle</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">build_circle</span>
                             Do you use original (OEM) parts?
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>
@@ -415,10 +415,10 @@
                     </div>
                 </details>
 
-                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+                <details class="group border border-gray-300 bg-white hover:border-gray-400 rounded-2xl shadow-sm transition-all duration-300 [&_summary::-webkit-details-marker]:hidden h-full">
                     <summary class="flex items-center justify-between p-5 md:p-6 cursor-pointer text-base md:text-lg font-semibold text-gray-900">
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300" aria-hidden="true">payment</span>
+                            <span class="material-symbols-outlined text-gray-500 group-open:text-gray-900 transition-colors duration-300 text-2xl" aria-hidden="true">payment</span>
                             How do I pay for my repair?
                         </div>
                         <span class="material-symbols-outlined text-gray-400 transition duration-300 group-open:rotate-180">expand_more</span>

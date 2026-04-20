@@ -54,6 +54,10 @@ use App\Http\Controllers\AppointmentDownloadController;
 */
 
 // Core & Info Pages
+use App\Http\Controllers\ChatbotController;
+
+Route::post('/api/chatbot', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');

@@ -1,4 +1,41 @@
-<div x-data="{ isOpen: false }" id="chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+<div x-data="{ 
+    isOpen: false, 
+    userInput: '',
+    isLoading: false,
+    messages: [
+        { role: 'bot', content: 'Hi! I\'m your Repairmax AI assistant. What kind of device issue are you experiencing today? I can help you diagnose it and set up a repair ticket.' }
+    ],
+    async sendMessage() {
+        if (!this.userInput.trim() || this.isLoading) return;
+        
+        const userMsg = this.userInput;
+        this.messages.push({ role: 'user', content: userMsg });
+        this.userInput = '';
+        this.isLoading = true;
+
+        try {
+            const response = await fetch('/api/chatbot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=&quot;csrf-token&quot;]').getAttribute('content')
+                },
+                body: JSON.stringify({ message: userMsg })
+            });
+
+            const data = await response.json();
+            this.messages.push({ role: 'bot', content: data.reply || data.output || 'Sorry, I didn\'t catch that.' });
+        } catch (error) {
+            this.messages.push({ role: 'bot', content: 'System error. Please try again.' });
+        } finally {
+            this.isLoading = false;
+            this.$nextTick(() => {
+                const el = document.getElementById('chat-messages-container');
+                el.scrollTop = el.scrollHeight;
+            });
+        }
+    }
+}" id="chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
 
     <div x-show="isOpen"
         x-transition:enter="transition ease-out duration-300 transform origin-bottom-right"
@@ -21,15 +58,29 @@
             </button>
         </div>
 
-        <div class="p-4 h-72 overflow-y-auto bg-gray-50 flex flex-col gap-3">
-            <div class="self-start bg-gray-200 text-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm leading-relaxed">
-                Hi! I'm your Repairmax AI assistant. What kind of device issue are you experiencing today? I can help you diagnose it and set up a repair ticket.
+        <div id="chat-messages-container" class="p-4 h-72 overflow-y-auto bg-gray-50 flex flex-col gap-3">
+            <template x-for="(msg, index) in messages" :key="index">
+                <div :class="msg.role === 'bot' ? 'self-start bg-gray-200 text-gray-800 rounded-tl-none' : 'self-end bg-gray-900 text-white rounded-tr-none'"
+                    class="p-3 rounded-2xl max-w-[85%] text-sm leading-relaxed"
+                    x-text="msg.content">
+                </div>
+            </template>
+            <div x-show="isLoading" class="self-start bg-gray-200 text-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm flex gap-1">
+                <span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></span>
+                <span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                <span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce [animation-delay:0.4s]"></span>
             </div>
         </div>
 
         <div class="p-3 border-t border-gray-200 bg-white flex items-center gap-2">
-            <input type="text" placeholder="Type your message..." class="flex-1 bg-gray-100 border-none rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow">
-            <button class="bg-gray-900 text-white w-10 h-10 rounded-full hover:bg-gray-700 transition-colors flex items-center justify-center focus:outline-none">
+            <input type="text" 
+                x-model="userInput" 
+                @keydown.enter="sendMessage()"
+                placeholder="Type your message..." 
+                class="flex-1 bg-gray-100 border-none rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow">
+            <button @click="sendMessage()"
+                :disabled="isLoading"
+                class="bg-gray-900 text-white w-10 h-10 rounded-full hover:bg-gray-700 disabled:bg-gray-400 transition-colors flex items-center justify-center focus:outline-none">
                 <span class="material-symbols-outlined text-[20px] ml-1">send</span>
             </button>
         </div>
@@ -41,4 +92,4 @@
         :class="isOpen ? 'scale-90' : ''">
         <span class="material-symbols-outlined text-2xl" x-text="isOpen ? 'keyboard_arrow_down' : 'chat'">chat</span>
     </button>
-</div>
+</div>

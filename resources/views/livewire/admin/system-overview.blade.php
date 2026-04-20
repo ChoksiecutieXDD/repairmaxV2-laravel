@@ -77,8 +77,8 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" 
-         x-data="{ 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
+        x-data="{ 
             appointmentTrend: @js($appointmentTrend),
             userGrowth: @js($userGrowth),
             init() {
@@ -177,52 +177,52 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-            <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span class="material-symbols-outlined">event</span>
-                Today's Appointments
-            </h3>
-            <div class="space-y-1">
-                @forelse($todaysAppointments as $app)
-                <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
-                    <div class="flex-1">
-                        <p class="font-bold text-gray-900 text-sm">{{ $app->user->first_name ?? 'Guest' }} - {{ $app->device_brand }}</p>
-                        <p class="text-xs text-gray-500">{{ $app->pref_time }} • {{ $app->fault_category }}</p>
-                    </div>
-                    <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-[10px] font-bold uppercase">{{ $app->status }}</span>
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+        <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">event</span>
+            Today's Appointments
+        </h3>
+        <div class="space-y-1">
+            @forelse($todaysAppointments as $app)
+            <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                <div class="flex-1">
+                    <p class="font-bold text-gray-900 text-sm">{{ $app->user->first_name ?? 'Guest' }} - {{ $app->device_brand }}</p>
+                    <p class="text-xs text-gray-500">{{ $app->pref_time }} • {{ $app->fault_category }}</p>
                 </div>
-                @empty
-                <div class="p-6 text-center text-gray-400 text-sm italic">
-                    No appointments scheduled for today.
-                </div>
-                @endforelse
+                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-[10px] font-bold uppercase">{{ $app->status }}</span>
             </div>
-        </div>
-
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-            <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span class="material-symbols-outlined">health_and_safety</span>
-                Service Status
-            </h3>
-            <div class="space-y-2">
-                @php
-                $services = [
-                ['name' => 'Web Server', 'status' => 'Running'],
-                ['name' => 'Database', 'status' => 'Connected'],
-                ['name' => 'Email Service', 'status' => 'Operational'],
-                ['name' => 'API Service', 'status' => 'Running'],
-                ];
-                @endphp
-
-                @foreach($services as $service)
-                <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
-                        <p class="font-medium text-gray-900 text-sm">{{ $service['name'] }}</p>
-                    </div>
-                    <span class="text-xs text-gray-500 font-bold uppercase">{{ $service['status'] }}</span>
-                </div>
-                @endforeach
+            @empty
+            <div class="p-6 text-center text-gray-400 text-sm italic">
+                No appointments scheduled for today.
             </div>
+            @endforelse
         </div>
     </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+        <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">health_and_safety</span>
+            Service Status
+        </h3>
+        <div class="space-y-2">
+            @php
+            $services = [
+            ['name' => 'Web Server', 'status' => 'Running'],
+            ['name' => 'Database', 'status' => 'Connected'],
+            ['name' => 'Email Service', 'status' => 'Operational'],
+            ['name' => 'API Service', 'status' => 'Running'],
+            ];
+            @endphp
+
+            @foreach($services as $service)
+            <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
+                    <p class="font-medium text-gray-900 text-sm">{{ $service['name'] }}</p>
+                </div>
+                <span class="text-xs text-gray-500 font-bold uppercase">{{ $service['status'] }}</span>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
