@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "silken-alloy-493903-n2",
+  "private_key_id": "17a73b495c8d47d5c7dbb0376808ffcf692a88f6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCd+zwKtSE3b/iT\nTfj+NpV4nEhlN5CLPEzm6KmjiYbIi6ON3imgEXfcZReSekYehkgoKxvZTKv2XvF0\noJ+KZvxYsXRp3upXz08cahKXdGaluEhP01Xo5PT2bEpXxUa3mzxU0lNc4L5tUCGx\niPs0+4Of1G+HWOYZjbrQdLroNF350ylqQh47ZInw4IqYHFsxqkTO2JwJmJcDfc0k\ng97v84E1p63kE/t8fO3Wf0KDIFsyw5hpFCigyvPdAoEvgwSY+p2YCx/Jilm5zV3d\nS6hTAYvBKEuiHcvJ0PkB0MhVCifgrS8IQeCxIfZyUZqJ6Mn/HI+C9J1ANbHfFMGI\nmpoEBROlAgMBAAECggEABRIUxcU1iTl7UYMNrF8lIgdmHXWQmp93Wmv6Uejung45\nVCrezCfzYGwQOx/Yk089Dqj/jlRzKoe2mUc0h7UxgUlE0scYX3QkdmWDLkBKsSP+\nki1W0xBSOnyUUEfhMrB1WcWcbl06T3jkc/XRFkzCV0VyxPXaANT3O4ybmSthHs0W\n2jZYmJi7MAXiAjdQ8ZKt6+lT1EQiOG2SAczHebCA6E5mr0YPxZevU4qKG6PhFF0i\nxw6qirU5m5UmFgd9BWMf23ksPjodG9r0Hinyyc5SnY281n9sC6TUzVMAY7mbTUQD\nnyFk4PFHC3PPSp2LxTKe6deCbK2+4prk5ozLeL1l6wKBgQDRRcnxCajhf0u2IutE\nhEihfCCKlYf65kw06QdIuLjN86FRaVKtWrvl2fL2ZBrkPjj2wE/yJZoloQl6NsWR\nCYn21cj7Tr7HWfkTqN9Do/CyUzO+nDe3cuGbKn/HblXz20FghhPOJUw6zbz52Tzs\nEgXO5f66GheVe5LTIunRT2WjwwKBgQDBQZfIESNQPVzX2ngVDDuq6x7Q8KGeimLF\nJ/rCF9UwZADDmcJViXMHtzG7o539xXo+0FOQzKM6VDiYkPrnnkUc+vfBm+ph4UBs\n4CMDSpZdrHeTgWUCYWqYqj/wcaCLileOmO+y+CFu4cDlw9vz/EEHwKDoLTdqyGzg\nSV7/aAb8dwKBgQDDYDVtnIgXpqGHtMgTGrE4WkuDNqFSI6noB9quEQ8v8BGekQcI\nI1qi97y2PbVBe7nw3JCG0IY+NT9E41fF1bMBSIwv20+PjDdXHGT8oFS6F6WKggwe\nb9mi5KWRCjiixwMdW2+oGPg3OhcA58jR2O2lQOJ02qFEBK+KAOFscYTBwwKBgHqV\nw9SJYnAMbG8TSmZ3ewXA3KxGZw5s05gh8wLZIUbvuDhauRWO+WNkhexzLc2CTTe4\n57kKxWNDdx73n9/52fc3Dp9F6leqDTbCuhLlZhoHQ1ZSlqL67iXmoGZBfUfmOgHe\n6vUIRhTSqIxWP5g1Y36qZqa/v85BUia3A8ZY002jAoGBAJmzdM+T+wBVK9HU59ut\nOqGMzTZpAjoOhB+ZMwr3enCP9snrTW2Q77+LRhKt97VBVXnZnL1LTg2o4pcCYCvz\nKiQ1T69mRaKjsyphZUb8jjJ9gvoGpN/jWeEO6x20BQoJpTMJps+lptpWpIyS7WRx\ndb6xiIszWmIb/QcAwGN/eGXG\n-----END PRIVATE KEY-----\n",
+  "client_email": "repairmax-n8n@silken-alloy-493903-n2.iam.gserviceaccount.com",
+  "client_id": "109613976287016896711",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/repairmax-n8n%40silken-alloy-493903-n2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
