@@ -12,54 +12,41 @@
     <div class="flex flex-col lg:flex-row gap-6">
 
         <div class="w-full lg:w-1/3 xl:w-1/4 bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col h-[300px] lg:h-[700px] transition-shadow hover:shadow-md duration-300">
-
             <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-white shrink-0 rounded-t-2xl">
                 <h2 class="font-bold text-gray-900 flex items-center gap-2">
                     <span class="material-symbols-outlined text-gray-400">forum</span>
                     History
                 </h2>
-                <button class="text-blue-600 hover:bg-blue-50 p-1.5 rounded-lg transition-colors focus:outline-none" title="New Chat">
+                <button wire:click="startNewChat" class="text-blue-600 hover:bg-blue-50 p-1.5 rounded-lg transition-colors focus:outline-none" title="New Chat">
                     <span class="material-symbols-outlined text-[20px]">add_box</span>
                 </button>
             </div>
 
             <div class="flex-1 overflow-y-auto p-3 space-y-2 bg-gray-50/50 rounded-b-2xl">
-                <div class="p-3 bg-white border border-blue-200 shadow-sm rounded-xl cursor-pointer group flex items-start justify-between relative overflow-hidden">
+                @forelse($history as $session)
+                <div wire:click="loadSession({{ $session->id }})" 
+                    class="p-3 bg-white border @if($currentSessionId == $session->id) border-blue-200 shadow-sm @else border-transparent hover:border-gray-200 @endif rounded-xl cursor-pointer group flex items-start justify-between relative overflow-hidden transition-all">
+                    
+                    @if($currentSessionId == $session->id)
                     <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
-                    <div class="flex-1 min-w-0 pl-2 pr-2">
-                        <p class="text-sm font-bold text-gray-900 truncate">iPhone Screen Inquiry</p>
-                        <p class="text-xs text-blue-600 font-medium mt-1 flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">confirmation_number</span>
-                            Ticket #TKT-1045
-                        </p>
-                    </div>
-                    <button class="text-gray-400 hover:text-red-500 bg-transparent border-none p-1 rounded transition-colors opacity-100 lg:opacity-0 group-hover:opacity-100 focus:outline-none" title="Delete chat">
-                        <span class="material-symbols-outlined text-[18px] block">delete</span>
-                    </button>
-                </div>
+                    @endif
 
-                <div class="p-3 hover:bg-white border border-transparent hover:border-gray-200 hover:shadow-sm rounded-xl cursor-pointer transition-all group flex items-start justify-between pl-4">
-                    <div class="flex-1 min-w-0 pr-2">
-                        <p class="text-sm font-semibold text-gray-700 group-hover:text-gray-900 truncate">Battery Replacement</p>
-                        <p class="text-xs text-gray-500 mt-1">Yesterday</p>
+                    <div class="flex-1 min-w-0 @if($currentSessionId == $session->id) pl-2 @endif pr-2">
+                        <p class="text-sm font-semibold text-gray-700 @if($currentSessionId == $session->id) text-gray-900 @endif truncate">{{ $session->title }}</p>
+                        <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-tighter">{{ $session->created_at->diffForHumans() }}</p>
                     </div>
-                    <button class="text-gray-400 hover:text-red-500 bg-transparent border-none p-1 rounded transition-colors opacity-100 lg:opacity-0 group-hover:opacity-100 focus:outline-none" title="Delete chat">
-                        <span class="material-symbols-outlined text-[18px] block">delete</span>
-                    </button>
-                </div>
 
-                <div class="p-3 hover:bg-white border border-transparent hover:border-gray-200 hover:shadow-sm rounded-xl cursor-pointer transition-all group flex items-start justify-between pl-4">
-                    <div class="flex-1 min-w-0 pr-2">
-                        <p class="text-sm font-semibold text-gray-700 group-hover:text-gray-900 truncate">Water Damage Diagnostic</p>
-                        <p class="text-xs text-green-600 mt-1 flex items-center gap-1 font-medium">
-                            <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                            Resolved
-                        </p>
-                    </div>
-                    <button class="text-gray-400 hover:text-red-500 bg-transparent border-none p-1 rounded transition-colors opacity-100 lg:opacity-0 group-hover:opacity-100 focus:outline-none" title="Delete chat">
+                    <button wire:click.stop="deleteSession({{ $session->id }})" 
+                        wire:confirm="Are you sure you want to delete this conversation?"
+                        class="text-gray-300 hover:text-red-500 bg-transparent border-none p-1 rounded transition-colors opacity-100 lg:opacity-0 group-hover:opacity-100 focus:outline-none" title="Delete chat">
                         <span class="material-symbols-outlined text-[18px] block">delete</span>
                     </button>
                 </div>
+                @empty
+                <div class="p-8 text-center">
+                    <p class="text-sm text-gray-400">No chat history yet.</p>
+                </div>
+                @endforelse
             </div>
         </div>
 
@@ -74,8 +61,8 @@
                         <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
                     </div>
                     <div>
-                        <h3 class="font-bold text-gray-900 text-sm">RepairBot</h3>
-                        <p class="text-xs text-green-600 font-medium">Online & Ready</p>
+                        <h3 class="font-bold text-gray-900 text-sm">Maxie</h3>
+                        <p class="text-xs text-green-600 font-medium tracking-tight">Repairmax Assistant</p>
                     </div>
                 </div>
                 <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full border border-blue-100">
@@ -83,35 +70,9 @@
                 </span>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 bg-gray-50/30">
-                @foreach($this->messages as $message)
+            <div id="chat-messages-container" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 bg-gray-50/30 scroll-smooth">
+                @foreach($messages as $message)
                 @if($message['role'] === 'assistant')
-
-                @if($message['is_ticket'])
-                <div class="flex gap-3 sm:gap-4">
-                    <div class="flex-shrink-0">
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center shadow-sm">
-                            <span class="material-symbols-outlined text-white text-[18px]">confirmation_number</span>
-                        </div>
-                    </div>
-                    <div class="bg-blue-50 border border-blue-100 rounded-2xl rounded-tl-sm p-4 max-w-lg w-full">
-                        <div class="flex items-center gap-2 mb-2 text-blue-800">
-                            <span class="material-symbols-outlined text-[20px]">check_circle</span>
-                            <span class="font-bold text-sm">Support Ticket Created</span>
-                        </div>
-                        <div class="bg-white rounded-lg p-3 border border-blue-50 mb-3 shadow-sm">
-                            <p class="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Ticket ID</p>
-                            <p class="text-sm font-bold text-gray-900 mb-2">#TKT-{{ rand(1000, 9999) }}</p>
-                        </div>
-                        <p class="text-sm text-blue-900 mb-3">{{ $message['content'] }}</p>
-                        <a href="{{ route('user.book-appointment') }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition-colors shadow-sm">
-                            Book Drop-off Time
-                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                        </a>
-                        <p class="text-[11px] text-blue-400 mt-3 font-medium">{{ $message['time'] }}</p>
-                    </div>
-                </div>
-                @else
                 <div class="flex gap-3 sm:gap-4">
                     <div class="flex-shrink-0">
                         <div class="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center shadow-sm">
@@ -119,21 +80,34 @@
                         </div>
                     </div>
                     <div class="bg-white border border-gray-200 shadow-sm rounded-2xl rounded-tl-sm p-3 sm:p-4 max-w-[85%] sm:max-w-lg">
-                        <p class="text-sm text-gray-800">{{ $message['content'] }}</p>
+                        <p class="text-sm text-gray-800 whitespace-pre-wrap">{{ $message['content'] }}</p>
                         <p class="text-[11px] text-gray-400 mt-2 font-medium">{{ $message['time'] }}</p>
                     </div>
                 </div>
-                @endif
-
                 @else
                 <div class="flex gap-3 sm:gap-4 justify-end">
                     <div class="bg-gray-900 text-white shadow-sm rounded-2xl rounded-tr-sm p-3 sm:p-4 max-w-[85%] sm:max-w-lg">
-                        <p class="text-sm">{{ $message['content'] }}</p>
+                        <p class="text-sm whitespace-pre-wrap">{{ $message['content'] }}</p>
                         <p class="text-[11px] text-gray-300 mt-2 font-medium text-right">{{ $message['time'] }}</p>
                     </div>
                 </div>
                 @endif
                 @endforeach
+
+                @if($isTyping)
+                <div class="flex gap-3 sm:gap-4 animate-pulse">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center shadow-sm">
+                            <span class="material-symbols-outlined text-white text-[18px]">smart_toy</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-200 shadow-sm rounded-2xl rounded-tl-sm p-3 px-4 flex gap-1 items-center">
+                        <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                        <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                        <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
+                    </div>
+                </div>
+                @endif
             </div>
 
             <div class="p-4 bg-white border-t border-gray-100 shrink-0 rounded-b-2xl">
@@ -158,4 +132,26 @@
         </div>
 
     </div>
+
+    @script
+    <script>
+        $wire.on('scroll-to-bottom', () => {
+            const el = document.getElementById('chat-messages-container');
+            if (el) {
+                setTimeout(() => {
+                    el.scrollTo({
+                        top: el.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        });
+
+        // Also scroll on load
+        window.addEventListener('load', () => {
+            const el = document.getElementById('chat-messages-container');
+            if (el) el.scrollTop = el.scrollHeight;
+        });
+    </script>
+    @endscript
 </div>

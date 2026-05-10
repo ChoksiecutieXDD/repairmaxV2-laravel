@@ -32,7 +32,7 @@ class Notifications extends Component
         return $query->latest()->paginate(15);
     }
 
-    public function markAsRead($notificationId)
+    public function markAsRead(int|string $notificationId)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -49,7 +49,7 @@ class Notifications extends Component
             ->update(['is_read' => true]);
     }
 
-    public function deleteNotification($notificationId)
+    public function deleteNotification(int|string $notificationId)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -65,7 +65,7 @@ class Notifications extends Component
         Notification::where('user_id', $user->id)->delete();
     }
 
-    public function getIconForNotification($notification)
+    public function getIconForNotification(Notification $notification)
     {
         if (str_contains($notification->title, 'Repair')) {
             return 'build';
@@ -79,7 +79,7 @@ class Notifications extends Component
         return 'notifications';
     }
 
-    public function getColorForNotification($notification)
+    public function getColorForNotification(Notification $notification)
     {
         if (str_contains($notification->title, 'Completed')) {
             return 'text-green-500';

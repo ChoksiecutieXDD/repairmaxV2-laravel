@@ -19,14 +19,14 @@ class ChatbotController extends Controller
 
         try {
             // Local n8n webhook URL (running in Docker)
-            // Note: We use '127.0.0.1' because Laravel is running natively
-            $n8nWebhookUrl = env('N8N_WEBHOOK_URL', 'http://127.0.0.1:5678/webhook-test/chatbot');
+            // Using 'localhost' instead of '127.0.0.1' for better Docker-to-Host compatibility
+            $n8nWebhookUrl = env('N8N_WEBHOOK_URL', 'http://localhost:5678/webhook-test/chatbot');
 
-            $response = Http::withHeaders([
+            $response = Http::asJson()->withHeaders([
                 'X-N8N-SECRET' => env('N8N_WEBHOOK_SECRET', 'repairmax_secret_123'),
             ])->post($n8nWebhookUrl, [
                 'message' => $request->message,
-                'user_id' => auth()->id() ?? 'anonymous',
+                'user_id' => \Illuminate\Support\Facades\Auth::id() ?? 'anonymous',
                 'timestamp' => now()->toIso8601String(),
             ]);
 

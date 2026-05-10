@@ -16,22 +16,22 @@ class Profile extends Component
 {
     use WithFileUploads;
 
-    public $first_name;
-    public $last_name;
-    public $email;
-    public $phone;
-    public $department;
-    public $job_title;
-    public $bio;
+    public string $first_name = '';
+    public string $last_name = '';
+    public string $email = '';
+    public string $phone = '';
+    public string $department = '';
+    public string $job_title = '';
+    public string $bio = '';
 
     // Photo Upload & Cropping
-    public $profile_picture;
-    public $cropped_image;
-    public $current_profile_picture;
+    public mixed $profile_picture = null;
+    public ?string $cropped_image = null;
+    public ?string $current_profile_picture = null;
 
-    public $currentPassword;
-    public $newPassword;
-    public $confirmPassword;
+    public string $currentPassword = '';
+    public string $newPassword = '';
+    public string $confirmPassword = '';
 
     public $isEditing = false;
 
@@ -49,12 +49,12 @@ class Profile extends Component
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
         $this->phone = $user->phone;
-        
+
         // Consolidated fields
         $this->bio = $user->bio ?? '';
         $this->department = $user->department ?? '';
@@ -91,31 +91,32 @@ class Profile extends Component
         $this->dispatch('openCropperModal');
     }
 
-    public function handleCroppedImage($base64String)
+    public function handleCroppedImage(string $base64String)
     {
         try {
             // Remove data:image/jpeg;base64, prefix
             $imageData = str_replace('data:image/jpeg;base64,', '', $base64String);
             $imageData = str_replace(' ', '+', $imageData);
-            
+
             // Decode and save
             $imageBinary = base64_decode($imageData);
             $filename = 'admin_profile_' . Auth::id() . '_' . time() . '.jpg';
             Storage::disk('public')->put('profile_pictures/' . $filename, $imageBinary);
             
             // Update user
+            /** @var \App\Models\User $user */
             $user = Auth::user();
             $oldPicture = $user->profile_picture;
             $user->update(['profile_picture' => 'profile_pictures/' . $filename]);
-            
+
             // Delete old picture if exists
             if ($oldPicture && Storage::disk('public')->exists($oldPicture)) {
                 Storage::disk('public')->delete($oldPicture);
             }
-            
+
             $this->current_profile_picture = 'profile_pictures/' . $filename;
             $this->profile_picture = null;
-            
+
             session()->flash('success', 'Profile picture updated successfully!');
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to update profile picture: ' . $e->getMessage());
@@ -124,14 +125,15 @@ class Profile extends Component
 
     public function deleteProfilePicture()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
             Storage::disk('public')->delete($user->profile_picture);
         }
-        
+
         $user->update(['profile_picture' => null]);
         $this->current_profile_picture = null;
-        
+
         session()->flash('success', 'Profile picture deleted successfully!');
     }
 
@@ -148,7 +150,7 @@ class Profile extends Component
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if(!Hash::check($this->currentPassword, $user->password)) {
+        if (!Hash::check($this->currentPassword, $user->password)) {
             $this->addError('currentPassword', 'Current password is incorrect.');
             return;
         }
@@ -163,10 +165,11 @@ class Profile extends Component
 
     public function deleteAccount()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         Auth::logout();
         $user->delete();
-        
+
         return redirect('/');
     }
 
@@ -175,4 +178,3 @@ class Profile extends Component
         return view('livewire.admin.profile');
     }
 }
-

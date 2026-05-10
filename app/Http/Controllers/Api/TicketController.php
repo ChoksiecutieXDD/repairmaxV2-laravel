@@ -15,6 +15,11 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        // Security check for n8n
+        if ($request->header('X-N8N-SECRET') !== env('N8N_WEBHOOK_SECRET', 'repairmax_secret_123')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         Log::info('Incoming n8n Ticket Request', $request->all());
 
         try {

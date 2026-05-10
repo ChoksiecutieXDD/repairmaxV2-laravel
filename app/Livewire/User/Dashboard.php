@@ -12,10 +12,10 @@ use App\Models\Appointment;
 #[Title('My Dashboard | Repairmax')]
 class Dashboard extends Component
 {
-    public $showDetailsModal = false;
-    public $selectedAppointment = null;
+    public bool $showDetailsModal = false;
+    public ?Appointment $selectedAppointment = null;
 
-    public function viewDetails($appointmentId)
+    public function viewDetails(int|string $appointmentId)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();

@@ -25,9 +25,9 @@ class BookAppointment extends Component
     public $pref_date      = '';
     public $pref_time      = '';
 
-    public $calendar_week_offset = 0;
-    public $selected_index  = null;
-    public $available_days  = [];
+    public int $calendar_week_offset = 0;
+    public ?int $selected_index  = null;
+    public array $available_days  = [];
 
     // Standardized to 24h format for database compatibility
     public $available_slots = ['09:00', '11:00', '13:00', '15:00', '17:00'];
@@ -127,14 +127,14 @@ class BookAppointment extends Component
         }
     }
 
-    public function selectDate($index)
+    public function selectDate(int $index)
     {
         $this->selected_index = $index;
         $this->pref_date      = $this->available_days[$index]['full'];
         $this->pref_time      = '';
     }
 
-    public function selectTime($time)
+    public function selectTime(string $time)
     {
         $this->pref_time = $time;
     }

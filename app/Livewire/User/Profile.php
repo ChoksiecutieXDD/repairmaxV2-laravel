@@ -33,9 +33,9 @@ class Profile extends Component
     public $birthdate = '';
 
     // Photo Upload & Cropping
-    public $profile_picture;
-    public $cropped_image;
-    public $current_profile_picture;
+    public mixed $profile_picture = null;
+    public ?string $cropped_image = null;
+    public ?string $current_profile_picture = null;
 
     // Security
     public $current_password = '';
@@ -66,12 +66,12 @@ class Profile extends Component
         $this->current_profile_picture = $user->profile_picture;
     }
 
-    public function updatedBirthdate($value)
+    public function updatedBirthdate(mixed $value)
     {
         $this->age = $this->calculateAge($value);
     }
 
-    private function calculateAge($birthdate)
+    private function calculateAge(?string $birthdate)
     {
         if (!$birthdate) return '';
         try {
@@ -81,7 +81,7 @@ class Profile extends Component
         }
     }
 
-    public function handleCroppedImage($base64Data)
+    public function handleCroppedImage(string $base64Data)
     {
         $sizeInBytes = (int)(strlen(rtrim($base64Data, '=')) * 0.75);
         if ($sizeInBytes > 1024 * 1024) {
