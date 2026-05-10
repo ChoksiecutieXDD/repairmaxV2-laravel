@@ -98,32 +98,32 @@
             </div>
             <div class="p-6 space-y-4">
                 <div class="flex items-center justify-between p-3 bg-green-50 border border-green-100 rounded-lg">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></span>
                         <span class="text-gray-700 font-medium">Database Server</span>
                     </div>
-                    <span class="text-xs font-bold text-green-600">RUNNING</span>
+                    <span class="text-xs font-bold text-green-600 ml-auto">RUNNING</span>
                 </div>
                 <div class="flex items-center justify-between p-3 bg-green-50 border border-green-100 rounded-lg">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></span>
                         <span class="text-gray-700 font-medium">Cache Service</span>
                     </div>
-                    <span class="text-xs font-bold text-green-600">RUNNING</span>
+                    <span class="text-xs font-bold text-green-600 ml-auto">RUNNING</span>
                 </div>
                 <div class="flex items-center justify-between p-3 bg-green-50 border border-green-100 rounded-lg">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></span>
                         <span class="text-gray-700 font-medium">Queue Service</span>
                     </div>
-                    <span class="text-xs font-bold text-green-600">RUNNING</span>
+                    <span class="text-xs font-bold text-green-600 ml-auto">RUNNING</span>
                 </div>
                 <div class="flex items-center justify-between p-3 bg-green-50 border border-green-100 rounded-lg">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></span>
                         <span class="text-gray-700 font-medium">Email Service</span>
                     </div>
-                    <span class="text-xs font-bold text-green-600">RUNNING</span>
+                    <span class="text-xs font-bold text-green-600 ml-auto">RUNNING</span>
                 </div>
             </div>
         </div>

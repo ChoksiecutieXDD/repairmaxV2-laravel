@@ -101,6 +101,12 @@ class Profile extends Component
             // Decode and save
             $imageBinary = base64_decode($imageData);
             $filename = 'admin_profile_' . Auth::id() . '_' . time() . '.jpg';
+            
+            // Ensure directory exists
+            if (!Storage::disk('public')->exists('profile_pictures')) {
+                Storage::disk('public')->makeDirectory('profile_pictures');
+            }
+            
             Storage::disk('public')->put('profile_pictures/' . $filename, $imageBinary);
             
             // Update user
@@ -114,11 +120,16 @@ class Profile extends Component
                 Storage::disk('public')->delete($oldPicture);
             }
 
-            $this->current_profile_picture = 'profile_pictures/' . $filename;
+            // Refresh user to get latest data
+            $user = $user->fresh();
+            $this->current_profile_picture = $user->profile_picture;
             $this->profile_picture = null;
+            $this->cropped_image = null;
 
             session()->flash('success', 'Profile picture updated successfully!');
+            $this->dispatch('refresh-page');
         } catch (\Exception $e) {
+            \Log::error('Profile picture error: ' . $e->getMessage());
             session()->flash('error', 'Failed to update profile picture: ' . $e->getMessage());
         }
     }

@@ -85,140 +85,155 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 <script>
-    // Revenue Trend Chart
-    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-    new Chart(revenueCtx, {
-        type: 'line',
-        data: {
-            labels: @json($metrics['revenueTrend']['labels']),
-            datasets: [{
-                label: 'Revenue ($)',
-                data: @json($metrics['revenueTrend']['data']),
-                borderColor: '#3B82F6',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                borderWidth: 2,
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: '#3B82F6',
-                pointBorderColor: '#fff',
-                pointRadius: 5,
-                pointHoverRadius: 7,
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: {
-                        color: '#6B7280',
-                        font: { size: 12, weight: '600' }
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            // Revenue Trend Chart
+            const revenueCtx = document.getElementById('revenueChart');
+            if (revenueCtx) {
+                new Chart(revenueCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: @json($metrics['revenueTrend']['labels'] ?? []),
+                        datasets: [{
+                            label: 'Revenue ($)',
+                            data: @json($metrics['revenueTrend']['data'] ?? []),
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#3B82F6',
+                            pointBorderColor: '#fff',
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: {
+                                    color: '#6B7280',
+                                    font: { size: 12, weight: '600' }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: '#E5E7EB' },
+                                ticks: { color: '#6B7280' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#6B7280' }
+                            }
+                        }
                     }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#E5E7EB' },
-                    ticks: { color: '#6B7280' }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { color: '#6B7280' }
-                }
+                });
             }
-        }
-    });
 
-    // Repair Status Distribution Chart
-    const statusCtx = document.getElementById('statusChart').getContext('2d');
-    new Chart(statusCtx, {
-        type: 'doughnut',
-        data: {
-            labels: @json($metrics['statusDistribution']['labels']),
-            datasets: [{
-                data: @json($metrics['statusDistribution']['data']),
-                backgroundColor: @json($metrics['statusDistribution']['backgroundColor']),
-                borderColor: '#fff',
-                borderWidth: 2,
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#6B7280',
-                        font: { size: 12, weight: '600' },
-                        padding: 15
+            // Repair Status Distribution Chart
+            const statusCtx = document.getElementById('statusChart');
+            if (statusCtx) {
+                new Chart(statusCtx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: @json($metrics['statusDistribution']['labels'] ?? []),
+                        datasets: [{
+                            data: @json($metrics['statusDistribution']['data'] ?? []),
+                            backgroundColor: @json($metrics['statusDistribution']['backgroundColor'] ?? []),
+                            borderColor: '#fff',
+                            borderWidth: 2,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#6B7280',
+                                    font: { size: 12, weight: '600' },
+                                    padding: 15
+                                }
+                            }
+                        }
                     }
-                }
+                });
             }
-        }
-    });
 
-    // Service Type Trends Chart
-    const serviceCtx = document.getElementById('serviceChart').getContext('2d');
-    new Chart(serviceCtx, {
-        type: 'line',
-        data: {
-            labels: @json($metrics['serviceTrends']['labels']),
-            datasets: [
-                {
-                    label: 'Phones',
-                    data: @json($metrics['serviceTrends']['phones']),
-                    borderColor: '#3B82F6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.05)',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    pointBackgroundColor: '#3B82F6',
-                    pointRadius: 4,
-                },
-                {
-                    label: 'Laptops',
-                    data: @json($metrics['serviceTrends']['laptops']),
-                    borderColor: '#10B981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    pointBackgroundColor: '#10B981',
-                    pointRadius: 4,
-                },
-                {
-                    label: 'Tablets',
-                    data: @json($metrics['serviceTrends']['tablets']),
-                    borderColor: '#F59E0B',
-                    backgroundColor: 'rgba(245, 158, 11, 0.05)',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    pointBackgroundColor: '#F59E0B',
-                    pointRadius: 4,
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: {
-                        color: '#6B7280',
-                        font: { size: 12, weight: '600' }
+            // Service Type Trends Chart
+            const serviceCtx = document.getElementById('serviceChart');
+            if (serviceCtx) {
+                new Chart(serviceCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: @json($metrics['serviceTrends']['labels'] ?? []),
+                        datasets: [
+                            {
+                                label: 'Phones',
+                                data: @json($metrics['serviceTrends']['phones'] ?? []),
+                                borderColor: '#3B82F6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                pointBackgroundColor: '#3B82F6',
+                                pointRadius: 4,
+                            },
+                            {
+                                label: 'Laptops',
+                                data: @json($metrics['serviceTrends']['laptops'] ?? []),
+                                borderColor: '#10B981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                pointBackgroundColor: '#10B981',
+                                pointRadius: 4,
+                            },
+                            {
+                                label: 'Tablets',
+                                data: @json($metrics['serviceTrends']['tablets'] ?? []),
+                                borderColor: '#F59E0B',
+                                backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                pointBackgroundColor: '#F59E0B',
+                                pointRadius: 4,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: {
+                                    color: '#6B7280',
+                                    font: { size: 12, weight: '600' }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: '#E5E7EB' },
+                                ticks: { color: '#6B7280' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#6B7280' }
+                            }
+                        }
                     }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#E5E7EB' },
-                    ticks: { color: '#6B7280' }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { color: '#6B7280' }
-                }
+                });
             }
+        } catch (error) {
+            console.error('Error initializing charts:', error);
         }
     });
 </script>

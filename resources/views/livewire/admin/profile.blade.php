@@ -10,22 +10,41 @@
         
         this.destroyCropper();
 
-        this.cropper = new Cropper(image, {
-            aspectRatio: 1,
-            viewMode: 1,
-            dragMode: 'move',
-            background: false,
-            responsive: true,
-            checkOrientation: true,
-            guides: true,
-            center: true,
-            highlight: false,
-            cropBoxMovable: true,
-            cropBoxResizable: true,
-            toggleDragModeOnDblclick: false,
-            minContainerWidth: 300,
-            minContainerHeight: 300
-        });
+        // Wait for image to load before initializing cropper
+        if (!image.complete) {
+            image.onload = () => {
+                this.createCropper(image);
+            };
+        } else {
+            this.createCropper(image);
+        }
+    },
+
+    createCropper(image) {
+        try {
+            if (typeof Cropper === 'undefined') {
+                console.error('Cropper.js library not loaded');
+                return;
+            }
+            this.cropper = new Cropper(image, {
+                aspectRatio: 1,
+                viewMode: 1,
+                dragMode: 'move',
+                background: false,
+                responsive: true,
+                checkOrientation: true,
+                guides: true,
+                center: true,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false,
+                minContainerWidth: 300,
+                minContainerHeight: 300
+            });
+        } catch (error) {
+            console.error('Error initializing cropper:', error);
+        }
     },
 
     saveCrop() {
@@ -133,9 +152,10 @@
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sticky top-6">
                 <div class="text-center mb-6">
                     @if($current_profile_picture)
-                        <img src="{{ asset('storage/' . $current_profile_picture) }}" 
+                        <img src="{{ asset('storage/' . $current_profile_picture) }}?t={{ time() }}" 
                              alt="Profile" 
-                             class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-blue-500 object-cover">
+                             class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-blue-500 object-cover"
+                             loading="eager">
                     @else
                         <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->getFullName()) }}&background=2563eb&color=ffffff&bold=true&size=120" 
                              alt="Profile" 
@@ -169,24 +189,31 @@
 
                 <!-- Photo Upload Actions -->
                 <div class="space-y-2">
-                    <input type="file" wire:model="profile_picture" @change="
-                        if ($wire.profile_picture) {
+                    <input type="file" x-ref="fileInput" class="hidden" accept="image/*"
+                        @change="
+                        const file = $event.target.files[0];
+                        if (file) {
+                            if (file.size > 1024 * 1024) {
+                                window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Image must be under 1MB', type: 'error' } }));
+                                return;
+                            }
                             const reader = new FileReader();
                             reader.onload = (e) => {
                                 imageSource = e.target.result;
-                                setTimeout(() => initCropper(), 100);
                                 cropperModal = true;
+                                // Wait for DOM to update and image to load
+                                setTimeout(() => initCropper(), 100);
                             };
-                            reader.readAsDataURL($wire.profile_picture.files[0]);
+                            reader.readAsDataURL(file);
                         }
-                    " id="profile-upload" type="file" class="hidden" accept="image/*">
-                    <button @click="document.getElementById('profile-upload').click()" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors text-sm">
-                        <span class="material-symbols-outlined text-[18px] inline mr-2">photo_camera</span>
+                    ">
+                    <button type="button" @click="$refs.fileInput.click()" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors text-sm flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">photo_camera</span>
                         Change Photo
                     </button>
                     @if($current_profile_picture)
-                        <button wire:click="deleteProfilePicture" class="w-full px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-lg transition-colors text-sm border border-red-200">
-                            <span class="material-symbols-outlined text-[18px] inline mr-2">delete</span>
+                        <button type="button" wire:click="deleteProfilePicture" class="w-full px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-lg transition-colors text-sm border border-red-200 flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
                             Remove Photo
                         </button>
                     @endif
@@ -301,39 +328,5 @@
 
     <!-- Cropper JS Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
-</div>
-
-    </div>
-
-    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-5 border-b border-gray-100">
-            <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-                <span class="material-symbols-outlined text-gray-400">lock</span>
-                Change Password
-            </h2>
-        </div>
-        <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
-                    <input wire:model="currentPassword" type="password" placeholder="Enter current password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                    @error('currentPassword') <span class="text-red-600 text-xs mt-1">{{ $message }}</span> @enderror
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-                    <input wire:model="newPassword" type="password" placeholder="Enter new password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                    @error('newPassword') <span class="text-red-600 text-xs mt-1">{{ $message }}</span> @enderror
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
-                    <input wire:model="confirmPassword" type="password" placeholder="Confirm new password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                    @error('confirmPassword') <span class="text-red-600 text-xs mt-1">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div class="flex justify-start mt-6">
-                <button wire:click="updatePassword" class="px-6 py-2 bg-gray-900 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors">Update Password</button>
-            </div>
-        </div>
-    </div>
 </div>
 </div>
