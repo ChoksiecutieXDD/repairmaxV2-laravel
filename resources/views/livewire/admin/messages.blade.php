@@ -32,13 +32,13 @@
                             <div class="flex items-start justify-between">
                                 <div class="flex-1">
                                     <div class="flex items-center gap-2">
-                                        <h3 class="font-bold text-gray-900">{{ $message->user->name }}</h3>
+                                        <h3 class="font-bold text-gray-900">{{ $message->user->first_name }} {{ $message->user->last_name }}</h3>
                                         @if(!$message->admin_read)
                                             <span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">New</span>
                                         @endif
                                     </div>
                                     <p class="text-sm font-semibold text-gray-700 mt-1">{{ $message->subject }}</p>
-                                    <p class="text-sm text-gray-500 mt-1 truncate">{{ Str::limit($message->message, 60) }}</p>
+                                    <p class="text-sm text-gray-500 mt-1 truncate">{{ \Illuminate\Support\Str::limit($message->message, 60) }}</p>
                                 </div>
                                 <span class="text-xs text-gray-500 whitespace-nowrap ml-4">{{ $message->created_at->diffForHumans() }}</span>
                             </div>
@@ -66,7 +66,7 @@
                     <!-- Header -->
                     <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-start">
                         <div>
-                            <h3 class="font-bold text-gray-900">{{ $selectedMessage->user->name }}</h3>
+                            <h3 class="font-bold text-gray-900">{{ $selectedMessage->user->first_name }} {{ $selectedMessage->user->last_name }}</h3>
                             <p class="text-sm text-gray-500">{{ $selectedMessage->user->email }}</p>
                         </div>
                         <button 
