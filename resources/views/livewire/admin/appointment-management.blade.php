@@ -51,8 +51,8 @@
                         <td class="px-6 py-4"><span class="text-gray-600">{{ $appointment->device_brand }} {{ $appointment->device_model }}</span></td>
                         <td class="px-6 py-4">
                             <div>
-                                <span class="text-gray-900 font-medium">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</span>
-                                <p class="text-xs text-gray-500">{{ $appointment->user->email }}</p>
+                                <span class="text-gray-900 font-medium">{{ ($appointment->user?->first_name ?? 'Unknown') . ' ' . ($appointment->user?->last_name ?? 'Customer') }}</span>
+                                <p class="text-xs text-gray-500">{{ $appointment->user?->email ?? 'No Email' }}</p>
                             </div>
                         </td>
                         <td class="px-6 py-4"><span class="text-gray-600">{{ $appointment->pref_date?->format('M d, Y') }}</span></td>
@@ -121,7 +121,7 @@
                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
                     <p class="text-xs font-bold text-gray-500 uppercase mb-2">Appointment Details</p>
                     <p class="font-bold text-gray-900">{{ $selectedAppointment->device_brand }} {{ $selectedAppointment->device_model }}</p>
-                    <p class="text-sm text-gray-600 mt-1">{{ $selectedAppointment->user->first_name }} {{ $selectedAppointment->user->last_name }}</p>
+                    <p class="text-sm text-gray-600 mt-1">{{ $selectedAppointment->user?->first_name ?? 'Unknown' }} {{ $selectedAppointment->user?->last_name ?? 'Customer' }}</p>
                     <p class="text-xs text-gray-500 mt-1">{{ $selectedAppointment->fault_category }}</p>
                 </div>
 

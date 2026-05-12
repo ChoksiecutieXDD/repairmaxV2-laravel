@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Admin Dashboard | Repairmax' }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,7 +39,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             @click="sidebarOpen = false"
-            class="fixed inset-0 bg-gray-900/40 backdrop-blur-sm lg:hidden z-30" style="display: none;"></div>
+            class="fixed inset-0 bg-gray-900/60 backdrop-blur-md lg:hidden z-30" style="display: none;"></div>
 
         <aside :class="{ 
                 'translate-x-0': sidebarOpen, 
@@ -143,7 +147,7 @@
                         <button @click="notifDropdown = !notifDropdown" class="relative p-1.5 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white focus:outline-none shrink-0" aria-label="Notifications" title="View notifications">
                             <span class="material-symbols-outlined text-[24px]">notifications</span>
                             <template x-if="unreadCount > 0">
-                                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 border border-gray-900 rounded-full animate-pulse"></span>
+                                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
                             </template>
                         </button>
 

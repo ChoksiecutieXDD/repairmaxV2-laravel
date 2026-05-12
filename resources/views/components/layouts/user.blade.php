@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'User Dashboard | Repairmax' }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
     
     <!-- Cropper.js -->
@@ -24,43 +28,56 @@
 
 <body class="font-sans antialiased text-gray-800 bg-gray-50 no-transition"
     x-data="{ 
-        toasts: [],
+        currentToast: null,
+        show: false,
+        timeout: null,
         addToast(message, type = 'success') {
-            const id = Date.now();
-            this.toasts.push({ id, message, type });
-            setTimeout(() => {
-                this.toasts = this.toasts.filter(t => t.id !== id);
-            }, 6000); 
+            if (this.show) {
+                this.show = false;
+                setTimeout(() => {
+                    this.currentToast = { message, type };
+                    this.show = true;
+                    this.resetTimeout();
+                }, 450);
+            } else {
+                this.currentToast = { message, type };
+                this.show = true;
+                this.resetTimeout();
+            }
+        },
+        resetTimeout() {
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => { this.show = false }, 5000);
         }
     }"
     @toast.window="addToast($event.detail.message || $event.detail[0].message, $event.detail.type || $event.detail[0].type)">
 
     <!-- Toast Container -->
-    <div class="fixed bottom-8 right-8 z-[100] flex flex-col gap-3 pointer-events-none">
-        <template x-for="toast in toasts" :key="toast.id">
-            <div x-show="true"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-8"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0 scale-90"
-                :class="{
-                    'bg-gray-900 border-gray-800 shadow-[0_20px_50px_rgba(0,0,0,0.3)]': toast.type === 'success',
-                    'bg-red-600 border-red-500 shadow-[0_20px_50px_rgba(220,38,38,0.2)]': toast.type === 'error',
-                    'bg-blue-600 border-blue-500 shadow-[0_20px_50px_rgba(37,99,235,0.2)]': toast.type === 'info',
-                    'bg-yellow-500 border-yellow-400': toast.type === 'warning'
-                }"
-                class="pointer-events-auto min-w-[320px] max-w-sm px-5 py-4 rounded-2xl border text-white flex items-center justify-between gap-4">
+    <div class="fixed top-10 left-1/2 -translate-x-1/2 z-[100] flex flex-col pointer-events-none w-full max-w-sm px-4">
+        <div x-show="show"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 -translate-y-10 scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+            x-transition:leave="transition ease-in duration-400"
+            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+            x-transition:leave-end="opacity-0 -translate-y-10 scale-95"
+            :class="{
+                'bg-gray-900': currentToast?.type === 'success',
+                'bg-red-600': currentToast?.type === 'error',
+                'bg-blue-600': currentToast?.type === 'info',
+                'bg-yellow-500': currentToast?.type === 'warning'
+            }"
+            class="pointer-events-auto w-full px-5 py-4 rounded-2xl text-white flex items-center justify-between gap-4 shadow-none border-none">
+            <template x-if="currentToast">
                 <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-[22px]" x-text="toast.type === 'success' ? 'check_circle' : (toast.type === 'error' ? 'error' : 'info')"></span>
-                    <span class="text-sm font-bold" x-text="toast.message"></span>
+                    <span class="material-symbols-outlined text-[22px]" x-text="currentToast.type === 'success' ? 'check_circle' : (currentToast.type === 'error' ? 'error' : 'info')"></span>
+                    <span class="text-sm font-bold" x-text="currentToast.message"></span>
                 </div>
-                <button @click="toasts = toasts.filter(t => t.id !== toast.id)" class="opacity-50 hover:opacity-100 transition-opacity">
-                    <span class="material-symbols-outlined text-[18px]">close</span>
-                </button>
-            </div>
-        </template>
+            </template>
+            <button @click="show = false" class="p-0 bg-transparent border-none shadow-none opacity-50 hover:opacity-100 transition-opacity">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
     </div>
     <div x-data="{ 
             sidebarOpen: false, 
@@ -78,7 +95,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             @click="sidebarOpen = false"
-            class="fixed inset-0 bg-gray-900/40 backdrop-blur-sm lg:hidden z-30" style="display: none;"></div>
+            class="fixed inset-0 bg-gray-900/60 backdrop-blur-md lg:hidden z-30" style="display: none;"></div>
 
         <aside :class="{ 
                 'translate-x-0': sidebarOpen, 
@@ -148,7 +165,7 @@
 
                     <a href="{{ route('user.notifications') }}" class="relative p-1.5 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white focus:outline-none shrink-0" aria-label="Notifications">
                         <span class="material-symbols-outlined text-[24px]">notifications</span>
-                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 border-2 border-gray-900 rounded-full animate-pulse"></span>
+                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></span>
                     </a>
                 </div>
                 @endauth

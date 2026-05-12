@@ -96,6 +96,7 @@ class User extends Authenticatable
             'email_notifications' => 'boolean',
             'sms_notifications' => 'boolean',
             'push_notifications' => 'boolean',
+            'permissions' => 'array',
         ];
     }
     // Relationships

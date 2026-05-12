@@ -176,7 +176,7 @@
                         @forelse ($recentAppointments as $appointment)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-3 text-sm font-medium text-gray-900">{{ $appointment->device_brand }} {{ $appointment->device_model }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-600">{{ $appointment->user->getFullName() }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">{{ $appointment->user?->getFullName() ?? 'Unknown Customer' }}</td>
                                 <td class="px-4 py-3">
                                     <span class="inline-flex px-2 py-1 text-xs font-bold rounded {{ 
                                         $appointment->status === 'completed' ? 'bg-green-50 text-green-700' :

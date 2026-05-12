@@ -9,15 +9,15 @@
 
     <title>{{ $title ?? 'Repairmax' }}</title>
 
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/repairlogocircle.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <script src="{{ asset('js/landing.js') }}" defer></script>
 
     @livewireStyles
 </head>

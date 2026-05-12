@@ -31,7 +31,7 @@
                     @forelse ($appointments as $appointment)
                         <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4"><span class="font-medium text-gray-900">{{ $appointment->device_brand }} {{ $appointment->device_model }}</span></td>
-                            <td class="px-6 py-4"><span class="text-gray-600">{{ $appointment->user->getFullName() }}</span></td>
+                            <td class="px-6 py-4"><span class="text-gray-600">{{ $appointment->user?->getFullName() ?? 'Unknown Customer' }}</span></td>
                             <td class="px-6 py-4"><span class="text-gray-600">{{ $appointment->fault_category }}</span></td>
                             <td class="px-6 py-4"><span class="text-gray-600">{{ $appointment->pref_date ? $appointment->pref_date->format('M d, Y') : 'N/A' }}</span></td>
                             <td class="px-6 py-4">
@@ -82,19 +82,19 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <p class="text-sm text-gray-600">Name</p>
-                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user->getFullName() }}</p>
+                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user?->getFullName() ?? 'N/A' }}</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Email</p>
-                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user->email }}</p>
+                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user?->email ?? 'N/A' }}</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Phone</p>
-                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user->phone }}</p>
+                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user?->phone ?? 'N/A' }}</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">City</p>
-                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user->city }}</p>
+                            <p class="font-medium text-gray-900">{{ $selectedAppointment->user?->city ?? 'N/A' }}</p>
                         </div>
                     </div>
                 </div>

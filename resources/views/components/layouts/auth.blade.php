@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Repairmax' }}</title>
 
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/repairlogocircle.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/repair-square-icon.png') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -43,7 +44,7 @@
 
         <div class="w-full lg:w-7/12 flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-12 lg:py-24 relative min-h-screen bg-gray-50">
 
-            <div class="absolute top-6 left-6 sm:top-10 sm:left-10 lg:top-16 lg:left-24">
+            <div class="hidden lg:block absolute top-16 left-24">
                 <a href="/" class="inline-flex items-center gap-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -53,8 +54,16 @@
             </div>
 
             <div class="w-full max-w-md mx-auto">
-                <div class="lg:hidden mb-10 text-center sm:text-left">
-                    <h1 class="text-4xl font-bold text-gray-900 tracking-tight">Repairmax.</h1>
+                <div class="lg:hidden mb-12">
+                    <a href="/" class="inline-flex items-center gap-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors mb-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                    <div class="text-center sm:text-left">
+                        <h1 class="text-4xl font-bold text-gray-900 tracking-tight">Repairmax.</h1>
+                    </div>
                 </div>
 
                 {{ $slot }}

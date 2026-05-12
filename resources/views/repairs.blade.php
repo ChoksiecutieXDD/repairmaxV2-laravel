@@ -15,8 +15,8 @@
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 md:mb-28">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 fade-in-element">
-                    <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6">
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 fade-in-element flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                         <span class="material-symbols-outlined text-3xl">screenshot</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Display Restoration</h3>
@@ -27,8 +27,8 @@
                     </ul>
                 </div>
 
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 fade-in-element">
-                    <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6">
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 fade-in-element flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                         <span class="material-symbols-outlined text-3xl">memory</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Micro-Soldering</h3>
@@ -39,8 +39,8 @@
                     </ul>
                 </div>
 
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 fade-in-element">
-                    <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6">
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 fade-in-element flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                         <span class="material-symbols-outlined text-3xl">battery_charging_full</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Power Optimization</h3>
@@ -56,46 +56,49 @@
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 md:mb-28">
             <div class="bg-white rounded-[2.5rem] p-8 md:p-16 border border-gray-200 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-in-element">
-                <div>
+                <div class="text-center lg:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Our Technical Standards</h2>
-                    <div class="space-y-6">
-                        <div class="flex gap-4">
-                            <div class="mt-1 shrink-0 bg-gray-100 p-2 rounded-lg h-fit text-gray-900">
-                                <span class="material-symbols-outlined">precision_manufacturing</span>
+                    <div class="space-y-10">
+                        <div class="flex flex-col items-center text-center lg:items-start lg:text-left gap-4">
+                            <div class="bg-gray-100 p-3 rounded-2xl text-gray-900 shadow-sm">
+                                <span class="material-symbols-outlined text-3xl">precision_manufacturing</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-900">Ultrasonic Cleaning</h4>
+                                <h4 class="text-xl font-bold text-gray-900 mb-2">Ultrasonic Cleaning</h4>
                                 <p class="text-gray-600">For water-damaged units, we utilize specialized ultrasonic tanks to strip corrosion from hidden logic board layers.</p>
                             </div>
                         </div>
 
-                        <div class="flex gap-4">
-                            <div class="mt-1 shrink-0 bg-gray-100 p-2 rounded-lg h-fit text-gray-900">
-                                <span class="material-symbols-outlined">fact_check</span>
+                        <div class="flex flex-col items-center text-center lg:items-start lg:text-left gap-4">
+                            <div class="bg-gray-100 p-3 rounded-2xl text-gray-900 shadow-sm">
+                                <span class="material-symbols-outlined text-3xl">fact_check</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-900">24-Point Inspection</h4>
+                                <h4 class="text-xl font-bold text-gray-900 mb-2">24-Point Inspection</h4>
                                 <p class="text-gray-600">Every device undergoes automated hardware testing post-repair to ensure FaceID, haptics, and sensors are 100% functional.</p>
                             </div>
                         </div>
 
-                        <div class="flex gap-4">
-                            <div class="mt-1 shrink-0 bg-gray-100 p-2 rounded-lg h-fit text-gray-900">
-                                <span class="material-symbols-outlined">history_edu</span>
+                        <div class="flex flex-col items-center text-center lg:items-start lg:text-left gap-4">
+                            <div class="bg-gray-100 p-3 rounded-2xl text-gray-900 shadow-sm">
+                                <span class="material-symbols-outlined text-3xl">history_edu</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-900">Digital Service Records</h4>
+                                <h4 class="text-xl font-bold text-gray-900 mb-2">Digital Service Records</h4>
                                 <p class="text-gray-600">Your repair history is logged securely, providing a digital paper trail for future resale or warranty claims.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="relative group">
-                    <div class="relative bg-gray-200 rounded-3xl h-[400px] w-full flex items-center justify-center overflow-hidden border border-gray-300">
-                        <span class="material-symbols-outlined text-[8rem] text-gray-400 group-hover:scale-110 transition-transform duration-500">
-                            biotech
-                        </span>
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent pointer-events-none"></div>
+                    <div class="relative rounded-[2.5rem] h-[450px] w-full flex items-center justify-center overflow-hidden shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-950"></div>
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.03),transparent)]"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="p-8 rounded-[3rem] bg-white/5 backdrop-blur-3xl border border-white/10 shadow-2xl group-hover:scale-105 transition-all duration-500">
+                                <span class="material-symbols-outlined text-[6rem] text-white/70">biotech</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="absolute bottom-6 right-6 bg-white p-4 md:p-6 rounded-2xl shadow-lg border border-gray-100">

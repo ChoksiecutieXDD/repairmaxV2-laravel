@@ -61,16 +61,14 @@
         <!-- Header -->
         <div class="bg-gray-900 text-white p-4 flex justify-between items-center shadow-lg">
             <div class="flex items-center gap-3">
-                <div class="bg-white/10 p-2 rounded-lg">
-                    <span class="material-symbols-outlined text-white text-2xl">smart_toy</span>
-                </div>
+                <span class="material-symbols-outlined text-white text-2xl">smart_toy</span>
                 <div class="flex flex-col">
                     <span class="font-bold text-lg text-white leading-tight">Maxie</span>
                     <span class="text-gray-400 text-xs font-medium uppercase tracking-wider">Repairmax Assistant</span>
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <button @click="isOpen = false" id="close-chat" class="text-gray-400 hover:text-white transition-colors focus:outline-none p-1">
+                <button @click="isOpen = false" id="close-chat" class="!bg-transparent !border-none !shadow-none !p-0 text-white transition-colors focus:outline-none">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -103,8 +101,8 @@
                     class="flex-1 bg-transparent border-none text-sm focus:ring-0 py-2">
                 <button @click="sendMessage()"
                     :disabled="isLoading"
-                    class="text-gray-900 disabled:text-gray-300 transition-colors flex items-center justify-center focus:outline-none">
-                    <span class="material-symbols-outlined text-2xl">send</span>
+                    class="!bg-transparent !border-none !shadow-none !p-0 text-gray-900 disabled:text-gray-300 transition-colors flex items-center justify-center focus:outline-none">
+                    <span class="material-symbols-outlined text-2xl" style="color: #101828">send</span>
                 </button>
             </div>
         </div>

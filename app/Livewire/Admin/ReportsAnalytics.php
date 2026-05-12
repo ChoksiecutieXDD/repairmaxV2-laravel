@@ -62,16 +62,25 @@ class ReportsAnalytics extends Component
             $days[] = Carbon::parse($date)->format('M d');
 
             $phones[] = Appointment::whereDate('created_at', $date)
-                ->where('device_type', 'like', '%Phone%')
-                ->count();
+                ->where(function($q) {
+                    $q->where('device_model', 'like', '%Phone%')
+                      ->orWhere('device_brand', 'like', '%Phone%')
+                      ->orWhere('device_model', 'like', '%iPhone%');
+                })->count();
 
             $laptops[] = Appointment::whereDate('created_at', $date)
-                ->where('device_type', 'like', '%Laptop%')
-                ->count();
+                ->where(function($q) {
+                    $q->where('device_model', 'like', '%Laptop%')
+                      ->orWhere('device_brand', 'like', '%Laptop%')
+                      ->orWhere('device_model', 'like', '%MacBook%');
+                })->count();
 
             $tablets[] = Appointment::whereDate('created_at', $date)
-                ->where('device_type', 'like', '%Tablet%')
-                ->count();
+                ->where(function($q) {
+                    $q->where('device_model', 'like', '%Tablet%')
+                      ->orWhere('device_brand', 'like', '%Tablet%')
+                      ->orWhere('device_model', 'like', '%iPad%');
+                })->count();
         }
 
         return [
@@ -109,7 +118,7 @@ class ReportsAnalytics extends Component
         return [
             'avgRepairTime' => $this->getAverageRepairTime(),
             'satisfaction' => 96,
-            'repeatCustomers' => round((User::where('created_at', '<', Carbon::now()->subMonths(3))->count() / User::count() * 100), 1),
+            'repeatCustomers' => User::count() > 0 ? round((User::where('created_at', '<', Carbon::now()->subMonths(3))->count() / User::count() * 100), 1) : 0,
             'warrantyRate' => 2.1,
             'revenueTrend' => $this->getRevenueTrend(),
             'statusDistribution' => $this->getRepairStatusDistribution(),

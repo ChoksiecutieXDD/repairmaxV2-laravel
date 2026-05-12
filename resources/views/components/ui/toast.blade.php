@@ -23,25 +23,25 @@
         }
     }"
     @notify.window="showToast"
-    class="fixed bottom-5 right-5 z-[110]"
+    class="fixed top-10 left-1/2 -translate-x-1/2 z-[110]"
     style="display: none;"
     x-show="show"
-    x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="opacity-0 transform translate-y-4"
-    x-transition:enter-end="opacity-100 transform translate-y-0"
-    x-transition:leave="transition ease-in duration-200"
-    x-transition:leave-start="opacity-100 transform translate-y-0"
-    x-transition:leave-end="opacity-0 transform translate-y-4">
+    x-transition:enter="transition ease-out duration-500"
+    x-transition:enter-start="opacity-0 -translate-y-10 scale-95"
+    x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+    x-transition:leave="transition ease-in duration-400"
+    x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+    x-transition:leave-end="opacity-0 -translate-y-10 scale-95">
 
-    <div class="flex items-center gap-3 px-5 py-4 rounded-xl shadow-lg border"
+    <div class="flex items-center gap-3 px-5 py-4 rounded-xl text-white shadow-none border-none"
         :class="{
-            'bg-gray-900 text-white border-gray-800': type === 'success',
-            'bg-red-600 text-white border-red-700': type === 'error'
+            'bg-gray-900': type === 'success',
+            'bg-red-600': type === 'error'
         }">
         <span class="material-symbols-outlined" x-text="type === 'success' ? 'check_circle' : 'error'"></span>
         <p class="font-medium text-sm" x-text="message"></p>
-        <button @click="show = false" class="ml-4 opacity-70 hover:opacity-100">
-            <span class="material-symbols-outlined text-sm">close</span>
+        <button @click="show = false" class="ml-4 p-0 bg-transparent opacity-70 hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-[20px]">close</span>
         </button>
     </div>
 </div>

@@ -77,26 +77,44 @@
     </div>
 
     <!-- Service Type Trends -->
-    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-10">
         <h3 class="text-lg font-bold text-gray-900 mb-6">Service Type Trends (7 Days)</h3>
         <canvas id="serviceChart"></canvas>
     </div>
+
+    <!-- Hidden Data Container for Charts -->
+    <div id="chartData" class="hidden"
+        data-revenue-labels="{{ Js::from($metrics['revenueTrend']['labels'] ?? []) }}"
+        data-revenue-data="{{ Js::from($metrics['revenueTrend']['data'] ?? []) }}"
+        data-status-labels="{{ Js::from($metrics['statusDistribution']['labels'] ?? []) }}"
+        data-status-data="{{ Js::from($metrics['statusDistribution']['data'] ?? []) }}"
+        data-status-colors="{{ Js::from($metrics['statusDistribution']['backgroundColor'] ?? []) }}"
+        data-service-labels="{{ Js::from($metrics['serviceTrends']['labels'] ?? []) }}"
+        data-service-phones="{{ Js::from($metrics['serviceTrends']['phones'] ?? []) }}"
+        data-service-laptops="{{ Js::from($metrics['serviceTrends']['laptops'] ?? []) }}"
+        data-service-tablets="{{ Js::from($metrics['serviceTrends']['tablets'] ?? []) }}"
+    ></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         try {
+            const dataContainer = document.getElementById('chartData');
+            if (!dataContainer) return;
+
+            const parseData = (attr) => JSON.parse(dataContainer.getAttribute(attr) || '[]');
+
             // Revenue Trend Chart
             const revenueCtx = document.getElementById('revenueChart');
             if (revenueCtx) {
                 new Chart(revenueCtx.getContext('2d'), {
                     type: 'line',
                     data: {
-                        labels: @json($metrics['revenueTrend']['labels'] ?? []),
+                        labels: parseData('data-revenue-labels'),
                         datasets: [{
                             label: 'Revenue ($)',
-                            data: @json($metrics['revenueTrend']['data'] ?? []),
+                            data: parseData('data-revenue-data'),
                             borderColor: '#3B82F6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             borderWidth: 2,
@@ -141,10 +159,10 @@
                 new Chart(statusCtx.getContext('2d'), {
                     type: 'doughnut',
                     data: {
-                        labels: @json($metrics['statusDistribution']['labels'] ?? []),
+                        labels: parseData('data-status-labels'),
                         datasets: [{
-                            data: @json($metrics['statusDistribution']['data'] ?? []),
-                            backgroundColor: @json($metrics['statusDistribution']['backgroundColor'] ?? []),
+                            data: parseData('data-status-data'),
+                            backgroundColor: parseData('data-status-colors'),
                             borderColor: '#fff',
                             borderWidth: 2,
                         }]
@@ -172,11 +190,11 @@
                 new Chart(serviceCtx.getContext('2d'), {
                     type: 'line',
                     data: {
-                        labels: @json($metrics['serviceTrends']['labels'] ?? []),
+                        labels: parseData('data-service-labels'),
                         datasets: [
                             {
                                 label: 'Phones',
-                                data: @json($metrics['serviceTrends']['phones'] ?? []),
+                                data: parseData('data-service-phones'),
                                 borderColor: '#3B82F6',
                                 backgroundColor: 'rgba(59, 130, 246, 0.05)',
                                 borderWidth: 2,
@@ -186,7 +204,7 @@
                             },
                             {
                                 label: 'Laptops',
-                                data: @json($metrics['serviceTrends']['laptops'] ?? []),
+                                data: parseData('data-service-laptops'),
                                 borderColor: '#10B981',
                                 backgroundColor: 'rgba(16, 185, 129, 0.05)',
                                 borderWidth: 2,
@@ -196,7 +214,7 @@
                             },
                             {
                                 label: 'Tablets',
-                                data: @json($metrics['serviceTrends']['tablets'] ?? []),
+                                data: parseData('data-service-tablets'),
                                 borderColor: '#F59E0B',
                                 backgroundColor: 'rgba(245, 158, 11, 0.05)',
                                 borderWidth: 2,

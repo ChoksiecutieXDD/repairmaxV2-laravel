@@ -1,15 +1,15 @@
 <footer class="bg-gray-900 text-gray-400 py-12 md:py-24 border-t border-gray-800 font-sans">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
-            <div class="col-span-1 lg:col-span-1">
+            <div class="col-span-2 lg:col-span-1 text-center md:text-left">
                 <a href="/" class="text-2xl font-bold text-gray-100 tracking-tight mb-4 inline-block">
                     Repairmax
                 </a>
                 <p class="text-sm leading-relaxed mb-6">
                     Fast, transparent, and seamless. We are bringing device repair into the 21st century with our digital-first platform.
                 </p>
-                <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center md:justify-start gap-4">
                     <a href="#" class="text-gray-500 hover:text-gray-100 transition-colors duration-300">
                         <span class="sr-only">Facebook</span>
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="col-span-1 text-center md:text-left">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Platform</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="/services" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Services</a></li>
@@ -41,7 +41,7 @@
                 </ul>
             </div>
 
-            <div>
+            <div class="col-span-1 text-center md:text-left">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Account</h3>
                 <ul class="space-y-3 text-sm">
                     <li>
@@ -59,7 +59,7 @@
                 </ul>
             </div>
 
-            <div>
+            <div class="col-span-2 text-center md:text-left lg:col-span-1">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Legal</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="/legal-policy#privacy" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Privacy Policy</a></li>

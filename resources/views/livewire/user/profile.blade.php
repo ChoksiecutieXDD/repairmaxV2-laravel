@@ -49,16 +49,30 @@
             this.cropper.destroy();
             this.cropper = null;
         }
+        if (this.$refs.fileInput) {
+            this.$refs.fileInput.value = '';
+        }
     }
 }">
 
         <div x-show="deleteModal"
-            class="fixed inset-0 z-[100] flex items-center justify-center p-4"
-            style="background-color: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px);"
+            class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md"
             x-cloak
-            x-transition>
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0">
 
-            <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center" @click.outside="deleteModal = false">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl max-w-md w-full p-10 text-center transform transition-all" 
+                @click.outside="deleteModal = false"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-4">
                 <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <span class="material-symbols-outlined text-3xl">warning</span>
                 </div>
@@ -78,13 +92,24 @@
         </div>
 
         <div x-show="cropperModal"
-            class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
-            style="background-color: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);"
+            class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 bg-gray-900/60 backdrop-blur-md"
             x-cloak
-            x-transition
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
             @keydown.escape.window="cropperModal = false; destroyCropper()">
 
-            <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full my-auto overflow-hidden flex flex-col max-h-[90vh]" @click.outside="cropperModal = false; destroyCropper()">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full my-auto overflow-hidden flex flex-col max-h-[90vh] transform transition-all" 
+                @click.outside="cropperModal = false; destroyCropper()"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-10"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-10">
                 <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
                     <h3 class="text-lg font-bold text-gray-900">Crop Profile Photo</h3>
                     <button @click="cropperModal = false; destroyCropper()" class="text-gray-400 hover:text-gray-600">

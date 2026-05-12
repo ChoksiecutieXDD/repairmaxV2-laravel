@@ -20,7 +20,7 @@ class AppointmentDownloadController extends Controller
         $appointment = $user->appointments()->findOrFail($appointmentId);
 
         // Generate PDF from HTML template
-        $html = View::make('livewire.user.receipt-pdf-print', [
+        $html = View::make('livewire.pdf.receipt-pdf-print', [
             'appointment' => $appointment,
             'user' => $user,
             'type' => 'receipt'
@@ -45,7 +45,7 @@ class AppointmentDownloadController extends Controller
         $appointment = $user->appointments()->findOrFail($appointmentId);
 
         // Generate PDF from HTML template
-        $html = View::make('livewire.user.receipt-pdf-print', [
+        $html = View::make('livewire.pdf.receipt-pdf-print', [
             'appointment' => $appointment,
             'user' => $user,
             'type' => 'invoice'
@@ -70,7 +70,7 @@ class AppointmentDownloadController extends Controller
         $appointment = $user->appointments()->findOrFail($appointmentId);
 
         // Display receipt and invoice as HTML (not PDF)
-        return View::make('livewire.user.receipt-and-invoice-view', [
+        return View::make('livewire.pdf.receipt-and-invoice-view', [
             'appointment' => $appointment,
             'user' => $user,
         ]);
@@ -88,7 +88,7 @@ class AppointmentDownloadController extends Controller
         $appointment = $user->appointments()->findOrFail($appointmentId);
 
         // Display receipt and invoice as HTML (not PDF)
-        return View::make('livewire.user.receipt-and-invoice-view', [
+        return View::make('livewire.pdf.receipt-and-invoice-view', [
             'appointment' => $appointment,
             'user' => $user,
         ]);

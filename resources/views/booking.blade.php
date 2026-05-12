@@ -2,11 +2,11 @@
     <main class="pt-32 lg:pt-40 py-16 md:py-24 !pt-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="mb-16 md:mb-24 text-center md:text-left">
+        <div class="mb-16 md:mb-24 text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight">
                 Tell us about your device.
             </h1>
-            <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
+            <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
                 Skip the line and let us know exactly what is going on. Our technicians will be ready to bring your device back to life.
             </p>
         </div>

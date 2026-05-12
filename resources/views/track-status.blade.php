@@ -1,5 +1,5 @@
 <x-layouts.landing title="Track Status | Repairmax">
-    <main class="pt-32 lg:pt-40 pb-20 md:pb-28 min-h-[80vh] flex flex-col justify-center">
+    <main class="pt-32 lg:pt-40 pb-20 md:pb-28 min-h-[90vh] flex flex-col justify-center bg-[#F3F4F6]">
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 fade-in-element">
             <div class="text-center max-w-3xl mx-auto">
@@ -16,17 +16,23 @@
                     @csrf
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-3">Repair Ticket ID</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none material-symbols-outlined text-gray-400">tag</span>
-                            <input type="text" name="ticket_id" placeholder="e.g. RM-84920" required class="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-base">
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-gray-400 group-focus-within:text-blue-500 transition-colors">tag</span>
+                            </div>
+                            <input type="text" name="ticket_id" placeholder="e.g. RM-84920" required 
+                                class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base shadow-sm">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-3">Email Address</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none material-symbols-outlined text-gray-400">mail</span>
-                            <input type="email" name="email" placeholder="hello@example.com" required class="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-base">
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-gray-400 group-focus-within:text-blue-500 transition-colors">mail</span>
+                            </div>
+                            <input type="email" name="email" placeholder="hello@example.com" required 
+                                class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base shadow-sm">
                         </div>
                     </div>
 

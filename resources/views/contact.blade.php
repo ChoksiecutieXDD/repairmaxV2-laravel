@@ -1,4 +1,4 @@
-<x-layouts.landing title="Contact Us | Andoy Cellphone Repair Service">
+<x-layouts.landing title="Contact Us | Repairmax">
     <main class="pt-32 lg:pt-40 py-16 md:py-24 !pt-40">
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,7 +14,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-200">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6 italic">Andoy Cellphone Repair Service</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 italic text-center md:text-left">Repairmax Service Center</h2>
 
                     <div class="space-y-6">
                         <div class="flex items-start gap-4">
@@ -71,7 +71,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
-                                <input type="text" value="Andoy Repair Support" disabled
+                                <input type="text" value="Repairmax Support" disabled
                                     class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-500 cursor-not-allowed">
                             </div>
                             <div>

@@ -1,4 +1,4 @@
-<div class="w-full">
+<div class="w-full" x-data="{ deleteModal: false, sessionToDelete: null }">
 
     <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -17,8 +17,8 @@
                     <span class="material-symbols-outlined text-gray-400">forum</span>
                     History
                 </h2>
-                <button wire:click="startNewChat" class="text-blue-600 hover:bg-blue-50 p-1.5 rounded-lg transition-colors focus:outline-none" title="New Chat">
-                    <span class="material-symbols-outlined text-[20px]">add_box</span>
+                <button wire:click="startNewChat" class="bg-gray-900 text-white p-1.5 rounded-lg hover:bg-gray-800 transition-all flex items-center justify-center focus:outline-none shadow-sm" title="New Chat">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
                 </button>
             </div>
 
@@ -36,8 +36,7 @@
                         <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-tighter">{{ $session->created_at->diffForHumans() }}</p>
                     </div>
 
-                    <button wire:click.stop="deleteSession({{ $session->id }})" 
-                        wire:confirm="Are you sure you want to delete this conversation?"
+                    <button @click.stop="deleteModal = true; sessionToDelete = {{ $session->id }}"
                         class="text-gray-300 hover:text-red-500 bg-transparent border-none p-1 rounded transition-colors opacity-100 lg:opacity-0 group-hover:opacity-100 focus:outline-none" title="Delete chat">
                         <span class="material-symbols-outlined text-[18px] block">delete</span>
                     </button>
@@ -87,7 +86,7 @@
                 @else
                 <div class="flex gap-3 sm:gap-4 justify-end">
                     <div class="bg-gray-900 text-white shadow-sm rounded-2xl rounded-tr-sm p-3 sm:p-4 max-w-[85%] sm:max-w-lg">
-                        <p class="text-sm whitespace-pre-wrap">{{ $message['content'] }}</p>
+                        <p class="text-sm whitespace-pre-wrap text-white">{{ $message['content'] }}</p>
                         <p class="text-[11px] text-gray-300 mt-2 font-medium text-right">{{ $message['time'] }}</p>
                     </div>
                 </div>
@@ -112,10 +111,6 @@
 
             <div class="p-4 bg-white border-t border-gray-100 shrink-0 rounded-b-2xl">
                 <form wire:submit="sendMessage" class="flex items-center gap-2">
-                    <button type="button" class="p-2.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors focus:outline-none" title="Attach image">
-                        <span class="material-symbols-outlined text-[22px]">attach_file</span>
-                    </button>
-
                     <input type="text"
                         wire:model="newMessage"
                         placeholder="Type your message..."
@@ -154,4 +149,44 @@
         });
     </script>
     @endscript
+
+    <!-- ===== DELETE CONFIRMATION MODAL ===== -->
+    <div x-show="deleteModal"
+        class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
+        x-cloak
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0">
+        <div class="fixed inset-0" @click="deleteModal = false"></div>
+        <div class="bg-white rounded-[2.5rem] shadow-2xl max-w-md w-full relative overflow-hidden flex flex-col transform transition-all"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+            x-transition:leave-end="opacity-0 scale-95 translate-y-4">
+            
+            <div class="px-8 pt-10 pb-6 flex flex-col items-center text-center bg-white relative">
+                <div class="w-16 h-16 bg-red-50 text-red-600 rounded-[1.5rem] flex items-center justify-center mb-5 shadow-sm border border-red-100/50">
+                    <span class="material-symbols-outlined text-[32px] leading-none">delete_forever</span>
+                </div>
+                <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Delete Conversation?</h3>
+                <p class="text-sm text-gray-400 font-medium mt-2">This action cannot be undone. All messages in this session will be permanently removed.</p>
+            </div>
+
+            <div class="p-6 bg-gray-50 border-t border-gray-100 flex gap-3">
+                <button type="button" @click="deleteModal = false" 
+                    class="flex-1 py-4 bg-white text-gray-700 font-bold rounded-2xl border border-gray-200 hover:bg-gray-100 transition-all">
+                    Cancel
+                </button>
+                <button type="button" @click="$wire.deleteSession(sessionToDelete); deleteModal = false" 
+                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-all shadow-lg shadow-red-200">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
