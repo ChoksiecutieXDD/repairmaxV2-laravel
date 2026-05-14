@@ -21,7 +21,7 @@
                                 <span class="material-symbols-outlined text-gray-400 group-focus-within:text-blue-500 transition-colors">tag</span>
                             </div>
                             <input type="text" name="ticket_id" placeholder="e.g. RM-84920" required 
-                                class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base shadow-sm">
+                                class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-[1.25rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base shadow-sm">
                         </div>
                     </div>
 
@@ -32,11 +32,11 @@
                                 <span class="material-symbols-outlined text-gray-400 group-focus-within:text-blue-500 transition-colors">mail</span>
                             </div>
                             <input type="email" name="email" placeholder="hello@example.com" required 
-                                class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base shadow-sm">
+                                class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-[1.25rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base shadow-sm">
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-gray-900 text-white font-bold rounded-xl transition-all shadow-md hover:bg-gray-800 hover:-translate-y-0.5 text-base md:text-lg">
+                    <button type="submit" class="w-full py-4 bg-gray-900 text-white font-bold rounded-[1.25rem] transition-all shadow-md hover:bg-gray-800 hover:-translate-y-0.5 text-base md:text-lg">
                         Check Status
                     </button>
                 </form>

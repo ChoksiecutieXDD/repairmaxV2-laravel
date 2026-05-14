@@ -67,7 +67,7 @@
                 'bg-blue-600': currentToast?.type === 'info',
                 'bg-yellow-500': currentToast?.type === 'warning'
             }"
-            class="pointer-events-auto w-full px-5 py-4 rounded-2xl text-white flex items-center justify-between gap-4 shadow-none border-none">
+            class="pointer-events-auto w-full px-5 py-4 rounded-[1.25rem] text-white flex items-center justify-between gap-4 shadow-none border-none">
             <template x-if="currentToast">
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-[22px]" x-text="currentToast.type === 'success' ? 'check_circle' : (currentToast.type === 'error' ? 'error' : 'info')"></span>
@@ -123,6 +123,14 @@
                 </div>
 
                 <div class="mb-6">
+                    <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Notifications</h3>
+                    <x-sidebar.link href="{{ route('user.notifications') }}" icon="notifications" :active="request()->routeIs('user.notifications')">
+                        Notifications
+                        @livewire('notification-badge', ['type' => 'user'])
+                    </x-sidebar.link>
+                </div>
+
+                <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Appointments</h3>
                     <x-sidebar.link href="/user/book-appointment" icon="add_circle" :active="request()->is('user/book-appointment')">Book Appointment</x-sidebar.link>
                     <x-sidebar.link href="/user/upcoming-appointments" icon="calendar_today" :active="request()->is('user/upcoming-appointments')">Upcoming</x-sidebar.link>
@@ -163,14 +171,10 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('user.notifications') }}" class="relative p-1.5 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white focus:outline-none shrink-0" aria-label="Notifications">
-                        <span class="material-symbols-outlined text-[24px]">notifications</span>
-                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></span>
-                    </a>
                 </div>
                 @endauth
 
-                <a href="{{ route('logout') }}" class="flex items-center gap-3 px-3 py-2.5 text-red-400 hover:text-white hover:bg-red-500/20 rounded-lg transition-all duration-200 group">
+                <a href="{{ route('logout') }}" class="flex items-center gap-3 px-3 py-2.5 text-red-400 hover:text-white hover:bg-red-500/20 rounded-[1.25rem] transition-all duration-200 group">
                     <span class="material-symbols-outlined text-[22px]">logout</span>
                     <span class="font-medium text-sm">Logout</span>
                 </a>
@@ -183,7 +187,7 @@
             <div class="flex items-center px-4 md:px-8 w-full">
 
                 <button @click="window.innerWidth >= 1024 ? sidebarCollapsed = !sidebarCollapsed : sidebarOpen = !sidebarOpen"
-                    class="inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-200/50 rounded-lg transition-colors text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 shrink-0">
+                    class="inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-200/50 rounded-[1.25rem] transition-colors text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 shrink-0">
                     <span class="material-symbols-outlined text-[26px]"
                         x-text="(window.innerWidth >= 1024 ? !sidebarCollapsed : sidebarOpen) ? 'menu_open' : 'menu'">
                     </span>

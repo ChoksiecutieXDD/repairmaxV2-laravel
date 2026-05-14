@@ -11,11 +11,17 @@ class InventoryItem extends Model
 
     protected $fillable = [
         'name',
+        'brand_id',
         'category',
         'sku',
         'quantity',
         'unit_price',
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     public function getTotalValueAttribute()
     {

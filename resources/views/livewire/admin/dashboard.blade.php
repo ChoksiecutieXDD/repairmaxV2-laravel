@@ -6,11 +6,11 @@
             <p class="text-gray-500 mt-1">System-wide overview and real-time management.</p>
         </div>
         <div class="flex gap-3">
-            <a href="#" class="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-bold shadow-sm transition-colors shrink-0">
+            <a href="{{ route('admin.reports-analytics') }}" class="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-bold shadow-sm transition-colors shrink-0">
                 <span class="material-symbols-outlined text-[20px]">analytics</span>
                 Reports
             </a>
-            <a href="#" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 rounded-lg font-bold shadow-md transition-colors shrink-0">
+            <a href="{{ route('admin.system-settings') }}" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 rounded-lg font-bold shadow-md transition-colors shrink-0">
                 <span class="material-symbols-outlined text-[20px]">settings_suggest</span>
                 Manage All
             </a>

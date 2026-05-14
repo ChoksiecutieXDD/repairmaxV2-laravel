@@ -8,6 +8,9 @@ use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\Appointment;
+use App\Models\Brand;
+use App\Models\InventoryItem;
+use App\Models\FaultType;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 
@@ -24,6 +27,7 @@ class BookAppointment extends Component
     public $photos         = [];
     public $pref_date      = '';
     public $pref_time      = '';
+    public $tracking_code  = '';
 
     public int $calendar_week_offset = 0;
     public ?int $selected_index  = null;
@@ -32,53 +36,10 @@ class BookAppointment extends Component
     // Standardized to 24h format for database compatibility
     public $available_slots = ['09:00', '11:00', '13:00', '15:00', '17:00'];
 
-    public static function faultCatalogue(): array
-    {
-        return [
-            'Screen - Cracked / Shattered'         => ['price' => 1800, 'group' => 'Screen'],
-            'Screen - Dead Pixels / Discoloration' => ['price' => 1500, 'group' => 'Screen'],
-            'Screen - Flickering / Ghost Touch'    => ['price' => 1200, 'group' => 'Screen'],
-            'Screen - Touch Not Responding'        => ['price' => 1000, 'group' => 'Screen'],
-            'Battery - Draining Too Fast'          => ['price' =>  900, 'group' => 'Battery'],
-            'Battery - Not Charging'               => ['price' =>  850, 'group' => 'Battery'],
-            'Battery - Swollen / Bloated'          => ['price' => 1100, 'group' => 'Battery'],
-            'Battery - Phone Shuts Off Randomly'   => ['price' =>  950, 'group' => 'Battery'],
-            'Charging Port - Loose / Wobbly'       => ['price' =>  650, 'group' => 'Charging Port'],
-            'Charging Port - Broken / Damaged'     => ['price' =>  850, 'group' => 'Charging Port'],
-            'Charging Port - Water Corrosion'      => ['price' =>  950, 'group' => 'Charging Port'],
-            'Camera - Lens Cracked'                => ['price' => 1200, 'group' => 'Camera'],
-            'Camera - Blurry / Unfocused Photos'   => ['price' => 1000, 'group' => 'Camera'],
-            'Camera - Front Camera Not Working'    => ['price' => 1100, 'group' => 'Camera'],
-            'Camera - Rear Camera Black Screen'    => ['price' => 1300, 'group' => 'Camera'],
-            'Camera - Flash Not Working'           => ['price' =>  750, 'group' => 'Camera'],
-            'Water Damage - Mild Exposure'         => ['price' => 2000, 'group' => 'Water Damage'],
-            'Water Damage - Fully Submerged'       => ['price' => 3500, 'group' => 'Water Damage'],
-            'Water Damage - Corrosion Cleaning'    => ['price' => 1800, 'group' => 'Water Damage'],
-            'Software - Bootloop / Stuck on Logo'  => ['price' =>  500, 'group' => 'Software'],
-            'Software - Virus / Malware'           => ['price' =>  450, 'group' => 'Software'],
-            'Software - Factory Reset Needed'      => ['price' =>  350, 'group' => 'Software'],
-            'Software - App Crashes / Freezing'    => ['price' =>  400, 'group' => 'Software'],
-            'Software - OS Upgrade / Downgrade'    => ['price' =>  500, 'group' => 'Software'],
-            'Speaker - No Sound / Low Volume'      => ['price' =>  750, 'group' => 'Speaker & Mic'],
-            'Speaker - Crackling / Distorted'      => ['price' =>  700, 'group' => 'Speaker & Mic'],
-            'Microphone - Not Working'             => ['price' =>  750, 'group' => 'Speaker & Mic'],
-            'Earpiece - No Sound During Calls'     => ['price' =>  800, 'group' => 'Speaker & Mic'],
-            'Back Cover - Cracked / Shattered'     => ['price' =>  900, 'group' => 'Physical'],
-            'Frame / Housing - Bent / Dented'      => ['price' => 1200, 'group' => 'Physical'],
-            'Power Button - Not Working'           => ['price' =>  700, 'group' => 'Physical'],
-            'Volume Button - Not Working'          => ['price' =>  700, 'group' => 'Physical'],
-            'Home Button - Not Responding'         => ['price' =>  800, 'group' => 'Physical'],
-            'Fingerprint Sensor - Not Working'     => ['price' =>  950, 'group' => 'Physical'],
-            'WiFi - Not Connecting'                => ['price' =>  600, 'group' => 'Connectivity'],
-            'Bluetooth - Not Working'              => ['price' =>  600, 'group' => 'Connectivity'],
-            'SIM Card - Not Detected'              => ['price' =>  700, 'group' => 'Connectivity'],
-            'Mobile Data - No Signal'              => ['price' =>  750, 'group' => 'Connectivity'],
-            'Other / Not Sure'                     => ['price' => null,  'group' => 'Other'],
-        ];
-    }
-
     public function mount()
     {
+        $this->pref_date = date('Y-m-d');
+        $this->generateTrackingCode();
         $this->generateAvailableDays();
     }
 
@@ -132,6 +93,7 @@ class BookAppointment extends Component
         $this->selected_index = $index;
         $this->pref_date      = $this->available_days[$index]['full'];
         $this->pref_time      = '';
+        $this->generateTrackingCode();
     }
 
     public function selectTime(string $time)
@@ -139,14 +101,42 @@ class BookAppointment extends Component
         $this->pref_time = $time;
     }
 
-    #[Computed]
-    public function groups(): array
+    public function selectDateAndTime(int $dayIndex, string $time)
     {
-        $groups = [];
-        foreach (self::faultCatalogue() as $label => $data) {
-            $groups[$data['group']][] = ['label' => $label, 'price' => $data['price']];
-        }
-        return $groups;
+        $this->selected_index = $dayIndex;
+        $this->pref_date      = $this->available_days[$dayIndex]['full'];
+        $this->pref_time      = $time;
+        $this->generateTrackingCode();
+    }
+
+    public function generateTrackingCode()
+    {
+        if (!$this->pref_date) return;
+
+        $count = Appointment::where('pref_date', $this->pref_date)->count();
+        $nextNumber = str_pad($count + 1, 5, '0', STR_PAD_LEFT);
+        $this->tracking_code = 'RM-' . date('Ymd', strtotime($this->pref_date)) . '-' . $nextNumber;
+    }
+
+    #[Computed]
+    public function brands()
+    {
+        return Brand::orderBy('name')->get();
+    }
+
+    #[Computed]
+    public function models()
+    {
+        if (!$this->device_brand) return collect();
+        return InventoryItem::whereHas('brand', function($q) {
+            $q->where('name', $this->device_brand);
+        })->orderBy('name')->get();
+    }
+
+    #[Computed]
+    public function faultTypes()
+    {
+        return FaultType::orderBy('name')->get();
     }
 
     protected $rules = [
@@ -172,7 +162,7 @@ class BookAppointment extends Component
             }
         }
 
-        $trackingCode = 'RM-' . strtoupper(Str::random(5));
+        $trackingCode = $this->tracking_code;
 
         $appointment = new Appointment();
         $appointment->user_id        = Auth::id();
@@ -183,12 +173,7 @@ class BookAppointment extends Component
         $appointment->description    = $this->description;
         $appointment->photo_paths    = $photoPaths;
         $appointment->pref_date      = $this->pref_date;
-
-        /** * FIX: Convert the time format to HH:mm:ss for MySQL
-         * Even if $this->pref_time is "09:00", this ensures it's "09:00:00"
-         */
         $appointment->pref_time      = date("H:i:s", strtotime($this->pref_time));
-
         $appointment->status         = 'Pending';
         $appointment->save();
 
@@ -198,8 +183,6 @@ class BookAppointment extends Component
 
     public function render()
     {
-        return view('livewire.user.book-appointment', [
-            'fault_catalogue' => self::faultCatalogue(),
-        ]);
+        return view('livewire.user.book-appointment');
     }
 }

@@ -13,7 +13,7 @@
         <div class="relative">
             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
             <input type="email" id="email" wire:model="email" required
-                class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-md px-4 py-3 focus:outline-none focus:border-gray-800 focus:ring-1 focus:ring-gray-800 transition-colors">
+                class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 focus:outline-none focus:border-gray-800 focus:ring-1 focus:ring-gray-800 transition-colors">
             @error('email') <span class="text-red-500 text-xs absolute -bottom-5 left-0">{{ $message }}</span> @enderror
         </div>
 
@@ -25,7 +25,7 @@
 
             <div class="relative">
                 <input :type="show ? 'text' : 'password'" id="password" wire:model="password" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-md px-4 py-3 pr-12 focus:outline-none focus:border-gray-800 focus:ring-1 focus:ring-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 focus:outline-none focus:border-gray-800 focus:ring-1 focus:ring-gray-800 transition-colors">
 
                 <button type="button" @click="show = !show"
                     class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="pt-4">
-            <button type="submit" class="w-full bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-md px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center">
+            <button type="submit" class="w-full bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-[1.25rem] px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center">
                 <span wire:loading.remove wire:target="login">Sign In</span>
                 <span wire:loading wire:target="login">Signing in...</span>
             </button>
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                        <button type="button" @click="open = false" class="inline-flex w-full justify-center rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 sm:w-auto">
+                        <button type="button" @click="open = false" class="inline-flex w-full justify-center rounded-[1.25rem] bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 sm:w-auto">
                             Try Again
                         </button>
                     </div>

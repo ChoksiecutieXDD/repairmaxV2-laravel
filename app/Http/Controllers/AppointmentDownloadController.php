@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\View;
 
 class AppointmentDownloadController extends Controller
 {
-    public function downloadReceipt($appointmentId)
+    public function downloadReceipt(string $appointmentId)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -33,7 +33,7 @@ class AppointmentDownloadController extends Controller
         return $pdf->download('receipt-' . $appointment->tracking_code . '.pdf');
     }
 
-    public function downloadInvoice($appointmentId)
+    public function downloadInvoice(string $appointmentId)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -58,7 +58,7 @@ class AppointmentDownloadController extends Controller
         return $pdf->download('invoice-' . ($appointment->invoice_number ?? $appointment->tracking_code) . '.pdf');
     }
 
-    public function viewReceipt($appointmentId)
+    public function viewReceipt(string $appointmentId)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -76,7 +76,7 @@ class AppointmentDownloadController extends Controller
         ]);
     }
 
-    public function viewInvoice($appointmentId)
+    public function viewInvoice(string $appointmentId)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();

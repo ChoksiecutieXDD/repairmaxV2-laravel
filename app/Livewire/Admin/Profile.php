@@ -88,12 +88,19 @@ class Profile extends Component
 
     public function uploadProfile()
     {
-        $this->validate(['profile_picture' => 'required|image|max:5120']);
+        $this->validate(['profile_picture' => 'required|image|max:2048']);
         $this->dispatch('openCropperModal');
     }
 
     public function handleCroppedImage(string $base64String)
     {
+        // Check size (approximate)
+        $sizeInBytes = (int)(strlen(rtrim($base64String, '=')) * 0.75);
+        if ($sizeInBytes > 2 * 1024 * 1024) {
+            session()->flash('error', 'The cropped image is too large. Max 2MB allowed.');
+            return;
+        }
+
         try {
             // Remove data:image/jpeg;base64, prefix
             $imageData = str_replace('data:image/jpeg;base64,', '', $base64String);
@@ -173,6 +180,7 @@ class Profile extends Component
         $this->currentPassword = '';
         $this->newPassword = '';
         $this->confirmPassword = '';
+        $this->dispatch('password-updated');
     }
 
     public function deleteAccount()

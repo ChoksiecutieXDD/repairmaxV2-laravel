@@ -10,6 +10,7 @@ use Livewire\Attributes\Title;
 #[Title('System Settings | Repairmax')]
 class SystemSettings extends Component
 {
+    public $activeTab = 'settings';
     public $maintenanceMode = false;
     public $emailNotifications = true;
     public $dataBackup = true;

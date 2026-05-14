@@ -21,7 +21,7 @@
             <!-- Modal Header -->
             <div class="px-8 pt-12 pb-6 flex flex-col items-center text-center bg-white relative">
                 <button type="button" @click="infoModal = false"
-                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all focus:outline-none focus:ring-0 group">
+                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
                     <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
                 <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
@@ -59,7 +59,7 @@
                 </section>
             </div>
             <div class="p-6 bg-gray-50 border-t border-gray-100">
-                <button type="button" @click="infoModal = false" class="w-full py-4 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition-all">Got it, thanks!</button>
+                <button type="button" @click="infoModal = false" class="w-full py-4 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all">Got it, thanks!</button>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
             <!-- Modal Header -->
             <div class="px-8 pt-12 pb-8 flex flex-col items-center text-center bg-white relative border-b border-gray-50">
                 <button type="button" @click="calendarModal = false"
-                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all focus:outline-none focus:ring-0 group">
+                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
                     <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
                 <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
@@ -100,8 +100,8 @@
             <!-- Week Navigator -->
             <div class="flex items-center justify-between px-8 py-4 bg-gray-50/50 border-b border-gray-100">
                 <button type="button" wire:click="prevWeek" @disabled($calendar_week_offset <=0)
-                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-xl border border-gray-200 transition-all
-                    {{ $calendar_week_offset <= 0 ? 'text-gray-300 cursor-not-allowed bg-gray-50' : 'text-gray-600 hover:bg-white hover:border-gray-300 hover:shadow-sm' }}">
+                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-[1.25rem] border border-gray-200 transition-all 
+                    {{ $calendar_week_offset <= 0 ? 'text-gray-300 cursor-not-allowed bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm' }}">
                     <span class="material-symbols-outlined text-[18px] leading-none">chevron_left</span>
                     Previous Week
                 </button>
@@ -113,11 +113,11 @@
                         @endif
                     </span>
                     @if($calendar_week_offset > 0)
-                    <button type="button" wire:click="$set('calendar_week_offset', 0); $wire.generateAvailableDays()" class="ml-2 text-[10px] font-black text-blue-500 uppercase tracking-wider hover:text-blue-700">Back to Now</button>
+                    <button type="button" wire:click="$set('calendar_week_offset', 0); $wire.generateAvailableDays()" class="ml-2 bg-transparent text-[10px] font-black text-blue-600 uppercase tracking-wider hover:text-blue-800 shadow-none hover:shadow-none translate-y-0 hover:translate-y-0">Back to Now</button>
                     @endif
                 </div>
                 <button type="button" wire:click="nextWeek"
-                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-white hover:border-gray-300 hover:shadow-sm transition-all">
+                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-[1.25rem] border border-gray-200 bg-white text-gray-900 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm transition-all">
                     Next Week
                     <span class="material-symbols-outlined text-[18px] leading-none">chevron_right</span>
                 </button>
@@ -171,7 +171,7 @@
                             wire:click="selectDateAndTime({{ $dayIndex }}, '{{ $slot }}')"
                             @click="calendarModal = false"
                             @endif
-                            class="w-full h-11 rounded-xl border-2 text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5
+                            class="w-full h-11 rounded-[1.25rem] border-2 text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5
                                                 {{ $isSelected ? 'bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-200'
                                                     : ($isBooked ? 'bg-red-50 border-red-100 text-red-300 cursor-not-allowed'
                                                     : 'bg-gray-50 border-gray-100 text-gray-400 hover:bg-green-50 hover:border-green-300 hover:text-green-600 cursor-pointer') }}">
@@ -194,7 +194,7 @@
 
     <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
         <p class="text-xs text-gray-400 font-medium">Selecting a slot closes this modal and fills in your booking.</p>
-        <button type="button" @click="calendarModal = false" class="px-6 py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all text-sm">Close</button>
+        <button type="button" @click="calendarModal = false" class="px-6 py-3 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all text-sm">Close</button>
     </div>
 </div>
 </div>
@@ -217,7 +217,18 @@
         <h3 class="font-bold text-gray-900">Booking Summary</h3>
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm mb-5">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-5">
+        <!-- Booking ID -->
+        <div class="bg-blue-50 rounded-xl p-3 border border-blue-100">
+            <p class="text-[10px] font-black text-blue-400 uppercase tracking-wider mb-1">Booking ID</p>
+            <p class="font-bold text-blue-700 text-xs leading-snug">
+                @if($pref_date)
+                    {{ $tracking_code }}
+                @else
+                    <span class="text-blue-300 font-normal italic">Select a date</span>
+                @endif
+            </p>
+        </div>
         <!-- Device -->
         <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
             <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Device</p>
@@ -299,24 +310,23 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
                         <label for="device_brand" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Brand</label>
-                        <select id="device_brand" wire:model="device_brand" class="w-full px-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                        <select id="device_brand" wire:model.live="device_brand" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
                             <option value="" disabled selected>Select Brand</option>
-                            <option value="Apple">Apple</option>
-                            <option value="Samsung">Samsung</option>
-                            <option value="Google">Google Pixel</option>
-                            <option value="Xiaomi">Xiaomi</option>
-                            <option value="Huawei">Huawei</option>
-                            <option value="OnePlus">OnePlus</option>
-                            <option value="OPPO">OPPO</option>
-                            <option value="Vivo">Vivo</option>
-                            <option value="Realme">Realme</option>
-                            <option value="Other">Other</option>
+                            @foreach($this->brands as $brand)
+                                <option value="{{ $brand->name }}">{{ $brand->name }}</option>
+                            @endforeach
                         </select>
                         @error('device_brand') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label for="device_model" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Exact Model</label>
-                        <input type="text" id="device_model" wire:model="device_model" placeholder="e.g., iPhone 15 Pro" class="w-full px-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                        <select id="device_model" wire:model="device_model" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required {{ !$device_brand ? 'disabled' : '' }}>
+                            <option value="" disabled selected>{{ !$device_brand ? 'Select brand first' : 'Select Model' }}</option>
+                            @foreach($this->models as $model)
+                                <option value="{{ $model->name }}">{{ $model->name }}</option>
+                            @endforeach
+                            <option value="Other">Other</option>
+                        </select>
                         @error('device_model') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -324,39 +334,24 @@
                 <!-- Fault Category with prices -->
                 <div>
                     <label for="fault_category" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Fault / Issue Type</label>
-                    <select id="fault_category" wire:model.live="fault_category" class="w-full px-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                    <select id="fault_category" wire:model.live="fault_category" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
                         <option value="" disabled selected>Select the primary issue…</option>
-                        @php
-                        $grouped = [];
-                        foreach ($fault_catalogue as $label => $data) {
-                        $grouped[$data['group']][] = ['label' => $label, 'price' => $data['price']];
-                        }
-                        @endphp
-                        @foreach($grouped as $group => $faults)
-                        <optgroup label="— {{ $group }} —">
-                            @foreach($faults as $fault)
-                            <option value="{{ $fault['label'] }}">
-                                {{ $fault['label'] }}
-                                @if($fault['price']) — ₱{{ number_format($fault['price']) }} @else — Quote on inspection @endif
+                        @foreach($this->faultTypes as $fault)
+                            <option value="{{ $fault->name }}">
+                                {{ $fault->name }} — ₱{{ number_format($fault->base_price, 2) }}
                             </option>
-                            @endforeach
-                        </optgroup>
                         @endforeach
                     </select>
                     @error('fault_category') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
 
                     @if($fault_category)
-                    @php $info = $fault_catalogue[$fault_category] ?? null; @endphp
-                    @if($info)
+                    @php $selectedFault = \App\Models\FaultType::where('name', $fault_category)->first(); @endphp
+                    @if($selectedFault)
                     <div class="mt-3 flex items-center gap-2.5 px-4 py-2.5 bg-blue-50 border border-blue-100 rounded-xl">
                         <span class="material-symbols-outlined text-[18px] leading-none text-blue-500 shrink-0">sell</span>
                         <span class="text-sm font-bold text-blue-700 leading-none">
                             Est. starting price:
-                            @if($info['price'])
-                            <span class="text-blue-600">₱{{ number_format($info['price']) }}</span>
-                            @else
-                            <span class="text-blue-600">Quote on inspection</span>
-                            @endif
+                            <span class="text-blue-600">₱{{ number_format($selectedFault->base_price, 2) }}</span>
                         </span>
                         <span class="text-xs text-blue-400 leading-none">· May vary</span>
                     </div>
@@ -373,7 +368,7 @@
                 </h3>
                 <div class="mb-8">
                     <label for="description" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Describe the problem in detail</label>
-                    <textarea id="description" wire:model="description" rows="4" placeholder="How did it happen? Are there any secondary issues?" class="w-full px-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium resize-none" required></textarea>
+                    <textarea id="description" wire:model="description" rows="4" placeholder="How did it happen? Are there any secondary issues?" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium resize-none" required></textarea>
                     @error('description') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                 </div>
 
@@ -393,7 +388,7 @@
                                 </button>
                             </div>
                             @else
-                            <label class="w-full h-full flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50 hover:bg-white hover:border-blue-400 transition-all cursor-pointer group hover:shadow-lg transform hover:-translate-y-0.5">
+                            <label class="w-full h-full flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-[1.25rem] bg-gray-50/50 hover:bg-white hover:border-blue-400 transition-all cursor-pointer group hover:shadow-lg transform hover:-translate-y-0.5">
                                 <input type="file" wire:model="photos.{{ $i }}" class="hidden" accept="image/*">
                                 <span class="material-symbols-outlined text-[28px] leading-none text-gray-300 group-hover:text-blue-400 transition-colors">add_a_photo</span>
                                 <span class="text-[9px] font-black text-gray-400 mt-1.5 group-hover:text-blue-500 uppercase">Slot {{ $i + 1 }}</span>
@@ -436,7 +431,7 @@
                     <button type="button"
                         wire:click="{{ $day['slots_left'] > 0 ? 'selectDate(' . $index . ')' : '' }}"
                         @disabled($day['slots_left'] <=0)
-                        class="flex flex-col items-center justify-center py-4 px-2 rounded-2xl border-2 transition-all transform active:scale-95 relative
+                        class="flex flex-col items-center justify-center py-4 px-2 rounded-[1.25rem] border-2 transition-all transform active:scale-95 relative
                                             {{ $selected_index === $index
                                                 ? 'border-blue-500 bg-blue-500 shadow-xl shadow-blue-200'
                                                 : ($day['slots_left'] <= 0
@@ -490,7 +485,7 @@
                     <button type="button"
                         @if(!$isBooked) wire:click="selectTime('{{ $slot }}')" @endif
                         @disabled($isBooked)
-                        class="py-4 px-2 rounded-2xl border-2 font-black text-xs uppercase tracking-wider transition-all flex flex-col items-center gap-1
+                        class="py-4 px-2 rounded-[1.25rem] border-2 font-black text-xs uppercase tracking-wider transition-all flex flex-col items-center gap-1
                                                     {{ $isSelected
                                                         ? 'border-blue-500 bg-white text-blue-700 shadow-lg ring-4 ring-blue-50/50 scale-[1.02]'
                                                         : ($isBooked
@@ -522,7 +517,7 @@
 
     <!-- Submit -->
     <div class="pt-6 border-t border-gray-100 flex justify-end">
-        <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 text-base rounded-xl font-bold transition-all shadow-lg hover:shadow-gray-200 disabled:opacity-70" wire:loading.attr="disabled">
+        <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 text-base rounded-[1.25rem] font-bold transition-all shadow-lg hover:shadow-gray-200 disabled:opacity-70" wire:loading.attr="disabled">
             <span class="material-symbols-outlined text-[20px] leading-none" wire:loading.remove wire:target="submit">check_circle</span>
             <span class="material-symbols-outlined text-[20px] animate-spin leading-none" wire:loading wire:target="submit">progress_activity</span>
             Confirm Repair Booking

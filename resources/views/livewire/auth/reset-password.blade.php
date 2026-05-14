@@ -21,7 +21,7 @@
                 Your password has been successfully updated. You can now log in to your Repairmax account with your new credentials.
             </p>
 
-            <a href="/login" wire:navigate class="w-full bg-[#0B1120] text-white font-medium rounded-md px-4 py-3 hover:bg-gray-800 transition-colors shadow-sm block">
+            <a href="/login" wire:navigate class="w-full bg-[#0B1120] text-white font-medium rounded-[1.25rem] px-4 py-3 hover:bg-gray-800 transition-colors shadow-sm block">
                 Return to Log in
             </a>
         </div>
@@ -77,7 +77,7 @@
             <div class="relative">
                 <input :type="show ? 'text' : 'password'" id="password"
                     wire:model="password" @input="pwd = $event.target.value" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-md px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
 
                 <button type="button" @click="show = !show"
                     class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
@@ -141,7 +141,7 @@
             <div class="relative">
                 <input :type="showConfirm ? 'text' : 'password'" id="password_confirmation"
                     wire:model="password_confirmation" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-md px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
 
                 <button type="button" @click="showConfirm = !showConfirm"
                     class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
@@ -154,7 +154,7 @@
 
         <div class="pt-6">
             <button type="submit"
-                class="w-full bg-[#0B1120] hover:bg-gray-800 text-gray-100 font-medium rounded-md px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center text-white"
+                class="w-full bg-[#0B1120] hover:bg-gray-800 text-gray-100 font-medium rounded-[1.25rem] px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center text-white"
                 wire:loading.attr="disabled">
                 <span wire:loading.remove>Reset Password</span>
                 <span wire:loading>Updating...</span>

@@ -84,8 +84,8 @@ class Profile extends Component
     public function handleCroppedImage(string $base64Data)
     {
         $sizeInBytes = (int)(strlen(rtrim($base64Data, '=')) * 0.75);
-        if ($sizeInBytes > 1024 * 1024) {
-            $this->dispatch('toast', message: 'Image is too large. Max 1MB allowed.', type: 'error');
+        if ($sizeInBytes > 2 * 1024 * 1024) {
+            $this->dispatch('toast', message: 'Image is too large. Max 2MB allowed.', type: 'error');
             $this->cropped_image = null;
             return;
         }
@@ -174,6 +174,7 @@ class Profile extends Component
         ]);
 
         $this->reset(['current_password', 'new_password', 'confirm_password']);
+        $this->dispatch('password-updated');
         $this->dispatch('toast', message: 'Password updated successfully!', type: 'success');
     }
 

@@ -171,8 +171,8 @@
                         @change="
                         const file = $event.target.files[0];
                         if (file) {
-                            if (file.size > 1024 * 1024) {
-                                window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Image must be under 1MB', type: 'error' } }));
+                            if (file.size > 2 * 1024 * 1024) {
+                                window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Image must be under 2MB', type: 'error' } }));
                                 return;
                             }
                             const reader = new FileReader();
@@ -185,11 +185,14 @@
                         }
                     ">
 
-                    <button type="button" @click="$refs.fileInput.click()"
-                        class="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900 w-full max-w-[200px] py-2.5 rounded-xl font-semibold transition-colors border border-gray-200 text-sm">
-                        <span class="material-symbols-outlined text-[18px]">photo_camera</span>
-                        Change Photo
-                    </button>
+                    <div class="mt-4 flex flex-col items-center gap-2 w-full">
+                        <button type="button" @click="$refs.fileInput.click()"
+                            class="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900 w-full max-w-[200px] py-2.5 rounded-xl font-semibold transition-colors border border-gray-200 text-sm">
+                            <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                            Change Photo
+                        </button>
+                        <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Max Size: 2MB</span>
+                    </div>
                 </div>
 
                 <div class="lg:w-3/4">
@@ -536,10 +539,11 @@
 
 
                         <div class="flex justify-end pt-8">
-                            <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 rounded-xl font-bold transition-all shadow-xl hover:shadow-gray-200 transform hover:-translate-y-0.5 active:translate-y-0">
+                            <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 rounded-xl font-bold transition-all shadow-xl hover:shadow-gray-200 transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed" wire:loading.attr="disabled" wire:target="updateProfile">
                                 <span class="material-symbols-outlined text-[20px]" wire:loading.remove wire:target="updateProfile">check_circle</span>
                                 <span class="material-symbols-outlined text-[20px] animate-spin" wire:loading wire:target="updateProfile">progress_activity</span>
-                                Save Changes
+                                <span wire:loading.remove wire:target="updateProfile">Save Changes</span>
+                                <span wire:loading wire:target="updateProfile">Saving...</span>
                             </button>
                         </div>
 
@@ -549,37 +553,126 @@
         </div>
 
         <!-- Password Update Section -->
-        <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 md:p-10 mb-8">
+        <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 md:p-10 mb-8"
+            x-data="{ 
+                showCurrent: false,
+                showNew: false,
+                showConfirm: false,
+                pwd: '',
+                get score() {
+                    let s = 0;
+                    if (this.pwd.length >= 8) s++;
+                    if (/[A-Z]/.test(this.pwd) && /[a-z]/.test(this.pwd)) s++;
+                    if (/[0-9]/.test(this.pwd)) s++;
+                    if (/[\W_]/.test(this.pwd)) s++;
+                    return s;
+                },
+                get strengthLabel() {
+                    if (this.score === 0) return '';
+                    if (this.score === 1) return 'Weak';
+                    if (this.score === 2 || this.score === 3) return 'Medium';
+                    if (this.score === 4) return 'Strong';
+                },
+                get meterColor() {
+                    if (this.score <= 1) return 'bg-red-500';
+                    if (this.score <= 3) return 'bg-yellow-500';
+                    return 'bg-green-500';
+                },
+                get meterWidth() {
+                    if (this.score === 0) return '0%';
+                    if (this.score === 1) return '25%';
+                    if (this.score === 2) return '50%';
+                    if (this.score === 3) return '75%';
+                    return '100%';
+                }
+            }"
+            @password-updated.window="pwd = ''">
             <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-6 flex items-center gap-2">
                 <span class="material-symbols-outlined text-gray-400">lock</span>
                 Security & Password
             </h3>
 
             <form wire:submit="updatePassword" class="space-y-6 w-full">
-                <div>
+                <div class="relative">
                     <label for="current_password_input" class="block text-sm font-bold text-gray-700 mb-2">Current Password</label>
-                    <input type="password" id="current_password_input" wire:model="current_password" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-all text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
+                    <div class="relative">
+                        <input :type="showCurrent ? 'text' : 'password'" id="current_password_input" wire:model="current_password" class="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-all text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
+                        <button type="button" @click="showCurrent = !showCurrent" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-gray-600 bg-transparent border-none shadow-none">
+                            <span class="material-symbols-outlined select-none text-xl" x-text="showCurrent ? 'visibility' : 'visibility_off'">visibility_off</span>
+                        </button>
+                    </div>
                     @error('current_password') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
+                    <div class="relative">
                         <label for="new_password_input" class="block text-sm font-bold text-gray-700 mb-2">New Password</label>
-                        <input type="password" id="new_password_input" wire:model="new_password" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-all text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
+                        <div class="relative">
+                            <input :type="showNew ? 'text' : 'password'" id="new_password_input" wire:model="new_password" @input="pwd = $event.target.value" class="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-all text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
+                            <button type="button" @click="showNew = !showNew" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-gray-600 bg-transparent border-none shadow-none">
+                                <span class="material-symbols-outlined select-none text-xl" x-text="showNew ? 'visibility' : 'visibility_off'">visibility_off</span>
+                            </button>
+                        </div>
                         @error('new_password') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
-                    <div>
+                    <div class="relative">
                         <label for="confirm_password_input" class="block text-sm font-bold text-gray-700 mb-2">Confirm New Password</label>
-                        <input type="password" id="confirm_password_input" wire:model="confirm_password" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-all text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
+                        <div class="relative">
+                            <input :type="showConfirm ? 'text' : 'password'" id="confirm_password_input" wire:model="confirm_password" class="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white transition-all text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
+                            <button type="button" @click="showConfirm = !showConfirm" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-gray-600 bg-transparent border-none shadow-none">
+                                <span class="material-symbols-outlined select-none text-xl" x-text="showConfirm ? 'visibility' : 'visibility_off'">visibility_off</span>
+                            </button>
+                        </div>
                         @error('confirm_password') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
                 </div>
 
+                <!-- Password Criteria -->
+                <div class="mt-4 text-sm text-gray-500 p-6 bg-gray-50 rounded-2xl border border-gray-100"
+                    x-cloak x-show="pwd.length > 0" x-transition>
+
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-gray-700 text-xs uppercase tracking-wider">Password Strength:</span>
+                            <span class="font-bold transition-colors duration-300 text-xs uppercase"
+                                :class="{ 'text-red-500': score <= 1, 'text-yellow-600': score > 1 && score <= 3, 'text-green-500': score === 4 }"
+                                x-text="strengthLabel"></span>
+                        </div>
+                        <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full transition-all duration-300 rounded-full" :class="meterColor" :style="`width: ${meterWidth}`"></div>
+                        </div>
+                    </div>
+
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                        <li class="flex items-center gap-2 transition-colors duration-300" :class="pwd.length >= 8 ? 'text-green-600' : 'text-gray-400'">
+                            <span class="material-symbols-outlined text-[18px]" x-text="pwd.length >= 8 ? 'check_circle' : 'radio_button_unchecked'">radio_button_unchecked</span>
+                            <span class="text-xs font-medium">8+ characters</span>
+                        </li>
+                        <li class="flex items-center gap-2 transition-colors duration-300" :class="(/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) ? 'text-green-600' : 'text-gray-400'">
+                            <span class="material-symbols-outlined text-[18px]" x-text="(/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) ? 'check_circle' : 'radio_button_unchecked'">radio_button_unchecked</span>
+                            <span class="text-xs font-medium">Upper & lowercase</span>
+                        </li>
+                        <li class="flex items-center gap-2 transition-colors duration-300" :class="/[0-9]/.test(pwd) ? 'text-green-600' : 'text-gray-400'">
+                            <span class="material-symbols-outlined text-[18px]" x-text="/[0-9]/.test(pwd) ? 'check_circle' : 'radio_button_unchecked'">radio_button_unchecked</span>
+                            <span class="text-xs font-medium">At least one number</span>
+                        </li>
+                        <li class="flex items-center gap-2 transition-colors duration-300" :class="/[\W_]/.test(pwd) ? 'text-green-600' : 'text-gray-400'">
+                            <span class="material-symbols-outlined text-[18px]" x-text="/[\W_]/.test(pwd) ? 'check_circle' : 'radio_button_unchecked'">radio_button_unchecked</span>
+                            <span class="text-xs font-medium">At least one symbol</span>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="flex justify-end pt-4">
-                    <button type="submit" class="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900 px-6 py-3 rounded-xl font-bold transition-all border border-gray-200 text-sm">
+                    <button type="submit" 
+                        :disabled="pwd.length > 0 && score < 2"
+                        :class="pwd.length > 0 && score < 2 ? 'opacity-50 cursor-not-allowed bg-gray-400' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'"
+                        class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border border-gray-200 text-sm disabled:opacity-70 disabled:cursor-not-allowed"
+                        wire:loading.attr="disabled">
                         <span class="material-symbols-outlined text-[18px]" wire:loading.remove wire:target="updatePassword">key</span>
                         <span class="material-symbols-outlined text-[18px] animate-spin" wire:loading wire:target="updatePassword">progress_activity</span>
-                        Update Password
+                        <span wire:loading.remove wire:target="updatePassword">Update Password</span>
+                        <span wire:loading wire:target="updatePassword">Processing...</span>
                     </button>
                 </div>
             </form>

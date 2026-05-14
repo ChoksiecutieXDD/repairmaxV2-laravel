@@ -60,7 +60,7 @@
             @endforeach
 
             <a href="/booking" id="book-btn"
-                class="px-6 py-2.5 text-sm md:text-base font-bold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 lg:ml-2"
+                class="px-6 py-2.5 text-sm md:text-base font-bold rounded-[1.25rem] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 lg:ml-2"
                 :class="isSolid ? 'bg-gray-900 text-white hover:bg-gray-700' : 'bg-white text-gray-900 hover:bg-gray-200'"
                 role="menuitem">
                 Book Repair

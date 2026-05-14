@@ -8,7 +8,7 @@
 
     <!-- Key Metrics -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+        <div class="bg-white p-6 rounded-[1.25rem] border border-gray-200 shadow-sm">
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Avg Repair Time</p>
@@ -21,7 +21,7 @@
             <p class="text-sm text-gray-600">Average service duration</p>
         </div>
 
-        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+        <div class="bg-white p-6 rounded-[1.25rem] border border-gray-200 shadow-sm">
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Customer Satisfaction</p>
@@ -34,7 +34,7 @@
             <p class="text-sm text-gray-600">Based on reviews</p>
         </div>
 
-        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+        <div class="bg-white p-6 rounded-[1.25rem] border border-gray-200 shadow-sm">
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Repeat Customers</p>
@@ -47,7 +47,7 @@
             <p class="text-sm text-gray-600">Customer retention rate</p>
         </div>
 
-        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+        <div class="bg-white p-6 rounded-[1.25rem] border border-gray-200 shadow-sm">
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Warranty Claims</p>
@@ -64,20 +64,20 @@
     <!-- Charts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
         <!-- Revenue Trend -->
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
             <h3 class="text-lg font-bold text-gray-900 mb-6">Revenue Trend (7 Days)</h3>
             <canvas id="revenueChart"></canvas>
         </div>
 
         <!-- Repair Status Distribution -->
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
             <h3 class="text-lg font-bold text-gray-900 mb-6">Repair Status Distribution</h3>
             <canvas id="statusChart"></canvas>
         </div>
     </div>
 
     <!-- Service Type Trends -->
-    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-10">
+    <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6 mb-10">
         <h3 class="text-lg font-bold text-gray-900 mb-6">Service Type Trends (7 Days)</h3>
         <canvas id="serviceChart"></canvas>
     </div>

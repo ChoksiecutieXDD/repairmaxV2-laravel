@@ -47,24 +47,7 @@
                 'lg:-translate-x-full': sidebarCollapsed, 
                 'lg:translate-x-0': !sidebarCollapsed 
             }"
-            class="fixed left-0 top-0 h-screen w-64 bg-gray-900 border-r border-gray-800 transition-transform duration-300 ease-in-out z-40 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.1)] lg:shadow-none"
-            x-data="{
-                notificationsOpen: false,
-                notifications: [],
-                unreadCount: 0,
-                async loadNotifications() {
-                    try {
-                        const response = await fetch('/admin/api/notifications');
-                        const data = await response.json();
-                        this.notifications = data.notifications.slice(0, 5);
-                        this.unreadCount = data.unreadCount;
-                    } catch (error) {
-                        console.error('Failed to load notifications:', error);
-                    }
-                }
-            }"
-            @load="loadNotifications()"
-            @notify.window="unreadCount = $event.detail.count; loadNotifications()">
+            class="fixed left-0 top-0 h-screen w-64 bg-gray-900 border-r border-gray-800 transition-transform duration-300 ease-in-out z-40 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.1)] lg:shadow-none">
 
             <div class="h-20 flex items-center justify-between px-6 bg-gray-900 border-b border-gray-800 shrink-0">
                 <a href="/" class="text-2xl font-bold text-white hover:text-gray-300 transition-colors tracking-tight flex items-center">
@@ -81,7 +64,6 @@
                 <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Main</h3>
                     <x-sidebar.link href="/admin/dashboard" icon="dashboard" :active="request()->is('admin/dashboard')">Dashboard</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.overview') }}" icon="dashboard" :active="request()->routeIs('admin.overview')">Overview</x-sidebar.link>
                     <x-sidebar.link href="/admin/profile" icon="person" :active="request()->is('admin/profile')">Profile</x-sidebar.link>
                 </div>
 
@@ -93,8 +75,7 @@
 
                 <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Inventory</h3>
-                    <x-sidebar.link href="/admin/inventory" icon="inventory_2" :active="request()->is('admin/inventory')">Inventory</x-sidebar.link>
-                    <x-sidebar.link href="/admin/inventory-management" icon="settings_applications" :active="request()->is('admin/inventory-management')">Management</x-sidebar.link>
+                    <x-sidebar.link href="/admin/inventory" icon="inventory_2" :active="request()->is('admin/inventory') || request()->is('admin/inventory-management')">Inventory</x-sidebar.link>
                 </div>
 
                 <div class="mb-6">
@@ -104,7 +85,10 @@
 
                 <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Notifications</h3>
-                    <x-sidebar.link href="{{ route('admin.notifications') }}" icon="notifications" :active="request()->routeIs('admin.notifications')">Notifications</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.notifications') }}" icon="notifications" :active="request()->routeIs('admin.notifications')">
+                        Notifications
+                        @livewire('notification-badge', ['type' => 'admin'])
+                    </x-sidebar.link>
                 </div>
 
                 <div class="mb-6">
@@ -120,9 +104,9 @@
                 </div>
 
                 <div>
-                    <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">System</h3>
-                    <x-sidebar.link href="/admin/settings" icon="tune" :active="request()->is('admin/settings')">Settings</x-sidebar.link>
-                    <x-sidebar.link href="/admin/system-settings" icon="settings" :active="request()->is('admin/system-settings')">System</x-sidebar.link>
+                    <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Settings</h3>
+                    <x-sidebar.link href="{{ route('admin.overview') }}" icon="grid_view" :active="request()->routeIs('admin.overview')">System Overview</x-sidebar.link>
+                    <x-sidebar.link href="/admin/settings" icon="settings" :active="request()->is('admin/settings') || request()->is('admin/system-settings')">System Settings</x-sidebar.link>
                 </div>
             </nav>
 
@@ -132,7 +116,7 @@
                     <div class="flex items-center gap-3 overflow-hidden">
                         <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Admin') }}&background=2563eb&color=ffffff&bold=true"
                             alt="Profile"
-                            class="w-10 h-10 rounded-full border border-gray-600 object-cover shadow-sm bg-blue-600 shrink-0">
+                            class="w-10 h-10 rounded-[1.25rem] border border-gray-600 object-cover shadow-sm bg-blue-600 shrink-0">
                         <div class="flex flex-col overflow-hidden">
                             <span class="text-sm font-semibold text-gray-100 leading-tight truncate">
                                 {{ auth()->user()->first_name ?? auth()->user()->name ?? 'Admin User' }}
@@ -143,55 +127,11 @@
                         </div>
                     </div>
 
-                    <div class="relative" x-data="{ notifDropdown: false }">
-                        <button @click="notifDropdown = !notifDropdown" class="relative p-1.5 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white focus:outline-none shrink-0" aria-label="Notifications" title="View notifications">
-                            <span class="material-symbols-outlined text-[24px]">notifications</span>
-                            <template x-if="unreadCount > 0">
-                                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                            </template>
-                        </button>
 
-                        <!-- Notification Dropdown -->
-                        <div x-show="notifDropdown" @click.outside="notifDropdown = false"
-                            class="absolute right-0 bottom-full mb-2 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-50 overflow-hidden"
-                            x-cloak>
-                            <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
-                                <h3 class="font-bold text-gray-900">Notifications <span class="text-xs text-gray-500" x-show="unreadCount > 0" x-text="'(' + unreadCount + ' new)'"></span></h3>
-                                <a href="/admin/notifications" class="text-xs text-blue-600 hover:text-blue-700 font-medium">View All</a>
-                            </div>
-                            <div class="max-h-96 overflow-y-auto divide-y divide-gray-100">
-                                <template x-if="notifications.length > 0">
-                                    <template x-for="notification in notifications" :key="notification.id">
-                                        <div class="px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer" @click="window.location.href = '/admin/notifications'">
-                                            <div class="flex gap-2">
-                                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 text-sm">
-                                                    <span class="material-symbols-outlined text-[16px]" x-text="notification.icon">notifications</span>
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-medium text-gray-900 truncate" x-text="notification.title"></p>
-                                                    <p class="text-xs text-gray-500 truncate" x-text="notification.message"></p>
-                                                    <p class="text-xs text-gray-400 mt-1" x-text="notification.time"></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </template>
-                                <template x-if="notifications.length === 0">
-                                    <div class="px-4 py-8 text-center text-gray-500">
-                                        <span class="material-symbols-outlined text-4xl text-gray-300">notifications_off</span>
-                                        <p class="text-sm mt-2">No new notifications</p>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="px-4 py-3 border-t border-gray-100 bg-gray-50">
-                                <a href="/admin/notifications" class="block text-center text-sm text-blue-600 hover:text-blue-700 font-medium py-2">Go to Notifications</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 @endauth
 
-                <a href="{{ route('logout') }}" class="flex items-center gap-3 px-3 py-2.5 text-red-400 hover:text-white hover:bg-red-500/20 rounded-lg transition-all duration-200 group">
+                <a href="{{ route('logout') }}" class="flex items-center gap-3 px-3 py-2.5 text-red-400 hover:text-white hover:bg-red-500/20 rounded-[1.25rem] transition-all duration-200 group">
                     <span class="material-symbols-outlined text-[22px]">logout</span>
                     <span class="font-medium text-sm">Logout</span>
                 </a>
@@ -204,7 +144,7 @@
             <div class="flex items-center px-4 md:px-8 w-full">
 
                 <button @click="window.innerWidth >= 1024 ? sidebarCollapsed = !sidebarCollapsed : sidebarOpen = !sidebarOpen"
-                    class="inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-200/50 rounded-lg transition-colors text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 shrink-0">
+                    class="inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-200/50 rounded-[1.25rem] transition-colors text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 shrink-0">
                     <span class="material-symbols-outlined text-[26px]"
                         x-text="(window.innerWidth >= 1024 ? !sidebarCollapsed : sidebarOpen) ? 'menu_open' : 'menu'">
                     </span>

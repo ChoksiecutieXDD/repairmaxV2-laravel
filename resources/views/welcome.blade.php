@@ -17,11 +17,11 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <a href="/booking" class="w-full sm:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-gray-900 bg-white hover:bg-gray-200 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1">
+                    <a href="/booking" class="w-full sm:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-gray-900 bg-white hover:bg-gray-200 rounded-[1.25rem] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1">
                         <span class="material-symbols-outlined mr-2">bolt</span>
                         Start Your Repair
                     </a>
-                    <a href="/track-status" class="w-full sm:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-transparent border-2 border-white/30 hover:bg-white/10 hover:border-white/50 rounded-full transition-all duration-300 backdrop-blur-md">
+                    <a href="/track-status" class="w-full sm:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-transparent border-2 border-white/30 hover:bg-white/10 hover:border-white/50 rounded-[1.25rem] transition-all duration-300 backdrop-blur-md">
                         <span class="material-symbols-outlined mr-2">search</span>
                         Track Status
                     </a>

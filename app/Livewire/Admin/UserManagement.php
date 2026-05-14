@@ -43,6 +43,11 @@ class UserManagement extends Component
     // Messages
     public $successMessage = '';
     public $errorMessage = '';
+    
+    // Delete Confirmation
+    public $showDeleteConfirmationModal = false;
+    public $userToDeleteId = null;
+    public $userToDeleteName = '';
 
     public function updatingSearch()
     {
@@ -313,33 +318,52 @@ class UserManagement extends Component
         User::find($userId)?->update(['is_active' => true]);
     }
 
-    public function deleteUser($userId)
+    public function confirmDeleteUser($userId)
     {
-        try {
-            $user = User::find($userId);
-            
-            if (!$user) {
-                $this->errorMessage = 'User not found';
-                return;
-            }
-
-            // Prevent deleting the current logged-in user
+        $user = User::find($userId);
+        if ($user) {
             if ($user->id === auth()->id()) {
                 $this->errorMessage = 'Cannot delete your own account';
                 return;
             }
+            $this->userToDeleteId = $userId;
+            $this->userToDeleteName = $user->first_name . ' ' . $user->last_name;
+            $this->showDeleteConfirmationModal = true;
+        }
+    }
+
+    public function cancelDeleteUser()
+    {
+        $this->showDeleteConfirmationModal = false;
+        $this->userToDeleteId = null;
+        $this->userToDeleteName = '';
+    }
+
+    public function deleteUser()
+    {
+        try {
+            if (!$this->userToDeleteId) return;
+
+            $user = User::find($this->userToDeleteId);
+            
+            if (!$user) {
+                $this->errorMessage = 'User not found';
+                $this->cancelDeleteUser();
+                return;
+            }
 
             $userName = $user->first_name . ' ' . $user->last_name;
-            
-            // Admin profile will be deleted automatically due to cascade delete
             $user->delete();
             
             $this->successMessage = "✅ User deleted successfully! ($userName)";
-            Log::info('User deleted: ' . $userName . ' (ID: ' . $userId . ')');
+            Log::info('User deleted: ' . $userName . ' (ID: ' . $this->userToDeleteId . ')');
+            
+            $this->cancelDeleteUser();
             
         } catch (\Exception $e) {
             $this->errorMessage = 'Error deleting user: ' . $e->getMessage();
             Log::error('Error deleting user: ' . $e->getMessage());
+            $this->cancelDeleteUser();
         }
     }
 
