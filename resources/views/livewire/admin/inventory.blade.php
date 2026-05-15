@@ -43,9 +43,9 @@
         </div>
     </div>
 
-    <!-- Search & Add -->
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-        <div class="relative flex-1 w-full h-[60px]">
+    <!-- Search & Add - Centered Layout -->
+    <div class="flex flex-col items-center gap-4 mb-6">
+        <div class="relative w-full max-w-2xl h-[60px]">
             <span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-[24px]">search</span>
             <input type="text" wire:model.live="search" placeholder="Search brands, items, or fault types..." class="w-full h-full pl-14 pr-6 bg-white border border-gray-200 rounded-[1.25rem] focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all text-sm font-black text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:font-bold">
         </div>
@@ -58,36 +58,36 @@
 
     <!-- Records Table -->
     <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm overflow-hidden">
-        <table class="min-w-full">
+        <table class="w-full">
             <thead>
                 <tr class="bg-gray-50 border-b border-gray-100">
-                    <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Name</th>
+                    <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest flex-1">Name</th>
                     @if($activeTab === 'items')
-                        <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Brand</th>
-                        <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">SKU</th>
-                        <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Stock</th>
+                        <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest flex-1">Brand</th>
+                        <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest flex-1">SKU</th>
+                        <th class="px-6 py-4 text-center text-[10px] font-black text-gray-400 uppercase tracking-widest flex-1">Stock</th>
                     @elseif($activeTab === 'fault')
-                        <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Base Price</th>
+                        <th class="px-6 py-4 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest flex-1">Base Price</th>
                     @endif
-                    <th class="px-6 py-4 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">Actions</th>
+                    <th class="px-6 py-4 text-center text-[10px] font-black text-gray-400 uppercase tracking-widest flex-1">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @forelse($records as $record)
                     <tr class="hover:bg-gray-50 transition-all group">
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 flex-1">
                             <span class="font-bold text-gray-900">{{ $record->name }}</span>
                         </td>
                         @if($activeTab === 'items')
-                            <td class="px-6 py-4 text-gray-600 text-sm">{{ $record->brand->name ?? 'N/A' }}</td>
-                            <td class="px-6 py-4 font-mono text-[10px] text-gray-400 bg-gray-50/50 rounded px-2 py-0.5 inline-block mt-3.5 ml-6">{{ $record->sku }}</td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 flex-1 text-gray-600 text-sm">{{ $record->brand->name ?? 'N/A' }}</td>
+                            <td class="px-6 py-4 flex-1 font-mono text-[10px] text-gray-400 bg-gray-50/50 rounded px-2 py-0.5 inline-block">{{ $record->sku }}</td>
+                            <td class="px-6 py-4 flex-1 text-center">
                                 <span class="font-bold text-sm {{ $record->quantity <= 10 ? 'text-red-600' : 'text-gray-900' }}">{{ $record->quantity }}</span>
                             </td>
                         @elseif($activeTab === 'fault')
-                            <td class="px-6 py-4 text-blue-600 font-black">₱{{ number_format($record->base_price, 2) }}</td>
+                            <td class="px-6 py-4 flex-1 text-right text-blue-600 font-black">₱{{ number_format($record->base_price, 2) }}</td>
                         @endif
-                        <td class="px-6 py-4 text-right space-x-2">
+                        <td class="px-6 py-4 flex-1 text-center flex items-center justify-center space-x-2">
                             <button wire:click="editRecord('{{ $activeTab === 'items' ? 'item' : $activeTab }}', {{ $record->id }})" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-all opacity-0 group-hover:opacity-100">
                                 <span class="material-symbols-outlined text-[20px]">edit</span>
                             </button>

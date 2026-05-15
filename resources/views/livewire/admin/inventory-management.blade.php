@@ -1,10 +1,10 @@
 <div class="w-full">
-    <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
+    <div class="mb-8 flex flex-col items-center gap-4">
+        <div class="text-center">
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Inventory Management</h1>
             <p class="text-gray-500 mt-1">Add, edit, and manage inventory items.</p>
         </div>
-        <button wire:click="createItem" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 rounded-lg font-bold shadow-md transition-colors">
+        <button wire:click="createItem" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-6 py-3 rounded-lg font-bold shadow-md transition-colors">
             <span class="material-symbols-outlined text-[20px]">add</span>
             Add Item
         </button>
@@ -61,38 +61,40 @@
             <label class="block text-sm font-medium text-gray-700">Search</label>
             <input wire:model="search" type="text" class="mt-2 block w-full p-2 border rounded-md" placeholder="Search by name, category, SKU" />
 
-            <div class="mt-6 overflow-x-auto">
-                <table class="min-w-full text-sm text-left">
+            <div class="mt-6 overflow-x-auto rounded-lg border border-gray-200">
+                <table class="w-full text-sm text-left">
                     <thead>
                         <tr class="border-b border-gray-100 bg-gray-50">
-                            <th class="px-3 py-2">Item</th>
-                            <th class="px-3 py-2">SKU</th>
-                            <th class="px-3 py-2">Stock</th>
-                            <th class="px-3 py-2">Unit</th>
-                            <th class="px-3 py-2">Value</th>
-                            <th class="px-3 py-2">Actions</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 flex-1">Item</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 flex-1">SKU</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 flex-1 text-center">Stock</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 flex-1 text-right">Unit Price</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 flex-1 text-right">Total Value</th>
+                            <th class="px-4 py-3 font-bold text-gray-700 flex-1 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($items as $item)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-2">{{ $item->name }}</td>
-                                <td class="px-3 py-2">{{ $item->sku }}</td>
-                                <td class="px-3 py-2">{{ $item->quantity }}</td>
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-4 py-3 font-medium text-gray-900 flex-1">{{ $item->name }}</td>
+                                <td class="px-4 py-3 text-gray-600 flex-1">{{ $item->sku }}</td>
+                                <td class="px-4 py-3 text-center flex-1">{{ $item->quantity }}</td>
                                 @php
                                     $unitDecimals = fmod($item->unit_price, 1) > 0 ? 2 : 0;
                                     $totalItemDecimals = fmod($item->total_value, 1) > 0 ? 2 : 0;
                                 @endphp
-                                <td class="px-3 py-2">₱{{ number_format($item->unit_price, $unitDecimals, '.', ',') }}</td>
-                                <td class="px-3 py-2">₱{{ number_format($item->total_value, $totalItemDecimals, '.', ',') }}</td>
-                                <td class="px-3 py-2">
-                                    <button wire:click="editItem({{ $item->id }})" class="text-blue-600 hover:text-blue-800 text-xs font-medium">Edit</button>
-                                    <button wire:click="deleteItem({{ $item->id }})" class="text-red-600 hover:text-red-800 text-xs font-medium ml-2">Delete</button>
+                                <td class="px-4 py-3 text-right text-blue-600 font-semibold flex-1">₱{{ number_format($item->unit_price, $unitDecimals, '.', ',') }}</td>
+                                <td class="px-4 py-3 text-right text-green-600 font-semibold flex-1">₱{{ number_format($item->total_value, $totalItemDecimals, '.', ',') }}</td>
+                                <td class="px-4 py-3 flex-1">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button wire:click="editItem({{ $item->id }})" class="text-blue-600 hover:text-blue-800 text-xs font-bold px-2 py-1 hover:bg-blue-50 rounded transition-colors">Edit</button>
+                                        <button wire:click="deleteItem({{ $item->id }})" class="text-red-600 hover:text-red-800 text-xs font-bold px-2 py-1 hover:bg-red-50 rounded transition-colors">Delete</button>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-3 py-4 text-center text-gray-500">No items found.</td>
+                                <td colspan="6" class="px-4 py-6 text-center text-gray-500 italic">No items found.</td>
                             </tr>
                         @endforelse
                     </tbody>

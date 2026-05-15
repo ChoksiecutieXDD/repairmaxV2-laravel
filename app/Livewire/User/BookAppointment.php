@@ -11,6 +11,8 @@ use App\Models\Appointment;
 use App\Models\Brand;
 use App\Models\InventoryItem;
 use App\Models\FaultType;
+use App\Models\Notification;
+use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 
@@ -176,6 +178,23 @@ class BookAppointment extends Component
         $appointment->pref_time      = date("H:i:s", strtotime($this->pref_time));
         $appointment->status         = 'Pending';
         $appointment->save();
+
+        // Create notifications for all admins
+        $admins = User::where('role', 'admin')->get();
+        $userFullName = Auth::user()->first_name . ' ' . Auth::user()->last_name;
+        
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'admin_id' => $admin->id,
+                'title' => 'New Appointment Booking',
+                'message' => $userFullName . ' has booked an appointment (Tracking: ' . $trackingCode . ') for ' . $this->device_brand . ' - ' . $this->fault_category,
+                'type' => 'appointment_booked',
+                'related_model' => 'Appointment',
+                'related_id' => $appointment->id,
+                'is_read' => false,
+            ]);
+        }
 
         session()->flash('success', 'Booking confirmed! Tracking code: ' . $trackingCode);
         return redirect()->route('user.dashboard');
