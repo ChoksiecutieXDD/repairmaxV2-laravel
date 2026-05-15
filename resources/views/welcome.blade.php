@@ -502,4 +502,5 @@
             </div>
         </div>
     </section>
+    <!-- Application update trigger -->
 </x-layouts.landing>
