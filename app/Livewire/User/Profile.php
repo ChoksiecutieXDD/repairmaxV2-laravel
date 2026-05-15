@@ -6,6 +6,8 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
+use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\WithFileUploads;
@@ -150,6 +152,22 @@ class Profile extends Component
 
         $user->update($data);
 
+        // Notify admins of profile update
+        $admins = User::where('role', 'admin')->get();
+        $userName = $user->first_name . ' ' . $user->last_name;
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'admin_id' => $admin->id,
+                'title' => 'User Profile Updated',
+                'message' => $userName . ' updated their profile information',
+                'type' => 'profile_updated',
+                'related_model' => 'User',
+                'related_id' => $user->id,
+                'is_read' => false,
+            ]);
+        }
+
         $this->dispatch('toast', message: 'Profile updated successfully!', type: 'success');
     }
 
@@ -184,6 +202,22 @@ class Profile extends Component
         $user = Auth::user();
 
         try {
+            // Notify admins of account deletion
+            $admins = User::where('role', 'admin')->get();
+            $userName = $user->first_name . ' ' . $user->last_name;
+            foreach ($admins as $admin) {
+                Notification::create([
+                    'user_id' => $admin->id,
+                    'admin_id' => $admin->id,
+                    'title' => 'User Account Deleted',
+                    'message' => 'User ' . $userName . ' (' . $user->email . ') has deleted their account',
+                    'type' => 'account_deleted',
+                    'related_model' => 'User',
+                    'related_id' => $user->id,
+                    'is_read' => false,
+                ]);
+            }
+
             if ($user->profile_picture) {
                 Storage::disk('public')->delete($user->profile_picture);
             }

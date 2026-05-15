@@ -24,6 +24,7 @@ use App\Livewire\User\BookAppointment;
 use App\Livewire\User\UpcomingAppointments;
 use App\Livewire\User\AppointmentHistory;
 use App\Livewire\User\AiSupport;
+use App\Livewire\User\SupportMessage;
 use App\Livewire\User\SystemSettings;
 use App\Livewire\User\Notifications;
 
@@ -164,6 +165,36 @@ Route::post('/contact/send', function (Request $request) {
         )
     );
 
+    // Get sender user if authenticated
+    $senderId = Auth::check() ? Auth::id() : null;
+
+    // Create a message record if user is authenticated
+    if ($senderId) {
+        $contactMessage = \App\Models\Message::create([
+            'user_id' => $senderId,
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+            'is_read' => false,
+            'admin_read' => false,
+        ]);
+
+        // Notify all admins of new contact message
+        $admins = \App\Models\User::where('role', 'admin')->get();
+        $user = Auth::user();
+        foreach ($admins as $admin) {
+            \App\Models\Notification::create([
+                'user_id' => $admin->id,
+                'admin_id' => $admin->id,
+                'title' => 'New Contact Message',
+                'message' => $user->first_name . ' ' . $user->last_name . ' sent a contact inquiry: ' . $validated['subject'],
+                'type' => 'contact_inquiry',
+                'related_model' => 'Message',
+                'related_id' => $contactMessage->id,
+                'is_read' => false,
+            ]);
+        }
+    }
+
     return back()->with('success', 'Your enquiry has been sent! Our technicians will get back to you shortly.');
 })->name('contact.send');
 
@@ -284,6 +315,7 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 
     // Support
     Route::get('/support', AiSupport::class)->name('ai-support');
+    Route::get('/support-message', SupportMessage::class)->name('support-message');
     Route::get('/system-settings', SystemSettings::class)->name('system-settings');
 
     // Notifications
