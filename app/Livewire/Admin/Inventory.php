@@ -19,7 +19,7 @@ class Inventory extends Component
     
     // Modal & Form State
     public $showEditModal = false;
-    public $editingId = null;
+    public ?int $editingId = null;
     public $editingType = ''; // 'brand', 'item', 'fault'
     
     // Form Fields
@@ -28,7 +28,7 @@ class Inventory extends Component
     public $formSku = '';
     public $formQuantity = 0;
     public $formUnitPrice = 0;
-    public $formBrandId = null;
+    public ?int $formBrandId = null;
     public $formBasePrice = 0;
     public $formIsActive = true;
 
@@ -54,7 +54,7 @@ class Inventory extends Component
         }
     }
 
-    public function editRecord($type, $id)
+    public function editRecord(string $type, ?int $id = null)
     {
         $this->resetForm();
         $this->editingType = $type;
@@ -107,7 +107,7 @@ class Inventory extends Component
         session()->flash('message', 'Record updated successfully.');
     }
 
-    public function deleteRecord($type, $id)
+    public function deleteRecord(string $type, int $id)
     {
         if ($type === 'brand') {
             Brand::findOrFail($id)->delete();
