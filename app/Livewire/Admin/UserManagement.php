@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 #[Layout('components.layouts.admin')]
 #[Title('User Management | Repairmax')]
@@ -46,7 +47,7 @@ class UserManagement extends Component
     
     // Delete Confirmation
     public $showDeleteConfirmationModal = false;
-    public $userToDeleteId = null;
+    public ?int $userToDeleteId = null;
     public $userToDeleteName = '';
 
     public function updatingSearch()
@@ -200,7 +201,7 @@ class UserManagement extends Component
                     'manage_admins' => $this->adminLevel === 'super_admin',
                 ]),
                 'department' => $this->adminDepartment ?: 'General',
-                'created_by_id' => auth()->id(),
+                'created_by_id' => Auth::id(),
             ]);
 
             Log::info('AdminProfile created for user ID: ' . $newAdmin->id);
@@ -308,21 +309,21 @@ class UserManagement extends Component
     }
 
 
-    public function blockUser($userId)
+    public function blockUser(int $userId)
     {
         User::find($userId)?->update(['is_active' => false]);
     }
 
-    public function unblockUser($userId)
+    public function unblockUser(int $userId)
     {
         User::find($userId)?->update(['is_active' => true]);
     }
 
-    public function confirmDeleteUser($userId)
+    public function confirmDeleteUser(int $userId)
     {
         $user = User::find($userId);
         if ($user) {
-            if ($user->id === auth()->id()) {
+            if ($user->id === Auth::id()) {
                 $this->errorMessage = 'Cannot delete your own account';
                 return;
             }

@@ -6,10 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::table('inventory_items', function (Blueprint $table) {
-            $table->foreignId('brand_id')->nullable()->after('id')->constrained()->nullOnDelete();
+        Schema::table('fault_types', function (Blueprint $table) {
+            $table->json('gallery_paths')->nullable()->after('image_path');
         });
     }
 
@@ -18,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('inventory_items', function (Blueprint $table) {
-            $table->dropForeign(['brand_id']);
-            $table->dropColumn('brand_id');
+        Schema::table('fault_types', function (Blueprint $table) {
+            $table->dropColumn('gallery_paths');
         });
     }
 };

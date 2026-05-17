@@ -10,6 +10,8 @@ class NotificationSeeder extends Seeder
 {
     public function run(): void
     {
+        Notification::truncate();
+
         $users = User::where('role', 'user')->get();
         $admins = User::where('role', 'admin')->get();
 

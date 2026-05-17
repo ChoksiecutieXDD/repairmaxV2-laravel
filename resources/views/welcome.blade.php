@@ -16,15 +16,30 @@
                     Fast, transparent, and seamless. We are bringing device repair into the 21st century.
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <a href="/booking" class="w-full sm:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-gray-900 bg-white hover:bg-gray-200 rounded-[1.25rem] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1">
-                        <span class="material-symbols-outlined mr-2">bolt</span>
-                        Start Your Repair
-                    </a>
-                    <a href="/track-status" class="w-full sm:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-transparent border-2 border-white/30 hover:bg-white/10 hover:border-white/50 rounded-[1.25rem] transition-all duration-300 backdrop-blur-md">
-                        <span class="material-symbols-outlined mr-2">search</span>
-                        Track Status
-                    </a>
+                <div class="flex flex-col items-center gap-4">
+                    <div class="flex flex-col lg:flex-row gap-6 justify-center items-center w-full max-w-5xl">
+                        <a href="/booking" class="w-full lg:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-gray-900 bg-white hover:bg-gray-200 rounded-[1.25rem] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1 shrink-0">
+                            <span class="material-symbols-outlined mr-2">bolt</span>
+                            Start Your Repair
+                        </a>
+
+                        <form action="/subscribe" method="POST" class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto items-center">
+                            @csrf
+                            <input type="email" name="email" placeholder="Enter your email" required
+                                class="w-full sm:w-80 px-6 py-4 bg-white/10 text-white rounded-[1.25rem] outline-none focus:ring-2 focus:ring-blue-500 border border-white/20 text-lg placeholder-gray-400 transition-all backdrop-blur-md">
+                            <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-[1.25rem] transition-all duration-300 active:scale-95 text-lg shrink-0 shadow-lg">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+
+                    @if (session('subscribe_success'))
+                        <div class="max-w-md p-3 bg-white/10 border border-white/20 text-green-400 rounded-xl text-sm w-full text-center backdrop-blur-md">
+                            {{ session('subscribe_success') }}
+                        </div>
+                    @endif
+
+                    <p class="text-sm text-gray-300 text-center">Want to know more? Head over to your email</p>
                 </div>
             </div>
 
@@ -493,9 +508,9 @@
                             <span class="material-symbols-outlined mr-2 group-hover:animate-bounce">bolt</span>
                             Start Repair
                         </a>
-                        <a href="/track-status" class="w-full sm:w-64 inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-gray-800/50 hover:bg-gray-800 rounded-2xl transition-all duration-300 active:scale-95 backdrop-blur-sm border border-white/10">
-                            <span class="material-symbols-outlined mr-2">search</span>
-                            Track Status
+                        <a href="/services" class="w-full sm:w-64 group inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-300 active:scale-95 backdrop-blur-md border border-white/20 hover:border-white/40 shadow-lg">
+                            <span class="material-symbols-outlined mr-2 group-hover:rotate-45 transition-transform duration-300">handyman</span>
+                            View Services
                         </a>
                     </div>
                 </div>

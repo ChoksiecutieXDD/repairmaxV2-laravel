@@ -79,6 +79,11 @@
                 </div>
 
                 <div class="mb-6">
+                    <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Services</h3>
+                    <x-sidebar.link href="/admin/services" icon="handyman" :active="request()->is('admin/services')">Services</x-sidebar.link>
+                </div>
+
+                <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Users</h3>
                     <x-sidebar.link href="/admin/user-management" icon="group" :active="request()->is('admin/user-management')">User Management</x-sidebar.link>
                 </div>

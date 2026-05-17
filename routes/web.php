@@ -35,7 +35,7 @@ use App\Livewire\Admin\Profile as AdminProfile;
 use App\Livewire\Admin\Appointment as AppointmentComponent;
 use App\Livewire\Admin\AppointmentManagement;
 use App\Livewire\Admin\Inventory;
-use App\Livewire\Admin\InventoryManagement;
+use App\Livewire\Admin\Services;
 use App\Livewire\Admin\UserManagement;
 use App\Livewire\Admin\AdminNotifications;
 use App\Livewire\Admin\Messages;
@@ -65,20 +65,25 @@ Route::get('/', function () {
 Route::get('/about-us', function () {
     return view('about-us');
 })->name('about');
-Route::get('/faq', function () {
-    return view('faq');
-})->name('faq');
+Route::redirect('/faq', '/help#faqs')->name('faq');
 Route::get('/legal-policy', function () {
     return view('legal-policy');
 })->name('legal');
+Route::get('/help', function () {
+    return view('help');
+})->name('help');
 
 // Services & Booking Info
 Route::get('/services', function () {
-    return view('services');
+    $services = \App\Models\FaultType::orderBy('name', 'asc')->get();
+    return view('services', compact('services'));
 })->name('services');
-Route::get('/repairs', function () {
-    return view('repairs');
-})->name('repairs');
+Route::get('/services/{id}', function ($id) {
+    $service = \App\Models\FaultType::findOrFail($id);
+    $relatedServices = \App\Models\FaultType::where('id', '!=', $id)->inRandomOrder()->take(3)->get();
+    return view('service-detail', compact('service', 'relatedServices'));
+})->name('services.detail');
+Route::redirect('/repairs', '/about-us');
 Route::get('/booking', function () {
     return view('booking');
 })->name('booking');
@@ -147,9 +152,7 @@ Route::post('/track-status', function () {
 });
 
 // Contact & Enquiries
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::redirect('/contact', '/help#contact')->name('contact');
 Route::post('/contact/send', function (Request $request) {
     $validated = $request->validate([
         'from_email' => 'required|email',
@@ -275,7 +278,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Inventory
     Route::get('/inventory', Inventory::class)->name('inventory');
-    Route::get('/inventory-management', InventoryManagement::class)->name('inventory-management');
+    
+    // Services
+    Route::get('/services', Services::class)->name('services');
     
     // Users
     Route::get('/user-management', UserManagement::class)->name('user-management');
@@ -320,6 +325,13 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 
     // Notifications
     Route::get('/notifications', Notifications::class)->name('notifications');
+});
+
+Route::post('/subscribe', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+    ]);
+    return back()->with('subscribe_success', 'Thank you for subscribing! Check your inbox.');
 });
 
 

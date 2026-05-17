@@ -25,6 +25,7 @@ class BookAppointment extends Component
     public $device_brand   = '';
     public $device_model   = '';
     public $fault_category = '';
+    public $custom_service = '';
     public $description    = '';
     public $photos         = [];
     public $pref_date      = '';
@@ -130,7 +131,7 @@ class BookAppointment extends Component
     public function models()
     {
         if (!$this->device_brand) return collect();
-        return InventoryItem::whereHas('brand', function($q) {
+        return \App\Models\DeviceModel::whereHas('brand', function($q) {
             $q->where('name', $this->device_brand);
         })->orderBy('name')->get();
     }
@@ -141,15 +142,24 @@ class BookAppointment extends Component
         return FaultType::orderBy('name')->get();
     }
 
-    protected $rules = [
-        'device_brand'  => 'required|string',
-        'device_model'  => 'required|string|max:255',
-        'fault_category' => 'required|string',
-        'description'   => 'required|string|max:1000',
-        'photos.*'      => 'nullable|image|max:5120',
-        'pref_date'     => 'required|date|after_or_equal:today',
-        'pref_time'     => 'required',
-    ];
+    public function rules()
+    {
+        $rules = [
+            'device_brand'   => 'required|string',
+            'device_model'   => 'required|string|max:255',
+            'fault_category' => 'required|string',
+            'description'    => 'required|string|max:1000',
+            'photos.*'       => 'nullable|image|max:5120',
+            'pref_date'      => 'required|date|after_or_equal:today',
+            'pref_time'      => 'required',
+        ];
+
+        if ($this->fault_category === 'Other') {
+            $rules['custom_service'] = 'required|string|max:255';
+        }
+
+        return $rules;
+    }
 
     public function submit()
     {
@@ -165,13 +175,14 @@ class BookAppointment extends Component
         }
 
         $trackingCode = $this->tracking_code;
+        $finalCategory = $this->fault_category === 'Other' ? $this->custom_service : $this->fault_category;
 
         $appointment = new Appointment();
         $appointment->user_id        = Auth::id();
         $appointment->tracking_code  = $trackingCode;
         $appointment->device_brand   = $this->device_brand;
         $appointment->device_model   = $this->device_model;
-        $appointment->fault_category = $this->fault_category;
+        $appointment->fault_category = $finalCategory;
         $appointment->description    = $this->description;
         $appointment->photo_paths    = $photoPaths;
         $appointment->pref_date      = $this->pref_date;
@@ -188,7 +199,7 @@ class BookAppointment extends Component
                 'user_id' => $admin->id,
                 'admin_id' => $admin->id,
                 'title' => 'New Appointment Booking',
-                'message' => $userFullName . ' has booked an appointment (Tracking: ' . $trackingCode . ') for ' . $this->device_brand . ' - ' . $this->fault_category,
+                'message' => $userFullName . ' has booked an appointment (Tracking: ' . $trackingCode . ') for ' . $this->device_brand . ' - ' . $finalCategory,
                 'type' => 'appointment_booked',
                 'related_model' => 'Appointment',
                 'related_id' => $appointment->id,

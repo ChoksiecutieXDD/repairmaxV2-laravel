@@ -35,8 +35,8 @@
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Platform</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="/services" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Services</a></li>
-                    <li><a href="/repairs" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">What We Repair</a></li>
-                    <li><a href="/faq" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">FAQ</a></li>
+                    <li><a href="/about-us" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">About Us</a></li>
+                    <li><a href="/help#faqs" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">FAQ</a></li>
                     <li><a href="/track-status" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Track Status</a></li>
                 </ul>
             </div>

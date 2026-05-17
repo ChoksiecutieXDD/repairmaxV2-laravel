@@ -14,13 +14,19 @@ use Illuminate\Support\Facades\DB;
 #[Title('Inventory | Repairmax')]
 class Inventory extends Component
 {
-    public $activeTab = 'brand'; // 'brand', 'items', 'fault'
+    public $activeTab = 'brand'; // 'brand', 'models', 'items'
     public $search = '';
+    public $sortOrder = 'latest'; // 'latest', 'alpha_asc', 'alpha_desc', 'stock_asc', 'stock_desc'
     
     // Modal & Form State
     public $showEditModal = false;
     public ?int $editingId = null;
-    public $editingType = ''; // 'brand', 'item', 'fault'
+    public $editingType = ''; // 'brand', 'model', 'item'
+    
+    public $showDeleteModal = false;
+    public $deletingType = '';
+    public ?int $deletingId = null;
+    public $deletingName = '';
     
     // Form Fields
     public $formName = '';
@@ -29,7 +35,6 @@ class Inventory extends Component
     public $formQuantity = 0;
     public $formUnitPrice = 0;
     public ?int $formBrandId = null;
-    public $formBasePrice = 0;
     public $formIsActive = true;
 
     protected function rules()
@@ -38,18 +43,18 @@ class Inventory extends Component
             return [
                 'formName' => 'required|string|max:255|unique:brands,name,' . $this->editingId,
             ];
-        } elseif ($this->editingType === 'item') {
+        } elseif ($this->editingType === 'model') {
+            return [
+                'formName' => 'required|string|max:255',
+                'formBrandId' => 'required|exists:brands,id',
+            ];
+        } else { // item
             return [
                 'formName' => 'required|string|max:255',
                 'formBrandId' => 'nullable|exists:brands,id',
                 'formSku' => 'required|string|max:100|unique:inventory_items,sku,' . $this->editingId,
                 'formQuantity' => 'required|integer|min:0',
                 'formUnitPrice' => 'required|numeric|min:0',
-            ];
-        } else { // fault
-            return [
-                'formName' => 'required|string|max:255|unique:fault_types,name,' . $this->editingId,
-                'formBasePrice' => 'required|numeric|min:0',
             ];
         }
     }
@@ -64,17 +69,17 @@ class Inventory extends Component
             if ($type === 'brand') {
                 $record = Brand::findOrFail($id);
                 $this->formName = $record->name;
-            } elseif ($type === 'item') {
+            } elseif ($type === 'model') {
+                $record = \App\Models\DeviceModel::findOrFail($id);
+                $this->formName = $record->name;
+                $this->formBrandId = $record->brand_id;
+            } else { // item
                 $record = InventoryItem::findOrFail($id);
                 $this->formName = $record->name;
                 $this->formBrandId = $record->brand_id;
                 $this->formSku = $record->sku;
                 $this->formQuantity = $record->quantity;
                 $this->formUnitPrice = $record->unit_price;
-            } else { // fault
-                $record = FaultType::findOrFail($id);
-                $this->formName = $record->name;
-                $this->formBasePrice = $record->base_price;
             }
         }
         
@@ -87,18 +92,18 @@ class Inventory extends Component
 
         if ($this->editingType === 'brand') {
             Brand::updateOrCreate(['id' => $this->editingId], ['name' => $this->formName]);
-        } elseif ($this->editingType === 'item') {
+        } elseif ($this->editingType === 'model') {
+            \App\Models\DeviceModel::updateOrCreate(['id' => $this->editingId], [
+                'name' => $this->formName,
+                'brand_id' => $this->formBrandId,
+            ]);
+        } else { // item
             InventoryItem::updateOrCreate(['id' => $this->editingId], [
                 'name' => $this->formName,
                 'brand_id' => $this->formBrandId,
                 'sku' => $this->formSku,
                 'quantity' => $this->formQuantity,
                 'unit_price' => $this->formUnitPrice,
-            ]);
-        } else { // fault
-            FaultType::updateOrCreate(['id' => $this->editingId], [
-                'name' => $this->formName,
-                'base_price' => $this->formBasePrice,
             ]);
         }
 
@@ -107,16 +112,39 @@ class Inventory extends Component
         session()->flash('message', 'Record updated successfully.');
     }
 
-    public function deleteRecord(string $type, int $id)
+    public function confirmDelete(string $type, int $id)
     {
+        $this->deletingType = $type;
+        $this->deletingId = $id;
+        
         if ($type === 'brand') {
-            Brand::findOrFail($id)->delete();
-        } elseif ($type === 'item') {
-            InventoryItem::findOrFail($id)->delete();
-        } else { // fault
-            FaultType::findOrFail($id)->delete();
+            $this->deletingName = Brand::find($id)?->name ?? '';
+        } elseif ($type === 'model') {
+            $this->deletingName = \App\Models\DeviceModel::find($id)?->name ?? '';
+        } else {
+            $this->deletingName = InventoryItem::find($id)?->name ?? '';
         }
-        session()->flash('message', 'Record deleted successfully.');
+        
+        $this->showDeleteModal = true;
+    }
+
+    public function deleteRecord()
+    {
+        if ($this->deletingId) {
+            if ($this->deletingType === 'brand') {
+                Brand::findOrFail($this->deletingId)->delete();
+            } elseif ($this->deletingType === 'model') {
+                \App\Models\DeviceModel::findOrFail($this->deletingId)->delete();
+            } else { // item
+                InventoryItem::findOrFail($this->deletingId)->delete();
+            }
+            session()->flash('message', 'Record deleted successfully.');
+        }
+
+        $this->showDeleteModal = false;
+        $this->deletingId = null;
+        $this->deletingType = '';
+        $this->deletingName = '';
     }
 
     public function resetForm()
@@ -127,7 +155,6 @@ class Inventory extends Component
         $this->formSku = '';
         $this->formQuantity = 0;
         $this->formUnitPrice = 0;
-        $this->formBasePrice = 0;
     }
 
     public function render()
@@ -137,17 +164,30 @@ class Inventory extends Component
         $query = null;
         if ($this->activeTab === 'brand') {
             $query = Brand::query();
-        } elseif ($this->activeTab === 'items') {
-            $query = InventoryItem::with('brand');
+        } elseif ($this->activeTab === 'models') {
+            $query = \App\Models\DeviceModel::with('brand');
         } else {
-            $query = FaultType::query();
+            $query = InventoryItem::with('brand');
         }
 
         if ($this->search) {
             $query->where('name', 'like', '%' . $this->search . '%');
         }
 
-        $records = $query->latest()->get();
+        // Apply Sorting
+        if ($this->sortOrder === 'alpha_asc') {
+            $query->orderBy('name', 'asc');
+        } elseif ($this->sortOrder === 'alpha_desc') {
+            $query->orderBy('name', 'desc');
+        } elseif ($this->sortOrder === 'stock_asc' && $this->activeTab === 'items') {
+            $query->orderBy('quantity', 'asc');
+        } elseif ($this->sortOrder === 'stock_desc' && $this->activeTab === 'items') {
+            $query->orderBy('quantity', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $records = $query->get();
 
         return view('livewire.admin.inventory', [
             'records' => $records,

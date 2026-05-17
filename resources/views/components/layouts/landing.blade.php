@@ -24,7 +24,11 @@
 
 <body class="font-sans antialiased text-gray-800 bg-gray-100">
 
-    <x-landing-header />
+    @if(request()->is('help'))
+        <x-help-header />
+    @else
+        <x-landing-header />
+    @endif
 
     <main>
         {{ $slot }}

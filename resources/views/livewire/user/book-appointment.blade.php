@@ -240,14 +240,16 @@
                 @endif
             </p>
         </div>
-        <!-- Issue -->
+        <!-- Issue / Service -->
         <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
-            <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Issue</p>
+            <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Service / Issue</p>
             <p class="font-bold text-gray-900 text-xs leading-snug">
-                @if($fault_category)
-                {{ $fault_category }}
+                @if($fault_category === 'Other')
+                    {{ $custom_service ?: 'Custom Service' }}
+                @elseif($fault_category)
+                    {{ $fault_category }}
                 @else
-                <span class="text-gray-300 font-normal italic">Not set</span>
+                    <span class="text-gray-300 font-normal italic">Not set</span>
                 @endif
             </p>
         </div>
@@ -267,22 +269,25 @@
         </div>
         <!-- Estimated Price -->
         <div class="rounded-xl p-3 border
-                @if($fault_category && ($fault_catalogue[$fault_category]['price'] ?? null))
+                @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first())
                     bg-blue-50 border-blue-100
                 @else
                     bg-gray-50 border-gray-100
                 @endif">
             <p class="text-[10px] font-black uppercase tracking-wider mb-1
-                    @if($fault_category && ($fault_catalogue[$fault_category]['price'] ?? null)) text-blue-400 @else text-gray-400 @endif">Est. Price</p>
+                    @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first()) text-blue-400 @else text-gray-400 @endif">Est. Price</p>
             @php
-            $summaryFaultInfo = $fault_catalogue[$fault_category] ?? null;
-            $summaryPrice = $summaryFaultInfo['price'] ?? null;
+            $selectedFault = ($fault_category && $fault_category !== 'Other') ? \App\Models\FaultType::where('name', $fault_category)->first() : null;
+            $summaryPrice = $selectedFault ? $selectedFault->base_price : null;
             @endphp
-            @if($fault_category && $summaryPrice)
+            @if($fault_category === 'Other')
+            <p class="font-bold text-gray-600 text-xs leading-tight mt-1">Custom Quote</p>
+            <p class="text-[9px] text-gray-400 mt-1">After diagnostic</p>
+            @elseif($fault_category && $summaryPrice)
             <p class="font-black text-blue-700 text-base leading-none">₱{{ number_format($summaryPrice) }}</p>
             <p class="text-[9px] text-blue-400 mt-1">Starting from</p>
             @elseif($fault_category)
-            <p class="font-bold text-gray-600 text-xs">After inspection</p>
+            <p class="font-bold text-gray-600 text-xs leading-tight mt-1">After inspection</p>
             @else
             <p class="text-gray-300 font-normal italic text-xs">Not set</p>
             @endif
@@ -333,18 +338,25 @@
 
                 <!-- Fault Category with prices -->
                 <div>
-                    <label for="fault_category" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Fault / Issue Type</label>
+                    <label for="fault_category" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Service / Issue Type</label>
                     <select id="fault_category" wire:model.live="fault_category" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
-                        <option value="" disabled selected>Select the primary issue…</option>
+                        <option value="" disabled selected>Select the service or issue…</option>
                         @foreach($this->faultTypes as $fault)
                             <option value="{{ $fault->name }}">
                                 {{ $fault->name }} — ₱{{ number_format($fault->base_price, 2) }}
                             </option>
                         @endforeach
+                        <option value="Other">Other / Custom Service</option>
                     </select>
                     @error('fault_category') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
 
-                    @if($fault_category)
+                    @if($fault_category === 'Other')
+                    <div class="mt-4 animate-fade-in">
+                        <label for="custom_service" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Custom Service Name / Describe Issue</label>
+                        <input type="text" id="custom_service" wire:model.live="custom_service" placeholder="e.g. Broken hinge, Water damage repair, Custom housing mod..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                        @error('custom_service') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                    </div>
+                    @elseif($fault_category)
                     @php $selectedFault = \App\Models\FaultType::where('name', $fault_category)->first(); @endphp
                     @if($selectedFault)
                     <div class="mt-3 flex items-center gap-2.5 px-4 py-2.5 bg-blue-50 border border-blue-100 rounded-xl">

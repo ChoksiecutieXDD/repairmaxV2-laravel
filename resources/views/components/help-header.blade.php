@@ -2,18 +2,16 @@
     x-data="{ 
         mobileMenuOpen: false, 
         scrolled: false, 
-        isHomePage: {{ request()->is('/') ? 'true' : 'false' }},
-        get isSolid() { return !this.isHomePage || this.scrolled || this.mobileMenuOpen }
+        isHomePage: false,
+        get isSolid() { return true }
     }"
     @scroll.window="scrolled = (window.scrollY > 50)"
     id="main-header"
-    class="fixed top-0 w-full z-50 transition-all duration-300"
-    :class="isSolid ? 'bg-white/80 backdrop-blur-md border-b border-gray-200' : 'bg-transparent border-none'">
-    <nav aria-label="Main Navigation" class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-6 items-center h-20">
+    class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <nav aria-label="Help Navigation" class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-6 items-center h-20">
 
         <div class="col-span-8 lg:col-span-3">
-            <a href="/" id="brand-logo" class="text-2xl md:text-3xl font-extrabold tracking-tight transition-colors duration-300 hover:opacity-80"
-                :class="isSolid ? 'text-gray-900' : 'text-white'"
+            <a href="/" id="brand-logo" class="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900 transition-colors duration-300 hover:opacity-80"
                 aria-label="Repairmax Home">
                 Repairmax
             </a>
@@ -21,8 +19,7 @@
 
         <div class="col-span-4 flex justify-end lg:hidden">
             <button @click="mobileMenuOpen = !mobileMenuOpen" 
-                class="p-2 focus:outline-none transition-colors duration-200 hover:opacity-80 bg-transparent border-none shadow-none hover:bg-transparent"
-                :class="isSolid ? 'text-gray-900' : 'text-white'"
+                class="p-2 focus:outline-none transition-colors duration-200 hover:opacity-80 text-gray-900 bg-transparent border-none shadow-none hover:bg-transparent"
                 aria-label="Toggle navigation menu" :aria-expanded="mobileMenuOpen" aria-controls="primary-menu">
                 <span class="material-symbols-outlined text-3xl" aria-hidden="true" x-text="mobileMenuOpen ? 'close' : 'menu'">menu</span>
             </button>
@@ -41,28 +38,21 @@
 
             @php
             $navLinks = [
-            ['url' => route('about'), 'label' => 'About Us'],
-            ['url' => route('services'), 'label' => 'Services'],
-            ['url' => route('help'), 'label' => 'Help'],
-            ['url' => route('login'), 'label' => 'Login'],
+            ['url' => '/help', 'label' => 'Help'],
+            ['url' => '#track', 'label' => 'Track'],
+            ['url' => '#contact', 'label' => 'Contact Us'],
+            ['url' => '#faqs', 'label' => 'FAQs'],
+            ['url' => '#ai-support', 'label' => 'AI Support'],
             ];
             @endphp
 
             @foreach($navLinks as $link)
             <a href="{{ $link['url'] }}"
-                class="nav-link text-base font-medium transition-colors duration-200"
-                :class="isSolid ? 'text-gray-600 hover:text-gray-900' : 'text-gray-300 hover:text-white'"
+                class="nav-link text-base font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200"
                 role="menuitem">
                 {{ $link['label'] }}
             </a>
             @endforeach
-
-            <a href="/booking" id="book-btn"
-                class="px-6 py-2.5 text-sm md:text-base font-bold rounded-[1.25rem] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 lg:ml-2"
-                :class="isSolid ? 'bg-gray-900 text-white hover:bg-gray-700' : 'bg-white text-gray-900 hover:bg-gray-200'"
-                role="menuitem">
-                Book Repair
-            </a>
 
         </div>
     </nav>

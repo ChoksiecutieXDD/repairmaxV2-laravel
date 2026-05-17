@@ -11,6 +11,7 @@ class AppointmentSeeder extends Seeder
 {
     public function run(): void
     {
+        Appointment::truncate();
         $users = User::where('role', 'user')->get();
 
         $brands = ['Apple', 'Samsung', 'Google', 'OnePlus', 'Xiaomi'];

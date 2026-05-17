@@ -12,4 +12,9 @@ class Brand extends Model
     {
         return $this->hasMany(InventoryItem::class);
     }
+
+    public function models()
+    {
+        return $this->hasMany(DeviceModel::class);
+    }
 }

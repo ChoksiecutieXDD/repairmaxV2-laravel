@@ -4,16 +4,40 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\InventoryItem;
+use App\Models\Brand;
 
 class InventoryItemSeeder extends Seeder
 {
     public function run()
     {
+        $apple = Brand::where('name', 'Apple')->first();
+        $samsung = Brand::where('name', 'Samsung')->first();
+
         $items = [
-            ['name' => 'iPhone Screen', 'category' => 'Screens', 'sku' => 'SKU-IP14-SCR', 'quantity' => 45, 'unit_price' => 2500],
-            ['name' => 'Galaxy Battery', 'category' => 'Batteries', 'sku' => 'SKU-GS23-BAT', 'quantity' => 8, 'unit_price' => 950],
-            ['name' => 'MacBook Keyboard', 'category' => 'Keyboards', 'sku' => 'SKU-MBPR-KBD', 'quantity' => 15, 'unit_price' => 3500],
-            ['name' => 'PS5 Controller', 'category' => 'Accessories', 'sku' => 'SKU-PS5-CTR', 'quantity' => 22, 'unit_price' => 3200],
+            [
+                'brand_id'   => $apple ? $apple->id : null,
+                'name'       => 'iPhone Screen Replacement',
+                'category'   => 'Screens',
+                'sku'        => 'SKU-IPH-SCR',
+                'quantity'   => 45,
+                'unit_price' => 2500
+            ],
+            [
+                'brand_id'   => $samsung ? $samsung->id : null,
+                'name'       => 'Galaxy Battery Replacement',
+                'category'   => 'Batteries',
+                'sku'        => 'SKU-GAL-BAT',
+                'quantity'   => 18,
+                'unit_price' => 950
+            ],
+            [
+                'brand_id'   => $apple ? $apple->id : null,
+                'name'       => 'MacBook Keyboard Assembly',
+                'category'   => 'Keyboards',
+                'sku'        => 'SKU-MAC-KBD',
+                'quantity'   => 15,
+                'unit_price' => 3500
+            ],
         ];
 
         foreach ($items as $item) {
