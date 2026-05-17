@@ -20,11 +20,24 @@
 
 
     @livewireStyles
+    <script>
+        // Suppress browser extension message port console clutter
+        window.addEventListener('unhandledrejection', function (event) {
+            if (event.reason && (event.reason.message && event.reason.message.includes('message port closed') || event.reason.stack && event.reason.stack.includes('extension'))) {
+                event.preventDefault();
+            }
+        });
+        window.addEventListener('error', function (event) {
+            if (event.message && (event.message.includes('message port closed') || event.filename && event.filename.includes('extension'))) {
+                event.preventDefault();
+            }
+        });
+    </script>
 </head>
 
 <body class="font-sans antialiased text-gray-800 bg-gray-100">
 
-    @if(request()->is('help'))
+    @if(request()->is('help*'))
         <x-help-header />
     @else
         <x-landing-header />

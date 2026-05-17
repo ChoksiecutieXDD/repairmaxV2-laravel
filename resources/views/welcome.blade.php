@@ -16,30 +16,37 @@
                     Fast, transparent, and seamless. We are bringing device repair into the 21st century.
                 </p>
 
-                <div class="flex flex-col items-center gap-4">
-                    <div class="flex flex-col lg:flex-row gap-6 justify-center items-center w-full max-w-5xl">
-                        <a href="/booking" class="w-full lg:w-64 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-gray-900 bg-white hover:bg-gray-200 rounded-[1.25rem] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1 shrink-0">
-                            <span class="material-symbols-outlined mr-2">bolt</span>
-                            Start Your Repair
-                        </a>
+                <div class="flex flex-col items-center gap-4 w-full max-w-[420px] mx-auto">
+                    <!-- Primary CTA -->
+                    <a href="/booking" class="w-full inline-flex items-center justify-center px-6 py-3.5 text-base font-bold text-gray-900 bg-white hover:bg-gray-200 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:-translate-y-0.5 active:scale-98 shrink-0">
+                        <span class="material-symbols-outlined mr-2">bolt</span>
+                        Start Your Repair
+                    </a>
 
-                        <form action="/subscribe" method="POST" class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto items-center">
-                            @csrf
-                            <input type="email" name="email" placeholder="Enter your email" required
-                                class="w-full sm:w-80 px-6 py-4 bg-white/10 text-white rounded-[1.25rem] outline-none focus:ring-2 focus:ring-blue-500 border border-white/20 text-lg placeholder-gray-400 transition-all backdrop-blur-md">
-                            <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-[1.25rem] transition-all duration-300 active:scale-95 text-lg shrink-0 shadow-lg">
-                                Subscribe
-                            </button>
-                        </form>
+                    <!-- Subdued Separator -->
+                    <div class="w-full flex items-center justify-center gap-3 py-0.5">
+                        <div class="h-px bg-white/10 flex-1"></div>
+                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none">or subscribe</span>
+                        <div class="h-px bg-white/10 flex-1"></div>
                     </div>
 
+                    <!-- Subscription Form -->
+                    <form action="/subscribe" method="POST" class="flex flex-col sm:flex-row gap-2.5 w-full items-stretch">
+                        @csrf
+                        <input type="email" name="email" placeholder="Enter your email" required
+                            class="flex-1 px-5 py-3 bg-white/10 text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 border border-white/20 text-sm placeholder-gray-400 transition-all backdrop-blur-md">
+                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all duration-300 active:scale-95 text-sm shrink-0 shadow-lg">
+                            Subscribe
+                        </button>
+                    </form>
+
                     @if (session('subscribe_success'))
-                        <div class="max-w-md p-3 bg-white/10 border border-white/20 text-green-400 rounded-xl text-sm w-full text-center backdrop-blur-md">
+                        <div class="w-full p-2.5 bg-white/10 border border-white/20 text-green-400 rounded-xl text-xs text-center backdrop-blur-md">
                             {{ session('subscribe_success') }}
                         </div>
                     @endif
 
-                    <p class="text-sm text-gray-300 text-center">Want to know more? Head over to your email</p>
+                    <p class="text-xs text-gray-400 text-center tracking-wide font-medium">Want to know more? Head over to your email</p>
                 </div>
             </div>
 
@@ -306,6 +313,160 @@
                         <p class="text-gray-400 leading-relaxed">Resolving muffled earpieces and blown speakers to bring back high-fidelity sound to your calls.</p>
                     </div>
                 </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SERVICES SPLIT-SCREEN CAROUSEL SECTION ================= -->
+    @php
+        $carouselServices = \App\Models\FaultType::orderBy('name', 'asc')->get();
+    @endphp
+    <section class="py-24 relative overflow-hidden bg-[#020617] border-t border-b border-white/5" 
+             x-data="{ 
+                activeIdx: 0, 
+                services: {{ Js::from($carouselServices->map(fn($s) => [
+                    'id' => $s->id,
+                    'name' => $s->name,
+                    'description' => $s->description,
+                    'image_path' => asset($s->image_path),
+                    'base_price' => number_format($s->base_price, 2),
+                    'categoryName' => (str_contains(strtolower($s->name), 'screen') || str_contains(strtolower($s->name), 'glass') || str_contains(strtolower($s->name), 'lcd')) ? 'Screen & Display' :
+                                      ((str_contains(strtolower($s->name), 'battery') || str_contains(strtolower($s->name), 'charge') || str_contains(strtolower($s->name), 'power')) ? 'Power & Charging' :
+                                      ((str_contains(strtolower($s->name), 'audio') || str_contains(strtolower($s->name), 'speaker') || str_contains(strtolower($s->name), 'microphone')) ? 'Audio & Sound' :
+                                      ((str_contains(strtolower($s->name), 'software') || str_contains(strtolower($s->name), 'system') || str_contains(strtolower($s->name), 'boot') || str_contains(strtolower($s->name), 'data')) ? 'Software & Systems' : 'Hardware & Modules'))),
+                    'badgeClass' => (str_contains(strtolower($s->name), 'screen') || str_contains(strtolower($s->name), 'glass') || str_contains(strtolower($s->name), 'lcd')) ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                    ((str_contains(strtolower($s->name), 'battery') || str_contains(strtolower($s->name), 'charge') || str_contains(strtolower($s->name), 'power')) ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                                    ((str_contains(strtolower($s->name), 'audio') || str_contains(strtolower($s->name), 'speaker') || str_contains(strtolower($s->name), 'microphone')) ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                                    ((str_contains(strtolower($s->name), 'software') || str_contains(strtolower($s->name), 'system') || str_contains(strtolower($s->name), 'boot') || str_contains(strtolower($s->name), 'data')) ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20')))
+                ])) }},
+                next() {
+                    this.activeIdx = (this.activeIdx + 1) % this.services.length;
+                },
+                prev() {
+                    this.activeIdx = (this.activeIdx - 1 + this.services.length) % this.services.length;
+                }
+             }">
+             
+        <!-- Decorative Background Glows -->
+        <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+                
+                <!-- Left Side: Labels and Navigation -->
+                <div class="lg:col-span-5 text-left space-y-8">
+                    <div class="space-y-4">
+                        <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/20 inline-block">
+                            What We Fix
+                        </span>
+                        <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight leading-[1.15]">
+                            Our Featured <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">Repair Services</span>
+                        </h2>
+                        <p class="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
+                            Browse our high-quality repair catalog. We offer quick, reliable, and premium repairs for screens, batteries, ports, and more.
+                        </p>
+                    </div>
+
+                    <!-- Sleek Premium Details Checklist -->
+                    <div class="space-y-5 pt-6 border-t border-white/5">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-blue-400 mt-0.5 text-[20px]">verified_user</span>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Premium Certified OEM Parts</h4>
+                                <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">We only use top-tier, quality-guaranteed parts for all repairs.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-blue-400 mt-0.5 text-[20px]">query_builder</span>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Same-Day Express Service</h4>
+                                <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Most smartphone and tablet repairs are completed within 2 hours.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-blue-400 mt-0.5 text-[20px]">shield</span>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">90-Day Solid Warranty Coverage</h4>
+                                <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Enjoy complete peace of mind with our worry-free repair warranty.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View All Services CTA Button -->
+                    <div class="pt-2 w-full">
+                        <a href="/services" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/10 bg-white/5 hover:bg-white/10 text-white rounded-2xl font-bold text-xs tracking-wider uppercase active:scale-95 transition-all shadow-md">
+                            <span class="material-symbols-outlined text-[16px]">menu_book</span>
+                            View All Services
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Single Card Display & Navigation -->
+                <div class="lg:col-span-7 flex flex-col items-center lg:items-end">
+                    <!-- Card Display -->
+                    <div class="relative w-full max-w-lg min-h-[480px] flex items-center justify-center">
+                        <template x-for="(service, index) in services" :key="service.id">
+                            <div class="bg-gray-900 rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col group w-full transition-all duration-500 transform"
+                                 :class="{
+                                     'opacity-100 scale-100 translate-x-0 pointer-events-auto z-10 relative': activeIdx === index,
+                                     'opacity-0 scale-95 -translate-x-12 pointer-events-none absolute inset-0': activeIdx > index,
+                                     'opacity-0 scale-95 translate-x-12 pointer-events-none absolute inset-0': activeIdx < index
+                                 }">
+                                 
+                                <!-- Card Image -->
+                                <div class="relative h-64 overflow-hidden bg-gray-950 shrink-0">
+                                    <img :src="service.image_path" 
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
+                                         :alt="service.name">
+                                    
+                                    <!-- Category Badge -->
+                                    <span :class="service.badgeClass"
+                                          class="absolute top-6 left-6 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm bg-gray-900/80"
+                                          x-text="service.categoryName">
+                                    </span>
+                                </div>
+
+                                <!-- Card Body -->
+                                <div class="p-8 flex flex-col flex-1">
+                                    <h3 class="text-2xl font-extrabold text-white tracking-tight mb-3" x-text="service.name"></h3>
+                                    
+                                    <!-- Description (constrained with premium blend fade) -->
+                                    <div class="relative h-20 overflow-hidden mb-6">
+                                        <p class="text-sm text-gray-400 leading-relaxed font-medium" x-text="service.description"></p>
+                                        <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none"></div>
+                                    </div>
+                                    
+                                    <!-- Pricing and View Details -->
+                                    <div class="flex items-center justify-between pt-6 border-t border-white/5 mt-auto">
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">Starting from</span>
+                                            <span class="text-2xl font-black text-white mt-1" x-text="'₱' + service.base_price"></span>
+                                        </div>
+                                        <a :href="'/services/' + service.id" class="inline-flex items-center justify-center gap-1.5 px-6 py-4 bg-white hover:bg-blue-600 text-gray-900 hover:text-white rounded-2xl font-bold text-xs shadow-md active:scale-95 transition-all">
+                                            Details
+                                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Navigation controls inline directly below card container -->
+                    <div class="mt-8 flex items-center justify-between w-full max-w-lg px-2">
+                        <button @click="prev()" 
+                                class="w-14 h-14 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-gray-300 hover:text-white shadow-xl active:scale-95 flex items-center justify-center transition-all">
+                            <span class="material-symbols-outlined font-black text-2xl">arrow_back</span>
+                        </button>
+                        
+                        <button @click="next()" 
+                                class="w-14 h-14 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-gray-300 hover:text-white shadow-xl active:scale-95 flex items-center justify-center transition-all">
+                            <span class="material-symbols-outlined font-black text-2xl">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

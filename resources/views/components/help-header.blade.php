@@ -7,7 +7,7 @@
     }"
     @scroll.window="scrolled = (window.scrollY > 50)"
     id="main-header"
-    class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    class="fixed top-0 w-full z-50 transition-all duration-300 bg-white border-b border-gray-200 shadow-sm">
     <nav aria-label="Help Navigation" class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-6 items-center h-20">
 
         <div class="col-span-8 lg:col-span-3">
@@ -38,11 +38,11 @@
 
             @php
             $navLinks = [
-            ['url' => '/help', 'label' => 'Help'],
-            ['url' => '#track', 'label' => 'Track'],
-            ['url' => '#contact', 'label' => 'Contact Us'],
-            ['url' => '#faqs', 'label' => 'FAQs'],
-            ['url' => '#ai-support', 'label' => 'AI Support'],
+            ['url' => '/help', 'label' => 'Help Center'],
+            ['url' => '/help/track', 'label' => 'Track Repair'],
+            ['url' => '/help/contact', 'label' => 'Contact Us'],
+            ['url' => '/help/faqs', 'label' => 'FAQs'],
+            ['url' => '/help/ai-support', 'label' => 'AI Support'],
             ];
             @endphp
 

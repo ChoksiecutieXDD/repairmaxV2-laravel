@@ -24,6 +24,8 @@ class BookAppointment extends Component
 
     public $device_brand   = '';
     public $device_model   = '';
+    public $custom_brand   = '';
+    public $custom_model   = '';
     public $fault_category = '';
     public $custom_service = '';
     public $description    = '';
@@ -130,7 +132,7 @@ class BookAppointment extends Component
     #[Computed]
     public function models()
     {
-        if (!$this->device_brand) return collect();
+        if (!$this->device_brand || $this->device_brand === 'Other') return collect();
         return \App\Models\DeviceModel::whereHas('brand', function($q) {
             $q->where('name', $this->device_brand);
         })->orderBy('name')->get();
@@ -154,6 +156,14 @@ class BookAppointment extends Component
             'pref_time'      => 'required',
         ];
 
+        if ($this->device_brand === 'Other') {
+            $rules['device_model'] = 'nullable|string';
+            $rules['custom_brand'] = 'required|string|max:255';
+            $rules['custom_model'] = 'required|string|max:255';
+        } elseif ($this->device_model === 'Other') {
+            $rules['custom_model'] = 'required|string|max:255';
+        }
+
         if ($this->fault_category === 'Other') {
             $rules['custom_service'] = 'required|string|max:255';
         }
@@ -175,13 +185,15 @@ class BookAppointment extends Component
         }
 
         $trackingCode = $this->tracking_code;
+        $finalBrand = $this->device_brand === 'Other' ? $this->custom_brand : $this->device_brand;
+        $finalModel = ($this->device_brand === 'Other' || $this->device_model === 'Other') ? $this->custom_model : $this->device_model;
         $finalCategory = $this->fault_category === 'Other' ? $this->custom_service : $this->fault_category;
 
         $appointment = new Appointment();
         $appointment->user_id        = Auth::id();
         $appointment->tracking_code  = $trackingCode;
-        $appointment->device_brand   = $this->device_brand;
-        $appointment->device_model   = $this->device_model;
+        $appointment->device_brand   = $finalBrand;
+        $appointment->device_model   = $finalModel;
         $appointment->fault_category = $finalCategory;
         $appointment->description    = $this->description;
         $appointment->photo_paths    = $photoPaths;
@@ -199,7 +211,7 @@ class BookAppointment extends Component
                 'user_id' => $admin->id,
                 'admin_id' => $admin->id,
                 'title' => 'New Appointment Booking',
-                'message' => $userFullName . ' has booked an appointment (Tracking: ' . $trackingCode . ') for ' . $this->device_brand . ' - ' . $finalCategory,
+                'message' => $userFullName . ' has booked an appointment (Tracking: ' . $trackingCode . ') for ' . $finalBrand . ' - ' . $finalCategory,
                 'type' => 'appointment_booked',
                 'related_model' => 'Appointment',
                 'related_id' => $appointment->id,

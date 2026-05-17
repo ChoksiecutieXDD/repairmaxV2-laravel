@@ -36,8 +36,8 @@
                 <ul class="space-y-3 text-sm">
                     <li><a href="/services" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Services</a></li>
                     <li><a href="/about-us" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">About Us</a></li>
-                    <li><a href="/help#faqs" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">FAQ</a></li>
-                    <li><a href="/track-status" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Track Status</a></li>
+                    <li><a href="/help/faqs" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">FAQ</a></li>
+                    <li><a href="/help/track" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Track Status</a></li>
                 </ul>
             </div>
 

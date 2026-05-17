@@ -118,9 +118,14 @@
                             <!-- Card Body -->
                             <div class="p-8 flex flex-col flex-1">
                                 <h3 class="text-xl font-extrabold text-gray-900 tracking-tight mb-3 group-hover:text-blue-600 transition-colors" x-text="service.name"></h3>
-                                <p class="text-sm text-gray-500 leading-relaxed font-medium flex-1 mb-6" x-text="service.description"></p>
+                                <!-- Constrained Description with Premium Blend Fade -->
+                                <div class="relative h-20 overflow-hidden mb-6">
+                                    <p class="text-sm text-gray-500 leading-relaxed font-medium" x-text="service.description"></p>
+                                    <!-- Blend / Fade mask at the bottom -->
+                                    <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+                                </div>
                                 
-                                <div class="flex items-center justify-between pt-6 border-t border-gray-50">
+                                <div class="flex items-center justify-between pt-6 border-t border-gray-50 mt-auto">
                                     <div class="flex flex-col">
                                         <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">Starting from</span>
                                         <span class="text-2xl font-black text-gray-900 mt-1" x-text="'₱' + Number(service.base_price).toLocaleString()"></span>

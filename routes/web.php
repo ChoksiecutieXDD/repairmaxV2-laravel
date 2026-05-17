@@ -65,13 +65,54 @@ Route::get('/', function () {
 Route::get('/about-us', function () {
     return view('about-us');
 })->name('about');
-Route::redirect('/faq', '/help#faqs')->name('faq');
+Route::redirect('/faq', '/help/faqs')->name('faq');
 Route::get('/legal-policy', function () {
     return view('legal-policy');
 })->name('legal');
 Route::get('/help', function () {
     return view('help');
 })->name('help');
+
+Route::get('/help/track', function () {
+    return view('help.track');
+})->name('help.track');
+
+Route::post('/help/track', function (Request $request) {
+    $ticketId = $request->input('ticket_id');
+    $email = $request->input('email');
+    
+    $appointment = \App\Models\Appointment::where('tracking_code', $ticketId)
+        ->whereHas('user', function ($query) use ($email) {
+            $query->where('email', $email);
+        })->first();
+
+    if ($appointment) {
+        return view('help.track', [
+            'status' => $appointment->status,
+            'appointment' => $appointment,
+            'ticket_id' => $ticketId,
+            'email' => $email
+        ]);
+    }
+
+    return view('help.track', [
+        'error' => 'No active repair found matching that Ticket ID and Email.',
+        'ticket_id' => $ticketId,
+        'email' => $email
+    ]);
+});
+
+Route::get('/help/contact', function () {
+    return view('help.contact');
+})->name('help.contact');
+
+Route::get('/help/faqs', function () {
+    return view('help.faqs');
+})->name('help.faqs');
+
+Route::get('/help/ai-support', function () {
+    return view('help.ai-support');
+})->name('help.ai-support');
 
 // Services & Booking Info
 Route::get('/services', function () {
@@ -144,15 +185,13 @@ Route::post('/booking', function (Request $request) {
 })->name('booking.store');
 
 // Track Status
-Route::get('/track-status', function () {
-    return view('track-status');
-})->name('track-status');
+Route::redirect('/track-status', '/help/track')->name('track-status');
 Route::post('/track-status', function () {
-    return view('track-status', ['status' => 'In Progress']);
+    return redirect()->route('help.track');
 });
 
 // Contact & Enquiries
-Route::redirect('/contact', '/help#contact')->name('contact');
+Route::redirect('/contact', '/help/contact')->name('contact');
 Route::post('/contact/send', function (Request $request) {
     $validated = $request->validate([
         'from_email' => 'required|email',

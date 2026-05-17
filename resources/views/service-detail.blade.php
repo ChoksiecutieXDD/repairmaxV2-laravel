@@ -206,11 +206,16 @@
                             <h4 class="text-lg font-extrabold text-gray-900 tracking-tight mb-2 group-hover:text-blue-600 transition-colors">
                                 {{ $related->name }}
                             </h4>
-                            <p class="text-xs text-gray-500 leading-relaxed font-medium flex-1 mb-5 line-clamp-2">
-                                {{ $related->description }}
-                            </p>
+                            <!-- Constrained Description with Premium Blend Fade -->
+                            <div class="relative h-16 overflow-hidden mb-5">
+                                <p class="text-xs text-gray-500 leading-relaxed font-medium">
+                                    {{ $related->description }}
+                                </p>
+                                <!-- Blend / Fade mask at the bottom -->
+                                <div class="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+                            </div>
                             
-                            <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                            <div class="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto">
                                 <div class="flex flex-col">
                                     <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none">Starting from</span>
                                     <span class="text-lg font-black text-gray-900 mt-0.5">₱{{ number_format($related->base_price, 2) }}</span>

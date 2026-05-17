@@ -233,10 +233,12 @@
         <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
             <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Device</p>
             <p class="font-bold text-gray-900 text-xs leading-snug">
-                @if($device_brand || $device_model)
-                {{ $device_brand }} {{ $device_model }}
+                @if($device_brand === 'Other')
+                    {{ $custom_brand ?: 'Custom' }} {{ $custom_model ?: 'Device' }}
+                @elseif($device_brand)
+                    {{ $device_brand }} {{ $device_model === 'Other' ? ($custom_model ?: 'Custom Model') : $device_model }}
                 @else
-                <span class="text-gray-300 font-normal italic">Not set</span>
+                    <span class="text-gray-300 font-normal italic">Not set</span>
                 @endif
             </p>
         </div>
@@ -313,28 +315,62 @@
                     <span class="leading-none">Device Information</span>
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label for="device_brand" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Brand</label>
-                        <select id="device_brand" wire:model.live="device_brand" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
-                            <option value="" disabled selected>Select Brand</option>
-                            @foreach($this->brands as $brand)
-                                <option value="{{ $brand->name }}">{{ $brand->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('device_brand') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
-                    </div>
-                    <div>
-                        <label for="device_model" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Exact Model</label>
-                        <select id="device_model" wire:model="device_model" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required {{ !$device_brand ? 'disabled' : '' }}>
-                            <option value="" disabled selected>{{ !$device_brand ? 'Select brand first' : 'Select Model' }}</option>
-                            @foreach($this->models as $model)
-                                <option value="{{ $model->name }}">{{ $model->name }}</option>
-                            @endforeach
-                            <option value="Other">Other</option>
-                        </select>
-                        @error('device_model') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
-                    </div>
+                    @if($device_brand !== 'Other')
+                        <div>
+                            <label for="device_brand" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Brand</label>
+                            <select id="device_brand" wire:model.live="device_brand" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                                <option value="" disabled selected>Select Brand</option>
+                                @foreach($this->brands as $brand)
+                                    <option value="{{ $brand->name }}">{{ $brand->name }}</option>
+                                @endforeach
+                                <option value="Other">Other</option>
+                            </select>
+                            @error('device_brand') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label for="device_model" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Exact Model</label>
+                            <select id="device_model" wire:model.live="device_model" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required {{ !$device_brand ? 'disabled' : '' }}>
+                                <option value="" disabled selected>{{ !$device_brand ? 'Select brand first' : 'Select Model' }}</option>
+                                @foreach($this->models as $model)
+                                    <option value="{{ $model->name }}">{{ $model->name }}</option>
+                                @endforeach
+                                <option value="Other">Other</option>
+                            </select>
+                            @error('device_model') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                        </div>
+                    @else
+                        <!-- If Other Brand is selected, allow Custom input for both Brand and Model -->
+                        <div class="col-span-1 md:col-span-2">
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="block text-sm font-bold text-gray-800 ml-1">Brand</label>
+                                <button type="button" wire:click="$set('device_brand', '')" class="text-xs font-black text-white hover:text-gray-200 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">arrow_back</span> Choose standard brand
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="custom_brand" class="block text-xs font-bold text-gray-500 mb-2 ml-1">Custom Brand Name</label>
+                                    <input type="text" id="custom_brand" wire:model="custom_brand" placeholder="e.g., Nothing, Motorola..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                                    @error('custom_brand') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <label for="custom_model" class="block text-xs font-bold text-gray-500 mb-2 ml-1">Exact Model Name</label>
+                                    <input type="text" id="custom_model" wire:model="custom_model" placeholder="e.g., Phone (2), Edge 40..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                                    @error('custom_model') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
+
+                <!-- Custom model input if standard brand is selected, but "Other" model is chosen -->
+                @if($device_brand && $device_brand !== 'Other' && $device_model === 'Other')
+                <div class="mb-6">
+                    <label for="custom_model_only" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Specify Your Model Name</label>
+                    <input type="text" id="custom_model_only" wire:model="custom_model" placeholder="e.g., iPhone 16 Pro Max, Galaxy S25 Ultra..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                    @error('custom_model') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                </div>
+                @endif
 
                 <!-- Fault Category with prices -->
                 <div>
