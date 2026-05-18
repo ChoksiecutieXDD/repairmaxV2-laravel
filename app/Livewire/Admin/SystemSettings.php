@@ -22,7 +22,7 @@ class SystemSettings extends Component
 
     public function mount()
     {
-        $tab = request()->query('tab');
+        $tab = \Illuminate\Support\Facades\Request::query('tab');
         if ($tab && in_array($tab, ['settings', 'overview'])) {
             $this->activeTab = $tab;
         }
@@ -45,7 +45,7 @@ class SystemSettings extends Component
 
     public function saveSettings()
     {
-        session()->flash('success', 'System settings updated successfully!');
+        \Illuminate\Support\Facades\Session::flash('success', 'System settings updated successfully!');
     }
 
     private function getAppointmentTrend()
