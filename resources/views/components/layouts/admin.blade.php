@@ -110,8 +110,9 @@
 
                 <div>
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Settings</h3>
-                    <x-sidebar.link href="{{ route('admin.overview') }}" icon="grid_view" :active="request()->routeIs('admin.overview')">System Overview</x-sidebar.link>
-                    <x-sidebar.link href="/admin/settings" icon="settings" :active="request()->is('admin/settings') || request()->is('admin/system-settings')">System Settings</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.system-settings', ['tab' => 'overview']) }}" icon="grid_view" :active="request()->is('admin/system-settings') && request()->query('tab') === 'overview'">System Overview</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.system-settings', ['tab' => 'settings']) }}" icon="settings" :active="request()->is('admin/system-settings') && request()->query('tab') !== 'overview'">System Settings</x-sidebar.link>
+                    <x-sidebar.link href="/admin/settings" icon="tune" :active="request()->is('admin/settings')">Business Settings</x-sidebar.link>
                 </div>
             </nav>
 
