@@ -294,8 +294,8 @@ Route::middleware('guest')->group(function () {
 */
 Route::get('/logout', function () {
     Auth::logout();
-    session()->invalidate();
-    session()->regenerateToken();
+    \Illuminate\Support\Facades\Session::invalidate();
+    \Illuminate\Support\Facades\Session::regenerateToken();
     return redirect('/login');
 })->name('logout');
 
