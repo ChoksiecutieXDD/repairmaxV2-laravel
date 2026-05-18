@@ -84,7 +84,6 @@
             x-transition:leave-end="opacity-0 scale-95 translate-y-10">
 
             <!-- Modal Header -->
-            <!-- Modal Header -->
             <div class="px-8 pt-12 pb-8 flex flex-col items-center text-center bg-white relative border-b border-gray-50">
                 <button type="button" @click="calendarModal = false"
                     class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
@@ -143,169 +142,158 @@
                                     <div class="text-2xl font-black text-gray-900 leading-tight">{{ $day['date'] }}</div>
                                     <div class="text-[11px] font-bold text-gray-500">{{ $day['day'] }}</div>
                                     @if($day['slots_left'] <= 0)
-                                        <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-red-100 text-red-500 text-[9px] font-black uppercase"><span class="w-1 h-1 bg-red-400 rounded-full animate-pulse"></span> FULL
+                                        <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-red-100 text-red-500 text-[9px] font-black uppercase"><span class="w-1 h-1 bg-red-400 rounded-full animate-pulse"></span> FULL</div>
+                                    @elseif($day['slots_left'] <= 1)
+                                        <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-500 text-[9px] font-black uppercase"><span class="w-1 h-1 bg-orange-400 rounded-full animate-pulse"></span> {{ $day['slots_left'] }} LEFT</div>
+                                    @else
+                                        <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-green-100 text-green-600 text-[9px] font-black uppercase"><span class="w-1 h-1 bg-green-400 rounded-full"></span> {{ $day['slots_left'] }} LEFT</div>
+                                    @endif
+                                </th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            @foreach($available_slots as $slot)
+                            <tr>
+                                <td class="py-2 pr-4 text-xs font-bold text-gray-500 whitespace-nowrap">{{ $slot }}</td>
+                                @foreach($available_days as $dayIndex => $day)
+                                @php
+                                $bookedCount = $day['slot_status'][$slot] ?? 0;
+                                $isBooked = $bookedCount > 0;
+                                $isSelected = ($selected_index === $dayIndex && $pref_time === $slot);
+                                @endphp
+                                <td class="py-2 px-2 text-center">
+                                    <button type="button"
+                                        @if(!$isBooked)
+                                        wire:click="selectDateAndTime({{ $dayIndex }}, '{{ $slot }}')"
+                                        @click="calendarModal = false"
+                                        @endif
+                                        class="w-full h-11 rounded-[1.25rem] border-2 text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5
+                                                            {{ $isSelected ? 'bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-200'
+                                                                : ($isBooked ? 'bg-red-50 border-red-100 text-red-300 cursor-not-allowed'
+                                                                : 'bg-gray-50 border-gray-100 text-gray-400 hover:bg-green-50 hover:border-green-300 hover:text-green-600 cursor-pointer') }}">
+                                        @if($isSelected)
+                                        <span class="material-symbols-outlined text-[14px] leading-none">check</span> Set
+                                        @elseif($isBooked)
+                                        <span class="w-1.5 h-1.5 bg-red-400 rounded-full inline-block"></span> Full
+                                        @else
+                                        <span class="w-1.5 h-1.5 bg-green-400 rounded-full inline-block"></span> Open
+                                        @endif
+                                    </button>
+                                </td>
+                                @endforeach
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                @elseif($day['slots_left'] <= 1)
-                    <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-500 text-[9px] font-black uppercase"><span class="w-1 h-1 bg-orange-400 rounded-full animate-pulse"></span> {{ $day['slots_left'] }} LEFT
             </div>
-            @else
-            <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-green-100 text-green-600 text-[9px] font-black uppercase"><span class="w-1 h-1 bg-green-400 rounded-full"></span> {{ $day['slots_left'] }} LEFT</div>
-            @endif
-            </th>
-            @endforeach
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-50">
-                @foreach($available_slots as $slot)
-                <tr>
-                    <td class="py-2 pr-4 text-xs font-bold text-gray-500 whitespace-nowrap">{{ $slot }}</td>
-                    @foreach($available_days as $dayIndex => $day)
-                    @php
-                    $bookedCount = $day['slot_status'][$slot] ?? 0;
-                    $isBooked = $bookedCount > 0;
-                    $isSelected = ($selected_index === $dayIndex && $pref_time === $slot);
-                    @endphp
-                    <td class="py-2 px-2 text-center">
-                        <button type="button"
-                            @if(!$isBooked)
-                            wire:click="selectDateAndTime({{ $dayIndex }}, '{{ $slot }}')"
-                            @click="calendarModal = false"
-                            @endif
-                            class="w-full h-11 rounded-[1.25rem] border-2 text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5
-                                                {{ $isSelected ? 'bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-200'
-                                                    : ($isBooked ? 'bg-red-50 border-red-100 text-red-300 cursor-not-allowed'
-                                                    : 'bg-gray-50 border-gray-100 text-gray-400 hover:bg-green-50 hover:border-green-300 hover:text-green-600 cursor-pointer') }}">
-                            @if($isSelected)
-                            <span class="material-symbols-outlined text-[14px] leading-none">check</span> Set
-                            @elseif($isBooked)
-                            <span class="w-1.5 h-1.5 bg-red-400 rounded-full inline-block"></span> Full
-                            @else
-                            <span class="w-1.5 h-1.5 bg-green-400 rounded-full inline-block"></span> Open
-                            @endif
-                        </button>
-                    </td>
-                    @endforeach
-                </tr>
-                @endforeach
-            </tbody>
-            </table>
+
+            <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center shrink-0">
+                <p class="text-xs text-gray-400 font-medium">Selecting a slot closes this modal and fills in your booking.</p>
+                <button type="button" @click="calendarModal = false" class="px-6 py-3 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all text-sm">Close</button>
+            </div>
         </div>
     </div>
 
-    <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
-        <p class="text-xs text-gray-400 font-medium">Selecting a slot closes this modal and fills in your booking.</p>
-        <button type="button" @click="calendarModal = false" class="px-6 py-3 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all text-sm">Close</button>
-    </div>
-</div>
-</div>
-
-<div class="mb-8">
-    <div class="flex items-center gap-3">
-        <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Book a Repair</h1>
-        <button type="button" @click="infoModal = true"
-            class="p-0 bg-transparent text-gray-300 hover:text-blue-600 transition-all transform hover:scale-110 active:scale-95 outline-none ring-0 focus:ring-0 focus:outline-none flex items-center justify-center -translate-y-[4px]"
-            title="View Guidelines">
-            <span class="material-symbols-outlined text-[28px] leading-none">info</span>
-        </button>
-    </div>
-    <p class="text-gray-500 mt-2 font-medium">Provide details about your device and schedule a drop-off time.</p>
-</div>
-
-<!-- ===== BOOKING SUMMARY (top, full-width) ===== -->
-<div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 mb-6">
-    <div class="mb-6 pb-3 border-b border-gray-100">
-        <h3 class="font-bold text-gray-900">Booking Summary</h3>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-5">
-        <!-- Booking ID -->
-        <div class="bg-blue-50 rounded-xl p-3 border border-blue-100">
-            <p class="text-[10px] font-black text-blue-400 uppercase tracking-wider mb-1">Booking ID</p>
-            <p class="font-bold text-blue-700 text-xs leading-snug">
-                @if($pref_date)
-                    {{ $tracking_code }}
-                @else
-                    <span class="text-blue-300 font-normal italic">Select a date</span>
-                @endif
-            </p>
+    <!-- ===== BOOKING SUMMARY (top, full-width) ===== -->
+    <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 mb-6">
+        <div class="mb-6 pb-3 border-b border-gray-100 flex justify-between items-center">
+            <h3 class="font-bold text-gray-900">Booking Summary</h3>
+            <button type="button" @click="infoModal = true"
+                class="p-0 bg-transparent text-gray-400 hover:text-blue-600 transition-all flex items-center gap-1.5 text-xs font-black uppercase tracking-wider outline-none ring-0">
+                <span class="material-symbols-outlined text-[18px]">info</span> Repair Guidelines
+            </button>
         </div>
-        <!-- Device -->
-        <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
-            <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Device</p>
-            <p class="font-bold text-gray-900 text-xs leading-snug">
-                @if($device_brand === 'Other')
-                    {{ $custom_brand ?: 'Custom' }} {{ $custom_model ?: 'Device' }}
-                @elseif($device_brand)
-                    {{ $device_brand }} {{ $device_model === 'Other' ? ($custom_model ?: 'Custom Model') : $device_model }}
-                @else
+
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-5">
+            <!-- Booking ID -->
+            <div class="bg-blue-50 rounded-xl p-3 border border-blue-100">
+                <p class="text-[10px] font-black text-blue-400 uppercase tracking-wider mb-1">Booking ID</p>
+                <p class="font-bold text-blue-700 text-xs leading-snug">
+                    @if($pref_date)
+                        {{ $tracking_code }}
+                    @else
+                        <span class="text-blue-300 font-normal italic">Select a date</span>
+                    @endif
+                </p>
+            </div>
+            <!-- Device -->
+            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Device</p>
+                <p class="font-bold text-gray-900 text-xs leading-snug">
+                    @if($device_brand === 'Other')
+                        {{ $custom_brand ?: 'Custom' }} {{ $custom_model ?: 'Device' }}
+                    @elseif($device_brand)
+                        {{ $device_brand }} {{ $device_model === 'Other' ? ($custom_model ?: 'Custom Model') : $device_model }}
+                    @else
+                        <span class="text-gray-300 font-normal italic">Not set</span>
+                    @endif
+                </p>
+            </div>
+            <!-- Issue / Service -->
+            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Service / Issue</p>
+                <p class="font-bold text-gray-900 text-xs leading-snug">
+                    @if($fault_category === 'Other')
+                        {{ $custom_service ?: 'Custom Service' }}
+                    @elseif($fault_category)
+                        {{ $fault_category }}
+                    @else
+                        <span class="text-gray-300 font-normal italic">Not set</span>
+                    @endif
+                </p>
+            </div>
+            <!-- Date & Time -->
+            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Date & Time</p>
+                <p class="font-bold text-gray-900 text-xs leading-snug">
+                    @if($pref_date && $pref_time)
+                    {{ \Carbon\Carbon::parse($pref_date)->format('M d, Y') }}<br>
+                    <span class="text-gray-500 font-medium">{{ $pref_time }}</span>
+                    @elseif($pref_date)
+                    {{ \Carbon\Carbon::parse($pref_date)->format('M d, Y') }}
+                    @else
                     <span class="text-gray-300 font-normal italic">Not set</span>
-                @endif
-            </p>
-        </div>
-        <!-- Issue / Service -->
-        <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
-            <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Service / Issue</p>
-            <p class="font-bold text-gray-900 text-xs leading-snug">
+                    @endif
+                </p>
+            </div>
+            <!-- Estimated Price -->
+            <div class="rounded-xl p-3 border
+                    @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first())
+                        bg-blue-50 border-blue-100
+                    @else
+                        bg-gray-50 border-gray-100
+                    @endif">
+                <p class="text-[10px] font-black uppercase tracking-wider mb-1
+                        @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first()) text-blue-400 @else text-gray-400 @endif">Est. Price</p>
+                @php
+                $selectedFault = ($fault_category && $fault_category !== 'Other') ? \App\Models\FaultType::where('name', $fault_category)->first() : null;
+                $summaryPrice = $selectedFault ? $selectedFault->base_price : null;
+                @endphp
                 @if($fault_category === 'Other')
-                    {{ $custom_service ?: 'Custom Service' }}
+                <p class="font-bold text-gray-600 text-xs leading-tight mt-1">Custom Quote</p>
+                <p class="text-[9px] text-gray-400 mt-1">After diagnostic</p>
+                @elseif($fault_category && $summaryPrice)
+                <p class="font-black text-blue-700 text-base leading-none">₱{{ number_format($summaryPrice) }}</p>
+                <p class="text-[9px] text-blue-400 mt-1">Starting from</p>
                 @elseif($fault_category)
-                    {{ $fault_category }}
+                <p class="font-bold text-gray-600 text-xs leading-tight mt-1">After inspection</p>
                 @else
-                    <span class="text-gray-300 font-normal italic">Not set</span>
+                <p class="text-gray-300 font-normal italic text-xs">Not set</p>
                 @endif
-            </p>
+            </div>
         </div>
-        <!-- Date & Time -->
-        <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
-            <p class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Date & Time</p>
-            <p class="font-bold text-gray-900 text-xs leading-snug">
-                @if($pref_date && $pref_time)
-                {{ \Carbon\Carbon::parse($pref_date)->format('M d, Y') }}<br>
-                <span class="text-gray-500 font-medium">{{ $pref_time }}</span>
-                @elseif($pref_date)
-                {{ \Carbon\Carbon::parse($pref_date)->format('M d, Y') }}
-                @else
-                <span class="text-gray-300 font-normal italic">Not set</span>
-                @endif
-            </p>
-        </div>
-        <!-- Estimated Price -->
-        <div class="rounded-xl p-3 border
-                @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first())
-                    bg-blue-50 border-blue-100
-                @else
-                    bg-gray-50 border-gray-100
-                @endif">
-            <p class="text-[10px] font-black uppercase tracking-wider mb-1
-                    @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first()) text-blue-400 @else text-gray-400 @endif">Est. Price</p>
-            @php
-            $selectedFault = ($fault_category && $fault_category !== 'Other') ? \App\Models\FaultType::where('name', $fault_category)->first() : null;
-            $summaryPrice = $selectedFault ? $selectedFault->base_price : null;
-            @endphp
-            @if($fault_category === 'Other')
-            <p class="font-bold text-gray-600 text-xs leading-tight mt-1">Custom Quote</p>
-            <p class="text-[9px] text-gray-400 mt-1">After diagnostic</p>
-            @elseif($fault_category && $summaryPrice)
-            <p class="font-black text-blue-700 text-base leading-none">₱{{ number_format($summaryPrice) }}</p>
-            <p class="text-[9px] text-blue-400 mt-1">Starting from</p>
-            @elseif($fault_category)
-            <p class="font-bold text-gray-600 text-xs leading-tight mt-1">After inspection</p>
-            @else
-            <p class="text-gray-300 font-normal italic text-xs">Not set</p>
-            @endif
+
+        <!-- Diagnostic Fee Note -->
+        <div class="flex items-center gap-2 text-xs text-gray-400 bg-gray-50 rounded-xl px-4 py-2.5 border border-gray-100">
+            <span class="material-symbols-outlined text-[16px] leading-none text-gray-400 shrink-0">info</span>
+            <span class="leading-none">A <strong class="text-gray-500">₱150 diagnostic fee</strong> applies if you decline the repair quote after inspection.</span>
         </div>
     </div>
 
-    <!-- Diagnostic Fee Note -->
-    <div class="flex items-center gap-2 text-xs text-gray-400 bg-gray-50 rounded-xl px-4 py-2.5 border border-gray-100">
-        <span class="material-symbols-outlined text-[16px] leading-none text-gray-400 shrink-0">info</span>
-        <span class="leading-none">A <strong class="text-gray-500">₱150 diagnostic fee</strong> applies if you decline the repair quote after inspection.</span>
-    </div>
-</div>
-
-<!-- ===== MAIN FORM (full-width single column) ===== -->
-<div class="">
-    <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 md:p-10 mb-8">
+    <!-- ===== MAIN FORM ===== -->
+    <div class="bg-white border border-gray-200 shadow-xl rounded-3xl p-6 md:p-10 mb-8">
         <form wire:submit="submit" class="space-y-12">
 
             <!-- Personal Details -->
@@ -318,23 +306,93 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
                         <label for="first_name" class="block text-sm font-bold text-gray-800 mb-2 ml-1">First Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="first_name" wire:model="first_name" placeholder="Jane" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                        <input type="text" id="first_name" wire:model="first_name" placeholder="e.g. Jane" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
                         @error('first_name') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label for="last_name" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Last Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="last_name" wire:model="last_name" placeholder="Doe" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                        <input type="text" id="last_name" wire:model="last_name" placeholder="e.g. Doe" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
                         @error('last_name') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label for="email" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Email Address <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" wire:model="email" placeholder="jane@example.com" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                        <input type="email" id="email" wire:model="email" placeholder="e.g. jane@example.com" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
                         @error('email') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label for="phone" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Phone Number <span class="text-red-500">*</span></label>
-                        <input type="tel" id="phone" wire:model="phone" placeholder="(555) 123-4567" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                        <input type="tel" id="phone" wire:model="phone" placeholder="e.g. (555) 123-4567" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
                         @error('phone') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+            </section>
+
+            <!-- Service & Pickup Details -->
+            <section>
+                <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-6 flex items-center gap-2.5">
+                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-[1px]">local_shipping</span>
+                    <span class="leading-none">Service Method & Address</span>
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Pickup Option (Radio Buttons) -->
+                    <div class="col-span-1 md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-800 mb-3 ml-1">How would you like to get your device to us? <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Option 1: Drop-off -->
+                            <label class="flex items-center gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all hover:bg-gray-50/50
+                                {{ $pickup_option === 'Drop-off' ? 'border-blue-500 bg-blue-50/10' : 'border-gray-200 bg-gray-50/30' }}">
+                                <input type="radio" wire:model.live="pickup_option" value="Drop-off" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <div>
+                                    <p class="text-sm font-bold text-gray-900">Drop-off at Shop</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Bring your device directly to our repair store.</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 2: Home Pickup -->
+                            <label class="flex items-center gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all hover:bg-gray-50/50
+                                {{ $pickup_option === 'Pickup' ? 'border-blue-500 bg-blue-50/10' : 'border-gray-200 bg-gray-50/30' }}">
+                                <input type="radio" wire:model.live="pickup_option" value="Pickup" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <div>
+                                    <p class="text-sm font-bold text-gray-900">Home Pickup & Return</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">We will collect and return the device to your door.</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Show Shop Address if Drop-off selected -->
+                        @if($pickup_option === 'Drop-off')
+                        <div class="mt-4 p-4 bg-blue-50/50 border border-blue-100/60 rounded-[1.25rem] flex items-start gap-3 animate-fade-in">
+                            <span class="material-symbols-outlined text-blue-500 text-[20px] shrink-0 mt-0.5">pin_drop</span>
+                            <div>
+                                <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-0.5">Shop Drop-off Location</h4>
+                                <p class="text-xs text-blue-700 font-medium leading-relaxed">Commonwealth Ave. Cor. IBP Road (Litex Junction), Quezon City, Metro Manila, Philippines</p>
+                            </div>
+                        </div>
+                        @endif
+
+                        @error('pickup_option') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                    </div>
+
+                    <!-- Pickup Address & City -->
+                    <div class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2">
+                            <label for="address" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Street Address & Barangay <span class="text-red-500">*</span></label>
+                            <input type="text" id="address" wire:model="address" placeholder="Enter Street name, Building, House No., Barangay..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                            @error('address') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="md:col-span-1">
+                            <label for="city" class="block text-sm font-bold text-gray-800 mb-2 ml-1">City / Municipality <span class="text-red-500">*</span></label>
+                            <input type="text" id="city" wire:model="city" placeholder="e.g. Quezon City" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
+                            @error('city') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <!-- Other Details / Special Instructions -->
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="other_details" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Other Details / Special Instructions <span class="text-gray-400 font-normal">(Optional)</span></label>
+                        <textarea id="other_details" wire:model="other_details" rows="2" placeholder="e.g. Best time for pickup, gate code, secondary contact details..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium resize-none"></textarea>
+                        @error('other_details') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                 </div>
             </section>
@@ -374,7 +432,7 @@
                         <div class="col-span-1 md:col-span-2">
                             <div class="flex items-center justify-between mb-2">
                                 <label class="block text-sm font-bold text-gray-800 ml-1">Brand</label>
-                                <button type="button" wire:click="$set('device_brand', '')" class="text-xs font-black text-white hover:text-gray-200 flex items-center gap-1">
+                                <button type="button" wire:click="$set('device_brand', '')" class="text-xs font-black text-blue-600 hover:text-blue-800 flex items-center gap-1">
                                     <span class="material-symbols-outlined text-[14px]">arrow_back</span> Choose standard brand
                                 </button>
                             </div>
@@ -418,7 +476,7 @@
                     @error('fault_category') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
 
                     @if($fault_category === 'Other')
-                    <div class="mt-4 animate-fade-in">
+                    <div class="mt-4">
                         <label for="custom_service" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Custom Service Name / Describe Issue</label>
                         <input type="text" id="custom_service" wire:model.live="custom_service" placeholder="e.g. Broken hinge, Water damage repair, Custom housing mod..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
                         @error('custom_service') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
@@ -522,186 +580,123 @@
                 </div>
             </section>
 
-            <!-- How would you like to get your device to us? -->
-            <section class="animate-fade-in">
-                <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-6 flex items-center gap-2.5">
-                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0">local_shipping</span>
-                    <span class="leading-none">How would you like to get your device to us? <span class="text-red-500">*</span></span>
-                </h3>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    <!-- Option 1: Drop-off -->
-                    <label class="flex items-center gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all hover:bg-gray-50/50
-                        {{ $pickup_option === 'Drop-off' ? 'border-blue-500 bg-blue-50/10' : 'border-gray-200 bg-gray-50/30' }}">
-                        <input type="radio" wire:model.live="pickup_option" value="Drop-off" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                        <div>
-                            <p class="text-sm font-bold text-gray-900">Drop-off at Shop</p>
-                            <p class="text-xs text-gray-500 mt-0.5">Bring your device directly to our repair store.</p>
-                        </div>
-                    </label>
-
-                    <!-- Option 2: Home Pickup -->
-                    <label class="flex items-center gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all hover:bg-gray-50/50
-                        {{ $pickup_option === 'Pickup' ? 'border-blue-500 bg-blue-50/10' : 'border-gray-200 bg-gray-50/30' }}">
-                        <input type="radio" wire:model.live="pickup_option" value="Pickup" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                        <div>
-                            <p class="text-sm font-bold text-gray-900">Home Pickup & Return</p>
-                            <p class="text-xs text-gray-500 mt-0.5">We will collect and return the device to your door.</p>
-                        </div>
-                    </label>
-                </div>
-
-                <!-- Show Shop Address if Drop-off selected -->
-                @if($pickup_option === 'Drop-off')
-                <div class="mt-4 p-4 bg-blue-50/50 border border-blue-100/60 rounded-[1.25rem] flex items-start gap-3 animate-fade-in mb-6">
-                    <span class="material-symbols-outlined text-blue-500 text-[20px] shrink-0 mt-0.5">pin_drop</span>
-                    <div>
-                        <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-0.5">Shop Drop-off Location</h4>
-                        <p class="text-xs text-blue-700 font-medium leading-relaxed">Commonwealth Ave. Cor. IBP Road (Litex Junction), Quezon City, Metro Manila, Philippines</p>
-                    </div>
-                </div>
-                @endif
-
-                <!-- User's Physical Address & City (Strictly Required) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                    <div class="md:col-span-2">
-                        <label for="address" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Street Address & Barangay <span class="text-red-500">*</span></label>
-                        <input type="text" id="address" wire:model="address" placeholder="Enter Street name, Building, House No., Barangay..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
-                        @error('address') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="md:col-span-1">
-                        <label for="city" class="block text-sm font-bold text-gray-800 mb-2 ml-1">City / Municipality <span class="text-red-500">*</span></label>
-                        <input type="text" id="city" wire:model="city" placeholder="e.g. Quezon City" class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium" required>
-                        @error('city') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-                
-                <div class="mt-6">
-                    <label for="other_details" class="block text-sm font-bold text-gray-800 mb-2 ml-1">Other Details / Instructions</label>
-                    <textarea id="other_details" wire:model="other_details" rows="2" placeholder="e.g. Call before coming, gate code is 1234, pickup after 2 PM..." class="w-full px-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50/50 focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-medium resize-none"></textarea>
-                    @error('other_details') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
-                </div>
-            </section>
-
             <!-- Schedule Drop-off -->
             <section>
                 <div class="flex items-center justify-between gap-3 border-b border-gray-100 pb-3 mb-6">
                     <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2.5">
                         <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-[1px]">calendar_month</span>
-                        <span class="leading-none">{{ $pickup_option === 'Pickup' ? 'Schedule Pickup' : 'Schedule Drop-off' }}</span>
+                        <span class="leading-none">Schedule Drop-off</span>
                     </h3>
-            <button type="button" @click="calendarModal = true"
-                class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all transform hover:scale-110 active:scale-95 shadow-sm shrink-0"
-                title="Open Live Availability Calendar">
-                <span class="material-symbols-outlined text-[18px] leading-none">open_in_full</span>
-            </button>
-        </div>
+                    <button type="button" @click="calendarModal = true"
+                        class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all transform hover:scale-110 active:scale-95 shadow-sm shrink-0"
+                        title="Open Live Availability Calendar">
+                        <span class="material-symbols-outlined text-[18px] leading-none">open_in_full</span>
+                    </button>
+                </div>
 
-        <div class="space-y-8">
-            <!-- Date Cards -->
-            <div>
-                <label class="block text-sm font-bold text-gray-800 mb-4 ml-1">Select Available Date</label>
-                <div class="grid grid-cols-5 gap-3">
-                    @foreach($available_days as $index => $day)
-                    <button type="button"
-                        wire:click="{{ $day['slots_left'] > 0 ? 'selectDate(' . $index . ')' : '' }}"
-                        @disabled($day['slots_left'] <=0)
-                        class="flex flex-col items-center justify-center py-4 px-2 rounded-[1.25rem] border-2 transition-all transform active:scale-95 relative
-                                            {{ $selected_index === $index
-                                                ? 'border-blue-500 bg-blue-500 shadow-xl shadow-blue-200'
-                                                : ($day['slots_left'] <= 0
-                                                    ? 'border-red-100 bg-red-50 cursor-not-allowed opacity-50'
-                                                    : 'border-gray-100 bg-gray-50/50 hover:bg-white hover:border-gray-300 hover:scale-[1.03] shadow-sm cursor-pointer') }}">
+                <div class="space-y-8">
+                    <!-- Date Cards -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-800 mb-4 ml-1">Select Available Date</label>
+                        <div class="grid grid-cols-5 gap-3">
+                            @foreach($available_days as $index => $day)
+                            <button type="button"
+                                wire:click="{{ $day['slots_left'] > 0 ? 'selectDate(' . $index . ')' : '' }}"
+                                @disabled($day['slots_left'] <=0)
+                                class="flex flex-col items-center justify-center py-4 px-2 rounded-[1.25rem] border-2 transition-all transform active:scale-95 relative
+                                                    {{ $selected_index === $index
+                                                        ? 'border-blue-500 bg-blue-500 shadow-xl shadow-blue-200'
+                                                        : ($day['slots_left'] <= 0
+                                                            ? 'border-red-100 bg-red-50 cursor-not-allowed opacity-50'
+                                                            : 'border-gray-100 bg-gray-50/50 hover:bg-white hover:border-gray-300 hover:scale-[1.03] shadow-sm cursor-pointer') }}">
 
-                        <span class="text-[9px] font-black uppercase tracking-widest mb-0.5
-                                                {{ $selected_index === $index ? 'text-blue-100' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-400') }}">
-                            {{ $day['month'] }}
-                        </span>
-                        <span class="text-2xl font-black mb-0.5
-                                                {{ $selected_index === $index ? 'text-white' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-900') }}">
-                            {{ $day['date'] }}
-                        </span>
-                        <span class="text-[10px] font-bold mb-2
-                                                {{ $selected_index === $index ? 'text-blue-200' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-500') }}">
-                            {{ $day['day'] }}
-                        </span>
-                        <div class="flex items-center gap-1 py-0.5 px-2 rounded-full text-[8px] font-black uppercase
-                                                {{ $selected_index === $index ? 'bg-white/25 text-white'
-                                                    : ($day['slots_left'] <= 0 ? 'bg-red-100 text-red-400'
-                                                    : ($day['slots_left'] <= 1 ? 'bg-orange-100 text-orange-600'
-                                                    : 'bg-green-100 text-green-700')) }}">
-                            @if($day['slots_left'] <= 0)
-                                <span class="w-1 h-1 bg-red-400 rounded-full animate-pulse"></span> FULL
-                                @elseif($day['slots_left'] <= 1)
-                                    <span class="w-1 h-1 bg-orange-400 rounded-full animate-pulse"></span> 1 SLOT
+                                <span class="text-[9px] font-black uppercase tracking-widest mb-0.5
+                                                        {{ $selected_index === $index ? 'text-blue-100' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-400') }}">
+                                    {{ $day['month'] }}
+                                </span>
+                                <span class="text-2xl font-black mb-0.5
+                                                        {{ $selected_index === $index ? 'text-white' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-900') }}">
+                                    {{ $day['date'] }}
+                                </span>
+                                <span class="text-[10px] font-bold mb-2
+                                                        {{ $selected_index === $index ? 'text-blue-200' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-500') }}">
+                                    {{ $day['day'] }}
+                                </span>
+                                <div class="flex items-center gap-1 py-0.5 px-2 rounded-full text-[8px] font-black uppercase
+                                                        {{ $selected_index === $index ? 'bg-white/25 text-white'
+                                                            : ($day['slots_left'] <= 0 ? 'bg-red-100 text-red-400'
+                                                            : ($day['slots_left'] <= 1 ? 'bg-orange-100 text-orange-600'
+                                                            : 'bg-green-100 text-green-700')) }}">
+                                    @if($day['slots_left'] <= 0)
+                                        <span class="w-1 h-1 bg-red-400 rounded-full animate-pulse"></span> FULL
+                                    @elseif($day['slots_left'] <= 1)
+                                        <span class="w-1 h-1 bg-orange-400 rounded-full animate-pulse"></span> 1 SLOT
                                     @else
-                                    <span class="w-1 h-1 bg-green-400 rounded-full"></span> {{ $day['slots_left'] }}
+                                        <span class="w-1 h-1 bg-green-400 rounded-full"></span> {{ $day['slots_left'] }}
                                     @endif
+                                </div>
+                            </button>
+                            @endforeach
                         </div>
-                    </button>
-                    @endforeach
+                        @error('pref_date') <span class="text-xs text-red-500 mt-2 block ml-1">{{ $message }}</span> @enderror
+                    </div>
+
+                    <!-- Time Slots -->
+                    @if($selected_index !== null)
+                    @php $selectedDay = $available_days[$selected_index] ?? null; @endphp
+                    @if($selectedDay)
+                    <div>
+                        <label class="block text-sm font-bold text-gray-800 mb-4 ml-1">Select Preferred Time Slot</label>
+                        <div class="grid grid-cols-5 gap-3">
+                            @foreach($available_slots as $slot)
+                            @php
+                            $bookedCount = $selectedDay['slot_status'][$slot] ?? 0;
+                            $isBooked = $bookedCount > 0;
+                            $isSelected = $pref_time === $slot;
+                            @endphp
+                            <button type="button"
+                                @if(!$isBooked) wire:click="selectTime('{{ $slot }}')" @endif
+                                @disabled($isBooked)
+                                class="py-4 px-2 rounded-[1.25rem] border-2 font-black text-xs uppercase tracking-wider transition-all flex flex-col items-center gap-1
+                                                            {{ $isSelected
+                                                                ? 'border-blue-500 bg-white text-blue-700 shadow-lg ring-4 ring-blue-50/50 scale-[1.02]'
+                                                                : ($isBooked
+                                                                    ? 'border-red-100 bg-red-50 text-red-300 cursor-not-allowed'
+                                                                    : 'border-gray-100 bg-gray-50/50 text-gray-500 hover:bg-white hover:border-gray-300 hover:scale-[1.02] cursor-pointer') }}">
+                                <div class="flex items-center gap-1">
+                                    @if($isBooked)
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse inline-block"></span>
+                                    @elseif($isSelected)
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block"></span>
+                                    @else
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>
+                                    @endif
+                                    {{ $slot }}
+                                </div>
+                                <span class="text-[8px] font-bold tracking-wider
+                                                                {{ $isBooked ? 'text-red-300' : ($isSelected ? 'text-blue-400' : 'text-gray-300') }}">
+                                    {{ $isBooked ? 'BOOKED' : ($isSelected ? 'SELECTED' : 'OPEN') }}
+                                </span>
+                            </button>
+                            @endforeach
+                        </div>
+                        @error('pref_time') <span class="text-xs text-red-500 mt-2 block ml-1">{{ $message }}</span> @enderror
+                    </div>
+                    @endif
+                    @endif
                 </div>
-                @error('pref_date') <span class="text-xs text-red-500 mt-2 block ml-1">{{ $message }}</span> @enderror
+            </section>
+
+            <!-- Submit -->
+            <div class="pt-6 border-t border-gray-100 flex justify-end">
+                <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 text-base rounded-[1.25rem] font-bold transition-all shadow-lg hover:shadow-gray-200 disabled:opacity-70" wire:loading.attr="disabled">
+                    <span class="material-symbols-outlined text-[20px] leading-none" wire:loading.remove wire:target="submit">check_circle</span>
+                    <span class="material-symbols-outlined text-[20px] animate-spin leading-none" wire:loading wire:target="submit">progress_activity</span>
+                    Confirm Repair Booking
+                </button>
             </div>
 
-            <!-- Time Slots -->
-            @if($selected_index !== null)
-            @php $selectedDay = $available_days[$selected_index] ?? null; @endphp
-            @if($selectedDay)
-            <div>
-                <label class="block text-sm font-bold text-gray-800 mb-4 ml-1">Select Preferred Time Slot</label>
-                <div class="grid grid-cols-5 gap-3">
-                    @foreach($available_slots as $slot)
-                    @php
-                    $bookedCount = $selectedDay['slot_status'][$slot] ?? 0;
-                    $isBooked = $bookedCount > 0;
-                    $isSelected = $pref_time === $slot;
-                    @endphp
-                    <button type="button"
-                        @if(!$isBooked) wire:click="selectTime('{{ $slot }}')" @endif
-                        @disabled($isBooked)
-                        class="py-4 px-2 rounded-[1.25rem] border-2 font-black text-xs uppercase tracking-wider transition-all flex flex-col items-center gap-1
-                                                    {{ $isSelected
-                                                        ? 'border-blue-500 bg-white text-blue-700 shadow-lg ring-4 ring-blue-50/50 scale-[1.02]'
-                                                        : ($isBooked
-                                                            ? 'border-red-100 bg-red-50 text-red-300 cursor-not-allowed'
-                                                            : 'border-gray-100 bg-gray-50/50 text-gray-500 hover:bg-white hover:border-gray-300 hover:scale-[1.02] cursor-pointer') }}">
-                        <div class="flex items-center gap-1">
-                            @if($isBooked)
-                            <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse inline-block"></span>
-                            @elseif($isSelected)
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block"></span>
-                            @else
-                            <span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>
-                            @endif
-                            {{ $slot }}
-                        </div>
-                        <span class="text-[8px] font-bold tracking-wider
-                                                        {{ $isBooked ? 'text-red-300' : ($isSelected ? 'text-blue-400' : 'text-gray-300') }}">
-                            {{ $isBooked ? 'BOOKED' : ($isSelected ? 'SELECTED' : 'OPEN') }}
-                        </span>
-                    </button>
-                    @endforeach
-                </div>
-                @error('pref_time') <span class="text-xs text-red-500 mt-2 block ml-1">{{ $message }}</span> @enderror
-            </div>
-            @endif
-            @endif
-        </div>
-    </section>
-
-    <!-- Submit -->
-    <div class="pt-6 border-t border-gray-100 flex justify-end">
-        <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 text-base rounded-[1.25rem] font-bold transition-all shadow-lg hover:shadow-gray-200 disabled:opacity-70" wire:loading.attr="disabled">
-            <span class="material-symbols-outlined text-[20px] leading-none" wire:loading.remove wire:target="submit">check_circle</span>
-            <span class="material-symbols-outlined text-[20px] animate-spin leading-none" wire:loading wire:target="submit">progress_activity</span>
-            Confirm Repair Booking
-        </button>
+        </form>
     </div>
-
-    </form>
-</div>
-</div>
-</div>
 
 </div>

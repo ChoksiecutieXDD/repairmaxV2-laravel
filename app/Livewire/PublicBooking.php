@@ -1,35 +1,37 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use App\Models\Appointment;
 use App\Models\Brand;
-use App\Models\InventoryItem;
 use App\Models\FaultType;
 use App\Models\Notification;
 use App\Models\User;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 
-#[Layout('layouts.user')]
-#[Title('Book Appointment | Repairmax')]
-class BookAppointment extends Component
+class PublicBooking extends Component
 {
     use WithFileUploads;
 
-    // Personal details
+    // Guest details
     public $first_name     = '';
     public $last_name      = '';
     public $email          = '';
     public $phone          = '';
     public $city           = '';
+    
+    // Pickup and Address details
+    public $address        = '';
+    public $pickup_option  = 'Drop-off'; // Default to Drop-off at Shop
+    public $other_details  = '';
 
+    // Device and booking details
     public $device_brand   = '';
     public $device_model   = '';
     public $custom_brand   = '';
@@ -43,11 +45,6 @@ class BookAppointment extends Component
     public $pref_time      = '';
     public $tracking_code  = '';
 
-    // Pickup and Address details
-    public $address        = '';
-    public $pickup_option  = 'Drop-off'; // Default to Drop-off at Shop
-    public $other_details  = '';
-
     public int $calendar_week_offset = 0;
     public ?int $selected_index  = null;
     public array $available_days  = [];
@@ -57,18 +54,22 @@ class BookAppointment extends Component
 
     public function mount()
     {
-        $user = Auth::user();
-        if ($user) {
-            $this->first_name = $user->first_name ?? '';
-            $this->last_name  = $user->last_name ?? '';
-            $this->email      = $user->email ?? '';
-            $this->phone      = $user->phone ?? '';
-            $this->address    = $user->address ?? '';
-            $this->city       = $user->city ?? '';
-        }
         $this->pref_date = date('Y-m-d');
         $this->generateTrackingCode();
         $this->generateAvailableDays();
+
+        // Read query parameter for pre-selecting service
+        $selectedService = Request::query('service');
+        if ($selectedService) {
+            $fault = FaultType::where('name', $selectedService)->first();
+            if ($fault) {
+                $this->fault_category = $fault->name;
+            } else {
+                // If it doesn't match any standard service, set to 'Other' and pre-fill custom service
+                $this->fault_category = 'Other';
+                $this->custom_service = $selectedService;
+            }
+        }
     }
 
     public function generateAvailableDays()
@@ -108,6 +109,7 @@ class BookAppointment extends Component
         $this->calendar_week_offset++;
         $this->generateAvailableDays();
     }
+    
     public function prevWeek()
     {
         if ($this->calendar_week_offset > 0) {
@@ -212,7 +214,7 @@ class BookAppointment extends Component
         $rules = [
             'first_name'     => 'required|string|max:255',
             'last_name'      => 'required|string|max:255',
-            'email'          => 'required|email|max:255|unique:users,email,' . Auth::id(),
+            'email'          => 'required|email|max:255',
             'phone'          => 'required|string|max:20',
             'city'           => 'required|string|max:100',
             'device_brand'   => 'required|string',
@@ -247,18 +249,20 @@ class BookAppointment extends Component
     {
         $this->validate();
 
-        // Re-save or update user profile with latest contact details
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        if ($user) {
-            $user->first_name = $this->first_name;
-            $user->last_name  = $this->last_name;
-            $user->email      = $this->email;
-            $user->phone      = $this->phone;
-            $user->address    = $this->address;
-            $user->city       = $this->city;
-            $user->save();
-        }
+        // Create or find guest user profile, and update details
+        $user = User::firstOrCreate(
+            ['email' => $this->email],
+            [
+                'role' => 'user',
+                'is_verified' => false,
+            ]
+        );
+        $user->first_name = $this->first_name;
+        $user->last_name = $this->last_name;
+        $user->phone = $this->phone;
+        $user->address = $this->address;
+        $user->city = $this->city;
+        $user->save();
 
         $photoPaths = [];
         // Store video first if uploaded
@@ -288,7 +292,7 @@ class BookAppointment extends Component
         }
 
         $appointment = new Appointment();
-        $appointment->user_id        = Auth::id();
+        $appointment->user_id        = $user->id;
         $appointment->tracking_code  = $trackingCode;
         $appointment->device_brand   = $finalBrand;
         $appointment->device_model   = $finalModel;
@@ -309,7 +313,7 @@ class BookAppointment extends Component
                 'user_id' => $admin->id,
                 'admin_id' => $admin->id,
                 'title' => 'New Appointment Booking',
-                'message' => $userFullName . ' has booked an appointment (Tracking: ' . $trackingCode . ') for ' . $finalBrand . ' - ' . $finalCategory,
+                'message' => $userFullName . ' has booked a repair appointment (Tracking: ' . $trackingCode . ') for ' . $finalBrand . ' - ' . $finalCategory,
                 'type' => 'appointment_booked',
                 'related_model' => 'Appointment',
                 'related_id' => $appointment->id,
@@ -318,11 +322,13 @@ class BookAppointment extends Component
         }
 
         Session::flash('success', 'Booking confirmed! Tracking code: ' . $trackingCode);
-        return redirect()->route('user.dashboard');
+        Session::flash('success_message', 'Tracking Code: ' . $trackingCode . '. Our team will contact you shortly to confirm the appointment details.');
+
+        return redirect()->route('booking');
     }
 
     public function render()
     {
-        return view('livewire.user.book-appointment');
+        return view('livewire.public-booking');
     }
 }

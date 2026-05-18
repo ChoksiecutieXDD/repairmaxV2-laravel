@@ -443,10 +443,15 @@
                                             <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">Starting from</span>
                                             <span class="text-2xl font-black text-white mt-1" x-text="'₱' + service.base_price"></span>
                                         </div>
-                                        <a :href="'/services/' + service.id" class="inline-flex items-center justify-center gap-1.5 px-6 py-4 bg-white hover:bg-blue-600 text-gray-900 hover:text-white rounded-2xl font-bold text-xs shadow-md active:scale-95 transition-all">
-                                            Details
-                                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                                        </a>
+                                        <div class="flex items-center gap-2 shrink-0">
+                                            <a :href="'/services/' + service.id" class="inline-flex items-center justify-center px-4 py-3.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-[10px] active:scale-95 transition-all whitespace-nowrap">
+                                                Details
+                                            </a>
+                                            <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-white hover:bg-blue-600 text-gray-900 hover:text-white rounded-xl font-bold text-[10px] shadow-md active:scale-95 transition-all whitespace-nowrap">
+                                                Book
+                                                <span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

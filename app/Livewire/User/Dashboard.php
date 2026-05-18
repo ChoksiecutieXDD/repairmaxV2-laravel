@@ -27,7 +27,7 @@ class Dashboard extends Component
     public function closeDetails()
     {
         $this->showDetailsModal = false;
-        $this->selectedAppointment = null;
+        // Keep selectedAppointment populated during Alpine's exit transition so the modal content does not disappear prematurely.
     }
 
     public function render()

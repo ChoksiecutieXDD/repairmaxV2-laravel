@@ -214,9 +214,18 @@
                     <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Attached Photos</h3>
                     <div class="grid grid-cols-3 gap-3">
                         @foreach($selectedAppointment->photo_paths as $photo)
+                        @php
+                            $isVideo = in_array(pathinfo($photo, PATHINFO_EXTENSION), ['mp4', 'mov', 'avi', 'webm', 'mpeg', 'mkv', '3gp']);
+                        @endphp
+                        @if($isVideo)
+                        <div class="aspect-square bg-gray-100 rounded-lg border border-gray-200 overflow-hidden relative flex items-center justify-center">
+                            <video src="{{ asset('storage/' . $photo) }}" class="w-full h-full object-cover" controls muted playsinline></video>
+                        </div>
+                        @else
                         <div class="aspect-square bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
                             <img src="{{ asset('storage/' . $photo) }}" alt="Device photo" class="w-full h-full object-cover">
                         </div>
+                        @endif
                         @endforeach
                     </div>
                 </div>

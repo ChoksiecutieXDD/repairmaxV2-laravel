@@ -14,21 +14,21 @@ class Services extends Component
 {
     use WithFileUploads;
 
-    public $search = '';
-    public $sortOrder = 'latest'; // 'latest', 'alpha_asc', 'alpha_desc', 'price_asc', 'price_desc'
+    public string $search = '';
+    public string $sortOrder = 'latest'; // 'latest', 'alpha_asc', 'alpha_desc', 'price_asc', 'price_desc'
     
     // Modal & Form State
-    public $showEditModal = false;
+    public bool $showEditModal = false;
     public ?int $editingId = null;
     
     // Form Fields
-    public $formName = '';
-    public $formBasePrice = 0;
-    public $formDescription = '';
-    public $formImage;
-    public $currentImage = '';
-    public $formGalleryImages = []; // Up to 5 additional images
-    public $currentGallery = []; // Saved gallery image paths
+    public string $formName = '';
+    public int|float $formBasePrice = 0;
+    public string $formDescription = '';
+    public mixed $formImage = null;
+    public string $currentImage = '';
+    public array $formGalleryImages = []; // Up to 5 additional images
+    public array $currentGallery = []; // Saved gallery image paths
 
     protected function rules()
     {

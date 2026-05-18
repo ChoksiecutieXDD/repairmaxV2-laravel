@@ -5,6 +5,7 @@ namespace App\Livewire\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Notification;
 use App\Models\User;
@@ -225,10 +226,10 @@ class Profile extends Component
             $user->delete();
 
             Auth::logout();
-            session()->invalidate();
-            session()->regenerateToken();
+            Session::invalidate();
+            Session::regenerateToken();
 
-            session()->flash('info', 'Your account has been deleted.');
+            Session::flash('info', 'Your account has been deleted.');
             $this->redirectRoute('login', navigate: true);
         } catch (\Exception $e) {
             $this->dispatch('toast', message: 'Cannot delete account. You have active associations (appointments/repairs).', type: 'error');

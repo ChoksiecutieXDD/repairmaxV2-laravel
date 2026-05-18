@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.admin')]
@@ -82,7 +83,7 @@ class Profile extends Component
             'job_title' => $this->job_title,
         ]);
 
-        session()->flash('success', 'Profile updated successfully!');
+        Session::flash('success', 'Profile updated successfully!');
         $this->isEditing = false;
     }
 
@@ -97,7 +98,7 @@ class Profile extends Component
         // Check size (approximate)
         $sizeInBytes = (int)(strlen(rtrim($base64String, '=')) * 0.75);
         if ($sizeInBytes > 2 * 1024 * 1024) {
-            session()->flash('error', 'The cropped image is too large. Max 2MB allowed.');
+            Session::flash('error', 'The cropped image is too large. Max 2MB allowed.');
             return;
         }
 
@@ -134,11 +135,11 @@ class Profile extends Component
             $this->profile_picture = null;
             $this->cropped_image = null;
 
-            session()->flash('success', 'Profile picture updated successfully!');
+            Session::flash('success', 'Profile picture updated successfully!');
             $this->dispatch('refresh-page');
         } catch (\Exception $e) {
             Log::error('Profile picture error: ' . $e->getMessage());
-            session()->flash('error', 'Failed to update profile picture: ' . $e->getMessage());
+            Session::flash('error', 'Failed to update profile picture: ' . $e->getMessage());
         }
     }
 
@@ -153,7 +154,7 @@ class Profile extends Component
         $user->update(['profile_picture' => null]);
         $this->current_profile_picture = null;
 
-        session()->flash('success', 'Profile picture deleted successfully!');
+        Session::flash('success', 'Profile picture deleted successfully!');
     }
 
     public function updatePassword()
@@ -176,7 +177,7 @@ class Profile extends Component
 
         $user->update(['password' => Hash::make($this->newPassword)]);
 
-        session()->flash('success', 'Password updated successfully!');
+        Session::flash('success', 'Password updated successfully!');
         $this->currentPassword = '';
         $this->newPassword = '';
         $this->confirmPassword = '';
