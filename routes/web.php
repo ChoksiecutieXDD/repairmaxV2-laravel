@@ -30,7 +30,6 @@ use App\Livewire\User\Notifications;
 
 // Livewire Components (Admin)
 use App\Livewire\Admin\Dashboard as AdminDashboard;
-use App\Livewire\Admin\SystemOverview;
 use App\Livewire\Admin\Profile as AdminProfile;
 use App\Livewire\Admin\Appointment as AppointmentComponent;
 use App\Livewire\Admin\AppointmentManagement;
@@ -308,7 +307,9 @@ Route::get('/logout', function () {
 */
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
-    Route::get('/overview', SystemOverview::class)->name('overview');
+    Route::get('/overview', function () {
+        return redirect()->route('admin.system-settings', ['tab' => 'overview']);
+    })->name('overview');
     Route::get('/profile', AdminProfile::class)->name('profile');
     
     // Appointments
