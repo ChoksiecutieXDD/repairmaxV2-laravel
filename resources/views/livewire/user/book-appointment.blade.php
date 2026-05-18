@@ -1,4 +1,4 @@
-<div class="w-full" x-data="{ infoModal: false, calendarModal: false }">
+<div class="w-full" x-data="{ infoModal: false, calendarModal: false, reviewModal: @entangle('showReviewModal') }">
 
     <!-- ===== INFO MODAL ===== -->
     <div x-show="infoModal"
@@ -197,6 +197,213 @@
         <button type="button" @click="calendarModal = false" class="px-6 py-3 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all text-sm">Close</button>
     </div>
 </div>
+
+<!-- ===== REVIEW DETAILS MODAL ===== -->
+<div x-show="reviewModal"
+    class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
+    x-cloak
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0">
+    <div class="fixed inset-0" @click="reviewModal = false"></div>
+    <div class="bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full relative overflow-hidden flex flex-col max-h-[90vh] transform transition-all"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+        x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+        x-transition:leave-end="opacity-0 scale-95 translate-y-4">
+        
+        <!-- Modal Header -->
+        <div class="px-8 pt-10 pb-6 flex flex-col items-center text-center bg-white relative border-b border-gray-100">
+            <button type="button" @click="reviewModal = false"
+                class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
+                <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
+            </button>
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-4 shadow-sm border border-blue-100/50">
+                <span class="material-symbols-outlined text-[32px] leading-none">rate_review</span>
+            </div>
+            <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Review Details</h3>
+            <p class="text-sm text-gray-400 font-medium mt-1">Please verify your booking details before submitting</p>
+        </div>
+
+        <!-- Modal Content (Scrollable) -->
+        <div class="p-8 overflow-y-auto space-y-6">
+            <!-- Personal details section -->
+            <div class="bg-gray-50 rounded-[1.5rem] p-5 border border-gray-100">
+                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">person</span> Personal Details
+                </h4>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Full Name</p>
+                        <p class="font-bold text-gray-900 mt-0.5">{{ $first_name }} {{ $last_name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Phone Number</p>
+                        <p class="font-bold text-gray-900 mt-0.5">{{ $phone }}</p>
+                    </div>
+                    <div class="col-span-2">
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Email Address</p>
+                        <p class="font-bold text-gray-900 mt-0.5">{{ $email }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Device & service details section -->
+            <div class="bg-gray-50 rounded-[1.5rem] p-5 border border-gray-100">
+                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">devices</span> Device & Service
+                </h4>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Device</p>
+                        <p class="font-bold text-gray-900 mt-0.5">
+                            @if($device_brand === 'Other')
+                                {{ $custom_brand }} {{ $custom_model }}
+                            @else
+                                {{ $device_brand }} {{ $device_model === 'Other' ? $custom_model : $device_model }}
+                            @endif
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Service Type</p>
+                        <p class="font-bold text-gray-900 mt-0.5">
+                            @if($fault_category === 'Other')
+                                {{ $custom_service }}
+                            @else
+                                {{ $fault_category }}
+                            @endif
+                        </p>
+                    </div>
+                    <div class="col-span-2">
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Problem Description</p>
+                        <p class="text-gray-700 mt-1 leading-relaxed whitespace-pre-line">{{ $description }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Method and Address section -->
+            <div class="bg-gray-50 rounded-[1.5rem] p-5 border border-gray-100">
+                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">local_shipping</span> Service Method & Schedule
+                </h4>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Service Method</p>
+                        <p class="font-bold text-gray-900 mt-0.5">
+                            {{ $pickup_option === 'Pickup' ? 'Home Pickup & Return' : 'Drop-off at Shop' }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Scheduled Date & Time</p>
+                        <p class="font-bold text-gray-900 mt-0.5">
+                            @if($pref_date)
+                                {{ \Carbon\Carbon::parse($pref_date)->format('M d, Y') }} at {{ $pref_time }}
+                            @endif
+                        </p>
+                    </div>
+                    <div class="col-span-2">
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Address</p>
+                        <p class="font-bold text-gray-900 mt-0.5">{{ $address }}, {{ $city }}</p>
+                    </div>
+                    @if($other_details)
+                    <div class="col-span-2">
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">Special Instructions</p>
+                        <p class="text-gray-700 mt-0.5">{{ $other_details }}</p>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Financial Overview section -->
+            <div class="bg-blue-50/40 rounded-[1.5rem] p-5 border border-blue-100/80">
+                <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-4 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">payments</span> Financial Overview
+                </h4>
+                
+                @php
+                $selectedFault = ($fault_category && $fault_category !== 'Other') ? \App\Models\FaultType::where('name', $fault_category)->first() : null;
+                $basePrice = $selectedFault ? $selectedFault->base_price : null;
+                $pickupFee = ($pickup_option === 'Pickup') ? 150 : 0;
+                @endphp
+
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between items-center text-gray-600">
+                        <span>Base Service Price ({{ $fault_category === 'Other' ? ($custom_service ?: 'Custom Service') : $fault_category }})</span>
+                        <span class="font-bold text-gray-900">
+                            @if($fault_category === 'Other')
+                                Quote after inspection
+                            @elseif($basePrice)
+                                ₱{{ number_format($basePrice, 2) }}
+                            @else
+                                Pending diagnostic
+                            @endif
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between items-center text-gray-600">
+                        <span>Service Method ({{ $pickup_option === 'Pickup' ? 'Home Pickup' : 'Shop Drop-off' }})</span>
+                        <span class="font-bold text-gray-900">
+                            @if($pickup_option === 'Pickup')
+                                ₱{{ number_format($pickupFee, 2) }}
+                            @else
+                                Free
+                            @endif
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between items-center text-gray-600 border-b border-blue-100/50 pb-3">
+                        <span class="flex items-center gap-1">
+                            Diagnostic Fee 
+                            <span class="text-[10px] font-black text-blue-500 bg-blue-100/80 px-1.5 py-0.5 rounded uppercase" title="Charged only if you decline repair after diagnostic check">Conditional</span>
+                        </span>
+                        <span class="font-bold text-gray-900">₱150.00</span>
+                    </div>
+
+                    <div class="flex justify-between items-center pt-1">
+                        <span class="text-base font-black text-gray-900">Estimated Total</span>
+                        <span class="text-lg font-black text-blue-700">
+                            @if($fault_category === 'Other')
+                                ₱{{ number_format($pickupFee, 2) }} + Diagnostic / Quote
+                            @elseif($basePrice)
+                                ₱{{ number_format($basePrice + $pickupFee, 2) }}
+                            @else
+                                ₱{{ number_format($pickupFee, 2) }}
+                            @endif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Warning Disclaimer Label -->
+                <div class="mt-5 p-3.5 bg-amber-50 border border-amber-100 rounded-xl flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-amber-600 text-[18px] shrink-0 mt-0.5 animate-pulse">warning</span>
+                    <div class="text-xs text-amber-800 leading-relaxed font-semibold">
+                        <strong class="font-black uppercase tracking-wider block mb-1">Pricing Notice (Subject to Final Inspection)</strong>
+                        This estimated total is not complete. The final cost will be determined after a technical diagnostic check of your device's actual condition. Additional fees may apply for secondary issues (e.g. internal hardware damages, bloated battery, water exposure) discovered during the repair process.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-6 bg-gray-50 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
+            <button type="button" @click="reviewModal = false"
+                class="w-full sm:w-1/2 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-[1.25rem] hover:bg-gray-50 transition-all text-sm">
+                Edit Details
+            </button>
+            <button type="button" wire:click="submit" wire:loading.attr="disabled"
+                class="w-full sm:w-1/2 py-4 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all text-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px] leading-none" wire:loading.remove wire:target="submit">check_circle</span>
+                <span class="material-symbols-outlined text-[18px] animate-spin leading-none" wire:loading wire:target="submit">progress_activity</span>
+                Confirm Booking
+            </button>
+        </div>
+    </div>
+</div>
 </div>
 
 <div class="mb-8">
@@ -306,7 +513,7 @@
 <!-- ===== MAIN FORM (full-width single column) ===== -->
 <div class="">
     <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 md:p-10 mb-8">
-        <form wire:submit="submit" class="space-y-12">
+        <form wire:submit.prevent="prepareReview" class="space-y-12" novalidate>
 
             <!-- Personal Details -->
             <section>
@@ -693,14 +900,55 @@
     <!-- Submit -->
     <div class="pt-6 border-t border-gray-100 flex justify-end">
         <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 text-base rounded-[1.25rem] font-bold transition-all shadow-lg hover:shadow-gray-200 disabled:opacity-70" wire:loading.attr="disabled">
-            <span class="material-symbols-outlined text-[20px] leading-none" wire:loading.remove wire:target="submit">check_circle</span>
-            <span class="material-symbols-outlined text-[20px] animate-spin leading-none" wire:loading wire:target="submit">progress_activity</span>
-            Confirm Repair Booking
+            <span class="material-symbols-outlined text-[20px] leading-none" wire:loading.remove wire:target="prepareReview">rate_review</span>
+            <span class="material-symbols-outlined text-[20px] animate-spin leading-none" wire:loading wire:target="prepareReview">progress_activity</span>
+            Review Details
         </button>
     </div>
 
-    </form>
-</div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('toast', event => {
+                let detail = event.detail || {};
+                if (Array.isArray(detail)) {
+                    detail = detail[0] || {};
+                } else if (detail.message === undefined && detail[0]) {
+                    detail = detail[0];
+                }
+                
+                if (detail.type === 'error') {
+                    // Wait for Livewire to inject error text elements
+                    setTimeout(() => {
+                        // Look for the first element with text-red-500 containing error message (excluding asterisks)
+                        const firstErrorLabel = Array.from(document.querySelectorAll('.text-red-500')).find(el => el.textContent.trim() !== '*');
+                        if (firstErrorLabel) {
+                            const parentDiv = firstErrorLabel.closest('div') || firstErrorLabel;
+                            parentDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            // Try to find the associated input/select/textarea in the same div and focus it
+                            const associatedInput = parentDiv.querySelector('input, select, textarea');
+                            if (associatedInput) {
+                                associatedInput.focus({ preventScroll: true });
+                            }
+                            return;
+                        }
+
+                        // Fallback: look for blank required elements
+                        const requiredFields = Array.from(document.querySelectorAll('form[novalidate] input[required], form[novalidate] select[required], form[novalidate] textarea[required]'));
+                        const firstBlankField = requiredFields.find(el => !el.value.trim());
+                        if (firstBlankField) {
+                            const parentDiv = firstBlankField.closest('div') || firstBlankField;
+                            parentDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            firstBlankField.focus({ preventScroll: true });
+                        }
+                    }, 150);
+                }
+            });
+        });
+    </script>
 </div>
 </div>
 

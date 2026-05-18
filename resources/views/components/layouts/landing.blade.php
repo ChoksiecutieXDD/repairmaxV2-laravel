@@ -49,6 +49,7 @@
 
     <x-landing-footer />
     <x-float-chatbot />
+    <x-ui.toast />
 
     @livewireScripts
 </body>

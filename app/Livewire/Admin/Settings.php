@@ -6,6 +6,10 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use App\Models\Setting;
+use App\Models\User;
+use App\Models\Appointment;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 #[Layout('components.layouts.admin')]
 #[Title('Settings | Repairmax')]
@@ -111,7 +115,7 @@ class Settings extends Component
         Setting::set('businessZipCode', $this->businessZipCode, 'general');
         Setting::set('businessWebsite', $this->businessWebsite, 'general');
         
-        session()->flash('success', 'General settings saved successfully!');
+        Session::flash('success', 'General settings saved successfully!');
     }
 
     public function saveEmailSettings()
@@ -122,7 +126,7 @@ class Settings extends Component
         Setting::set('emailFromName', $this->emailFromName, 'email');
         Setting::set('emailNotificationsEnabled', $this->emailNotificationsEnabled, 'email');
         
-        session()->flash('success', 'Email settings saved successfully!');
+        Session::flash('success', 'Email settings saved successfully!');
     }
 
     public function saveNotificationSettings()
@@ -132,7 +136,7 @@ class Settings extends Component
         Setting::set('statusUpdateNotifications', $this->statusUpdateNotifications, 'notifications');
         Setting::set('adminAlerts', $this->adminAlerts, 'notifications');
         
-        session()->flash('success', 'Notification settings saved successfully!');
+        Session::flash('success', 'Notification settings saved successfully!');
     }
 
     public function savePaymentSettings()
@@ -141,7 +145,7 @@ class Settings extends Component
         Setting::set('currencyCode', $this->currencyCode, 'payment');
         Setting::set('taxPercentage', $this->taxPercentage, 'payment');
         
-        session()->flash('success', 'Payment settings saved successfully!');
+        Session::flash('success', 'Payment settings saved successfully!');
     }
 
     public function saveBusinessHours()
@@ -158,7 +162,7 @@ class Settings extends Component
         
         Setting::set('businessHours', $hours, 'business');
         
-        session()->flash('success', 'Business hours saved successfully!');
+        Session::flash('success', 'Business hours saved successfully!');
     }
 
     public function saveSecuritySettings()
@@ -171,11 +175,81 @@ class Settings extends Component
         Setting::set('sessionTimeout', $this->sessionTimeout, 'security');
         Setting::set('maxLoginAttempts', $this->maxLoginAttempts, 'security');
         
-        session()->flash('success', 'Security settings saved successfully!');
+        Session::flash('success', 'Security settings saved successfully!');
+    }
+
+    private function getAppointmentTrend()
+    {
+        $days = [];
+        $counts = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $count = Appointment::whereDate('pref_date', $date)->count();
+            
+            $days[] = $date->format('M d');
+            $counts[] = $count;
+        }
+
+        return [
+            'labels' => $days,
+            'data' => $counts,
+        ];
+    }
+
+    private function getUserGrowth()
+    {
+        $days = [];
+        $counts = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $count = User::whereDate('created_at', '<=', $date)->count();
+            
+            $days[] = $date->format('M d');
+            $counts[] = $count;
+        }
+
+        return [
+            'labels' => $days,
+            'data' => $counts,
+        ];
     }
 
     public function render()
     {
-        return view('livewire.admin.settings');
+        // 1. Real Database Queries
+        $totalUsers = User::count();
+        $adminCount = User::where('role', 'admin')->count();
+        $userCount = User::where('role', 'user')->count();
+
+        $pendingTasks = Appointment::where('status', 'Pending')->count();
+
+        // 2. Fetch Today's Appointments (Real Data)
+        $todaysAppointments = Appointment::whereDate('pref_date', Carbon::today())
+            ->take(5)
+            ->get();
+
+        // 3. Chart Data - Last 7 Days Appointments
+        $appointmentTrend = $this->getAppointmentTrend();
+
+        // 4. Chart Data - User Growth
+        $userGrowth = $this->getUserGrowth();
+
+        // 5. Static Stats (Update these later with real server logic if needed)
+        $systemUptime = "99.8%";
+        $storageUsed = "42.5GB";
+
+        return view('livewire.admin.settings', [
+            'totalUsers' => $totalUsers,
+            'adminCount' => $adminCount,
+            'userCount' => $userCount,
+            'pendingTasks' => $pendingTasks,
+            'todaysAppointments' => $todaysAppointments,
+            'systemUptime' => $systemUptime,
+            'storageUsed' => $storageUsed,
+            'appointmentTrend' => $appointmentTrend,
+            'userGrowth' => $userGrowth,
+        ]);
     }
 }

@@ -110,7 +110,7 @@
                     Repairmax
                 </a>
 
-                <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white focus:outline-none">
+                <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white focus:outline-none bg-transparent border-0 p-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100">
                     <span class="material-symbols-outlined text-[24px]">close</span>
                 </button>
             </div>

@@ -55,7 +55,7 @@
                     <span class="text-[10px] text-blue-500 font-mono ml-2 uppercase border border-blue-500 rounded px-1.5 py-0.5">Admin</span>
                 </a>
 
-                <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white focus:outline-none">
+                <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white focus:outline-none bg-transparent border-0 p-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100">
                     <span class="material-symbols-outlined text-[24px]">close</span>
                 </button>
             </div>
@@ -110,9 +110,7 @@
 
                 <div>
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Settings</h3>
-                    <x-sidebar.link href="{{ route('admin.system-settings', ['tab' => 'overview']) }}" icon="grid_view" :active="request()->is('admin/system-settings') && request()->query('tab') === 'overview'">System Overview</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.system-settings', ['tab' => 'settings']) }}" icon="settings" :active="request()->is('admin/system-settings') && request()->query('tab') !== 'overview'">System Settings</x-sidebar.link>
-                    <x-sidebar.link href="/admin/settings" icon="tune" :active="request()->is('admin/settings')">Business Settings</x-sidebar.link>
+                    <x-sidebar.link href="/admin/settings" icon="settings" :active="request()->is('admin/settings') || request()->is('admin/system-settings')">System Settings</x-sidebar.link>
                 </div>
             </nav>
 

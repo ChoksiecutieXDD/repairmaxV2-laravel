@@ -180,6 +180,206 @@
 
     </div>
 
+    <!-- ===== OUR REPAIR SERVICES CATALOG ===== -->
+    <div class="mt-12 mb-12"
+         x-data="{
+             search: '',
+             selectedCategory: 'all',
+             openLightbox: false,
+             imageUrl: '',
+             services: [],
+             get filteredServices() {
+                 return this.services.filter(s => {
+                     const matchesSearch = s.name.toLowerCase().includes(this.search.toLowerCase()) || s.description.toLowerCase().includes(this.search.toLowerCase());
+                     const matchesCategory = this.selectedCategory === 'all' || s.category === this.selectedCategory;
+                     return matchesSearch && matchesCategory;
+                 });
+             }
+         }"
+         x-init="services = JSON.parse($el.getAttribute('data-services'))"
+         data-services="{{ json_encode(array_map(fn($s) => [
+             'id' => $s->id,
+             'name' => $s->name,
+             'description' => $s->description,
+             'base_price' => $s->base_price,
+             'image_path' => asset($s->image_path),
+             'gallery_paths' => array_map(fn($path) => asset($path), $s->gallery_paths ?: []),
+             'category' => $s->category ?: 'hardware',
+             'categoryName' => match($s->category ?: 'hardware') {
+                 'screen' => 'Screen & Display',
+                 'power' => 'Power & Charging',
+                 'audio' => 'Audio & Sound',
+                 'software' => 'Software & Systems',
+                 default => 'Hardware & Modules',
+             }
+         ], $services->all())) }}">
+    
+    <!-- Heading & Search Bar Row -->
+        <div class="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div>
+                <h2 class="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-650 bg-blue-50 p-2 rounded-2xl">build_circle</span>
+                    Explore Repair Services
+                </h2>
+                <p class="text-sm text-gray-500 mt-1 font-medium">Explore transparent pricing and professional repair catalogs</p>
+            </div>
+
+            <!-- Sleek Search input -->
+            <div class="relative w-full lg:max-w-md shrink-0">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-[20px]">search</span>
+                <input type="text" x-model="search" placeholder="Search for screens, battery replacement..." 
+                    class="w-full pl-11 pr-10 py-3 bg-white border border-gray-200 rounded-[1.25rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none text-xs font-bold text-gray-900 shadow-sm">
+                <button x-show="search.length > 0" @click="search = ''" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Shortcut Filter Pills -->
+        <div class="flex flex-wrap items-center gap-1.5 bg-white p-1.5 rounded-[1.25rem] mb-8 w-full border border-gray-200/80 shadow-sm">
+            <button @click="selectedCategory = 'all'" 
+                :class="selectedCategory === 'all' ? 'bg-[#111827] text-white shadow-md transform scale-105' : 'text-gray-550 hover:bg-gray-50 hover:text-gray-900 bg-transparent'"
+                class="px-5 py-2.5 rounded-[1rem] text-[10px] font-black uppercase tracking-wider transition-all duration-300 active:scale-95 inline-flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">grid_view</span>
+                All Repairs
+            </button>
+            <button @click="selectedCategory = 'screen'" 
+                :class="selectedCategory === 'screen' ? 'bg-[#111827] text-white shadow-md transform scale-105' : 'text-gray-550 hover:bg-gray-50 hover:text-gray-900 bg-transparent'"
+                class="px-5 py-2.5 rounded-[1rem] text-[10px] font-black uppercase tracking-wider transition-all duration-300 active:scale-95 inline-flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">smartphone</span>
+                Screen & Display
+            </button>
+            <button @click="selectedCategory = 'power'" 
+                :class="selectedCategory === 'power' ? 'bg-[#111827] text-white shadow-md transform scale-105' : 'text-gray-550 hover:bg-gray-50 hover:text-gray-900 bg-transparent'"
+                class="px-5 py-2.5 rounded-[1rem] text-[10px] font-black uppercase tracking-wider transition-all duration-300 active:scale-95 inline-flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">battery_charging_full</span>
+                Power & Battery
+            </button>
+            <button @click="selectedCategory = 'audio'" 
+                :class="selectedCategory === 'audio' ? 'bg-[#111827] text-white shadow-md transform scale-105' : 'text-gray-550 hover:bg-gray-50 hover:text-gray-900 bg-transparent'"
+                class="px-5 py-2.5 rounded-[1rem] text-[10px] font-black uppercase tracking-wider transition-all duration-300 active:scale-95 inline-flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">volume_up</span>
+                Audio & Sound
+            </button>
+            <button @click="selectedCategory = 'software'" 
+                :class="selectedCategory === 'software' ? 'bg-[#111827] text-white shadow-md transform scale-105' : 'text-gray-550 hover:bg-gray-50 hover:text-gray-900 bg-transparent'"
+                class="px-5 py-2.5 rounded-[1rem] text-[10px] font-black uppercase tracking-wider transition-all duration-300 active:scale-95 inline-flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">terminal</span>
+                Software & OS
+            </button>
+            <button @click="selectedCategory = 'hardware'" 
+                :class="selectedCategory === 'hardware' ? 'bg-[#111827] text-white shadow-md transform scale-105' : 'text-gray-550 hover:bg-gray-50 hover:text-gray-900 bg-transparent'"
+                class="px-5 py-2.5 rounded-[1rem] text-[10px] font-black uppercase tracking-wider transition-all duration-300 active:scale-95 inline-flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">memory</span>
+                Hardware & Modules
+            </button>
+        </div>
+
+        <!-- Services Card Grid -->
+        <div class="relative min-h-[300px]">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="filteredServices.length > 0">
+                <template x-for="service in filteredServices" :key="service.id">
+                    <div class="bg-white rounded-[2rem] border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 overflow-hidden flex flex-col group">
+                        
+                        <!-- Image Container with Zoom -->
+                        <div class="relative h-48 overflow-hidden bg-gray-50 shrink-0">
+                            <img :src="service.image_path" 
+                                 @click="imageUrl = service.image_path; openLightbox = true"
+                                 class="w-full h-full object-cover cursor-zoom-in group-hover:scale-110 transition-transform duration-500" 
+                                 :alt="service.name">
+                            
+                            <!-- Badges -->
+                            <span :class="{
+                                      'bg-blue-50 text-blue-600 border border-blue-100': service.category === 'screen',
+                                      'bg-amber-50 text-amber-600 border border-amber-100': service.category === 'power',
+                                      'bg-emerald-50 text-emerald-600 border border-emerald-100': service.category === 'audio',
+                                      'bg-purple-50 text-purple-600 border border-purple-100': service.category === 'software',
+                                      'bg-indigo-50 text-indigo-600 border border-indigo-100': service.category === 'hardware'
+                                  }"
+                                  class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm bg-white"
+                                  x-text="service.categoryName">
+                            </span>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-6 flex flex-col flex-1">
+                            <h3 class="text-lg font-black text-gray-900 tracking-tight mb-2 group-hover:text-blue-600 transition-colors" x-text="service.name"></h3>
+                            
+                            <div class="relative h-16 overflow-hidden mb-4">
+                                <p class="text-xs text-gray-500 leading-relaxed font-medium" x-text="service.description"></p>
+                                <div class="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+                            </div>
+                            
+                            <!-- Price & Call to Actions -->
+                            <div class="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
+                                <div class="flex flex-col">
+                                    <span class="text-[9px] font-black text-gray-400 uppercase tracking-wider leading-none">Starting from</span>
+                                    <span class="text-xl font-black text-gray-900 mt-1" x-text="'₱' + Number(service.base_price).toLocaleString()"></span>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    <a :href="'/user/services/' + service.id" class="inline-flex items-center justify-center px-3.5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-[10px] active:scale-95 transition-all whitespace-nowrap">
+                                        Details
+                                    </a>
+                                    <a :href="'/user/book-appointment?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-3.5 py-3 bg-gray-900 hover:bg-blue-600 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap">
+                                        Book
+                                        <span class="material-symbols-outlined text-[13px] leading-none">calendar_month</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Empty State -->
+            <div class="flex flex-col items-center justify-center text-center py-16 px-4 bg-white border border-gray-200 rounded-[2rem] shadow-sm"
+                 x-show="filteredServices.length === 0" 
+                 x-cloak>
+                <div class="w-16 h-16 bg-gray-50 border border-dashed border-gray-200 rounded-2xl flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-gray-455 text-3xl">search_off</span>
+                </div>
+                <h4 class="text-base font-black text-gray-900 tracking-tight">No Matching Services</h4>
+                <p class="text-xs text-gray-550 max-w-xs mt-1.5 leading-relaxed font-medium">
+                    We couldn't find any repairs matching "<span class="font-bold text-gray-700" x-text="search"></span>". Try another term or reset categories!
+                </p>
+                <button @click="search = ''; selectedCategory = 'all'" class="mt-5 px-5 py-2.5 bg-gray-900 text-white text-[10px] font-black uppercase tracking-wider rounded-xl active:scale-95 transition-all shadow-md">
+                    Clear Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Dynamic Lightbox Modal -->
+        <div x-show="openLightbox" 
+             class="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6" 
+             x-cloak>
+             <!-- Backdrop -->
+             <div x-show="openLightbox"
+                  x-transition:enter="ease-out duration-300"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
+                  x-transition:leave="ease-in duration-200"
+                  x-transition:leave-start="opacity-100"
+                  x-transition:leave-end="opacity-0"
+                  class="fixed inset-0 bg-gray-950/80 backdrop-blur-xl" 
+                  @click="openLightbox = false"></div>
+
+             <!-- Content Card -->
+             <div x-show="openLightbox"
+                  x-transition:enter="ease-out duration-300"
+                  x-transition:enter-start="opacity-0 scale-95"
+                  x-transition:enter-end="opacity-100 scale-100"
+                  x-transition:leave="ease-in duration-200"
+                  x-transition:leave-start="opacity-100 scale-100"
+                  x-transition:leave-end="opacity-0 scale-95"
+                  class="relative bg-white/10 backdrop-blur-md rounded-[2rem] overflow-hidden max-w-2xl w-full p-3 border border-white/20 shadow-2xl flex flex-col items-center justify-center z-30">
+                  <button @click="openLightbox = false" class="absolute top-4 right-4 text-red-500 hover:text-red-650 active:scale-90 transition-all z-40">
+                      <span class="material-symbols-outlined text-[32px] font-bold">close</span>
+                  </button>
+                  <img :src="imageUrl" class="max-w-full max-h-[70vh] rounded-xl object-contain shadow-2xl">
+             </div>
+        </div>
+    </div>
+
     <!-- Appointment Details Modal -->
     <div x-data="{ open: @entangle('showDetailsModal') }"
          x-show="open"

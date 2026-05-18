@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 // Mails
 use App\Mail\ContactEnquiry;
@@ -27,9 +28,11 @@ use App\Livewire\User\AiSupport;
 use App\Livewire\User\SupportMessage;
 use App\Livewire\User\SystemSettings;
 use App\Livewire\User\Notifications;
+use App\Livewire\User\ServiceDetail;
 
 // Livewire Components (Admin)
 use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\SystemOverview;
 use App\Livewire\Admin\Profile as AdminProfile;
 use App\Livewire\Admin\Appointment as AppointmentComponent;
 use App\Livewire\Admin\AppointmentManagement;
@@ -294,8 +297,8 @@ Route::middleware('guest')->group(function () {
 */
 Route::get('/logout', function () {
     Auth::logout();
-    \Illuminate\Support\Facades\Session::invalidate();
-    \Illuminate\Support\Facades\Session::regenerateToken();
+    Session::invalidate();
+    Session::regenerateToken();
     return redirect('/login');
 })->name('logout');
 
@@ -307,9 +310,7 @@ Route::get('/logout', function () {
 */
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
-    Route::get('/overview', function () {
-        return redirect()->route('admin.system-settings', ['tab' => 'overview']);
-    })->name('overview');
+    Route::get('/overview', SystemOverview::class)->name('overview');
     Route::get('/profile', AdminProfile::class)->name('profile');
     
     // Appointments
@@ -365,6 +366,9 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 
     // Notifications
     Route::get('/notifications', Notifications::class)->name('notifications');
+
+    // Services Details (User-specific)
+    Route::get('/services/{id}', ServiceDetail::class)->name('services.detail');
 });
 
 Route::post('/subscribe', function (Request $request) {

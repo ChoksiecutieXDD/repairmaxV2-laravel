@@ -76,6 +76,7 @@
             <thead>
                 <tr class="bg-gray-50 border-b border-gray-100">
                     <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Service Information</th>
+                    <th class="px-6 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest w-48">Category</th>
                     <th class="px-6 py-4 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest w-48">Base Price</th>
                     <th class="px-6 py-4 text-center text-[10px] font-black text-gray-400 uppercase tracking-widest w-36">Actions</th>
                 </tr>
@@ -102,6 +103,34 @@
                                 @endif
                             </div>
                         </td>
+                        <td class="px-6 py-4">
+                            @php
+                                $categorySlug = $record->category ?: 'hardware';
+                                $categoryName = match($categorySlug) {
+                                    'screen' => 'Screen & Display',
+                                    'power' => 'Power & Charging',
+                                    'audio' => 'Audio & Sound',
+                                    'software' => 'Software & Systems',
+                                    default => 'Hardware & Modules',
+                                };
+                            @endphp
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider
+                                @if($categorySlug === 'screen') bg-blue-50 text-blue-700 border border-blue-200
+                                @elseif($categorySlug === 'power') bg-amber-50 text-amber-700 border border-amber-200
+                                @elseif($categorySlug === 'audio') bg-emerald-50 text-emerald-700 border border-emerald-200
+                                @elseif($categorySlug === 'software') bg-purple-50 text-purple-700 border border-purple-200
+                                @else bg-indigo-50 text-indigo-700 border border-indigo-200
+                                @endif shadow-sm bg-white">
+                                <span class="w-1.5 h-1.5 rounded-full 
+                                    @if($categorySlug === 'screen') bg-blue-500
+                                    @elseif($categorySlug === 'power') bg-amber-500
+                                    @elseif($categorySlug === 'audio') bg-emerald-500
+                                    @elseif($categorySlug === 'software') bg-purple-500
+                                    @else bg-indigo-500
+                                    @endif"></span>
+                                {{ $categoryName }}
+                            </span>
+                        </td>
                         <td class="px-6 py-4 text-right text-blue-600 font-black">
                             ₱{{ number_format($record->base_price, 2) }}
                         </td>
@@ -116,7 +145,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="px-6 py-10 text-center text-gray-400 italic text-sm">No services found.</td>
+                        <td colspan="4" class="px-6 py-10 text-center text-gray-400 italic text-sm">No services found.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -174,6 +203,22 @@
                         <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Service Name</label>
                         <input type="text" wire:model="formName" placeholder="e.g. Screen Replacement..." class="w-full px-5 py-4 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all outline-none text-sm font-bold text-gray-900">
                         @error('formName') <span class="text-[10px] text-red-500 mt-2 font-bold block ml-1 uppercase tracking-tighter">{{ $message }}</span> @enderror
+                    </div>
+
+                    <!-- Service Category -->
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Service Category</label>
+                        <div class="relative w-full">
+                            <select wire:model="formCategory" class="w-full pl-6 pr-12 py-4 bg-gray-50 border border-gray-200 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all text-sm font-bold text-gray-900 outline-none appearance-none cursor-pointer">
+                                <option value="screen">Screen & Display</option>
+                                <option value="power">Power & Battery</option>
+                                <option value="audio">Audio & Sound</option>
+                                <option value="software">Software & OS</option>
+                                <option value="hardware">Hardware & Modules</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">unfold_more</span>
+                        </div>
+                        @error('formCategory') <span class="text-[10px] text-red-500 mt-2 font-bold block ml-1 uppercase tracking-tighter">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Service Description (Information) -->

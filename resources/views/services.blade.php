@@ -13,8 +13,14 @@
                       description: '{{ e($service->description) }}',
                       base_price: {{ $service->base_price }},
                       image_path: '{{ asset($service->image_path) }}',
-                      category: '{{ str_contains(strtolower($service->name), 'screen') || str_contains(strtolower($service->name), 'glass') || str_contains(strtolower($service->name), 'lcd') ? 'screen' : (str_contains(strtolower($service->name), 'battery') || str_contains(strtolower($service->name), 'charge') || str_contains(strtolower($service->name), 'power') ? 'power' : (str_contains(strtolower($service->name), 'audio') || str_contains(strtolower($service->name), 'speaker') || str_contains(strtolower($service->name), 'microphone') ? 'audio' : (str_contains(strtolower($service->name), 'software') || str_contains(strtolower($service->name), 'system') || str_contains(strtolower($service->name), 'boot') || str_contains(strtolower($service->name), 'data') ? 'software' : 'hardware'))) }}',
-                      categoryName: '{{ str_contains(strtolower($service->name), 'screen') || str_contains(strtolower($service->name), 'glass') || str_contains(strtolower($service->name), 'lcd') ? 'Screen & Display' : (str_contains(strtolower($service->name), 'battery') || str_contains(strtolower($service->name), 'charge') || str_contains(strtolower($service->name), 'power') ? 'Power & Charging' : (str_contains(strtolower($service->name), 'audio') || str_contains(strtolower($service->name), 'speaker') || str_contains(strtolower($service->name), 'microphone') ? 'Audio & Sound' : (str_contains(strtolower($service->name), 'software') || str_contains(strtolower($service->name), 'system') || str_contains(strtolower($service->name), 'boot') || str_contains(strtolower($service->name), 'data') ? 'Software & Systems' : 'Hardware & Modules'))) }}'
+                      category: '{{ $service->category ?: 'hardware' }}',
+                      categoryName: '{{ match($service->category ?: 'hardware') {
+                          'screen' => 'Screen & Display',
+                          'power' => 'Power & Charging',
+                          'audio' => 'Audio & Sound',
+                          'software' => 'Software & Systems',
+                          default => 'Hardware & Modules',
+                      } }}',
                   },
                   @endforeach
               ],

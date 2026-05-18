@@ -64,6 +64,7 @@ class Dashboard extends Component
             'upcomingCount' => $upcomingCount,
             'completedCount' => $completedCount,
             'recentRepairs' => $recentRepairs,
+            'services' => \App\Models\FaultType::orderBy('name', 'asc')->get(),
         ]);
     }
 }

@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use App\Models\Appointment;
 use App\Models\Brand;
@@ -42,6 +43,7 @@ class BookAppointment extends Component
     public $pref_date      = '';
     public $pref_time      = '';
     public $tracking_code  = '';
+    public $showReviewModal = false;
 
     // Pickup and Address details
     public $address        = '';
@@ -69,6 +71,18 @@ class BookAppointment extends Component
         $this->pref_date = date('Y-m-d');
         $this->generateTrackingCode();
         $this->generateAvailableDays();
+
+        // Read query parameter for pre-selecting service
+        $selectedService = Request::query('service');
+        if ($selectedService) {
+            $fault = FaultType::where('name', $selectedService)->first();
+            if ($fault) {
+                $this->fault_category = $fault->name;
+            } else {
+                $this->fault_category = 'Other';
+                $this->custom_service = $selectedService;
+            }
+        }
     }
 
     public function generateAvailableDays()
@@ -243,9 +257,31 @@ class BookAppointment extends Component
         return $rules;
     }
 
+    public function validationFailed($validator)
+    {
+        $this->dispatch('toast', message: 'Please fill in all required fields correctly!', type: 'error');
+    }
+
+    public function prepareReview()
+    {
+        try {
+            $this->validate();
+            $this->showReviewModal = true;
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->dispatch('toast', message: 'Please fill in all required fields correctly!', type: 'error');
+            throw $e;
+        }
+    }
+
     public function submit()
     {
-        $this->validate();
+        try {
+            $this->validate();
+            $this->showReviewModal = false;
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->dispatch('toast', message: 'Please fill in all required fields correctly!', type: 'error');
+            throw $e;
+        }
 
         // Re-save or update user profile with latest contact details
         /** @var \App\Models\User $user */

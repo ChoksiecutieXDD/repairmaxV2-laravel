@@ -44,6 +44,7 @@ class PublicBooking extends Component
     public $pref_date      = '';
     public $pref_time      = '';
     public $tracking_code  = '';
+    public $showReviewModal = false;
 
     public int $calendar_week_offset = 0;
     public ?int $selected_index  = null;
@@ -245,9 +246,31 @@ class PublicBooking extends Component
         return $rules;
     }
 
+    public function validationFailed($validator)
+    {
+        $this->dispatch('toast', message: 'Please fill in all required fields correctly!', type: 'error');
+    }
+
+    public function prepareReview()
+    {
+        try {
+            $this->validate();
+            $this->showReviewModal = true;
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->dispatch('toast', message: 'Please fill in all required fields correctly!', type: 'error');
+            throw $e;
+        }
+    }
+
     public function submit()
     {
-        $this->validate();
+        try {
+            $this->validate();
+            $this->showReviewModal = false;
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->dispatch('toast', message: 'Please fill in all required fields correctly!', type: 'error');
+            throw $e;
+        }
 
         // Create or find guest user profile, and update details
         $user = User::firstOrCreate(

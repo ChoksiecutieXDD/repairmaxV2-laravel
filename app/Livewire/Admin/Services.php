@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\WithFileUploads;
 use App\Models\FaultType;
+use Illuminate\Support\Facades\Session;
 
 #[Layout('components.layouts.admin')]
 #[Title('Services | Repairmax')]
@@ -23,6 +24,7 @@ class Services extends Component
     
     // Form Fields
     public string $formName = '';
+    public string $formCategory = 'screen';
     public int|float $formBasePrice = 0;
     public string $formDescription = '';
     public mixed $formImage = null;
@@ -34,6 +36,7 @@ class Services extends Component
     {
         return [
             'formName' => 'required|string|max:255|unique:fault_types,name,' . $this->editingId,
+            'formCategory' => 'required|string|in:screen,power,audio,software,hardware',
             'formBasePrice' => 'required|numeric|min:0',
             'formDescription' => 'nullable|string|max:1000',
             'formImage' => 'nullable|image|max:2048', // 2MB Max
@@ -49,6 +52,7 @@ class Services extends Component
         if ($this->editingId) {
             $record = FaultType::findOrFail($id);
             $this->formName = $record->name;
+            $this->formCategory = $record->category ?? 'screen';
             $this->formBasePrice = $record->base_price;
             $this->formDescription = $record->description;
             $this->currentImage = $record->image_path;
@@ -94,6 +98,7 @@ class Services extends Component
 
         FaultType::updateOrCreate(['id' => $this->editingId], [
             'name' => $this->formName,
+            'category' => $this->formCategory,
             'base_price' => $this->formBasePrice,
             'description' => $this->formDescription,
             'image_path' => $imagePath,
@@ -101,19 +106,20 @@ class Services extends Component
         ]);
 
         $this->showEditModal = false;
-        session()->flash('message', 'Service saved successfully.');
+        Session::flash('message', 'Service saved successfully.');
     }
 
     public function deleteRecord(int $id)
     {
         FaultType::findOrFail($id)->delete();
-        session()->flash('message', 'Service deleted successfully.');
+        Session::flash('message', 'Service deleted successfully.');
     }
 
     public function resetForm()
     {
         $this->editingId = null;
         $this->formName = '';
+        $this->formCategory = 'screen';
         $this->formBasePrice = 0;
         $this->formDescription = '';
         $this->formImage = null;
