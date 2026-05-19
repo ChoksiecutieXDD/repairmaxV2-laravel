@@ -33,6 +33,7 @@ class PublicBooking extends Component
     public $pickup_option  = 'Drop-off'; // Default to Drop-off at Shop
     public $other_details  = '';
     public $create_account = false;
+    public $additional_fee = 0; // Fee for pickup service
 
     // Device and booking details
     public $device_brand   = '';
@@ -154,6 +155,14 @@ class PublicBooking extends Component
         $this->booking_number = 'BK-' . date('Ymd', strtotime($this->pref_date)) . '-' . $nextNumber;
     }
 
+    public function updatedPickupOption($value)
+    {
+        $this->pickup_option = $value;
+        // Set additional fee based on pickup option
+        // Drop-off: Free | Pickup: ₱300 (calculated as 300 pesos)
+        $this->additional_fee = ($value === 'Pickup') ? 300 : 0;
+    }
+
     #[Computed]
     public function brands()
     {
@@ -222,7 +231,7 @@ class PublicBooking extends Component
             'last_name'      => 'required|string|max:255',
             'email'          => 'required|email|max:255',
             'phone'          => 'required|string|max:20',
-            'city'           => 'required|string|max:100',
+            'city'           => $this->pickup_option === 'Pickup' ? 'required|string|max:100' : 'nullable|string|max:100',
             'device_brand'   => 'required|string',
             'device_model'   => 'required|string|max:255',
             'fault_category' => 'required|string',
@@ -232,7 +241,7 @@ class PublicBooking extends Component
             'pref_date'      => 'required|date|after_or_equal:today',
             'pref_time'      => 'required',
             'pickup_option'  => 'required|string|in:Drop-off,Pickup',
-            'address'        => 'required|string|max:500',
+            'address'        => $this->pickup_option === 'Pickup' ? 'required|string|max:500' : 'nullable|string|max:500',
             'other_details'  => 'nullable|string|max:1000',
         ];
 
@@ -333,6 +342,10 @@ class PublicBooking extends Component
         $appointment->pref_date      = $this->pref_date;
         $appointment->pref_time      = date("H:i:s", strtotime($this->pref_time));
         $appointment->status         = 'Pending';
+        $appointment->service_method = $this->pickup_option;
+        $appointment->address        = $this->address;
+        $appointment->city           = $this->city;
+        $appointment->additional_fee = $this->additional_fee;
         $appointment->save();
 
         // Create notifications for all admins

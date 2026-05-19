@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="micGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#888;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#222;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="#f5f5f5" rx="20"/>
+  <g transform="translate(100, 70)">
+    <ellipse cx="0" cy="0" rx="20" ry="28" fill="url(#micGrad)" stroke="#333" stroke-width="1.5"/>
+    <ellipse cx="0" cy="-25" rx="18" ry="6" fill="#555" stroke="#333" stroke-width="1"/>
+    <path d="M -8 5 Q -8 15 -5 25" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M 8 5 Q 8 15 5 25" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <path d="M 75 140 L 125 140" stroke="#666" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="155" r="8" fill="#888" stroke="#555" stroke-width="1.5"/>
+</svg>

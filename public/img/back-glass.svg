@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:0.9" />
+      <stop offset="50%" style="stop-color:#c0c0c0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="#f5f5f5" rx="20"/>
+  <rect x="45" y="50" width="110" height="110" rx="12" fill="url(#glassGrad)" stroke="#666" stroke-width="2"/>
+  <line x1="50" y1="55" x2="150" y2="155" stroke="#999" stroke-width="1.5" opacity="0.4"/>
+  <line x1="150" y1="55" x2="50" y2="155" stroke="#999" stroke-width="1.5" opacity="0.4"/>
+  <path d="M 60 70 L 75 85 M 75 70 L 90 85 M 90 70 L 105 85 M 105 70 L 120 85 M 120 70 L 135 85" stroke="#dd4444" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+  <rect x="50" y="55" width="100" height="100" fill="none" stroke="#fff" stroke-width="1" rx="10" opacity="0.3"/>
+</svg>

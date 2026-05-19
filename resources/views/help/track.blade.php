@@ -72,13 +72,29 @@
                             </div>
                             @endif
                         </div>
-                        <div class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider inline-block w-fit
-                            @if($appointment->status === 'Completed') bg-green-50 text-green-700 border border-green-200
-                            @elseif($appointment->status === 'Cancelled') bg-red-50 text-red-700 border border-red-200
-                            @elseif($appointment->status === 'Ready for Pickup') bg-blue-50 text-blue-700 border border-blue-200
-                            @elseif($appointment->status === 'In Progress') bg-orange-50 text-orange-700 border border-orange-200
-                            @else bg-yellow-50 text-yellow-700 border border-yellow-200 @endif">
-                            {{ $appointment->status }}
+                        <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                            <!-- Customer Type Indicator -->
+                            @if($appointment->user_id)
+                                <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-lg text-xs font-black uppercase tracking-wider">
+                                    <span class="material-symbols-outlined text-[14px]">person_check</span>
+                                    Registered User
+                                </span>
+                            @else
+                                <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-orange-50 text-orange-700 border border-orange-200 rounded-lg text-xs font-black uppercase tracking-wider">
+                                    <span class="material-symbols-outlined text-[14px]">person_add</span>
+                                    Guest Customer
+                                </span>
+                            @endif
+                            
+                            <!-- Status Badge -->
+                            <div class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider inline-block w-fit
+                                @if($appointment->status === 'Completed') bg-green-50 text-green-700 border border-green-200
+                                @elseif($appointment->status === 'Cancelled') bg-red-50 text-red-700 border border-red-200
+                                @elseif($appointment->status === 'Ready for Pickup') bg-blue-50 text-blue-700 border border-blue-200
+                                @elseif($appointment->status === 'In Progress') bg-orange-50 text-orange-700 border border-orange-200
+                                @else bg-yellow-50 text-yellow-700 border border-yellow-200 @endif">
+                                {{ $appointment->status }}
+                            </div>
                         </div>
                     </div>
 
@@ -95,6 +111,80 @@
                         <div>
                             <span class="text-[10px] uppercase font-black tracking-widest text-gray-400 block">Submission Date</span>
                             <span class="text-sm font-bold text-gray-900 mt-0.5 block">{{ $appointment->created_at->format('M d, Y') }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Device Photos Section -->
+                    @if($appointment->photo_paths && count($appointment->photo_paths) > 0)
+                    <div class="mb-10">
+                        <h4 class="text-sm font-extrabold text-gray-900 uppercase tracking-widest mb-4">Device Photos</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            @foreach($appointment->photo_paths as $photo)
+                                <div class="relative group overflow-hidden rounded-2xl border border-gray-200 hover:border-blue-500 transition-all">
+                                    <img src="{{ asset($photo) }}" alt="Device photo" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <a href="{{ asset($photo) }}" target="_blank" class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                        <span class="material-symbols-outlined text-white text-4xl">zoom_in</span>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- Pricing & Cost Details Section -->
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6 mb-10">
+                        <h4 class="text-sm font-extrabold text-gray-900 uppercase tracking-widest mb-5 flex items-center gap-2">
+                            <span class="material-symbols-outlined">attach_money</span>
+                            Pricing & Cost Details
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <!-- Estimated Quote -->
+                            <div class="bg-white rounded-xl p-4 border border-green-100">
+                                <span class="text-[10px] uppercase font-black tracking-widest text-gray-500 block">Estimated Quote Price</span>
+                                <span class="text-2xl font-black text-green-600 mt-2 block">₱{{ number_format($appointment->quote ?? 0, 2) }}</span>
+                                <span class="text-xs text-gray-500 mt-1">Original estimate</span>
+                            </div>
+                            
+                            <!-- Final Cost -->
+                            <div class="bg-white rounded-xl p-4 border border-green-100">
+                                <span class="text-[10px] uppercase font-black tracking-widest text-gray-500 block">Final Cost Price</span>
+                                @if($appointment->final_cost)
+                                    <span class="text-2xl font-black text-green-600 mt-2 block">₱{{ number_format($appointment->final_cost, 2) }}</span>
+                                    <span class="text-xs text-gray-500 mt-1">Actual total paid</span>
+                                @else
+                                    <span class="text-lg font-bold text-gray-400 mt-2 block">Pending</span>
+                                    <span class="text-xs text-gray-500 mt-1">Will be finalized upon completion</span>
+                                @endif
+                            </div>
+                            
+                            <!-- Additional Fees -->
+                            <div class="bg-white rounded-xl p-4 border border-green-100">
+                                <span class="text-[10px] uppercase font-black tracking-widest text-gray-500 block">Additional Fees</span>
+                                @php
+                                    $additionalFees = max(0, ($appointment->final_cost ?? 0) - ($appointment->quote ?? 0));
+                                @endphp
+                                <span class="text-2xl font-black text-orange-600 mt-2 block">₱{{ number_format($additionalFees, 2) }}</span>
+                                <span class="text-xs text-gray-500 mt-1">Extra charges if any</span>
+                            </div>
+                        </div>
+
+                        <!-- Invoice Info -->
+                        @if($appointment->invoice_number)
+                        <div class="bg-white rounded-xl p-4 border border-green-100">
+                            <span class="text-xs uppercase font-black text-gray-500">Invoice Number</span>
+                            <span class="text-lg font-mono font-bold text-gray-900 block mt-1">{{ $appointment->invoice_number }}</span>
+                        </div>
+                        @endif
+
+                        <!-- Cost Breakdown Note -->
+                        <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700">
+                            <p class="font-semibold mb-1">📌 Pricing Clarification:</p>
+                            <ul class="text-xs space-y-1">
+                                <li>✓ <strong>Estimated Quote</strong> = Initial service estimate based on diagnostics</li>
+                                <li>✓ <strong>Final Cost</strong> = Actual amount paid (may include parts, labor, other fees)</li>
+                                <li>✓ <strong>Additional Fees</strong> = Any extra charges beyond the original quote</li>
+                            </ul>
                         </div>
                     </div>
 

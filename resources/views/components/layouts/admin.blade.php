@@ -69,8 +69,8 @@
 
                 <div class="mb-6">
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Appointments</h3>
-                    <x-sidebar.link href="/admin/appointment" icon="event" :active="request()->is('admin/appointment')">Appointments</x-sidebar.link>
-                    <x-sidebar.link href="/admin/appointment-management" icon="calendar_month" :active="request()->is('admin/appointment-management')">Management</x-sidebar.link>
+                    <x-sidebar.link href="/admin/appointment" icon="event" :active="request()->is('admin/appointment') || request()->is('admin/appointment/*/details')">Appointments</x-sidebar.link>
+                    <x-sidebar.link href="/admin/appointment" icon="calendar_month" :active="false">Calendar</x-sidebar.link>
                 </div>
 
                 <div class="mb-6">
