@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 
 // Mails
 use App\Mail\ContactEnquiry;
+use App\Mail\BookingConfirmationEmail;
 
 // Livewire Components (Auth)
 use App\Livewire\Auth\Register;
@@ -35,6 +36,7 @@ use App\Livewire\Admin\Dashboard as AdminDashboard;
 use App\Livewire\Admin\SystemOverview;
 use App\Livewire\Admin\Profile as AdminProfile;
 use App\Livewire\Admin\Appointment as AppointmentComponent;
+use App\Livewire\Admin\AppointmentDetails;
 use App\Livewire\Admin\AppointmentManagement;
 use App\Livewire\Admin\Inventory;
 use App\Livewire\Admin\Services;
@@ -129,6 +131,9 @@ Route::get('/services/{id}', function ($id) {
     $relatedServices = \App\Models\FaultType::where('id', '!=', $id)->inRandomOrder()->take(3)->get();
     return view('service-detail', compact('service', 'relatedServices'));
 })->name('services.detail');
+Route::get('/pricing', function () {
+    return view('pricing');
+})->name('pricing');
 Route::redirect('/repairs', '/about-us');
 Route::get('/booking', function () {
     return view('booking');
@@ -180,9 +185,25 @@ Route::post('/booking', function (Request $request) {
             'pref_time' => '10:00:00',
         ]);
 
+        // Send booking confirmation email
+        try {
+            Mail::to($user->email)->send(new BookingConfirmationEmail(
+                $user->first_name,
+                $user->last_name,
+                $appointment->tracking_code,
+                $appointment->device_brand,
+                $appointment->device_model,
+                $appointment->fault_category,
+                $appointment->description,
+                $user->email
+            ));
+        } catch (\Exception $e) {
+            Log::error('Email sending error: ' . $e->getMessage());
+        }
+
         return redirect('/booking')
             ->with('success', 'Thank you! Your repair booking has been received.')
-            ->with('success_message', 'Tracking Code: ' . $appointment->tracking_code . '. Our team will contact you shortly to confirm the appointment details.');
+            ->with('success_message', 'Ticket ID: ' . $appointment->tracking_code . '. We have sent a confirmation email and our team will contact you within 24 hours to confirm the appointment details.');
     } catch (\Exception $e) {
         Log::error('Booking error: ' . $e->getMessage());
         return back()->with('error', 'There was an error processing your booking. Please try again.');
@@ -318,6 +339,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Appointments
     Route::get('/appointment', AppointmentComponent::class)->name('appointment');
+    Route::get('/appointment/{id}/details', AppointmentDetails::class)->name('appointment.details');
     Route::get('/appointment-management', AppointmentManagement::class)->name('appointment-management');
     
     // Inventory

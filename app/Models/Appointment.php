@@ -25,7 +25,11 @@ class Appointment extends Model
         'final_cost',
         'completion_notes',
         'invoice_number',
-        'completed_at'
+        'completed_at',
+        'service_method',
+        'address',
+        'city',
+        'additional_fee'
     ];
 
     protected function casts(): array

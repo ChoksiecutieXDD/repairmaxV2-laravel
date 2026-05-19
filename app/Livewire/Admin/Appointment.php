@@ -12,58 +12,30 @@ use App\Models\Appointment as AppointmentModel;
 class Appointment extends Component
 {
     public $search = '';
-    public $selectedAppointment = null;
-    public $showViewModal = false;
 
     public function render()
     {
+        // Kunin lahat ng appointments na may filter sa search
         $appointments = AppointmentModel::with('user')
             ->when($this->search, function ($query) {
                 $query->where('device_brand', 'like', '%'.$this->search.'%')
                     ->orWhere('device_model', 'like', '%'.$this->search.'%')
+                    ->orWhere('tracking_code', 'like', '%'.$this->search.'%')
                     ->orWhereHas('user', function ($q) {
                         $q->where('first_name', 'like', '%'.$this->search.'%')
-                            ->orWhere('last_name', 'like', '%'.$this->search.'%');
+                            ->orWhere('last_name', 'like', '%'.$this->search.'%')
+                            ->orWhere('email', 'like', '%'.$this->search.'%');
                     });
             })
-            ->orderBy('pref_date', 'desc')
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('livewire.admin.appointment', compact('appointments'));
     }
 
-    public function viewAppointment($id)
+    // Navigate to the full appointment details page
+    public function viewDetails($id)
     {
-        $this->selectedAppointment = AppointmentModel::with('user')->findOrFail($id);
-        $this->showViewModal = true;
-    }
-
-    public function closeModal()
-    {
-        $this->showViewModal = false;
-        $this->selectedAppointment = null;
-    }
-
-    public function updateStatus($appointmentId, $newStatus)
-    {
-        $appointment = AppointmentModel::findOrFail($appointmentId);
-        $appointment->update(['status' => $newStatus]);
-        
-        // Send notification to user
-        \App\Models\Notification::create([
-            'user_id' => $appointment->user_id,
-            'admin_id' => auth()->id(),
-            'title' => 'Appointment Status Updated',
-            'message' => "Your appointment status has been updated to: {$newStatus}",
-            'type' => 'appointment_confirmation',
-            'related_model' => 'Appointment',
-            'related_id' => $appointment->id,
-        ]);
-
-        session()->flash('message', 'Appointment status updated successfully!');
-        
-        if($this->showViewModal && $this->selectedAppointment->id === $appointmentId) {
-            $this->viewAppointment($appointmentId);
-        }
+        return redirect()->route('admin.appointment.details', ['id' => $id]);
     }
 }
