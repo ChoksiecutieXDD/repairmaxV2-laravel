@@ -11,9 +11,9 @@
 
     <div class="flex flex-col lg:flex-row gap-6">
 
-        <div class="w-full lg:w-1/3 xl:w-1/4 bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col h-[300px] lg:h-[700px] transition-shadow hover:shadow-md duration-300">
-            <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-white shrink-0 rounded-t-2xl">
-                <h2 class="font-bold text-gray-900 flex items-center gap-2">
+        <div class="w-full lg:w-1/3 xl:w-1/4 bg-white rounded-2xl border border-brand-200 shadow-sm flex flex-col h-[300px] lg:h-[700px] transition-shadow hover:shadow-md duration-300">
+            <div class="p-5 border-b border-brand-100 flex items-center justify-between bg-white shrink-0 rounded-t-2xl">
+                <h2 class="font-bold text-gray-900 flex items-center gap-2 mb-0">
                     <span class="material-symbols-outlined text-gray-400">forum</span>
                     History
                 </h2>
@@ -25,7 +25,7 @@
             <div class="flex-1 overflow-y-auto p-3 space-y-2 bg-gray-50/50 rounded-b-2xl">
                 @forelse($history as $session)
                 <div wire:click="loadSession({{ $session->id }})" 
-                    class="p-3 bg-white border @if($currentSessionId == $session->id) border-blue-200 shadow-sm @else border-transparent hover:border-gray-200 @endif rounded-xl cursor-pointer group flex items-start justify-between relative overflow-hidden transition-all">
+                    class="p-3 bg-white border @if($currentSessionId == $session->id) border-blue-200 shadow-sm @else border-transparent hover:border-brand-200 @endif rounded-xl cursor-pointer group flex items-start justify-between relative overflow-hidden transition-all">
                     
                     @if($currentSessionId == $session->id)
                     <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
@@ -49,18 +49,18 @@
             </div>
         </div>
 
-        <div class="flex-1 bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col h-[600px] lg:h-[700px] transition-shadow hover:shadow-md duration-300">
+        <div class="flex-1 bg-white rounded-2xl border border-brand-200 shadow-sm flex flex-col h-[600px] lg:h-[700px] transition-shadow hover:shadow-md duration-300">
 
-            <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-white shrink-0 rounded-t-2xl">
+            <div class="px-5 py-4 border-b border-brand-100 flex items-center justify-between bg-white shrink-0 rounded-t-2xl">
                 <div class="flex items-center gap-3">
                     <div class="relative">
-                        <div class="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center shadow-sm border border-gray-200 shrink-0">
+                        <div class="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center shadow-sm border border-brand-200 shrink-0">
                             <span class="material-symbols-outlined text-white">smart_toy</span>
                         </div>
                         <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
                     </div>
                     <div>
-                        <h3 class="font-bold text-gray-900 text-sm">Maxie</h3>
+                        <h3 class="font-bold text-gray-900 text-sm mb-0">Maxie</h3>
                         <p class="text-xs text-green-600 font-medium tracking-tight">Repairmax Assistant</p>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             <span class="material-symbols-outlined text-white text-[18px]">smart_toy</span>
                         </div>
                     </div>
-                    <div class="bg-white border border-gray-200 shadow-sm rounded-2xl rounded-tl-sm p-3 sm:p-4 max-w-[85%] sm:max-w-lg">
+                    <div class="bg-white border border-brand-200 shadow-sm rounded-2xl rounded-tl-sm p-3 sm:p-4 max-w-[85%] sm:max-w-lg">
                         <p class="text-sm text-gray-800 whitespace-pre-wrap">{{ $message['content'] }}</p>
                         <p class="text-[11px] text-gray-400 mt-2 font-medium">{{ $message['time'] }}</p>
                     </div>
@@ -100,7 +100,7 @@
                             <span class="material-symbols-outlined text-white text-[18px]">smart_toy</span>
                         </div>
                     </div>
-                    <div class="bg-white border border-gray-200 shadow-sm rounded-2xl rounded-tl-sm p-3 px-4 flex gap-1 items-center">
+                    <div class="bg-white border border-brand-200 shadow-sm rounded-2xl rounded-tl-sm p-3 px-4 flex gap-1 items-center">
                         <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
                         <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
                         <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
@@ -109,12 +109,12 @@
                 @endif
             </div>
 
-            <div class="p-4 bg-white border-t border-gray-100 shrink-0 rounded-b-2xl">
+            <div class="p-4 bg-white border-t border-brand-100 shrink-0 rounded-b-2xl">
                 <form wire:submit="sendMessage" class="flex items-center gap-2">
                     <input type="text"
                         wire:model="newMessage"
                         placeholder="Type your message..."
-                        class="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm"
+                        class="flex-1 px-4 py-3 bg-gray-50 border border-brand-200 rounded-xl focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm"
                         required>
 
                     <button type="submit" class="p-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 hover:shadow-md transition-all flex items-center justify-center focus:outline-none">
@@ -177,9 +177,9 @@
                 <p class="text-sm text-gray-400 font-medium mt-2">This action cannot be undone. All messages in this session will be permanently removed.</p>
             </div>
 
-            <div class="p-6 bg-gray-50 border-t border-gray-100 flex gap-3">
+            <div class="p-6 bg-gray-50 border-t border-brand-100 flex gap-3">
                 <button type="button" @click="deleteModal = false" 
-                    class="flex-1 py-4 bg-white text-gray-700 font-bold rounded-2xl border border-gray-200 hover:bg-gray-100 transition-all">
+                    class="flex-1 py-4 bg-white text-gray-700 font-bold rounded-2xl border border-brand-200 hover:bg-gray-100 transition-all">
                     Cancel
                 </button>
                 <button type="button" @click="$wire.deleteSession(sessionToDelete); deleteModal = false" 

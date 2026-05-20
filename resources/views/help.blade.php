@@ -19,7 +19,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
                 
                 <!-- Card 1: Track Repair -->
-                <div class="bg-white rounded-[2rem] border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
+                <div class="bg-white rounded-4xl border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
                     <div>
                         <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                             <span class="material-symbols-outlined text-2xl font-black">track_changes</span>
@@ -36,7 +36,7 @@
                 </div>
 
                 <!-- Card 2: FAQs -->
-                <div class="bg-white rounded-[2rem] border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
+                <div class="bg-white rounded-4xl border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
                     <div>
                         <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                             <span class="material-symbols-outlined text-2xl font-black">quiz</span>
@@ -53,7 +53,7 @@
                 </div>
 
                 <!-- Card 3: Contact Us -->
-                <div class="bg-white rounded-[2rem] border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
+                <div class="bg-white rounded-4xl border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
                     <div>
                         <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                             <span class="material-symbols-outlined text-2xl font-black">support_agent</span>
@@ -70,7 +70,7 @@
                 </div>
 
                 <!-- Card 4: AI Diagnostic Support -->
-                <div class="bg-white rounded-[2rem] border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
+                <div class="bg-white rounded-4xl border border-gray-200 p-8 md:p-10 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
                     <div>
                         <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                             <span class="material-symbols-outlined text-2xl font-black">smart_toy</span>

@@ -5,12 +5,12 @@
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
             <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Track Your Repair</h1>
             <p class="text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Enter your Booking Reference Number or Repair Ticket ID and email address below to get real-time tracking updates and technician reports.
+                Enter your Booking Reference Number and email address below to get real-time tracking updates and technician reports.
             </p>
         </section>
 
         <!-- Tracking Content -->
-        <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-200">
                 
                 <!-- Tracking Form -->
@@ -18,12 +18,12 @@
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Booking Reference or Repair Ticket ID</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Booking Reference</label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <span class="material-symbols-outlined text-gray-400 group-focus-within:text-gray-900 transition-colors">tag</span>
                                 </div>
-                                <input type="text" name="ticket_id" placeholder="e.g. BK-20260519-00001 or RM-20260519-00001" value="{{ $ticket_id ?? '' }}" required 
+                                <input type="text" name="ticket_id" placeholder="e.g. BK-00001" value="{{ $ticket_id ?? '' }}" required 
                                     class="w-full pl-12 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-sm shadow-sm">
                             </div>
                         </div>
@@ -59,22 +59,16 @@
                 <div class="mt-12 pt-10 border-t border-gray-200 fade-in-element">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                         <div class="flex flex-col sm:flex-row gap-x-8 gap-y-4">
-                            @if($appointment->tracking_code)
-                            <div>
-                                <span class="text-[10px] uppercase font-black tracking-widest text-blue-500 block">Booking Reference Number</span>
-                                <h3 class="text-lg font-black text-gray-900 mt-0.5">{{ $appointment->tracking_code }}</h3>
-                            </div>
-                            @endif
                             @if($appointment->booking_number)
                             <div>
-                                <span class="text-[10px] uppercase font-black tracking-widest text-indigo-500 block">Repair Ticket ID</span>
+                                <span class="text-[10px] uppercase font-black tracking-widest text-blue-500 block">Booking Reference Number</span>
                                 <h3 class="text-lg font-black text-gray-900 mt-0.5">{{ $appointment->booking_number }}</h3>
                             </div>
                             @endif
                         </div>
                         <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
                             <!-- Customer Type Indicator -->
-                            @if($appointment->user_id)
+                            @if($appointment->user?->role === 'user')
                                 <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-lg text-xs font-black uppercase tracking-wider">
                                     <span class="material-symbols-outlined text-[14px]">person_check</span>
                                     Registered User
@@ -114,18 +108,29 @@
                         </div>
                     </div>
 
-                    <!-- Device Photos Section -->
+                    <!-- Device Photos & Videos Section -->
                     @if($appointment->photo_paths && count($appointment->photo_paths) > 0)
                     <div class="mb-10">
-                        <h4 class="text-sm font-extrabold text-gray-900 uppercase tracking-widest mb-4">Device Photos</h4>
+                        <h4 class="text-sm font-extrabold text-gray-900 uppercase tracking-widest mb-4">Device Photos & Videos</h4>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             @foreach($appointment->photo_paths as $photo)
-                                <div class="relative group overflow-hidden rounded-2xl border border-gray-200 hover:border-blue-500 transition-all">
-                                    <img src="{{ asset($photo) }}" alt="Device photo" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
-                                    <a href="{{ asset($photo) }}" target="_blank" class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                        <span class="material-symbols-outlined text-white text-4xl">zoom_in</span>
-                                    </a>
-                                </div>
+                                @php
+                                    $isVideo = in_array(strtolower(pathinfo($photo, PATHINFO_EXTENSION)), ['mp4', 'mov', 'avi', 'webm', 'mpeg', 'mkv', '3gp']);
+                                @endphp
+                                @if($isVideo)
+                                    <div class="relative rounded-2xl border border-gray-200 overflow-hidden h-48 bg-gray-100 flex items-center justify-center shadow-sm">
+                                        <video src="{{ asset('storage/' . $photo) }}" class="w-full h-full object-cover" controls muted playsinline></video>
+                                    </div>
+                                @else
+                                    <div class="relative group overflow-hidden rounded-2xl border border-gray-200 hover:border-blue-500 transition-all h-48">
+                                        <img src="{{ asset('storage/' . $photo) }}" alt="Device photo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                            <a href="{{ asset('storage/' . $photo) }}" target="_blank" class="p-3 bg-white rounded-full text-gray-900 shadow-lg hover:scale-110 transition-transform">
+                                                <span class="material-symbols-outlined text-gray-900 text-2xl">zoom_in</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

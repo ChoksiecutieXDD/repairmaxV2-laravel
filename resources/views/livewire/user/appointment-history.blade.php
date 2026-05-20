@@ -10,16 +10,16 @@
 
         <button
             wire:click="exportRecords()"
-            class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-bold shadow-sm transition-colors shrink-0">
+            class="flex items-center gap-2 bg-white border border-brand-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-bold shadow-sm transition-colors shrink-0">
             <span class="material-symbols-outlined text-[20px]">download</span>
             Export Records
         </button>
     </div>
 
-    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+    <div class="bg-white rounded-2xl border border-brand-200 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
         <div class="overflow-x-auto w-full">
             <table class="w-full text-left whitespace-nowrap">
-                <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider font-bold border-b border-gray-200">
+                <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider font-bold border-b border-brand-200">
                     <tr>
                         <th class="px-6 py-5">Device</th>
                         <th class="px-6 py-5">Service Provided</th>
@@ -29,20 +29,20 @@
                         <th class="px-6 py-5 text-right">Downloads</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 text-sm">
+                <tbody class="divide-y divide-brand-100 text-sm">
 
                     @forelse($history as $item)
                     <tr class="hover:bg-gray-50 transition-colors group">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 border border-gray-200">
+                                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 border border-brand-200">
                                     <span class="material-symbols-outlined text-[20px] text-gray-600">
                                         {{ str_contains(strtolower($item->device_brand), 'apple') ? 'laptop_mac' : 'smartphone' }}
                                     </span>
                                 </div>
                                 <div>
                                     <span class="block font-bold text-gray-900">{{ $item->device_brand }} {{ $item->device_model }}</span>
-                                    <span class="block text-xs text-gray-500 font-medium">Ticket: #{{ $item->tracking_code }}</span>
+                                    <span class="block text-xs text-gray-500 font-medium">Booking Ref: {{ $item->booking_number ?? $item->tracking_code }}</span>
                                 </div>
                             </div>
                         </td>
@@ -95,7 +95,7 @@
                             <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <span class="material-symbols-outlined text-gray-300 text-4xl">folder_open</span>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-900">No history found</h3>
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">No history found</h3>
                             <p class="text-gray-500">You haven't completed any repair appointments yet.</p>
                         </td>
                     </tr>
@@ -105,7 +105,7 @@
             </table>
         </div>
 
-        <div class="px-6 py-4 border-t border-gray-100 bg-white">
+        <div class="px-6 py-4 border-t border-brand-100 bg-white">
             {{ $history->links() }}
         </div>
 

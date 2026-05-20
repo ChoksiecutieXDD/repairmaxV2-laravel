@@ -159,25 +159,26 @@
                                 @foreach($available_days as $dayIndex => $day)
                                 @php
                                 $bookedCount = $day['slot_status'][$slot] ?? 0;
-                                $isBooked = $bookedCount > 0;
-                                $isSelected = ($selected_index === $dayIndex && $pref_time === $slot);
+                                $isFull = $bookedCount >= 1;
+                                $isSelected = ($pref_date === $day['full'] && $pref_time === $slot);
+                                $spotsLeft = 1 - $bookedCount;
                                 @endphp
                                 <td class="py-2 px-2 text-center">
                                     <button type="button"
-                                        @if(!$isBooked)
+                                        @if(!$isFull)
                                         wire:click="selectDateAndTime({{ $dayIndex }}, '{{ $slot }}')"
                                         @click="calendarModal = false"
                                         @endif
                                         class="w-full h-11 rounded-[1.25rem] border-2 text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5
                                                             {{ $isSelected ? 'bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-200'
-                                                                : ($isBooked ? 'bg-red-50 border-red-100 text-red-300 cursor-not-allowed'
+                                                                : ($isFull ? 'bg-red-50 border-red-100 text-red-300 cursor-not-allowed'
                                                                 : 'bg-gray-50 border-gray-100 text-gray-400 hover:bg-green-50 hover:border-green-300 hover:text-green-600 cursor-pointer') }}">
                                         @if($isSelected)
                                         <span class="material-symbols-outlined text-[14px] leading-none">check</span> Set
-                                        @elseif($isBooked)
+                                        @elseif($isFull)
                                         <span class="w-1.5 h-1.5 bg-red-400 rounded-full inline-block"></span> Full
                                         @else
-                                        <span class="w-1.5 h-1.5 bg-green-400 rounded-full inline-block"></span> Open
+                                        Select
                                         @endif
                                     </button>
                                 </td>
@@ -231,15 +232,9 @@
             <!-- Modal Content (Scrollable) -->
             <div class="p-8 overflow-y-auto space-y-6">
                 <!-- Reference Codes Grid (Logistics vs Substance) -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-blue-50/30 border border-blue-100/50 rounded-[1.25rem] p-4 text-left">
-                        <span class="text-[9px] uppercase font-black tracking-widest text-blue-600 block">Booking Reference Number</span>
-                        <span class="text-sm md:text-base font-black text-blue-900 mt-1 block">{{ $tracking_code }}</span>
-                    </div>
-                    <div class="bg-indigo-50/30 border border-indigo-100/50 rounded-[1.25rem] p-4 text-left">
-                        <span class="text-[9px] uppercase font-black tracking-widest text-indigo-600 block">Repair Ticket ID</span>
-                        <span class="text-sm md:text-base font-black text-indigo-900 mt-1 block">{{ $booking_number }}</span>
-                    </div>
+                <div class="bg-blue-50/30 border border-blue-100/50 rounded-[1.25rem] p-4 text-left">
+                    <span class="text-[9px] uppercase font-black tracking-widest text-blue-600 block">Booking Reference Number</span>
+                    <span class="text-sm md:text-base font-black text-blue-900 mt-1 block font-mono">{{ $booking_number }}</span>
                 </div>
 
                 <!-- Personal details section -->
@@ -433,12 +428,12 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-5">
-            <!-- Booking ID -->
+            <!-- Booking Reference -->
             <div class="bg-blue-50 rounded-xl p-3 border border-blue-100">
-                <p class="text-[10px] font-black text-blue-400 uppercase tracking-wider mb-1">Booking ID</p>
-                <p class="font-bold text-blue-700 text-xs leading-snug">
+                <p class="text-[10px] font-black text-blue-500 uppercase tracking-wider mb-1">Booking Reference</p>
+                <p class="font-bold text-blue-700 text-xs leading-snug font-mono">
                     @if($pref_date)
-                        {{ $tracking_code }}
+                        {{ $booking_number }}
                     @else
                         <span class="text-blue-300 font-normal italic">Select a date</span>
                     @endif
@@ -896,26 +891,26 @@
                                 wire:click="{{ $day['slots_left'] > 0 ? 'selectDate(' . $index . ')' : '' }}"
                                 @disabled($day['slots_left'] <=0)
                                 class="flex flex-col items-center justify-center py-4 px-2 rounded-[1.25rem] border-2 transition-all transform active:scale-95 relative
-                                                    {{ $selected_index === $index
+                                                    {{ $pref_date === $day['full']
                                                         ? 'border-blue-500 bg-blue-500 shadow-xl shadow-blue-200'
                                                         : ($day['slots_left'] <= 0
                                                             ? 'border-red-100 bg-red-50 cursor-not-allowed opacity-50'
                                                             : 'border-gray-100 bg-gray-50/50 hover:bg-white hover:border-gray-300 hover:scale-[1.03] shadow-sm cursor-pointer') }}">
 
                                 <span class="text-[9px] font-black uppercase tracking-widest mb-0.5
-                                                        {{ $selected_index === $index ? 'text-blue-100' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-400') }}">
+                                                        {{ $pref_date === $day['full'] ? 'text-blue-100' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-400') }}">
                                     {{ $day['month'] }}
                                 </span>
                                 <span class="text-2xl font-black mb-0.5
-                                                        {{ $selected_index === $index ? 'text-white' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-900') }}">
+                                                        {{ $pref_date === $day['full'] ? 'text-white' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-900') }}">
                                     {{ $day['date'] }}
                                 </span>
                                 <span class="text-[10px] font-bold mb-2
-                                                        {{ $selected_index === $index ? 'text-blue-200' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-500') }}">
+                                                        {{ $pref_date === $day['full'] ? 'text-blue-200' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-500') }}">
                                     {{ $day['day'] }}
                                 </span>
                                 <div class="flex items-center gap-1 py-0.5 px-2 rounded-full text-[8px] font-black uppercase
-                                                        {{ $selected_index === $index ? 'bg-white/25 text-white'
+                                                        {{ $pref_date === $day['full'] ? 'bg-white/25 text-white'
                                                             : ($day['slots_left'] <= 0 ? 'bg-red-100 text-red-400'
                                                             : ($day['slots_left'] <= 1 ? 'bg-orange-100 text-orange-600'
                                                             : 'bg-green-100 text-green-700')) }}">
@@ -934,8 +929,17 @@
                     </div>
 
                     <!-- Time Slots -->
-                    @if($selected_index !== null)
-                    @php $selectedDay = $available_days[$selected_index] ?? null; @endphp
+                    @php
+                        $selectedDay = null;
+                        if ($pref_date) {
+                            foreach ($available_days as $d) {
+                                if ($d['full'] === $pref_date) {
+                                    $selectedDay = $d;
+                                    break;
+                                }
+                            }
+                        }
+                    @endphp
                     @if($selectedDay)
                     <div>
                         <label class="block text-sm font-bold text-gray-800 mb-4 ml-1">Select Preferred Time Slot</label>
@@ -943,38 +947,27 @@
                             @foreach($available_slots as $slot)
                             @php
                             $bookedCount = $selectedDay['slot_status'][$slot] ?? 0;
-                            $isBooked = $bookedCount > 0;
+                            $isFull = $bookedCount >= 1;
                             $isSelected = $pref_time === $slot;
                             @endphp
                             <button type="button"
-                                @if(!$isBooked) wire:click="selectTime('{{ $slot }}')" @endif
-                                @disabled($isBooked)
-                                class="py-4 px-2 rounded-[1.25rem] border-2 font-black text-xs uppercase tracking-wider transition-all flex flex-col items-center gap-1
-                                                            {{ $isSelected
-                                                                ? 'border-blue-500 bg-white text-blue-700 shadow-lg ring-4 ring-blue-50/50 scale-[1.02]'
-                                                                : ($isBooked
-                                                                    ? 'border-red-100 bg-red-50 text-red-300 cursor-not-allowed'
-                                                                    : 'border-gray-100 bg-gray-50/50 text-gray-500 hover:bg-white hover:border-gray-300 hover:scale-[1.02] cursor-pointer') }}">
-                                <div class="flex items-center gap-1">
-                                    @if($isBooked)
-                                    <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse inline-block"></span>
-                                    @elseif($isSelected)
-                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block"></span>
-                                    @else
-                                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>
-                                    @endif
-                                    {{ $slot }}
-                                </div>
-                                <span class="text-[8px] font-bold tracking-wider
-                                                                {{ $isBooked ? 'text-red-300' : ($isSelected ? 'text-blue-400' : 'text-gray-300') }}">
-                                    {{ $isBooked ? 'BOOKED' : ($isSelected ? 'SELECTED' : 'OPEN') }}
-                                </span>
-                            </button>
+                                 @if(!$isFull) wire:click="selectTime('{{ $slot }}')" @endif
+                                 @disabled($isFull)
+                                 class="py-4 px-2 rounded-[1.25rem] border-2 font-black text-sm transition-all flex items-center justify-center gap-2 outline-none
+                                                             {{ $isSelected
+                                                                 ? 'border-blue-500 bg-white text-blue-700 shadow-lg ring-4 ring-blue-50/50 scale-[1.02]'
+                                                                 : ($isFull
+                                                                     ? 'border-red-100 bg-red-50 text-red-300 cursor-not-allowed opacity-50'
+                                                                     : 'border-gray-100 bg-gray-50/50 text-gray-500 hover:bg-white hover:border-gray-300 hover:scale-[1.02] cursor-pointer') }}">
+                                 @if($isSelected)
+                                 <span class="w-2 h-2 rounded-full bg-blue-500 inline-block animate-pulse"></span>
+                                 @endif
+                                 {{ $slot }}
+                             </button>
                             @endforeach
                         </div>
                         @error('pref_time') <span class="text-xs text-red-500 mt-2 block ml-1">{{ $message }}</span> @enderror
                     </div>
-                    @endif
                     @endif
                 </div>
             </section>

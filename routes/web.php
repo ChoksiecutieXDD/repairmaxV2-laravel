@@ -30,6 +30,7 @@ use App\Livewire\User\SupportMessage;
 use App\Livewire\User\SystemSettings;
 use App\Livewire\User\Notifications;
 use App\Livewire\User\ServiceDetail;
+use App\Livewire\User\BookedDetails;
 
 // Livewire Components (Admin)
 use App\Livewire\Admin\Dashboard as AdminDashboard;
@@ -37,7 +38,7 @@ use App\Livewire\Admin\SystemOverview;
 use App\Livewire\Admin\Profile as AdminProfile;
 use App\Livewire\Admin\Appointment as AppointmentComponent;
 use App\Livewire\Admin\AppointmentDetails;
-use App\Livewire\Admin\AppointmentManagement;
+use App\Livewire\Admin\Calendar;
 use App\Livewire\Admin\Inventory;
 use App\Livewire\Admin\Services;
 use App\Livewire\Admin\UserManagement;
@@ -103,7 +104,7 @@ Route::post('/help/track', function (Request $request) {
     }
 
     return view('help.track', [
-        'error' => 'No active repair found matching that Ticket ID and Email.',
+        'error' => 'No active repair found matching that Booking Reference and Email.',
         'ticket_id' => $ticketId,
         'email' => $email
     ]);
@@ -203,7 +204,7 @@ Route::post('/booking', function (Request $request) {
 
         return redirect('/booking')
             ->with('success', 'Thank you! Your repair booking has been received.')
-            ->with('success_message', 'Ticket ID: ' . $appointment->tracking_code . '. We have sent a confirmation email and our team will contact you within 24 hours to confirm the appointment details.');
+            ->with('success_message', 'Booking Reference: ' . $appointment->booking_number . '. We have sent a confirmation email and our team will contact you within 24 hours to confirm the appointment details.');
     } catch (\Exception $e) {
         Log::error('Booking error: ' . $e->getMessage());
         return back()->with('error', 'There was an error processing your booking. Please try again.');
@@ -340,7 +341,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Appointments
     Route::get('/appointment', AppointmentComponent::class)->name('appointment');
     Route::get('/appointment/{id}/details', AppointmentDetails::class)->name('appointment.details');
-    Route::get('/appointment-management', AppointmentManagement::class)->name('appointment-management');
+    Route::get('/calendar', Calendar::class)->name('calendar');
     
     // Inventory
     Route::get('/inventory', Inventory::class)->name('inventory');
@@ -391,6 +392,7 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 
     // Notifications
     Route::get('/notifications', Notifications::class)->name('notifications');
+    Route::get('/booked-details/{id}', BookedDetails::class)->name('booked-details');
 
     // Services Details (User-specific)
     Route::get('/services/{id}', ServiceDetail::class)->name('services.detail');

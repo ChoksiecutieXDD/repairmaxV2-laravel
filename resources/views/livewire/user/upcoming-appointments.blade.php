@@ -21,11 +21,11 @@
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
         @forelse($appointments as $app)
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all overflow-hidden">
+        <div class="bg-white rounded-2xl border border-brand-200 shadow-sm hover:shadow-md transition-all overflow-hidden">
 
-            <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="p-6 border-b border-brand-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center flex-shrink-0 text-gray-600 border border-gray-100">
+                    <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center flex-shrink-0 text-gray-600 border border-brand-100">
                         <span class="material-symbols-outlined text-[28px]">
                             {{ $app->device_brand == 'Apple' ? 'laptop_mac' : 'smartphone' }}
                         </span>
@@ -39,7 +39,7 @@
                 @php
                 $statusClasses = [
                 'In Progress' => 'bg-orange-50 text-orange-700 border-orange-200',
-                'Pending' => 'bg-gray-100 text-gray-700 border-gray-200',
+                'Pending' => 'bg-gray-100 text-gray-700 border-brand-200',
                 'Approved' => 'bg-green-50 text-green-700 border-green-200',
                 'Cancelled' => 'bg-red-50 text-red-700 border-red-200',
                 ];
@@ -55,28 +55,28 @@
             <div class="p-6 bg-gray-50/30">
                 <div class="flex items-center gap-2 mb-5 text-gray-900">
                     <span class="material-symbols-outlined text-gray-400 text-[20px]">calendar_clock</span>
-                    <p class="font-bold text-sm">Scheduled for:
+                    <p class="font-bold text-sm mb-0">Scheduled for:
                         <span class="font-medium text-gray-600 ml-1">
                             {{ \Carbon\Carbon::parse($app->pref_date)->format('M d, Y') }} at {{ \Carbon\Carbon::parse($app->pref_time)->format('h:i A') }}
                         </span>
                     </p>
                 </div>
 
-                <div class="grid grid-cols-3 gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div class="grid grid-cols-3 gap-4 bg-white p-4 rounded-xl border border-brand-200 shadow-sm">
                     <div>
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Service ID</p>
-                        <p class="font-mono font-bold text-gray-900 text-sm">{{ $app->tracking_code }}</p>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Booking Ref</p>
+                        <p class="font-mono font-bold text-gray-900 text-sm mb-0">{{ $app->booking_number ?? $app->tracking_code }}</p>
                     </div>
                     <div>
                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Est. Duration</p>
-                        <p class="font-bold text-gray-900 text-sm flex items-center gap-1">
+                        <p class="font-bold text-gray-900 text-sm flex items-center gap-1 mb-0">
                             <span class="material-symbols-outlined text-[16px] text-gray-400">timer</span>
                             --
                         </p>
                     </div>
                     <div>
                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Technician</p>
-                        <p class="font-bold text-gray-400 text-sm italic">Assigning...</p>
+                        <p class="font-bold text-gray-400 text-sm italic mb-0">Assigning...</p>
                     </div>
                 </div>
 
@@ -91,25 +91,24 @@
                     @endif
                     <button
                         wire:click="openEdit({{ $app->id }})"
-                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
+                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-brand-200 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">edit</span>
                         Edit
                     </button>
                     <button
                         wire:click="openReschedule({{ $app->id }})"
-                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-brand-200 rounded-lg hover:bg-gray-50 transition-colors">
                         Reschedule
                     </button>
-                    <button
-                        wire:click="showDetails({{ $app->id }})"
-                        class="px-4 py-2 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-lg hover:bg-blue-100 transition-colors">
+                    <a href="{{ route('user.booked-details', $app->id) }}"
+                        class="px-4 py-2 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-lg hover:bg-blue-100 transition-colors inline-flex items-center">
                         View Details
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
         @empty
-        <div class="col-span-full py-20 bg-white rounded-3xl border border-dashed border-gray-300 flex flex-col items-center justify-center text-center px-6">
+        <div class="col-span-full py-20 bg-white rounded-3xl border border-dashed border-brand-300 flex flex-col items-center justify-center text-center px-6">
             <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
                 <span class="material-symbols-outlined text-gray-300 text-5xl">event_busy</span>
             </div>
@@ -123,176 +122,159 @@
 
     </div>
 
-    <!-- View Details Modal -->
-    @if($showDetailsModal && $selectedAppointment)
-    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-5 flex items-center justify-between">
-                <h2 class="text-xl font-bold text-gray-900">Appointment Details</h2>
+    <!-- Details Modal Removed (Redirected to BookedDetails) -->
+
+    <!-- Reschedule Modal -->
+    @if($showRescheduleModal && $selectedAppointment)
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full border border-brand-100 overflow-hidden transform transition-all duration-300 scale-100">
+            <div class="border-b border-brand-100 px-6 py-5 flex items-center justify-between bg-gray-50/50">
+                <h2 class="text-xl font-extrabold text-gray-900 tracking-tight">Reschedule Appointment</h2>
                 <button
                     wire:click="closeModals()"
-                    class="text-gray-400 hover:text-gray-600 transition-colors">
+                    class="text-gray-400 hover:text-gray-600 transition-colors bg-transparent border-0 cursor-pointer p-0 shadow-none">
                     <span class="material-symbols-outlined text-[28px]">close</span>
                 </button>
             </div>
 
             <div class="p-6 space-y-6">
-                <!-- Device Information -->
-                <div>
-                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Device Information</h3>
-                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-xs text-gray-500 font-semibold mb-1">Brand</p>
-                                <p class="font-bold text-gray-900">{{ $selectedAppointment->device_brand }}</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-500 font-semibold mb-1">Model</p>
-                                <p class="font-bold text-gray-900">{{ $selectedAppointment->device_model }}</p>
-                            </div>
-                            <div class="col-span-2">
-                                <p class="text-xs text-gray-500 font-semibold mb-1">Issue Category</p>
-                                <p class="font-bold text-gray-900">{{ $selectedAppointment->fault_category }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Description -->
-                <div>
-                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Description</h3>
-                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                        <p class="text-gray-700">{{ $selectedAppointment->description ?? 'No description provided' }}</p>
-                    </div>
-                </div>
-
-                <!-- Appointment Schedule -->
-                <div>
-                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Scheduled Appointment</h3>
-                    <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="material-symbols-outlined text-blue-600">calendar_today</span>
-                            <p class="font-bold text-gray-900">{{ \Carbon\Carbon::parse($selectedAppointment->pref_date)->format('M d, Y') }}</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-blue-600">schedule</span>
-                            <p class="font-bold text-gray-900">{{ \Carbon\Carbon::parse($selectedAppointment->pref_time)->format('h:i A') }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Status & Tracking -->
-                <div>
-                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Status & Reference</h3>
-                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3">
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold mb-1">Tracking Code</p>
-                            <p class="font-mono font-bold text-gray-900">{{ $selectedAppointment->tracking_code }}</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold mb-1">Status</p>
-                            @php
-                            $statusClasses = [
-                            'In Progress' => 'bg-orange-50 text-orange-700 border-orange-200',
-                            'Pending' => 'bg-gray-100 text-gray-700 border-gray-200',
-                            'Approved' => 'bg-green-50 text-green-700 border-green-200',
-                            'Cancelled' => 'bg-red-50 text-red-700 border-red-200',
-                            ];
-                            $badgeClass = $statusClasses[$selectedAppointment->status] ?? $statusClasses['Pending'];
-                            @endphp
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border {{ $badgeClass }}">
-                                <span class="w-1.5 h-1.5 rounded-full {{ $selectedAppointment->status == 'In Progress' ? 'bg-orange-500 animate-pulse' : 'bg-current' }}"></span>
-                                {{ $selectedAppointment->status }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Attached Photos -->
-                @if($selectedAppointment->photo_paths && count($selectedAppointment->photo_paths) > 0)
-                <div>
-                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Attached Photos</h3>
-                    <div class="grid grid-cols-3 gap-3">
-                        @foreach($selectedAppointment->photo_paths as $photo)
-                        @php
-                            $isVideo = in_array(pathinfo($photo, PATHINFO_EXTENSION), ['mp4', 'mov', 'avi', 'webm', 'mpeg', 'mkv', '3gp']);
-                        @endphp
-                        @if($isVideo)
-                        <div class="aspect-square bg-gray-100 rounded-lg border border-gray-200 overflow-hidden relative flex items-center justify-center">
-                            <video src="{{ asset('storage/' . $photo) }}" class="w-full h-full object-cover" controls muted playsinline></video>
-                        </div>
-                        @else
-                        <div class="aspect-square bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
-                            <img src="{{ asset('storage/' . $photo) }}" alt="Device photo" class="w-full h-full object-cover">
-                        </div>
+                <!-- Week Navigator -->
+                <div class="flex items-center justify-between py-2 border-b border-brand-100">
+                    <button type="button" wire:click="prevWeek" @disabled($calendar_week_offset <= 0)
+                        class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl border border-brand-200 transition-all 
+                        {{ $calendar_week_offset <= 0 ? 'text-gray-300 cursor-not-allowed bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50 hover:border-brand-300' }}">
+                        <span class="material-symbols-outlined text-[16px] leading-none">chevron_left</span>
+                        Prev Week
+                    </button>
+                    <div class="text-center">
+                        <span class="text-xs font-black text-gray-700">
+                            @if($calendar_week_offset === 0) This Week
+                            @elseif($calendar_week_offset === 1) Next Week
+                            @else {{ $calendar_week_offset }} Weeks Ahead
+                            @endif
+                        </span>
+                        @if($calendar_week_offset > 0)
+                        <button type="button" wire:click="$set('calendar_week_offset', 0); $wire.generateAvailableDays()" class="ml-2 bg-transparent text-[9px] font-black text-blue-600 uppercase tracking-wider hover:text-blue-800 shadow-none hover:shadow-none p-0 inline-block border-0 cursor-pointer">Back to Now</button>
                         @endif
+                    </div>
+                    <button type="button" wire:click="nextWeek"
+                        class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl border border-brand-200 bg-white text-gray-900 hover:bg-gray-50 hover:border-brand-300 transition-all">
+                        Next Week
+                        <span class="material-symbols-outlined text-[16px] leading-none">chevron_right</span>
+                    </button>
+                </div>
+
+                <!-- Date Cards -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Select New Date</label>
+                    <div class="grid grid-cols-5 gap-2.5">
+                        @foreach($available_days as $index => $day)
+                        <button type="button"
+                            wire:click="{{ $day['slots_left'] > 0 ? 'selectRescheduleDate(' . $index . ')' : '' }}"
+                            @disabled($day['slots_left'] <= 0)
+                            class="flex flex-col items-center justify-center py-3 px-1.5 rounded-2xl border-2 transition-all transform active:scale-95 relative outline-none
+                                {{ $rescheduleDate === $day['full']
+                                    ? 'border-blue-500 bg-blue-500 text-white shadow-lg shadow-blue-100'
+                                    : ($day['slots_left'] <= 0
+                                        ? 'border-red-100 bg-red-50/50 cursor-not-allowed opacity-50'
+                                        : 'border-brand-100 bg-gray-50/50 hover:bg-white hover:border-brand-300 hover:scale-[1.03] shadow-sm cursor-pointer') }}">
+
+                            <span class="text-[9px] font-black uppercase tracking-widest mb-0.5
+                                {{ $rescheduleDate === $day['full'] ? 'text-blue-100' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-400') }}">
+                                {{ $day['month'] }}
+                            </span>
+                            <span class="text-xl font-black mb-0.5
+                                {{ $rescheduleDate === $day['full'] ? 'text-white' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-900') }}">
+                                {{ $day['date'] }}
+                            </span>
+                            <span class="text-[9px] font-bold mb-2
+                                {{ $rescheduleDate === $day['full'] ? 'text-blue-200' : ($day['slots_left'] <= 0 ? 'text-red-300' : 'text-gray-500') }}">
+                                {{ $day['day'] }}
+                            </span>
+                            <div class="flex items-center gap-0.5 py-0.5 px-1.5 rounded-full text-[8px] font-black uppercase
+                                {{ $rescheduleDate === $day['full'] ? 'bg-white/20 text-white'
+                                    : ($day['slots_left'] <= 0 ? 'bg-red-100 text-red-500'
+                                    : ($day['slots_left'] <= 3 ? 'bg-orange-100 text-orange-600'
+                                    : 'bg-green-100 text-green-700')) }}">
+                                @if($day['slots_left'] <= 0)
+                                    FULL
+                                @elseif($day['slots_left'] === 1)
+                                    1 LEFT
+                                @else
+                                    {{ $day['slots_left'] }} LEFT
+                                @endif
+                            </div>
+                        </button>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Time Slots -->
+                @php
+                    $selectedDay = null;
+                    if ($rescheduleDate) {
+                        foreach ($available_days as $d) {
+                            if ($d['full'] === $rescheduleDate) {
+                                $selectedDay = $d;
+                                break;
+                            }
+                        }
+                    }
+                @endphp
+                @if($selectedDay)
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Select New Time</label>
+                    <div class="grid grid-cols-5 gap-2.5">
+                        @foreach($available_slots as $slot)
+                        @php
+                        $bookedCount = $selectedDay['slot_status'][$slot] ?? 0;
+                        $isFull = $bookedCount >= 1;
+                        $isSelected = $rescheduleTime === $slot;
+                        $spotsLeft = 1 - $bookedCount;
+                        @endphp
+                        <button type="button"
+                            @if(!$isFull) wire:click="selectRescheduleTime('{{ $slot }}')" @endif
+                            @disabled($isFull)
+                            class="py-4 px-2 rounded-2xl border-2 font-black text-sm transition-all flex items-center justify-center gap-2 outline-none
+                                {{ $isSelected
+                                    ? 'border-blue-500 bg-white text-blue-700 shadow-md ring-2 ring-blue-100 scale-[1.02]'
+                                    : ($isFull
+                                        ? 'border-red-100 bg-red-50 text-red-300 cursor-not-allowed opacity-50'
+                                        : 'border-brand-100 bg-gray-50/50 text-gray-500 hover:bg-white hover:border-brand-300 hover:scale-[1.02] cursor-pointer') }}">
+                            @if($isSelected)
+                            <span class="w-2 h-2 rounded-full bg-blue-500 inline-block animate-pulse"></span>
+                            @endif
+                            {{ $slot }}
+                        </button>
                         @endforeach
                     </div>
                 </div>
                 @endif
-            </div>
 
-            <div class="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
-                <button
-                    wire:click="closeModals()"
-                    class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    <!-- Reschedule Modal -->
-    @if($showRescheduleModal && $selectedAppointment)
-    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full">
-            <div class="border-b border-gray-200 px-6 py-5 flex items-center justify-between">
-                <h2 class="text-xl font-bold text-gray-900">Reschedule Appointment</h2>
-                <button
-                    wire:click="closeModals()"
-                    class="text-gray-400 hover:text-gray-600 transition-colors">
-                    <span class="material-symbols-outlined text-[28px]">close</span>
-                </button>
-            </div>
-
-            <div class="p-6 space-y-4">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Select New Date</label>
-                    <input
-                        type="date"
-                        wire:model="rescheduleDate"
-                        min="{{ now()->format('Y-m-d') }}"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Select New Time</label>
-                    <input
-                        type="time"
-                        wire:model="rescheduleTime"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                </div>
-
+                <!-- Preview Selected Time -->
                 @if($rescheduleDate && $rescheduleTime)
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <p class="text-xs text-blue-600 font-semibold mb-1">New Appointment Time</p>
-                    <p class="font-bold text-blue-900">
-                        {{ \Carbon\Carbon::parse($rescheduleDate)->format('M d, Y') }} at {{ \Carbon\Carbon::parse($rescheduleTime)->format('h:i A') }}
-                    </p>
+                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-blue-600 text-[28px]">schedule</span>
+                    <div>
+                        <p class="text-[10px] text-blue-650 font-bold uppercase tracking-wider">New Appointment Time</p>
+                        <p class="font-extrabold text-blue-900 text-sm">
+                            {{ \Carbon\Carbon::parse($rescheduleDate)->format('M d, Y') }} at {{ \Carbon\Carbon::parse($rescheduleTime)->format('h:i A') }}
+                        </p>
+                    </div>
                 </div>
                 @endif
             </div>
 
-            <div class="bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
+            <div class="bg-gray-50 border-t border-brand-100 px-6 py-4 flex justify-end gap-3">
                 <button
                     wire:click="closeModals()"
-                    class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    class="px-5 py-2.5 text-sm font-bold text-gray-700 bg-white border border-brand-300 rounded-xl hover:bg-gray-50 hover:border-brand-400 transition-all">
                     Cancel
                 </button>
                 <button
                     wire:click="saveReschedule()"
-                    class="px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                    @disabled(!$rescheduleDate || !$rescheduleTime)
+                    class="px-5 py-2.5 text-sm font-bold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-md shadow-blue-100 disabled:opacity-50 disabled:cursor-not-allowed">
                     Save Changes
                 </button>
             </div>
@@ -303,8 +285,8 @@
     <!-- Edit Modal -->
     @if($showEditModal && $selectedAppointment)
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full">
-            <div class="border-b border-gray-200 px-6 py-5 flex items-center justify-between">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-brand-100 overflow-hidden">
+            <div class="border-b border-brand-200 px-6 py-5 flex items-center justify-between bg-gray-50/50">
                 <h2 class="text-xl font-bold text-gray-900">Edit Appointment</h2>
                 <button
                     wire:click="closeModals()"
@@ -320,7 +302,7 @@
                         type="text"
                         wire:model="editDeviceBrand"
                         placeholder="e.g., Apple, Samsung"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full px-4 py-2.5 border border-brand-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <div>
@@ -329,14 +311,14 @@
                         type="text"
                         wire:model="editDeviceModel"
                         placeholder="e.g., iPhone 14, Galaxy S23"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full px-4 py-2.5 border border-brand-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Issue Category <span class="text-red-500">*</span></label>
                     <select
                         wire:model="editFaultCategory"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full px-4 py-2.5 border border-brand-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">Select issue category</option>
                         <option value="Screen">Screen</option>
                         <option value="Battery">Battery</option>
@@ -354,14 +336,14 @@
                         wire:model="editDescription"
                         placeholder="Describe the issue in detail..."
                         rows="3"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+                        class="w-full px-4 py-2.5 border border-brand-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
                 </div>
             </div>
 
-            <div class="bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
+            <div class="bg-gray-50 border-t border-brand-200 px-6 py-4 flex justify-end gap-3">
                 <button
                     wire:click="closeModals()"
-                    class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-brand-300 rounded-lg hover:bg-gray-50 transition-colors">
                     Cancel
                 </button>
                 <button
