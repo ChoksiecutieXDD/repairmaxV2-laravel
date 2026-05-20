@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 #[Title('Appointment Details | Repairmax')]
 class AppointmentDetails extends Component
 {
-    // Appointment ID mula sa URL parameter
+    // Appointment ID from URL parameter
     public $appointmentId;
     
     // Appointment data
@@ -47,12 +47,12 @@ class AppointmentDetails extends Component
         ]);
     }
 
-    // Buksan ang email modal
+    // Open the email modal
     public function openEmailModal($type = 'receipt')
     {
         $this->emailType = $type;
         
-        // I-pre-fill ang subject base sa type
+        // Pre-fill the subject based on the type
         if ($type === 'receipt') {
             $this->emailSubject = 'Service Receipt - Appointment #' . $this->appointment->tracking_code;
             $this->emailBody = $this->generateReceiptTemplate();
@@ -64,19 +64,18 @@ class AppointmentDetails extends Component
         $this->showEmailModal = true;
     }
 
-    // I-generate ang receipt template
+    // Generate receipt template
     private function generateReceiptTemplate()
     {
         $finalCost = $this->appointment->final_cost ?? 'Pending';
         $description = $this->appointment->description ?? 'N/A';
         
         return <<<HTML
-Maaligtas na inyong Teknisyan,
+Dear Valued Customer,
 
-Narito ang inyong SERVICE RECEIPT para sa pagkumpirma:
+Here is your SERVICE RECEIPT for confirmation:
 
-📌 Booking Reference: {$this->appointment->tracking_code}
-📌 Repair Ticket: {$this->appointment->booking_number}
+📌 Booking Reference: {$this->appointment->booking_number}
 📌 Device: {$this->appointment->device_brand} {$this->appointment->device_model}
 📌 Issue: {$this->appointment->fault_category}
 📌 Status: {$this->appointment->status}
@@ -86,14 +85,14 @@ Narito ang inyong SERVICE RECEIPT para sa pagkumpirma:
 
 🔧 Description: {$description}
 
-Salamat sa paggamit ng aming serbisyo!
+Thank you for choosing our service!
 
 Best regards,
 RepairMax Team
 HTML;
     }
 
-    // I-generate ang invoice template
+    // Generate the invoice template
     private function generateInvoiceTemplate()
     {
         $invoiceNumber = $this->appointment->invoice_number ?? 'N/A';
@@ -108,7 +107,7 @@ HTML;
         return <<<HTML
 OFFICIAL INVOICE
 
-Booking Reference: {$this->appointment->tracking_code}
+Booking Reference: {$this->appointment->booking_number}
 Invoice Number: {$invoiceNumber}
 Date: {$createdDate}
 
@@ -144,7 +143,7 @@ RepairMax Administrative Team
 HTML;
     }
 
-    // Ipadala ang email
+    // Send the email
     public function sendEmail()
     {
         // Validate
@@ -154,22 +153,22 @@ HTML;
         ]);
 
         try {
-            // Kunin ang email ng customer
+            // Get the customer's email
             $recipientEmail = $this->appointment->user?->email;
             
             if (!$recipientEmail) {
-                session()->flash('error', 'Walang email address para sa customer na ito.');
+                session()->flash('error', 'No email address for this customer.');
                 return;
             }
 
-            // Ipadala using Mail class
+            // Send using Mail class
             Mail::raw($this->emailBody, function ($message) use ($recipientEmail) {
                 $message->to($recipientEmail)
                     ->subject($this->emailSubject)
                     ->from(config('mail.from.address'), 'RepairMax');
             });
 
-            // I-reset ang form
+            // Reset the form
             $this->showEmailModal = false;
             $this->emailSubject = '';
             $this->emailBody = '';
@@ -181,13 +180,13 @@ HTML;
         }
     }
 
-    // I-close ang email modal
+    // Close the email modal
     public function closeEmailModal()
     {
         $this->showEmailModal = false;
     }
 
-    // I-update ang status
+    // Update the status
     public function updateStatus()
     {
         $this->validate([
@@ -197,7 +196,7 @@ HTML;
         try {
             $this->appointment->update(['status' => $this->newStatus]);
 
-            // Lumikha ng notification para sa user
+            // Create a notification for the user
             if ($this->appointment->user_id) {
                 \App\Models\Notification::create([
                     'user_id' => $this->appointment->user_id,
@@ -218,7 +217,7 @@ HTML;
         }
     }
 
-    // I-delete ang appointment
+    // Delete the appointment
     public function deleteAppointment()
     {
         try {

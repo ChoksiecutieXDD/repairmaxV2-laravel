@@ -90,10 +90,17 @@ class PublicBooking extends Component
                 $slotStatus = [];
                 foreach ($this->available_slots as $slot) {
                     $count = Appointment::where('pref_date', $dateStr)
-                        ->where('pref_time', $slot)
+                        ->where('pref_time', 'like', $slot . '%')
                         ->whereIn('status', ['Pending', 'In Progress'])
                         ->count();
                     $slotStatus[$slot] = $count;
+                }
+
+                $slotsLeftForDay = 0;
+                foreach ($this->available_slots as $slot) {
+                    if ($slotStatus[$slot] < 1) {
+                        $slotsLeftForDay++;
+                    }
                 }
 
                 $this->available_days[] = [
@@ -101,12 +108,23 @@ class PublicBooking extends Component
                     'day'         => $date->format('D'),
                     'date'        => $date->format('d'),
                     'month'       => $date->format('M'),
-                    'slots_left'  => max(0, count($this->available_slots) - array_sum($slotStatus)),
+                    'slots_left'  => $slotsLeftForDay,
                     'slot_status' => $slotStatus,
                 ];
                 $found++;
             }
             $date->addDay();
+        }
+
+        // Auto-sync selected_index based on pref_date
+        $this->selected_index = null;
+        if ($this->pref_date) {
+            foreach ($this->available_days as $idx => $day) {
+                if ($day['full'] === $this->pref_date) {
+                    $this->selected_index = $idx;
+                    break;
+                }
+            }
         }
     }
 
@@ -147,12 +165,10 @@ class PublicBooking extends Component
 
     public function generateTrackingCode()
     {
-        if (!$this->pref_date) return;
-
-        $count = Appointment::where('pref_date', $this->pref_date)->count();
+        $count = Appointment::count();
         $nextNumber = str_pad($count + 1, 5, '0', STR_PAD_LEFT);
-        $this->tracking_code = 'RM-' . date('Ymd', strtotime($this->pref_date)) . '-' . $nextNumber;
-        $this->booking_number = 'BK-' . date('Ymd', strtotime($this->pref_date)) . '-' . $nextNumber;
+        $this->tracking_code = 'RM-' . $nextNumber;
+        $this->booking_number = 'BK-' . $nextNumber;
     }
 
     public function updatedPickupOption($value)
@@ -330,10 +346,14 @@ class PublicBooking extends Component
             $fullDescription .= "\n\nOther Details / Special Instructions:\n" . $this->other_details;
         }
 
+        $selectedFault = ($finalCategory && $finalCategory !== 'Other') ? \App\Models\FaultType::where('name', $finalCategory)->first() : null;
+        $basePrice = $selectedFault ? $selectedFault->base_price : 0;
+        $calculatedQuote = $basePrice + $this->additional_fee;
+
         $appointment = new Appointment();
         $appointment->user_id        = $user->id;
         $appointment->tracking_code  = $trackingCode;
-        $appointment->booking_number = $this->booking_number ?: 'BK-' . date('Ymd', strtotime($this->pref_date)) . '-' . str_pad(Appointment::where('pref_date', $this->pref_date)->count() + 1, 5, '0', STR_PAD_LEFT);
+        $appointment->booking_number = $this->booking_number ?: 'BK-' . str_pad(Appointment::count() + 1, 5, '0', STR_PAD_LEFT);
         $appointment->device_brand   = $finalBrand;
         $appointment->device_model   = $finalModel;
         $appointment->fault_category = $finalCategory;
@@ -346,6 +366,7 @@ class PublicBooking extends Component
         $appointment->address        = $this->address;
         $appointment->city           = $this->city;
         $appointment->additional_fee = $this->additional_fee;
+        $appointment->quote          = $calculatedQuote;
         $appointment->save();
 
         // Create notifications for all admins
@@ -373,7 +394,7 @@ class PublicBooking extends Component
         }
 
         Session::flash('success', 'Booking confirmed! Booking No: ' . $appointment->booking_number);
-        Session::flash('success_message', 'Booking Number (Logistics): ' . $appointment->booking_number . ' | Ticket Number (Substance): ' . $trackingCode . '. Our team will contact you shortly to confirm the appointment details.');
+        Session::flash('success_message', 'Booking Reference: ' . $appointment->booking_number . '. Our team will contact you shortly to confirm the appointment details.');
         Session::flash('message', 'Your appointment booking is completed successfully!');
 
         return redirect()->route('booking');

@@ -12,23 +12,7 @@ use App\Models\Appointment;
 #[Title('My Dashboard | Repairmax')]
 class Dashboard extends Component
 {
-    public bool $showDetailsModal = false;
-    public ?Appointment $selectedAppointment = null;
 
-    public function viewDetails(int|string $appointmentId)
-    {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        
-        $this->selectedAppointment = $user->appointments()->findOrFail($appointmentId);
-        $this->showDetailsModal = true;
-    }
-
-    public function closeDetails()
-    {
-        $this->showDetailsModal = false;
-        // Keep selectedAppointment populated during Alpine's exit transition so the modal content does not disappear prematurely.
-    }
 
     public function render()
     {

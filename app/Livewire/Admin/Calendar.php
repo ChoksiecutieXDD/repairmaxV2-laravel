@@ -5,65 +5,17 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use App\Models\Appointment as AppointmentModel;
+use App\Models\Appointment;
 use Carbon\Carbon;
-use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
-#[Title('Appointments | Repairmax')]
-class Appointment extends Component
+#[Title('Appointment Calendar | Repairmax')]
+class Calendar extends Component
 {
-    use WithPagination;
-
-    public $search = '';
-    public $viewMode = 'list'; // 'list' or 'calendar'
-    
-    // Calendar State
     public $currentYear;
     public $currentMonth;
     public $selectedDate = null;
     public $selectedDateAppointments = [];
-
-    public function mount()
-    {
-        $this->currentYear = now()->year;
-        $this->currentMonth = now()->month;
-        
-        // Auto-select today
-        $this->selectDate(now()->format('Y-m-d'));
-
-        // Handle direct view requests (e.g. from /admin/calendar route or ?view=calendar parameter)
-        if (request()->routeIs('admin.calendar') || request()->query('view') === 'calendar') {
-            $this->viewMode = 'calendar';
-        }
-    }
-
-    public function prevMonth()
-    {
-        $date = Carbon::create($this->currentYear, $this->currentMonth, 1)->subMonth();
-        $this->currentYear = $date->year;
-        $this->currentMonth = $date->month;
-        $this->selectedDate = null;
-        $this->selectedDateAppointments = [];
-    }
-
-    public function nextMonth()
-    {
-        $date = Carbon::create($this->currentYear, $this->currentMonth, 1)->addMonth();
-        $this->currentYear = $date->year;
-        $this->currentMonth = $date->month;
-        $this->selectedDate = null;
-        $this->selectedDateAppointments = [];
-    }
-
-    public function selectDate($dateStr)
-    {
-        $this->selectedDate = $dateStr;
-        $this->selectedDateAppointments = AppointmentModel::with('user')
-            ->whereDate('pref_date', $dateStr)
-            ->orderBy('pref_time', 'asc')
-            ->get();
-    }
 
     // Reschedule/Move Modal State
     public $showRescheduleModal = false;
@@ -87,7 +39,7 @@ class Appointment extends Component
                 $dateStr = $date->format('Y-m-d');
                 $slotStatus = [];
                 foreach ($this->available_slots as $slot) {
-                    $query = AppointmentModel::where('pref_date', $dateStr)
+                    $query = Appointment::where('pref_date', $dateStr)
                         ->where('pref_time', 'like', $slot . '%')
                         ->whereIn('status', ['Pending', 'In Progress']);
                     
@@ -163,9 +115,45 @@ class Appointment extends Component
         $this->rescheduleTime = $time;
     }
 
+    public function mount()
+    {
+        $this->currentYear = now()->year;
+        $this->currentMonth = now()->month;
+        
+        // Auto-select today
+        $this->selectDate(now()->format('Y-m-d'));
+    }
+
+    public function prevMonth()
+    {
+        $date = Carbon::create($this->currentYear, $this->currentMonth, 1)->subMonth();
+        $this->currentYear = $date->year;
+        $this->currentMonth = $date->month;
+        $this->selectedDate = null;
+        $this->selectedDateAppointments = [];
+    }
+
+    public function nextMonth()
+    {
+        $date = Carbon::create($this->currentYear, $this->currentMonth, 1)->addMonth();
+        $this->currentYear = $date->year;
+        $this->currentMonth = $date->month;
+        $this->selectedDate = null;
+        $this->selectedDateAppointments = [];
+    }
+
+    public function selectDate($dateStr)
+    {
+        $this->selectedDate = $dateStr;
+        $this->selectedDateAppointments = Appointment::with('user')
+            ->whereDate('pref_date', $dateStr)
+            ->orderBy('pref_time', 'asc')
+            ->get();
+    }
+
     public function openReschedule($id)
     {
-        $this->selectedAppointment = AppointmentModel::findOrFail($id);
+        $this->selectedAppointment = Appointment::findOrFail($id);
         $this->rescheduleDate = Carbon::parse($this->selectedAppointment->pref_date)->format('Y-m-d');
         $this->rescheduleTime = Carbon::parse($this->selectedAppointment->pref_time)->format('H:i');
         
@@ -225,42 +213,19 @@ class Appointment extends Component
         session()->flash('message', 'Appointment successfully rescheduled!');
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
         // Re-fetch selected date appointments during polling / render so it is live
         if ($this->selectedDate) {
-            $this->selectedDateAppointments = AppointmentModel::with('user')
+            $this->selectedDateAppointments = Appointment::with('user')
                 ->whereDate('pref_date', $this->selectedDate)
                 ->orderBy('pref_time', 'asc')
                 ->get();
         }
-
-        // 1. Fetch appointments for the list view
-        $appointmentsList = AppointmentModel::with('user')
-            ->when($this->search, function ($query) {
-                $query->where('device_brand', 'like', '%'.$this->search.'%')
-                    ->orWhere('device_model', 'like', '%'.$this->search.'%')
-                    ->orWhere('tracking_code', 'like', '%'.$this->search.'%')
-                    ->orWhere('booking_number', 'like', '%'.$this->search.'%')
-                    ->orWhereHas('user', function ($q) {
-                        $q->where('first_name', 'like', '%'.$this->search.'%')
-                            ->orWhere('last_name', 'like', '%'.$this->search.'%')
-                            ->orWhere('email', 'like', '%'.$this->search.'%');
-                    });
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        // 2. Compute calendar variables
         $currentDate = Carbon::create($this->currentYear, $this->currentMonth, 1);
         $monthName = $currentDate->format('F Y');
 
-        // Start of the month
+        // Start and end of the month
         $startOfMonth = $currentDate->copy()->startOfMonth();
 
         // Carbon dayOfWeek is 0 (Sunday) to 6 (Saturday)
@@ -313,24 +278,17 @@ class Appointment extends Component
         $startDateStr = reset($allDays)['date'];
         $endDateStr = end($allDays)['date'];
 
-        $calendarAppointments = AppointmentModel::with('user')
+        $appointments = Appointment::with('user')
             ->whereBetween('pref_date', [$startDateStr, $endDateStr])
             ->get()
             ->groupBy(function ($app) {
                 return Carbon::parse($app->pref_date)->format('Y-m-d');
             });
 
-        return view('livewire.admin.appointment', [
-            'appointments' => $appointmentsList,
+        return view('livewire.admin.calendar', [
             'monthName' => $monthName,
             'allDays' => $allDays,
-            'calendarAppointments' => $calendarAppointments,
+            'appointments' => $appointments,
         ]);
-    }
-
-    // Navigate to the full appointment details page
-    public function viewDetails($id)
-    {
-        return redirect()->route('admin.appointment.details', ['id' => $id]);
     }
 }

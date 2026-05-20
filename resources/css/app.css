@@ -179,6 +179,13 @@
     ::-webkit-scrollbar-thumb:hover {
         background-color: var(--gray-700);
     }
+
+    .material-symbols-outlined {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+    }
 }
 
 /* ==========================================================================

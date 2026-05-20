@@ -5,22 +5,22 @@
             <div class="text-center max-w-3xl mx-auto">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight">Track Your Repair</h1>
                 <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
-                    Enter your Booking Reference Number or Repair Ticket ID and email to get real-time updates on your device status.
+                    Enter your Booking Reference Number and email to get real-time updates on your device status.
                 </p>
             </div>
         </section>
 
-        <section class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full fade-in-element mb-16">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full fade-in-element mb-16">
             <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg shadow-gray-200/50 border border-gray-100">
                 <form action="/track-status" method="POST" class="space-y-8">
                     @csrf
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-3">Booking Reference or Repair Ticket ID</label>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">Booking Reference</label>
                         <div class="relative group">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <span class="material-symbols-outlined text-gray-400 group-focus-within:text-blue-500 transition-colors">tag</span>
                             </div>
-                            <input type="text" name="ticket_id" placeholder="e.g. BK-20260519-00001 or RM-20260519-00001" required 
+                            <input type="text" name="ticket_id" placeholder="e.g. BK-00001" required 
                                 class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-[1.25rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base shadow-sm">
                         </div>
                     </div>
@@ -60,14 +60,14 @@
         </section>
 
         <!-- Additional Help Section -->
-        <section class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="bg-gray-50 rounded-2xl border border-gray-200 p-8">
                 <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <span class="material-symbols-outlined text-gray-600">help</span>
                     Need Help?
                 </h3>
                 <p class="text-gray-600 mb-4">
-                    If you can't find your ticket ID, check your confirmation email or contact our support team.
+                    If you can't find your booking reference, check your confirmation email or contact our support team.
                 </p>
                 <a href="/contact" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-bold">
                     <span>Contact Support</span>

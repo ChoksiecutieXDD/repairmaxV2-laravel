@@ -24,7 +24,7 @@
         }
 
         .email-content {
-            max-width: 600px;
+            max-width: 950px;
             margin: 0 auto;
             background-color: #ffffff;
             border: 1px solid #E2E8F0;
@@ -95,39 +95,42 @@
         .details-section {
             border: 1px solid #E2E8F0;
             border-radius: 12px;
-            padding: 24px;
+            padding: 28px;
             margin-bottom: 30px;
+            background-color: #FAFAFA;
         }
 
         .details-title {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
             color: #0F172A;
             margin-top: 0;
-            margin-bottom: 16px;
-            border-bottom: 1px solid #F1F5F9;
-            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 12px;
         }
 
-        .detail-row {
-            display: table;
-            width: 100%;
-            margin-bottom: 12px;
+        .detail-card {
+            background-color: #ffffff;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
 
         .detail-label {
-            display: table-cell;
-            width: 35%;
-            font-weight: 500;
+            font-weight: 600;
             color: #64748B;
-            font-size: 14px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
         .detail-value {
-            display: table-cell;
             color: #0F172A;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 16px;
         }
 
         /* Attention Box */
@@ -199,61 +202,50 @@
                 <p class="intro-text">Thank you for booking with Repairmax. We have received your repair request and it is now active in our system.</p>
 
                 <div class="tracking-card">
-                    @if($appointment->booking_number)
-                    <table width="100%" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-                        <tr>
-                            <td width="50%" align="center" style="border-right: 1px solid #BFDBFE; padding-right: 10px; vertical-align: middle;">
-                                <div class="tracking-label" style="margin-bottom: 4px;">Booking No.</div>
-                                <div style="font-size: 20px; font-weight: 700; color: #1E3A8A; letter-spacing: 0.5px; margin: 0;">{{ $appointment->tracking_code }}</div>
-                            </td>
-                            <td width="50%" align="center" style="padding-left: 10px; vertical-align: middle;">
-                                <div class="tracking-label" style="margin-bottom: 4px;">Ticket No.</div>
-                                <div style="font-size: 20px; font-weight: 700; color: #1E3A8A; letter-spacing: 0.5px; margin: 0;">{{ $appointment->booking_number }}</div>
-                            </td>
-                        </tr>
-                    </table>
-                    @else
                     <div style="text-align: center; padding: 10px 0;">
                         <div class="tracking-label" style="margin-bottom: 6px;">Booking No.</div>
-                        <div style="font-size: 22px; font-weight: 700; color: #1E3A8A; letter-spacing: 0.5px; margin: 0;">{{ $appointment->tracking_code }}</div>
+                        <div style="font-size: 22px; font-weight: 700; color: #1E3A8A; letter-spacing: 0.5px; margin: 0;">{{ $appointment->booking_number ?? 'N/A' }}</div>
                     </div>
-                    @endif
                 </div>
 
                 <div class="details-section">
                     <h3 class="details-title">Appointment Summary</h3>
                     
-                    <div class="detail-row">
-                        <div class="detail-label">Device Brand</div>
-                        <div class="detail-value">{{ $appointment->device_brand }}</div>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <div class="detail-label">Device Model</div>
-                        <div class="detail-value">{{ $appointment->device_model }}</div>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <div class="detail-label">Service Type</div>
-                        <div class="detail-value">{{ $appointment->fault_category }}</div>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <div class="detail-label">Preferred Date</div>
-                        <div class="detail-value">{{ date('l, F j, Y', strtotime($appointment->pref_date)) }}</div>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <div class="detail-label">Preferred Time</div>
-                        <div class="detail-value">{{ date('h:i A', strtotime($appointment->pref_time)) }}</div>
-                    </div>
-
-                    <div class="detail-row">
-                        <div class="detail-label">Service Method</div>
-                        <div class="detail-value">
-                            {{ str_contains($appointment->description, 'Home Pickup & Return') ? 'Home Pickup & Return' : 'Drop-off at Shop' }}
-                        </div>
-                    </div>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td width="48%" style="vertical-align: top;">
+                                <div class="detail-card">
+                                    <div class="detail-label">Device Brand</div>
+                                    <div class="detail-value">{{ $appointment->device_brand }}</div>
+                                </div>
+                                <div class="detail-card">
+                                    <div class="detail-label">Device Model</div>
+                                    <div class="detail-value">{{ $appointment->device_model }}</div>
+                                </div>
+                                <div class="detail-card">
+                                    <div class="detail-label">Service Type</div>
+                                    <div class="detail-value">{{ $appointment->fault_category }}</div>
+                                </div>
+                            </td>
+                            <td width="4%"></td>
+                            <td width="48%" style="vertical-align: top;">
+                                <div class="detail-card">
+                                    <div class="detail-label">Preferred Date</div>
+                                    <div class="detail-value">{{ date('l, F j, Y', strtotime($appointment->pref_date)) }}</div>
+                                </div>
+                                <div class="detail-card">
+                                    <div class="detail-label">Preferred Time</div>
+                                    <div class="detail-value">{{ date('h:i A', strtotime($appointment->pref_time)) }}</div>
+                                </div>
+                                <div class="detail-card">
+                                    <div class="detail-label">Service Method</div>
+                                    <div class="detail-value">
+                                        {{ str_contains($appointment->description, 'Home Pickup & Return') ? 'Home Pickup & Return' : 'Drop-off at Shop' }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div class="attention-box">
