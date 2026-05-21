@@ -2,7 +2,7 @@
 
     <!-- ===== INFO MODAL ===== -->
     <div x-show="infoModal"
-        class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
+        class="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
         x-cloak
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0"
@@ -24,7 +24,7 @@
                     class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
                     <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
-                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
                     <span class="material-symbols-outlined text-[32px] leading-none">info</span>
                 </div>
                 <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Repair Guidelines</h3>
@@ -66,7 +66,7 @@
 
     <!-- ===== LIVE AVAILABILITY CALENDAR MODAL ===== -->
     <div x-show="calendarModal"
-        class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
+        class="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
         x-cloak
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0"
@@ -90,7 +90,7 @@
                     class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
                     <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
-                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
                     <span class="material-symbols-outlined text-[32px] leading-none">calendar_month</span>
                 </div>
                 <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Live Availability Calendar</h3>
@@ -138,7 +138,7 @@
                             <tr>
                                 <th class="w-32 pb-4 pr-4 text-left text-xs font-black text-gray-400 uppercase tracking-widest">Time</th>
                                 @foreach($available_days as $day)
-                                <th class="pb-4 px-2 text-center min-w-[110px]">
+                                <th class="pb-4 px-2 text-center min-w-27.5">
                                     <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest">{{ $day['month'] }}</div>
                                     <div class="text-2xl font-black text-gray-900 leading-tight">{{ $day['date'] }}</div>
                                     <div class="text-[11px] font-bold text-gray-500">{{ $day['day'] }}</div>
@@ -202,7 +202,7 @@
 
 <!-- ===== REVIEW DETAILS MODAL ===== -->
 <div x-show="reviewModal"
-    class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
+    class="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-gray-900/60 backdrop-blur-md"
     x-cloak
     x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="opacity-0"
@@ -225,7 +225,7 @@
                 class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
                 <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
             </button>
-            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-4 shadow-sm border border-blue-100/50">
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-4 shadow-sm border border-blue-100/50">
                 <span class="material-symbols-outlined text-[32px] leading-none">rate_review</span>
             </div>
             <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Review Details</h3>
@@ -241,7 +241,7 @@
             </div>
 
             <!-- Personal details section -->
-            <div class="bg-gray-50 rounded-[1.5rem] p-5 border border-gray-100">
+            <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100">
                 <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
                     <span class="material-symbols-outlined text-[16px]">person</span> Personal Details
                 </h4>
@@ -262,7 +262,7 @@
             </div>
 
             <!-- Device & service details section -->
-            <div class="bg-gray-50 rounded-[1.5rem] p-5 border border-gray-100">
+            <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100">
                 <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
                     <span class="material-symbols-outlined text-[16px]">devices</span> Device & Service
                 </h4>
@@ -295,7 +295,7 @@
             </div>
 
             <!-- Method and Address section -->
-            <div class="bg-gray-50 rounded-[1.5rem] p-5 border border-gray-100">
+            <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100">
                 <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
                     <span class="material-symbols-outlined text-[16px]">local_shipping</span> Service Method & Schedule
                 </h4>
@@ -328,7 +328,7 @@
             </div>
 
             <!-- Financial Overview section -->
-            <div class="bg-blue-50/40 rounded-[1.5rem] p-5 border border-blue-100/80">
+            <div class="bg-blue-50/40 rounded-3xl p-5 border border-blue-100/80">
                 <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-4 flex items-center gap-1.5">
                     <span class="material-symbols-outlined text-[16px]">payments</span> Financial Overview
                 </h4>
@@ -417,7 +417,7 @@
     <div class="flex items-center gap-3">
         <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Book a Repair</h1>
         <button type="button" @click="infoModal = true"
-            class="p-0 bg-transparent text-gray-300 hover:text-blue-600 transition-all transform hover:scale-110 active:scale-95 outline-none ring-0 focus:ring-0 focus:outline-none flex items-center justify-center -translate-y-[4px]"
+            class="p-0 bg-transparent text-gray-300 hover:text-blue-600 transition-all transform hover:scale-110 active:scale-95 outline-none ring-0 focus:ring-0 focus:outline-none flex items-center justify-center -translate-y-1"
             title="View Guidelines">
             <span class="material-symbols-outlined text-[28px] leading-none">info</span>
         </button>
@@ -484,14 +484,8 @@
             </p>
         </div>
         <!-- Estimated Price -->
-        <div class="rounded-xl p-3 border
-                @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first())
-                    bg-blue-50 border-blue-100
-                @else
-                    bg-gray-50 border-gray-100
-                @endif">
-            <p class="text-[10px] font-black uppercase tracking-wider mb-1
-                    @if($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first()) text-blue-400 @else text-gray-400 @endif">Est. Price</p>
+        <div class="rounded-xl p-3 border {{ ($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first()) ? 'bg-blue-50 border-blue-100' : 'bg-gray-50 border-gray-100' }}">
+            <p class="text-[10px] font-black uppercase tracking-wider mb-1 {{ ($fault_category && $fault_category !== 'Other' && \App\Models\FaultType::where('name', $fault_category)->first()) ? 'text-blue-400' : 'text-gray-400' }}">Est. Price</p>
             @php
             $selectedFault = ($fault_category && $fault_category !== 'Other') ? \App\Models\FaultType::where('name', $fault_category)->first() : null;
             $summaryPrice = $selectedFault ? $selectedFault->base_price : null;
@@ -525,7 +519,7 @@
             <!-- Personal Details -->
             <section>
                 <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-6 flex items-center gap-2.5">
-                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-[1px]">person</span>
+                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-px">person</span>
                     <span class="leading-none">Personal Details</span>
                 </h3>
                 
@@ -556,7 +550,7 @@
             <!-- Device Information -->
             <section>
                 <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-6 flex items-center gap-2.5">
-                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-[1px]">devices</span>
+                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-px">devices</span>
                     <span class="leading-none">Device Information</span>
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -656,7 +650,7 @@
             <!-- Issue Description -->
             <section>
                 <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-6 flex items-center gap-2.5">
-                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-[1px]">description</span>
+                    <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-px">description</span>
                     <span class="leading-none">Issue Description</span>
                 </h3>
                 <div class="mb-8">
@@ -801,7 +795,7 @@
             <section>
                 <div class="flex items-center justify-between gap-3 border-b border-gray-100 pb-3 mb-6">
                     <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2.5">
-                        <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-[1px]">calendar_month</span>
+                        <span class="material-symbols-outlined text-[20px] leading-none text-blue-500 bg-blue-50 p-1.5 rounded-xl shrink-0 transform translate-y-px">calendar_month</span>
                         <span class="leading-none">{{ $pickup_option === 'Pickup' ? 'Schedule Pickup' : 'Schedule Drop-off' }}</span>
                     </h3>
             <button type="button" @click="calendarModal = true"
