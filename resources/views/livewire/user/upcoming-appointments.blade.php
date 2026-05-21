@@ -18,6 +18,13 @@
     </div>
     @endif
 
+    @if (session()->has('error'))
+    <div class="mb-6 p-4 bg-red-50 text-red-700 rounded-xl border border-red-100 flex items-center gap-2">
+        <span class="material-symbols-outlined">error</span>
+        {{ session('error') }}
+    </div>
+    @endif
+
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
         @forelse($appointments as $app)
@@ -80,6 +87,29 @@
                     </div>
                 </div>
 
+                <!-- Financial Overview -->
+                <div class="mt-6 bg-white p-4 rounded-xl border border-brand-200 shadow-sm">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Pricing Breakdown</p>
+                    <div class="space-y-2.5">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Base Service Price</span>
+                            <span class="text-sm font-bold text-gray-900">₱{{ number_format($app->quote - ($app->additional_fee ?? 0), 2) }}</span>
+                        </div>
+                        @if($app->additional_fee > 0)
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Service Method ({{ $app->service_method ?? 'N/A' }})</span>
+                            <span class="text-sm font-bold text-gray-900">₱{{ number_format($app->additional_fee ?? 0, 2) }}</span>
+                        </div>
+                        @endif
+                        <div class="border-t border-brand-200 pt-2.5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-bold text-gray-900">Estimated Total</span>
+                                <span class="text-base font-extrabold text-brand-600">₱{{ number_format($app->quote ?? 0, 2) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mt-6 flex justify-end gap-3">
                     @if($app->status == 'Pending')
                     <button
@@ -89,17 +119,6 @@
                         Cancel
                     </button>
                     @endif
-                    <button
-                        wire:click="openEdit({{ $app->id }})"
-                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-brand-200 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px]">edit</span>
-                        Edit
-                    </button>
-                    <button
-                        wire:click="openReschedule({{ $app->id }})"
-                        class="px-4 py-2 text-sm font-bold text-gray-600 bg-white border border-brand-200 rounded-lg hover:bg-gray-50 transition-colors">
-                        Reschedule
-                    </button>
                     <a href="{{ route('user.booked-details', $app->id) }}"
                         class="px-4 py-2 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-lg hover:bg-blue-100 transition-colors inline-flex items-center">
                         View Details

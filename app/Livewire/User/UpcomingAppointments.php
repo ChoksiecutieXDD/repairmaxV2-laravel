@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Appointment;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Carbon\Carbon;
 
 #[Layout('layouts.user')]
 #[Title('Upcoming Appointments | Repairmax')]
@@ -119,8 +120,16 @@ class UpcomingAppointments extends Component
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Now the IDE knows $user has the 'appointments' relationship
         $appointment = $user->appointments()->findOrFail($id);
+
+        // Check if appointment is more than 1 hour in the future
+        $appointmentDateTime = Carbon::parse($appointment->pref_date . ' ' . $appointment->pref_time);
+        $hoursUntilAppointment = $appointmentDateTime->diffInHours(now(), false);
+
+        if ($hoursUntilAppointment <= 1) {
+            session()->flash('error', 'Appointments can only be cancelled at least 1 hour before the scheduled time.');
+            return;
+        }
 
         $appointment->update(['status' => 'Cancelled']);
 
@@ -130,74 +139,28 @@ class UpcomingAppointments extends Component
 
     public function openEdit($id)
     {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        
-        $this->selectedAppointment = $user->appointments()->findOrFail($id);
-        $this->editDeviceBrand = $this->selectedAppointment->device_brand;
-        $this->editDeviceModel = $this->selectedAppointment->device_model;
-        $this->editFaultCategory = $this->selectedAppointment->fault_category;
-        $this->editDescription = $this->selectedAppointment->description;
-        $this->showEditModal = true;
+        $this->dispatch('notify', message: 'Appointments cannot be edited after booking. Please cancel and create a new appointment if needed.', type: 'error');
+        return;
     }
 
     public function saveEdit()
     {
-        if (!$this->selectedAppointment || !$this->editDeviceBrand || !$this->editFaultCategory) {
-            session()->flash('error', 'Please fill in all required fields.');
-            return;
-        }
-
-        $this->selectedAppointment->update([
-            'device_brand' => $this->editDeviceBrand,
-            'device_model' => $this->editDeviceModel,
-            'fault_category' => $this->editFaultCategory,
-            'description' => $this->editDescription,
-        ]);
-
-        $this->showEditModal = false;
-        session()->flash('message', 'Appointment updated successfully.');
-        $this->dispatch('refresh-appointments');
+        // Editing is disabled - appointments are read-only after booking
+        return;
     }
 
 
 
     public function openReschedule($id)
     {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        
-        $this->selectedAppointment = $user->appointments()->findOrFail($id);
-        $this->rescheduleDate = \Carbon\Carbon::parse($this->selectedAppointment->pref_date)->format('Y-m-d');
-        $this->rescheduleTime = \Carbon\Carbon::parse($this->selectedAppointment->pref_time)->format('H:i');
-        
-        $this->calendar_week_offset = 0;
-        $this->generateAvailableDays();
-        
-        $this->selected_index = null;
-        foreach ($this->available_days as $idx => $day) {
-            if ($day['full'] === $this->rescheduleDate) {
-                $this->selected_index = $idx;
-                break;
-            }
-        }
-        
-        $this->showRescheduleModal = true;
+        $this->dispatch('notify', message: 'Appointments cannot be rescheduled after booking. Please cancel and create a new appointment if needed.', type: 'error');
+        return;
     }
 
     public function saveReschedule()
     {
-        if (!$this->selectedAppointment || !$this->rescheduleDate || !$this->rescheduleTime) {
-            session()->flash('error', 'Please select both date and time.');
-            return;
-        }
-
-        $formattedTime = date("H:i:s", strtotime($this->rescheduleTime));
-
-        $this->selectedAppointment->update([
-            'pref_date' => $this->rescheduleDate,
-            'pref_time' => $formattedTime,
-        ]);
+        // Rescheduling is disabled - appointments are read-only after booking
+        return;
 
         $this->showRescheduleModal = false;
         session()->flash('message', 'Appointment rescheduled successfully.');
