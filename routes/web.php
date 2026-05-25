@@ -48,7 +48,6 @@ use App\Livewire\Admin\MessagesSupport;
 use App\Livewire\Admin\Reports;
 use App\Livewire\Admin\ReportsAnalytics;
 use App\Livewire\Admin\Settings;
-use App\Livewire\Admin\SystemSettings as AdminSystemSettings;
 
 // Controllers
 use App\Http\Controllers\AppointmentDownloadController;
@@ -363,7 +362,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Settings
     Route::get('/settings', Settings::class)->name('settings');
-    Route::get('/system-settings', AdminSystemSettings::class)->name('system-settings');
 });
 
 

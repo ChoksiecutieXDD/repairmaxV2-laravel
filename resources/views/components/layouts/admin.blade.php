@@ -110,7 +110,7 @@
 
                 <div>
                     <h3 class="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Settings</h3>
-                    <x-sidebar.link href="/admin/settings" icon="settings" :active="request()->is('admin/settings') || request()->is('admin/system-settings')">System Settings</x-sidebar.link>
+                    <x-sidebar.link href="/admin/settings" icon="settings" :active="request()->is('admin/settings')">System Settings</x-sidebar.link>
                 </div>
             </nav>
 

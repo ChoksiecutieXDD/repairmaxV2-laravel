@@ -213,7 +213,7 @@
                 @foreach($services as $service)
                 <div class="system-health-item">
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 flex-shrink-0 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                        <div class="w-10 h-10 shrink-0 bg-white rounded-xl flex items-center justify-center shadow-sm">
                             <span class="material-symbols-outlined text-gray-400 group-hover:text-green-600 transition-colors text-[20px]">{{ $service['icon'] }}</span>
                         </div>
                         <div>

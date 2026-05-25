@@ -10,7 +10,7 @@
                 <span class="material-symbols-outlined text-[20px]">analytics</span>
                 Reports
             </a>
-            <a href="{{ route('admin.system-settings') }}" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 rounded-lg font-bold shadow-md transition-colors shrink-0">
+            <a href="{{ route('admin.settings') }}" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 rounded-lg font-bold shadow-md transition-colors shrink-0">
                 <span class="material-symbols-outlined text-[20px]">settings_suggest</span>
                 Manage All
             </a>

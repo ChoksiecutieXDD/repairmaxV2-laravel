@@ -64,4 +64,55 @@ class TicketController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Track a repair ticket (appointment) via API.
+     */
+    public function track(Request $request)
+    {
+        // Security check for n8n
+        if ($request->header('X-N8N-SECRET') !== env('N8N_WEBHOOK_SECRET', 'repairmax_secret_123')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $validated = $request->validate([
+            'booking_reference' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $ref = $validated['booking_reference'];
+        $email = $validated['email'];
+
+        $appointment = Appointment::where(function ($query) use ($ref) {
+                $query->where('tracking_code', $ref)
+                      ->orWhere('booking_number', $ref);
+            })
+            ->whereHas('user', function ($query) use ($email) {
+                $query->where('email', $email);
+            })->first();
+
+        if (!$appointment) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No active repair booking found matching reference "' . $ref . '" and email "' . $email . '".'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'booking_number' => $appointment->booking_number,
+                'tracking_code' => $appointment->tracking_code,
+                'device_brand' => $appointment->device_brand,
+                'device_model' => $appointment->device_model,
+                'fault_category' => $appointment->fault_category,
+                'description' => $appointment->description,
+                'status' => $appointment->status,
+                'pref_date' => $appointment->pref_date,
+                'pref_time' => $appointment->pref_time,
+                'final_cost' => $appointment->final_cost,
+                'created_at' => $appointment->created_at ? $appointment->created_at->toIso8601String() : null,
+            ]
+        ]);
+    }
 }
