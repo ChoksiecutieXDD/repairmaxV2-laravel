@@ -10,3 +10,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/tickets', [TicketController::class, 'store']);
+
+// N8N Integration Routes
+require base_path('routes/n8n.php');

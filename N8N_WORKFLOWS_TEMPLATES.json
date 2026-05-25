@@ -1,0 +1,253 @@
+{
+  "workflows": [
+    {
+      "name": "Chatbot Message Handler",
+      "description": "Basic webhook that receives messages and echoes them back",
+      "nodes": [
+        {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 1.1,
+          "position": [250, 300],
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "chatbot-message",
+            "authentication": "none"
+          }
+        },
+        {
+          "name": "Set Response",
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 1,
+          "position": [450, 300],
+          "parameters": {
+            "values": {
+              "string": [
+                {
+                  "name": "session_id",
+                  "value": "={{ $json.session_id }}"
+                },
+                {
+                  "name": "user_id",
+                  "value": "={{ $json.user_id }}"
+                },
+                {
+                  "name": "message",
+                  "value": "Thank you for your message: {{ $json.message }}"
+                },
+                {
+                  "name": "action",
+                  "value": "process_message"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send to Laravel",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 3.1,
+          "position": [650, 300],
+          "parameters": {
+            "url": "http://host.docker.internal:8000/api/webhooks/n8n/chatbot-response",
+            "method": "POST",
+            "contentType": "application/json",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={{ $json }}"
+          }
+        }
+      ],
+      "connections": {
+        "Webhook": {
+          "main": [[{ "node": "Set Response", "branch": 0, "type": "main" }]]
+        },
+        "Set Response": {
+          "main": [[{ "node": "Send to Laravel", "branch": 0, "type": "main" }]]
+        }
+      }
+    },
+    {
+      "name": "Repair Status Inquiry",
+      "description": "Handle repair status checking",
+      "nodes": [
+        {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 1.1,
+          "position": [250, 300],
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "repair-status-check",
+            "authentication": "none"
+          }
+        },
+        {
+          "name": "HTTP Request",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 3.1,
+          "position": [450, 300],
+          "parameters": {
+            "url": "http://host.docker.internal:8000/api/webhooks/n8n/repair-status-update",
+            "method": "POST",
+            "contentType": "application/json",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={{ {\n  repair_id: $json.repair_id,\n  user_id: $json.user_id,\n  status: \"in_progress\",\n  message: \"Your repair is being processed\"\n} }}"
+          }
+        }
+      ],
+      "connections": {
+        "Webhook": {
+          "main": [[{ "node": "HTTP Request", "branch": 0, "type": "main" }]]
+        }
+      }
+    },
+    {
+      "name": "Booking Confirmation",
+      "description": "Send booking confirmation emails and update database",
+      "nodes": [
+        {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 1.1,
+          "position": [250, 300],
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "booking-confirmation",
+            "authentication": "none"
+          }
+        },
+        {
+          "name": "Generate Code",
+          "type": "n8n-nodes-base.functionItem",
+          "typeVersion": 1,
+          "position": [450, 300],
+          "parameters": {
+            "functionCode": "return {\n  ...item.json,\n  confirmation_code: Math.random().toString(36).substring(2, 10).toUpperCase()\n}"
+          }
+        },
+        {
+          "name": "Update Laravel",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 3.1,
+          "position": [650, 300],
+          "parameters": {
+            "url": "http://host.docker.internal:8000/api/webhooks/n8n/booking-confirmation",
+            "method": "POST",
+            "contentType": "application/json",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={{ $json }}"
+          }
+        }
+      ],
+      "connections": {
+        "Webhook": {
+          "main": [[{ "node": "Generate Code", "branch": 0, "type": "main" }]]
+        },
+        "Generate Code": {
+          "main": [[{ "node": "Update Laravel", "branch": 0, "type": "main" }]]
+        }
+      }
+    }
+  ],
+  "setup_instructions": {
+    "1_access_n8n": {
+      "local": "http://localhost:5678",
+      "production": "https://repairmax.n8n.app",
+      "credentials": {
+        "email": "roxas.t.bscs@gmail.com",
+        "password": "@Roxastristan1925"
+      }
+    },
+    "2_create_workflow": [
+      "Click 'New' > 'New Workflow'",
+      "Name your workflow (e.g., 'Chatbot Message Handler')",
+      "Add a Webhook trigger node"
+    ],
+    "3_webhook_setup": {
+      "method": "POST",
+      "paths": {
+        "chatbot": "/webhook/chatbot-message",
+        "repair_status": "/webhook/repair-status-check",
+        "booking": "/webhook/booking-confirmation",
+        "appointment": "/webhook/appointment-scheduling",
+        "products": "/webhook/product-recommendations",
+        "support": "/webhook/support-ticket"
+      }
+    },
+    "4_add_processing": [
+      "Add processing nodes (Set, If, Function, etc.)",
+      "Map your data fields",
+      "Add condition logic if needed"
+    ],
+    "5_add_response": {
+      "type": "HTTP Request",
+      "method": "POST",
+      "url": "http://host.docker.internal:8000/api/webhooks/n8n/{callback_path}",
+      "body": "Send back processed data with session_id, user_id, message"
+    },
+    "6_test": [
+      "Click 'Save'",
+      "Click 'Execute Workflow'",
+      "Check Laravel logs for webhook received"
+    ],
+    "7_activate": [
+      "Go to Settings (top right)",
+      "Toggle 'Active' to enable workflow",
+      "Workflow now responds to real requests"
+    ]
+  },
+  "laravel_webhook_paths": {
+    "chatbot_response": "/api/webhooks/n8n/chatbot-response",
+    "repair_status_update": "/api/webhooks/n8n/repair-status-update",
+    "booking_confirmation": "/api/webhooks/n8n/booking-confirmation",
+    "appointment_notification": "/api/webhooks/n8n/appointment-notification",
+    "product_recommendation": "/api/webhooks/n8n/product-recommendation",
+    "support_ticket": "/api/webhooks/n8n/support-ticket",
+    "health_check": "/api/webhooks/n8n/health"
+  },
+  "example_payloads": {
+    "chatbot_request": {
+      "message": "Hello, can I book an appointment?",
+      "user_id": 1,
+      "session_id": "abc123def456"
+    },
+    "chatbot_response": {
+      "session_id": "abc123def456",
+      "user_id": 1,
+      "message": "Sure! I can help you book an appointment. What date works best for you?",
+      "action": "process_message",
+      "metadata": {
+        "intent": "booking",
+        "confidence": 0.95
+      }
+    },
+    "repair_status_request": {
+      "repair_id": 5,
+      "user_id": 1
+    },
+    "repair_status_response": {
+      "repair_id": 5,
+      "user_id": 1,
+      "status": "in_progress",
+      "message": "Your iPhone 13 repair is in progress. Expected completion: tomorrow at 3 PM"
+    },
+    "booking_confirmation_request": {
+      "appointment_id": 10,
+      "user_id": 1
+    },
+    "booking_confirmation_response": {
+      "appointment_id": 10,
+      "user_id": 1,
+      "confirmation_code": "RP2M9K7L",
+      "message": "Your appointment has been confirmed for May 26, 2026 at 2:00 PM"
+    }
+  },
+  "environment_variables": {
+    "N8N_HOST": "https://repairmax.n8n.app",
+    "N8N_WEBHOOK_URL": "https://repairmax.n8n.app",
+    "LARAVEL_WEBHOOK_URL": "http://host.docker.internal:8000"
+  }
+}
