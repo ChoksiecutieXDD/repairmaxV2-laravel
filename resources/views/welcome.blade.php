@@ -1,3 +1,4 @@
+{{-- Welcome to Repairmax Home --}}
 <x-layouts.landing title="Repairmax | Home">
 
     <section id="intro" class="relative w-full min-h-screen flex items-center overflow-hidden pt-20 pb-20">
