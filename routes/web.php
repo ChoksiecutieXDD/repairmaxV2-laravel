@@ -549,24 +549,6 @@ Route::post('/subscribe', function (Request $request) {
 require base_path('routes/chatbot.php');
 
 
-Route::get('/run-migrations', function () {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        return 'Migrations ran successfully!<br><pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>';
-    } catch (\Exception $e) {
-        return 'Error running migrations: ' . $e->getMessage();
-    }
-});
-
-Route::get('/run-seeders', function () {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
-        return 'Seeders ran successfully!<br><pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>';
-    } catch (\Exception $e) {
-        return 'Error running seeders: ' . $e->getMessage();
-    }
-});
-
 /*
 |--------------------------------------------------------------------------
 | FALLBACK ROUTE (Catch-all for 404s)
