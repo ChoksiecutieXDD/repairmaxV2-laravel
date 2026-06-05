@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Admin Dashboard | Repairmax' }}</title>
-    <link rel="icon" type="image/png" href="{{ asset('img/repair-square-icon.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('img/repair-square-icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo-r-blue.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/logo-r-blue.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -50,9 +50,10 @@
             class="fixed left-0 top-0 h-screen w-64 bg-gray-900 border-r border-gray-800 transition-transform duration-300 ease-in-out z-40 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.1)] lg:shadow-none">
 
             <div class="h-20 flex items-center justify-between px-6 bg-gray-900 border-b border-gray-800 shrink-0">
-                <a href="/" class="text-2xl font-bold text-white hover:text-gray-300 transition-colors tracking-tight flex items-center">
-                    Repairmax
-                    <span class="text-[10px] text-blue-500 font-mono ml-2 uppercase border border-blue-500 rounded px-1.5 py-0.5">Admin</span>
+                <a href="/" class="hover:opacity-80 transition-colors flex items-center gap-2">
+                    <img src="{{ asset('img/logo-r-white.png') }}" alt="Repairmax Logo" class="h-8 w-auto">
+                    <span class="font-[Montserrat] text-lg font-bold tracking-tight text-white">Repairmax</span>
+                    <span class="text-[10px] text-blue-500 font-mono uppercase border border-blue-500 rounded px-1.5 py-0.5">Admin</span>
                 </a>
 
                 <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white focus:outline-none bg-transparent border-0 p-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100">

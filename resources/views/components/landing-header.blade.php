@@ -23,9 +23,10 @@
 
         <!-- Logo Column (Left) -->
         <div class="col-span-8 lg:col-span-3 flex items-center">
-            <a href="/" id="brand-logo" class="font-[Montserrat] text-2xl md:text-3xl font-normal tracking-tight transition-colors duration-300 hover:opacity-80 text-white"
+            <a href="/" id="brand-logo" class="transition-colors duration-300 hover:opacity-80 flex items-center gap-2.5"
                 aria-label="Repairmax Home">
-                Repairmax
+                <img src="{{ asset('img/logo-r-white.png') }}" alt="Repairmax Logo" class="h-8 w-auto">
+                <span class="font-[Montserrat] text-xl font-bold tracking-tight text-white">Repairmax</span>
             </a>
         </div>
 

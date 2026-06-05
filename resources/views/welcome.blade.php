@@ -793,7 +793,7 @@
     </section>
 
     <!-- Final CTA Section (SaaS Redesign) -->
-    <section class="py-12 bg-[#020617] overflow-hidden relative">
+    <section class="pt-12 pb-16 md:pb-24 bg-[#020617] overflow-hidden relative">
         <!-- Glow Effects -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
 

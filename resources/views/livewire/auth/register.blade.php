@@ -11,14 +11,14 @@
             class="flex flex-col items-center"
             x-cloak style="display: none;">
 
-            <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
-                <span class="material-symbols-outlined text-3xl text-gray-700">check_circle</span>
+            <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
+                <span class="material-symbols-outlined text-3xl text-white">check_circle</span>
             </div>
 
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">Account created successfully</h2>
+            <h2 class="text-2xl font-bold text-white mb-2">Account created successfully</h2>
 
-            <p class="text-gray-600 mb-8 max-w-sm">
-                Welcome to Repairmax! Your account for <span class="font-medium text-gray-900">{{ $email }}</span> has been successfully created.
+            <p class="text-gray-400 mb-8 max-w-sm">
+                Welcome to Repairmax! Your account for <span class="font-medium text-white">{{ $email }}</span> has been successfully created.
             </p>
 
             <a href="/login" wire:navigate class="w-full bg-blue-600 text-white font-bold rounded-[1.25rem] px-4 py-3 hover:bg-blue-500 transition-all shadow-lg hover:-translate-y-0.5 duration-200 block text-center">
@@ -28,32 +28,32 @@
     </div>
     @else
     <div class="mb-10 text-center sm:text-left">
-        <h2 class="text-2xl font-bold text-gray-900">Create an account</h2>
-        <p class="text-gray-600 mt-2">Enter your details below to register.</p>
+        <h2 class="text-2xl font-bold text-white">Create an account</h2>
+        <p class="text-gray-400 mt-2">Enter your details below to register.</p>
     </div>
 
     <form wire:submit="register" class="space-y-6">
 
         <div class="grid grid-cols-12 gap-6">
             <div class="col-span-12 sm:col-span-6 relative">
-                <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <label for="first_name" class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
                 <input type="text" id="first_name" wire:model="first_name" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
+                    class="w-full bg-white/5 border border-white/10 text-white rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-500">
                 @error('first_name') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div class="col-span-12 sm:col-span-6 relative">
-                <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <label for="last_name" class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
                 <input type="text" id="last_name" wire:model="last_name" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
+                    class="w-full bg-white/5 border border-white/10 text-white rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-500">
                 @error('last_name') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
             </div>
         </div>
 
         <div class="relative">
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-2 mt-4">Email Address</label>
+            <label for="email" class="block text-sm font-medium text-gray-300 mb-2 mt-4">Email Address</label>
             <input type="email" id="email" wire:model="email" required
-                class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
+                class="w-full bg-white/5 border border-white/10 text-white rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-500">
             @error('email') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
         </div>
 
@@ -88,16 +88,16 @@
                 }
             }">
             <div class="flex items-center justify-between mb-2">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
             </div>
 
             <div class="relative">
                 <input :type="show ? 'text' : 'password'" id="password" name="password" autocomplete="new-password"
                     wire:model="password" @input="pwd = $event.target.value" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
+                    class="w-full bg-white/5 border border-white/10 text-white rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-500">
 
                 <button type="button" @click="show = !show"
-                    class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
+                    class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-white cursor-pointer">
                     <span class="material-symbols-outlined select-none text-2xl" x-text="show ? 'visibility' : 'visibility_off'">
                         visibility_off
                     </span>
@@ -105,7 +105,7 @@
             </div>
             @error('password') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
 
-            <div class="mt-4 text-sm text-gray-500"
+            <div class="mt-4 text-sm text-gray-400"
                 x-cloak
                 x-show="pwd.length > 0"
                 x-transition:enter="transition ease-out duration-300"
@@ -118,44 +118,44 @@
 
                 <div class="mb-4">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="font-medium text-gray-700">Password Strength:</span>
+                        <span class="font-medium text-gray-300">Password Strength:</span>
                         <span class="font-bold transition-colors duration-300"
                             :class="{ 'text-red-500': score <= 1, 'text-yellow-600': score > 1 && score <= 3, 'text-green-500': score === 4 }"
                             x-text="strengthLabel"></span>
                     </div>
-                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                         <div class="h-full transition-all duration-300 rounded-full" :class="meterColor" :style="`width: ${meterWidth}`"></div>
                     </div>
                 </div>
 
-                <p class="mb-2 font-medium text-gray-600">Requirements:</p>
-                <ul class="space-y-1.5">
-                    <li class="flex items-center gap-2 transition-colors duration-300" :class="pwd.length >= 8 ? 'text-green-600' : 'text-gray-500'">
-                        <span class="material-symbols-outlined text-[18px] select-none" x-text="pwd.length >= 8 ? 'check_circle' : 'radio_button_unchecked'">
+                <p class="mb-3 font-medium text-gray-400 text-xs">Requirements:</p>
+                <ul class="grid grid-cols-2 gap-x-4 gap-y-2">
+                    <li class="flex items-center gap-1.5 transition-colors duration-300 text-xs" :class="pwd.length >= 8 ? 'text-green-500' : 'text-gray-500'">
+                        <span class="material-symbols-outlined text-[16px] select-none shrink-0" x-text="pwd.length >= 8 ? 'check_circle' : 'radio_button_unchecked'">
                             radio_button_unchecked
                         </span>
-                        At least 8 characters
+                        <span class="translate-y-[1px]">At least 8 characters</span>
                     </li>
 
-                    <li class="flex items-center gap-2 transition-colors duration-300" :class="(/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) ? 'text-green-600' : 'text-gray-500'">
-                        <span class="material-symbols-outlined text-[18px] select-none" x-text="(/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) ? 'check_circle' : 'radio_button_unchecked'">
+                    <li class="flex items-center gap-1.5 transition-colors duration-300 text-xs" :class="(/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) ? 'text-green-500' : 'text-gray-500'">
+                        <span class="material-symbols-outlined text-[16px] select-none shrink-0" x-text="(/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) ? 'check_circle' : 'radio_button_unchecked'">
                             radio_button_unchecked
                         </span>
-                        Upper and lowercase letters
+                        <span class="translate-y-[1px]">Upper & lowercase</span>
                     </li>
 
-                    <li class="flex items-center gap-2 transition-colors duration-300" :class="/[0-9]/.test(pwd) ? 'text-green-600' : 'text-gray-500'">
-                        <span class="material-symbols-outlined text-[18px] select-none" x-text="/[0-9]/.test(pwd) ? 'check_circle' : 'radio_button_unchecked'">
+                    <li class="flex items-center gap-1.5 transition-colors duration-300 text-xs" :class="/[0-9]/.test(pwd) ? 'text-green-500' : 'text-gray-500'">
+                        <span class="material-symbols-outlined text-[16px] select-none shrink-0" x-text="/[0-9]/.test(pwd) ? 'check_circle' : 'radio_button_unchecked'">
                             radio_button_unchecked
                         </span>
-                        At least one number
+                        <span class="translate-y-[1px]">At least one number</span>
                     </li>
 
-                    <li class="flex items-center gap-2 transition-colors duration-300" :class="/[\W_]/.test(pwd) ? 'text-green-600' : 'text-gray-500'">
-                        <span class="material-symbols-outlined text-[18px] select-none" x-text="/[\W_]/.test(pwd) ? 'check_circle' : 'radio_button_unchecked'">
+                    <li class="flex items-center gap-1.5 transition-colors duration-300 text-xs" :class="/[\W_]/.test(pwd) ? 'text-green-500' : 'text-gray-500'">
+                        <span class="material-symbols-outlined text-[16px] select-none shrink-0" x-text="/[\W_]/.test(pwd) ? 'check_circle' : 'radio_button_unchecked'">
                             radio_button_unchecked
                         </span>
-                        At least one symbol (e.g., !@#$%)
+                        <span class="translate-y-[1px]">At least one symbol</span>
                     </li>
                 </ul>
             </div>
@@ -174,9 +174,9 @@
         </div>
     </form>
 
-    <div class="mt-8 text-center text-sm text-gray-600">
+    <div class="mt-8 text-center text-sm text-gray-400">
         Already have an account?
-        <a href="/login" wire:navigate class="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
+        <a href="/login" wire:navigate class="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
             Log in here
         </a>
     </div>

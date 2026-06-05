@@ -52,7 +52,7 @@
         </section>
 
         <!-- Service Detail Content -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 fade-in-element">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 fade-in-element">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
                 
                 <!-- Left: Interactive Image Block & Price/Actions -->
@@ -164,7 +164,7 @@
 
         <!-- Related Services Section -->
         @if($relatedServices && $relatedServices->count() > 0)
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 mb-20 fade-in-element">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 mb-0 fade-in-element">
             <h3 class="text-2xl font-black text-white tracking-tight mb-8">
                 You Might Also Be Interested In
             </h3>

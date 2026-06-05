@@ -10,10 +10,11 @@
     class="fixed top-0 w-full z-50 transition-all duration-300 bg-[#020617]/90 backdrop-blur-md border-b border-white/5 shadow-sm">
     <nav aria-label="Help Navigation" class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-6 items-center h-20">
 
-        <div class="col-span-8 lg:col-span-3">
-            <a href="/" id="brand-logo" class="font-[Montserrat] text-2xl md:text-3xl font-normal tracking-tight text-white transition-colors duration-300 hover:opacity-80"
+        <div class="col-span-8 lg:col-span-3 flex items-center">
+            <a href="/" id="brand-logo" class="transition-colors duration-300 hover:opacity-80 flex items-center gap-2.5"
                 aria-label="Repairmax Home">
-                Repairmax
+                <img src="{{ asset('img/logo-r-white.png') }}" alt="Repairmax Logo" class="h-8 w-auto">
+                <span class="font-[Montserrat] text-xl font-bold tracking-tight text-white">Repairmax</span>
             </a>
         </div>
 

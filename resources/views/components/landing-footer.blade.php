@@ -3,8 +3,9 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
             <div class="col-span-2 lg:col-span-1 text-center md:text-left">
-                <a href="/" class="font-[Montserrat] inline-block text-2xl font-normal text-gray-100 tracking-tight mb-4">
-                    Repairmax
+                <a href="/" class="transition-colors duration-300 hover:opacity-80 flex items-center justify-center md:justify-start gap-2.5 mb-4" aria-label="Repairmax Home">
+                    <img src="{{ asset('img/logo-r-white.png') }}" alt="Repairmax Logo" class="h-8 w-auto">
+                    <span class="font-[Montserrat] text-2xl font-bold tracking-tight text-white">Repairmax</span>
                 </a>
                 <p class="text-sm leading-relaxed mb-6">
                     Fast, transparent, and seamless. We are bringing device repair into the 21st century with our digital-first platform.

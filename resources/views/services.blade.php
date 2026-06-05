@@ -98,7 +98,7 @@
         </section>
 
         <!-- Services Grid -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 fade-in-element">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-0 fade-in-element">
             <!-- Loading/State Wrapper -->
             <div class="relative min-h-100">
                 

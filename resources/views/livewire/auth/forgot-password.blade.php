@@ -9,12 +9,12 @@
             x-cloak style="display: none;">
 
             <div class="flex flex-col items-center sm:items-start text-center sm:text-left mb-10">
-                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
-                    <span class="material-symbols-outlined text-3xl text-gray-700">mail</span>
+                <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
+                    <span class="material-symbols-outlined text-3xl text-white">mail</span>
                 </div>
-                <h2 class="text-2xl font-semibold text-gray-900">Check your email</h2>
-                <p class="text-gray-600 mt-2">
-                    We've sent a password reset link to <span class="font-medium text-gray-900">{{ $email }}</span>.
+                <h2 class="text-2xl font-semibold text-white">Check your email</h2>
+                <p class="text-gray-400 mt-2">
+                    We've sent a password reset link to <span class="font-medium text-white">{{ $email }}</span>.
                 </p>
             </div>
 
@@ -28,21 +28,21 @@
     </div>
     @else
     <div class="mb-10 text-center sm:text-left">
-        <h2 class="text-2xl font-bold text-gray-900">Forgot password?</h2>
-        <p class="text-gray-600 mt-2">Enter your email and we'll send you a link to reset your password.</p>
+        <h2 class="text-2xl font-bold text-white">Forgot password?</h2>
+        <p class="text-gray-400 mt-2">Enter your email and we'll send you a link to reset your password.</p>
     </div>
 
     @if($errorMessage)
-    <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-[1.25rem] text-sm">
+    <div class="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-[1.25rem] text-sm">
         {{ $errorMessage }}
     </div>
     @endif
 
     <form wire:submit="sendResetLink" class="space-y-6">
         <div class="relative">
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
             <input type="email" id="email" wire:model="email" required
-                class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
+                class="w-full bg-white/5 border border-white/10 text-white rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-500">
             @error('email') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
         </div>
 
@@ -56,9 +56,9 @@
         </div>
     </form>
 
-    <div class="mt-8 text-center text-sm text-gray-600">
+    <div class="mt-8 text-center text-sm text-gray-400">
         Remembered your password?
-        <a href="/login" wire:navigate class="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
+        <a href="/login" wire:navigate class="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
             Log in here
         </a>
     </div>

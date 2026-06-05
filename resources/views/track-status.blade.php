@@ -1,8 +1,8 @@
 <x-layouts.landing title="Track Status | Repairmax">
     <main class="relative pt-32 lg:pt-40 pb-20 md:pb-28 min-h-[90vh] flex flex-col justify-center overflow-hidden">
         <!-- Glow Effects -->
-        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/4 left-1/4 w-125 h-125 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 fade-in-element">
@@ -15,7 +15,7 @@
         </section>
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full fade-in-element mb-16">
-            <div class="bg-white/[0.03] backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
+            <div class="bg-white/3 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
                 <form action="/track-status" method="POST" class="space-y-8">
                     @csrf
                     <div>
@@ -65,7 +65,7 @@
 
         <!-- Additional Help Section -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="bg-white/[0.03] backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl">
+            <div class="bg-white/3 backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl">
                 <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
                     <span class="material-symbols-outlined text-gray-400">help</span>
                     Need Help?

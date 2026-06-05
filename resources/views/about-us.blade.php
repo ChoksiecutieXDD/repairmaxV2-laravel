@@ -142,34 +142,34 @@
                 <div class="text-center lg:text-left">
                     <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Our Technical Standards</h3>
                     <div class="space-y-10">
-                        <div class="flex flex-col items-center text-center lg:items-start lg:text-left gap-4">
-                            <div class="bg-white/5 p-3 rounded-2xl text-white shadow-sm border border-white/5">
-                                <span class="material-symbols-outlined text-3xl">precision_manufacturing</span>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-4 text-left">
+                                <div class="w-12 h-12 bg-white/5 text-white border border-white/5 rounded-xl flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-2xl leading-none">precision_manufacturing</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white translate-y-[4px]">Ultrasonic Cleaning</h4>
                             </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-white mb-2">Ultrasonic Cleaning</h4>
-                                <p class="text-gray-400">For water-damaged units, we utilize specialized ultrasonic tanks to strip corrosion from hidden logic board layers.</p>
-                            </div>
+                            <p class="text-gray-400 pl-16 text-left">For water-damaged units, we utilize specialized ultrasonic tanks to strip corrosion from hidden logic board layers.</p>
                         </div>
 
-                        <div class="flex flex-col items-center text-center lg:items-start lg:text-left gap-4">
-                            <div class="bg-white/5 p-3 rounded-2xl text-white shadow-sm border border-white/5">
-                                <span class="material-symbols-outlined text-3xl">fact_check</span>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-4 text-left">
+                                <div class="w-12 h-12 bg-white/5 text-white border border-white/5 rounded-xl flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-2xl leading-none">fact_check</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white translate-y-[4px]">24-Point Inspection</h4>
                             </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-white mb-2">24-Point Inspection</h4>
-                                <p class="text-gray-400">Every device undergoes automated hardware testing post-repair to ensure FaceID, haptics, and sensors are 100% functional.</p>
-                            </div>
+                            <p class="text-gray-400 pl-16 text-left">Every device undergoes automated hardware testing post-repair to ensure FaceID, haptics, and sensors are 100% functional.</p>
                         </div>
 
-                        <div class="flex flex-col items-center text-center lg:items-start lg:text-left gap-4">
-                            <div class="bg-white/5 p-3 rounded-2xl text-white shadow-sm border border-white/5">
-                                <span class="material-symbols-outlined text-3xl">history_edu</span>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-4 text-left">
+                                <div class="w-12 h-12 bg-white/5 text-white border border-white/5 rounded-xl flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-2xl leading-none">history_edu</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white translate-y-[4px]">Digital Service Records</h4>
                             </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-white mb-2">Digital Service Records</h4>
-                                <p class="text-gray-400">Your repair history is logged securely, providing a digital paper trail for future resale or warranty claims.</p>
-                            </div>
+                            <p class="text-gray-400 pl-16 text-left">Your repair history is logged securely, providing a digital paper trail for future resale or warranty claims.</p>
                         </div>
                     </div>
                 </div>
