@@ -1,229 +1,367 @@
 {{-- Welcome to Repairmax Home --}}
 <x-layouts.landing title="Repairmax | Home">
 
-    <section id="intro" class="relative w-full min-h-screen flex items-center overflow-hidden pt-20 pb-20">
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
-            <source src="{{ asset('video/commercial-repairing-scene.mp4') }}" type="video/mp4">
-        </video>
-
-        <div class="absolute inset-0 bg-gray-900/85 z-10"></div>
+    <section id="intro" class="relative w-full min-h-screen flex items-center overflow-hidden pt-32 lg:pt-36 pb-20 bg-[#020617]">
+        <!-- Premium Radial Glow Effects -->
+        <div class="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-900/15 rounded-full blur-[130px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="relative z-20 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="max-w-4xl mx-auto fade-in-element text-center">
-                <h2 class="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tighter drop-shadow-2xl leading-[1.1]">
-                    Next-Generation<br>Device Repair
-                </h2>
-                <p class="text-xl md:text-2xl text-gray-200 mb-12 font-medium leading-relaxed max-w-2xl mx-auto">
-                    Fast, transparent, and seamless. We are bringing device repair into the 21st century.
-                </p>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column: Content and CTA -->
+                <div class="lg:col-span-6 text-center lg:text-left space-y-8 fade-in-element">
 
-                <div class="flex flex-col items-center gap-4 w-full max-w-[420px] mx-auto">
-                    <!-- Primary CTA -->
-                    <a href="/booking" class="w-full inline-flex items-center justify-center px-6 py-3.5 text-base font-bold text-gray-900 bg-white hover:bg-gray-200 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:-translate-y-0.5 active:scale-98 shrink-0">
-                        <span class="material-symbols-outlined mr-2">bolt</span>
-                        Start Your Repair
-                    </a>
 
-                    <!-- Subdued Separator -->
-                    <div class="w-full flex items-center justify-center gap-3 py-0.5">
-                        <div class="h-px bg-white/10 flex-1"></div>
-                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none">or subscribe</span>
-                        <div class="h-px bg-white/10 flex-1"></div>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-semibold text-white tracking-tighter drop-shadow-2xl leading-[1.1] text-balance">
+                        We Fix Devices.<br>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400">
+                            You Stay Connected.
+                        </span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-400 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Professional repairs with premium parts and certified technicians. Fast, reliable, and hassle-free.
+                    </p>
+
+                    <!-- Key features list -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-3 text-sm text-gray-300 font-semibold pt-2">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-blue-400 text-lg">shield</span>
+                            <span>95-Day Warranty</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-blue-400 text-lg">bolt</span>
+                            <span>Fast Turnaround</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-blue-400 text-lg">verified_user</span>
+                            <span>Certified Experts</span>
+                        </div>
                     </div>
 
-                    <!-- Subscription Form -->
-                    <form action="/subscribe" method="POST" class="flex flex-col sm:flex-row gap-2.5 w-full items-stretch">
-                        @csrf
-                        <input type="email" name="email" placeholder="Enter your email" required
-                            class="flex-1 px-5 py-3 bg-white/10 text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 border border-white/20 text-sm placeholder-gray-400 transition-all backdrop-blur-md">
-                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all duration-300 active:scale-95 text-sm shrink-0 shadow-lg">
-                            Subscribe
-                        </button>
-                    </form>
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="/booking" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-2xl transition-all duration-300 shadow-lg active:scale-95 shrink-0">
+                            <span class="material-symbols-outlined mr-2">calendar_month</span>
+                            Book Your Repair
+                        </a>
+                        <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-2xl transition-all duration-300 active:scale-95 shrink-0">
+                            Create an Account
+                            <span class="material-symbols-outlined ml-2 text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
 
-                    @if (session('subscribe_success'))
-                        <div class="w-full p-2.5 bg-white/10 border border-white/20 text-green-400 rounded-xl text-xs text-center backdrop-blur-md">
-                            {{ session('subscribe_success') }}
+                <!-- Right Column: Status Tracker Mockup Card with Diagnostic Ring Graphic -->
+                <div class="lg:col-span-6 flex justify-center lg:justify-end fade-in-element">
+                    <div class="w-full max-w-[560px] bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-md shadow-2xl relative overflow-hidden">
+                        
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between gap-4 pb-6 border-b border-white/5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/15 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-xl">assignment_turned_in</span>
+                                </div>
+                                <div class="text-left">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sm font-extrabold text-white">Repair #RMX-78291</span>
+                                        <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                            In Progress
+                                        </span>
+                                    </div>
+                                    <p class="text-[10px] text-gray-500 font-medium mt-0.5 mb-0">Estimated completion: May 24, 2024</p>
+                                </div>
+                            </div>
                         </div>
-                    @endif
 
-                    <p class="text-xs text-gray-400 text-center tracking-wide font-medium">Want to know more? Head over to your email</p>
+                        <!-- Card Body -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-6">
+                            
+                            <!-- Diagnostic Ring Graphic (Left) -->
+                            <div class="md:col-span-5 flex flex-col items-center gap-4 py-2">
+                                <div class="relative w-40 h-40 flex items-center justify-center">
+                                    <!-- Animated dashed circle -->
+                                    <div class="absolute inset-0 rounded-full border border-dashed border-blue-500/25 animate-[spin_60s_linear_infinite]"></div>
+                                    <!-- Concentric solid circles -->
+                                    <div class="absolute inset-4 rounded-full border border-blue-500/15"></div>
+                                    <div class="absolute inset-8 rounded-full border border-blue-500/25 flex items-center justify-center">
+                                        <!-- Wrench wrapper -->
+                                        <div class="w-16 h-16 rounded-full bg-[#020617] border border-blue-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.25)]">
+                                            <span class="material-symbols-outlined text-2xl text-blue-400">handyman</span>
+                                        </div>
+                                    </div>
+                                    <!-- Orbiting glow dot -->
+                                    <div class="absolute w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]" style="top: 14px; right: 28px;"></div>
+                                    <div class="absolute w-1.5 h-1.5 rounded-full bg-blue-500/50" style="bottom: 24px; left: 18px;"></div>
+                                </div>
+                                <div class="text-center">
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Overall Progress</span>
+                                    <p class="text-3xl font-black text-white mt-1 mb-0">60%</p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline tracking (Right) -->
+                            <div class="md:col-span-7 space-y-4 text-left relative pl-1">
+                                <!-- Timeline line connector -->
+                                <div class="absolute left-[13px] top-4 bottom-4 w-px bg-white/10"></div>
+
+                                <!-- Timeline Step 1 -->
+                                <div class="flex items-start gap-4 relative z-10">
+                                    <span class="w-6 h-6 rounded-full bg-blue-600 border border-blue-500 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_10px_rgba(37,99,235,0.3)]">
+                                        <span class="material-symbols-outlined text-[14px] text-white font-black">check</span>
+                                    </span>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs font-extrabold text-white leading-none">Device Received</h4>
+                                        <p class="text-[10px] text-gray-400 font-medium">May 20, 2024 at 10:30 AM</p>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Step 2 -->
+                                <div class="flex items-start gap-4 relative z-10">
+                                    <span class="w-6 h-6 rounded-full bg-blue-600 border border-blue-500 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_10px_rgba(37,99,235,0.3)]">
+                                        <span class="material-symbols-outlined text-[14px] text-white font-black">check</span>
+                                    </span>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs font-extrabold text-white leading-none">Diagnostic Completed</h4>
+                                        <p class="text-[10px] text-gray-400 font-medium">May 20, 2024 at 11:15 AM</p>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Step 3 (Active) -->
+                                <div class="flex items-start gap-4 relative z-10">
+                                    <span class="w-6 h-6 rounded-full bg-blue-600/20 border border-blue-500 flex items-center justify-center shrink-0 mt-0.5 animate-pulse">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+                                    </span>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs font-black text-blue-400 leading-none">Repair in Progress</h4>
+                                        <p class="text-[10px] text-blue-400 font-bold">May 21, 2024 at 09:45 AM</p>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Step 4 -->
+                                <div class="flex items-start gap-4 relative z-10 opacity-30">
+                                    <span class="w-6 h-6 rounded-full bg-transparent border border-white/20 flex items-center justify-center shrink-0 mt-0.5"></span>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs font-bold text-white leading-none">Quality Check</h4>
+                                        <p class="text-[10px] text-gray-400 font-medium">Pending</p>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Step 5 -->
+                                <div class="flex items-start gap-4 relative z-10 opacity-30">
+                                    <span class="w-6 h-6 rounded-full bg-transparent border border-white/20 flex items-center justify-center shrink-0 mt-0.5"></span>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs font-bold text-white leading-none">Ready for Pickup</h4>
+                                        <p class="text-[10px] text-gray-400 font-medium">Pending</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Features Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 sm:p-8 bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-[2.5rem] mt-16 max-w-7xl mx-auto fade-in-element">
+                <!-- Quality Parts -->
+                <div class="flex items-center gap-4 text-left p-2">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/15">
+                        <span class="material-symbols-outlined text-2xl">shield</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white mb-0.5">Quality Parts</h4>
+                        <p class="text-xs text-gray-400 leading-normal mb-0">We use only high-quality OEM and premium parts.</p>
+                    </div>
+                </div>
+
+                <!-- Lightning Fast -->
+                <div class="flex items-center gap-4 text-left p-2">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/15">
+                        <span class="material-symbols-outlined text-2xl">bolt</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white mb-0.5">Lightning Fast</h4>
+                        <p class="text-xs text-gray-400 leading-normal mb-0">Most repairs completed within 24-48 hours.</p>
+                    </div>
+                </div>
+
+                <!-- Transparent Pricing -->
+                <div class="flex items-center gap-4 text-left p-2">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/15">
+                        <span class="material-symbols-outlined text-2xl">sell</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white mb-0.5">Transparent Pricing</h4>
+                        <p class="text-xs text-gray-400 leading-normal mb-0">No hidden fees. What we quote is what you pay.</p>
+                    </div>
+                </div>
+
+                <!-- Expert Support -->
+                <div class="flex items-center gap-4 text-left p-2">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/15">
+                        <span class="material-symbols-outlined text-2xl">contact_support</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white mb-0.5">Expert Support</h4>
+                        <p class="text-xs text-gray-400 leading-normal mb-0">Our team is here to help you every step of the way.</p>
+                    </div>
                 </div>
             </div>
 
-            </div>
         </div>
     </section>
 
-    <section class="py-10 md:py-16 bg-gray-900 border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-gray-700 fade-in-element">
-                <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center justify-center pt-6 sm:pt-0">
-                    <span class="material-symbols-outlined text-4xl text-gray-300 mb-3">settings_suggest</span>
-                    <span class="text-gray-100 font-bold text-lg mb-1">OEM Quality Parts</span>
-                    <p class="text-gray-400 text-xs sm:text-sm">Factory-grade components only</p>
-                </div>
-                <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center justify-center pt-6 sm:pt-0">
-                    <span class="material-symbols-outlined text-4xl text-gray-300 mb-3">smart_toy</span>
-                    <span class="text-gray-100 font-bold text-lg mb-1">24/7 AI Booking</span>
-                    <p class="text-gray-400 text-xs sm:text-sm">Schedule on your own time</p>
-                </div>
-                <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center justify-center pt-6 sm:pt-0">
-                    <span class="material-symbols-outlined text-4xl text-gray-300 mb-3">gpp_good</span>
-                    <span class="text-gray-100 font-bold text-lg mb-1">100% Secure Data</span>
-                    <p class="text-gray-400 text-xs sm:text-sm">Strict privacy protocols</p>
-                </div>
-                <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center justify-center pt-6 sm:pt-0">
-                    <span class="material-symbols-outlined text-4xl text-gray-300 mb-3">workspace_premium</span>
-                    <span class="text-gray-100 font-bold text-lg mb-1">90-Day Guarantee</span>
-                    <p class="text-gray-400 text-xs sm:text-sm">Peace of mind included</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16 md:py-24 bg-white">
+    <section id="how-it-works" class="py-16 md:py-24 bg-[#020617]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16 fade-in-element">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">A Seamless Digital Process</h2>
-                <p class="text-base md:text-lg text-gray-600 leading-relaxed">We have eliminated the waiting rooms and confusing paperwork. Our streamlined process gets your device back in your hands faster.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">A Seamless Digital Process</h2>
+                <p class="text-base md:text-lg text-gray-400 leading-relaxed">We have eliminated the waiting rooms and confusing paperwork. Our streamlined process gets your device back in your hands faster.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-12 gap-8 md:gap-12 fade-in-element">
                 <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center text-center">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-5 border-2 border-gray-300">
-                        <span class="text-xl md:text-2xl font-bold text-gray-900">1</span>
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-5 border border-blue-500/20 text-blue-400">
+                        <span class="text-xl md:text-2xl font-bold">1</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Book Online</h3>
-                    <p class="text-gray-600 text-sm md:text-base">Use our AI chatbot to instantly diagnose your issue and secure a drop-off time slot.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Book Online</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Use our AI chatbot to instantly diagnose your issue and secure a drop-off time slot.</p>
                 </div>
 
                 <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center text-center">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-5 border-2 border-gray-300">
-                        <span class="text-xl md:text-2xl font-bold text-gray-900">2</span>
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-5 border border-blue-500/20 text-blue-400">
+                        <span class="text-xl md:text-2xl font-bold">2</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Drop Off</h3>
-                    <p class="text-gray-600 text-sm md:text-base">Bring your device in. We securely log it into our system and give you a unique tracking ticket.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Drop Off</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Bring your device in. We securely log it into our system and give you a unique tracking ticket.</p>
                 </div>
 
                 <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center text-center">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-5 border-2 border-gray-300">
-                        <span class="text-xl md:text-2xl font-bold text-gray-900">3</span>
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-5 border border-blue-500/20 text-blue-400">
+                        <span class="text-xl md:text-2xl font-bold">3</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Track Live</h3>
-                    <p class="text-gray-600 text-sm md:text-base">Watch your repair progress in real-time on our dashboard. Receive automated SMS updates.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Track Live</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Watch your repair progress in real-time on our dashboard. Receive automated SMS updates.</p>
                 </div>
 
                 <div class="sm:col-span-6 lg:col-span-3 flex flex-col items-center text-center">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-5 border-2 border-gray-300">
-                        <span class="text-xl md:text-2xl font-bold text-gray-900">4</span>
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-5 border border-blue-500/20 text-blue-400">
+                        <span class="text-xl md:text-2xl font-bold">4</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Pick Up</h3>
-                    <p class="text-gray-600 text-sm md:text-base">Pay your digital invoice securely online and pick up your fully restored device.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Pick Up</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Pay your digital invoice securely online and pick up your fully restored device.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Platform Modules Section -->
-    <section id="services" class="py-24 md:py-32 bg-white">
+    <section id="services" class="py-24 md:py-32 bg-[#020617] relative overflow-hidden">
+        <!-- Glow Effects -->
+        <div class="absolute top-1/4 left-10 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-10 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-16 md:mb-24 max-w-3xl mx-auto text-center fade-in-element">
-                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-4">Core Infrastructure</h2>
-                <h3 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-6">Built for Reliability.</h3>
-                <p class="text-lg text-gray-600 leading-relaxed">Our platform is built on a modular architecture designed to handle every stage of the device lifecycle with surgical precision.</p>
+                <h2 class="text-xs font-bold text-blue-500 uppercase tracking-[0.2em] mb-4">Core Infrastructure</h2>
+                <h3 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-6">Built for Reliability.</h3>
+                <p class="text-lg text-gray-400 leading-relaxed">Our platform is built on a modular architecture designed to handle every stage of the device lifecycle with surgical precision.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 fade-in-element">
                 <!-- Advanced Ticketing -->
-                <article class="group bg-[#F8FAFC] p-8 md:p-10 rounded-[2rem] border border-gray-100 hover:bg-white hover:shadow-2xl hover:border-blue-100 transition-all duration-500 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                        <span class="material-symbols-outlined text-gray-900 text-3xl">confirmation_number</span>
+                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-blue-400 text-3xl">confirmation_number</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Advanced Ticketing</h4>
-                    <p class="text-gray-600 leading-relaxed">Secure, unique ticketing to track diagnostics, repair milestones, and quality checks in real-time.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Advanced Ticketing</h4>
+                    <p class="text-gray-400 leading-relaxed">Secure, unique ticketing to track diagnostics, repair milestones, and quality checks in real-time.</p>
                 </article>
 
                 <!-- AI Chatbot -->
-                <article class="group bg-[#F8FAFC] p-8 md:p-10 rounded-[2rem] border border-gray-100 hover:bg-white hover:shadow-2xl hover:border-blue-100 transition-all duration-500 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                        <span class="material-symbols-outlined text-gray-900 text-3xl">smart_toy</span>
+                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-blue-400 text-3xl">smart_toy</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">AI Chatbot</h4>
-                    <p class="text-gray-600 leading-relaxed">Automated 24/7 assistance to diagnose symptoms and secure your drop-off slot instantly.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">AI Chatbot</h4>
+                    <p class="text-gray-400 leading-relaxed">Automated 24/7 assistance to diagnose symptoms and secure your drop-off slot instantly.</p>
                 </article>
 
                 <!-- Dashboard -->
-                <article class="group bg-[#F8FAFC] p-8 md:p-10 rounded-[2rem] border border-gray-100 hover:bg-white hover:shadow-2xl hover:border-blue-100 transition-all duration-500 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                        <span class="material-symbols-outlined text-gray-900 text-3xl">analytics</span>
+                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-blue-400 text-3xl">analytics</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Smart Dashboard</h4>
-                    <p class="text-gray-600 leading-relaxed">A centralized view for our team to oversee workloads, track repair times, and ensure strict quality.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Smart Dashboard</h4>
+                    <p class="text-gray-400 leading-relaxed">A centralized view for our team to oversee workloads, track repair times, and ensure strict quality.</p>
                 </article>
 
                 <!-- Notifications -->
-                <article class="group bg-[#F8FAFC] p-8 md:p-10 rounded-[2rem] border border-gray-100 hover:bg-white hover:shadow-2xl hover:border-blue-100 transition-all duration-500 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                        <span class="material-symbols-outlined text-gray-900 text-3xl">notifications_active</span>
+                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-blue-400 text-3xl">notifications_active</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Live Updates</h4>
-                    <p class="text-gray-600 leading-relaxed">Stay informed with instant SMS and email updates the moment your repair status changes.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Live Updates</h4>
+                    <p class="text-gray-400 leading-relaxed">Stay informed with instant SMS and email updates the moment your repair status changes.</p>
                 </article>
 
                 <!-- Inventory -->
-                <article class="group bg-[#F8FAFC] p-8 md:p-10 rounded-[2rem] border border-gray-100 hover:bg-white hover:shadow-2xl hover:border-blue-100 transition-all duration-500 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                        <span class="material-symbols-outlined text-gray-900 text-3xl">inventory_2</span>
+                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-blue-400 text-3xl">inventory_2</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Stock Control</h4>
-                    <p class="text-gray-600 leading-relaxed">Real-time monitoring of screens and batteries ensures we always have the parts needed.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Stock Control</h4>
+                    <p class="text-gray-400 leading-relaxed">Real-time monitoring of screens and batteries ensures we always have the parts needed.</p>
                 </article>
 
                 <!-- Invoicing -->
-                <article class="group bg-[#F8FAFC] p-8 md:p-10 rounded-[2rem] border border-gray-100 hover:bg-white hover:shadow-2xl hover:border-blue-100 transition-all duration-500 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                        <span class="material-symbols-outlined text-gray-900 text-3xl">receipt_long</span>
+                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-blue-400 text-3xl">receipt_long</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Digital Payments</h4>
-                    <p class="text-gray-600 leading-relaxed">Receive detailed digital invoices and pay securely online before you even arrive for pickup.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Digital Payments</h4>
+                    <p class="text-gray-400 leading-relaxed">Receive detailed digital invoices and pay securely online before you even arrive for pickup.</p>
                 </article>
             </div>
         </div>
     </section>
 
     <!-- Advantage Section -->
-    <section id="why" class="py-24 md:py-32 bg-[#F8FAFC]">
+    <section id="why" class="py-24 md:py-32 bg-[#020617]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-20 fade-in-element">
-                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-4">Precision First</h2>
-                <h3 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-6">The Repairmax Standard.</h3>
-                <p class="text-lg text-gray-600 leading-relaxed">We don't just replace parts; we restore your device to its optimal factory condition using industry-leading standards.</p>
+                <h2 class="text-xs font-bold text-blue-500 uppercase tracking-[0.2em] mb-4">Precision First</h2>
+                <h3 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-6">The Repairmax Standard.</h3>
+                <p class="text-lg text-gray-400 leading-relaxed">We don't just replace parts; we restore your device to its optimal factory condition using industry-leading standards.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 fade-in-element">
                 <div class="flex flex-col items-center text-center">
-                    <div class="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-8 shadow-xl border border-gray-100">
-                        <span class="material-symbols-outlined text-4xl text-gray-900">memory</span>
+                    <div class="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mb-8 shadow-xl border border-blue-500/15">
+                        <span class="material-symbols-outlined text-4xl text-blue-400">memory</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Micro-Soldering</h4>
-                    <p class="text-gray-600 leading-relaxed">Expert motherboard diagnostics and micro-component replacement for complex hardware damage that others can't fix.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Micro-Soldering</h4>
+                    <p class="text-gray-400 leading-relaxed">Expert motherboard diagnostics and micro-component replacement for complex hardware damage that others can't fix.</p>
                 </div>
 
                 <div class="flex flex-col items-center text-center">
-                    <div class="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-8 shadow-xl border border-gray-100">
-                        <span class="material-symbols-outlined text-4xl text-gray-900">precision_manufacturing</span>
+                    <div class="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mb-8 shadow-xl border border-blue-500/15">
+                        <span class="material-symbols-outlined text-4xl text-blue-400">precision_manufacturing</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Diagnostic Precision</h4>
-                    <p class="text-gray-600 leading-relaxed">Advanced voltage testing and ultrasonic cleaning to identify shorts and liquid damage other shops miss.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Diagnostic Precision</h4>
+                    <p class="text-gray-400 leading-relaxed">Advanced voltage testing and ultrasonic cleaning to identify shorts and liquid damage other shops miss.</p>
                 </div>
 
                 <div class="flex flex-col items-center text-center">
-                    <div class="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-8 shadow-xl border border-gray-100">
-                        <span class="material-symbols-outlined text-4xl text-gray-900">fact_check</span>
+                    <div class="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mb-8 shadow-xl border border-blue-500/15">
+                        <span class="material-symbols-outlined text-4xl text-blue-400">fact_check</span>
                     </div>
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Strict QC</h4>
-                    <p class="text-gray-600 leading-relaxed">A strict 24-point post-repair inspection ensures every sensor and component is functioning flawlessly.</p>
+                    <h4 class="text-2xl font-bold text-white mb-4">Strict QC</h4>
+                    <p class="text-gray-400 leading-relaxed">A strict 24-point post-repair inspection ensures every sensor and component is functioning flawlessly.</p>
                 </div>
             </div>
         </div>
@@ -231,9 +369,9 @@
 
     <!-- What We Can Repair Section -->
     <section id="repairs" class="py-24 md:py-32 bg-[#020617] relative overflow-hidden">
-        <!-- Radial Glow Effects -->
-        <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <!-- Glow Effects -->
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="mb-16 md:mb-24 max-w-3xl mx-auto text-center fade-in-element">
@@ -244,7 +382,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 fade-in-element">
                 <!-- Screen Replacements -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-gray-900/40 border border-white/5 hover:border-white/20 transition-all duration-500 backdrop-blur-sm overflow-hidden">
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-blue-600 group-hover:border-blue-500 transition-all duration-500 shadow-inner">
@@ -256,7 +394,7 @@
                 </article>
 
                 <!-- Battery Issues -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-gray-900/40 border border-white/5 hover:border-white/20 transition-all duration-500 backdrop-blur-sm overflow-hidden">
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-indigo-600 group-hover:border-indigo-500 transition-all duration-500 shadow-inner">
@@ -268,7 +406,7 @@
                 </article>
 
                 <!-- Charging Port -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-gray-900/40 border border-white/5 hover:border-white/20 transition-all duration-500 backdrop-blur-sm overflow-hidden">
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-cyan-600 group-hover:border-cyan-500 transition-all duration-500 shadow-inner">
@@ -280,7 +418,7 @@
                 </article>
 
                 <!-- Water Damage -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-gray-900/40 border border-white/5 hover:border-white/20 transition-all duration-500 backdrop-blur-sm overflow-hidden">
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-blue-400 group-hover:border-blue-400 transition-all duration-500 shadow-inner">
@@ -292,7 +430,7 @@
                 </article>
 
                 <!-- Camera & Lens -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-gray-900/40 border border-white/5 hover:border-white/20 transition-all duration-500 backdrop-blur-sm overflow-hidden">
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-violet-600 group-hover:border-violet-500 transition-all duration-500 shadow-inner">
@@ -304,7 +442,7 @@
                 </article>
 
                 <!-- Audio & Speaker -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-gray-900/40 border border-white/5 hover:border-white/20 transition-all duration-500 backdrop-blur-sm overflow-hidden">
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-slate-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-slate-600 group-hover:border-slate-500 transition-all duration-500 shadow-inner">
@@ -322,7 +460,7 @@
     @php
         $carouselServices = \App\Models\FaultType::orderBy('name', 'asc')->get();
     @endphp
-    <section class="py-24 relative overflow-hidden bg-[#020617] border-t border-b border-white/5" 
+    <section class="py-24 relative overflow-hidden bg-[#020617]" 
              x-data="{ 
                 activeIdx: 0, 
                 services: {{ Js::from($carouselServices->map(fn($s) => [
@@ -347,10 +485,9 @@
                     this.activeIdx = (this.activeIdx - 1 + this.services.length) % this.services.length;
                 }
              }">
+        <!-- Glow Effects -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
              
-        <!-- Decorative Background Glows -->
-        <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
@@ -408,7 +545,7 @@
                     <!-- Card Display -->
                     <div class="relative w-full max-w-lg min-h-[480px] flex items-center justify-center">
                         <template x-for="(service, index) in services" :key="service.id">
-                            <div class="bg-gray-900 rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col group w-full transition-all duration-500 transform"
+                            <div class="bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col group w-full transition-all duration-500 transform"
                                  :class="{
                                      'opacity-100 scale-100 translate-x-0 pointer-events-auto z-10 relative': activeIdx === index,
                                      'opacity-0 scale-95 -translate-x-12 pointer-events-none absolute inset-0': activeIdx > index,
@@ -420,26 +557,25 @@
                                     <img :src="service.image_path" 
                                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                                          :alt="service.name">
-                                    
-                                    <!-- Category Badge -->
-                                    <span :class="service.badgeClass"
-                                          class="absolute top-6 left-6 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm bg-gray-900/80"
-                                          x-text="service.categoryName">
-                                    </span>
                                 </div>
 
                                 <!-- Card Body -->
                                 <div class="p-8 flex flex-col flex-1">
+                                    <!-- Category Badge -->
+                                    <span :class="service.badgeClass"
+                                          class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest inline-block mb-4 w-fit shadow-xs"
+                                          x-text="service.categoryName">
+                                    </span>
+
                                     <h3 class="text-2xl font-extrabold text-white tracking-tight mb-3" x-text="service.name"></h3>
                                     
-                                    <!-- Description (constrained with premium blend fade) -->
-                                    <div class="relative h-20 overflow-hidden mb-6">
+                                    <!-- Description -->
+                                    <div class="mb-6">
                                         <p class="text-sm text-gray-400 leading-relaxed font-medium" x-text="service.description"></p>
-                                        <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none"></div>
                                     </div>
                                     
                                     <!-- Pricing and View Details -->
-                                    <div class="flex items-center justify-between pt-6 border-t border-white/5 mt-auto">
+                                    <div class="flex items-center justify-between pt-6 mt-auto">
                                         <div class="flex flex-col">
                                             <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">Starting from</span>
                                             <span class="text-2xl font-black text-white mt-1" x-text="'₱' + service.base_price"></span>
@@ -448,7 +584,7 @@
                                             <a :href="'/services/' + service.id" class="inline-flex items-center justify-center px-4 py-3.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-[10px] active:scale-95 transition-all whitespace-nowrap">
                                                 Details
                                             </a>
-                                            <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-white hover:bg-blue-600 text-gray-900 hover:text-white rounded-xl font-bold text-[10px] shadow-md active:scale-95 transition-all whitespace-nowrap">
+                                            <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap">
                                                 Book
                                                 <span class="material-symbols-outlined text-[14px]">calendar_month</span>
                                             </a>
@@ -478,10 +614,14 @@
     </section>
 
     <!-- Testimonials Section (SaaS Infinite Scroll) -->
-    <section x-data="{}" class="pt-24 pb-12 bg-[#F3F4F6] overflow-hidden relative">
+    <section x-data="{}" class="pt-24 pb-12 bg-[#020617] overflow-hidden relative">
+        <!-- Glow Effects -->
+        <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8 relative z-10">
-            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-4">Customer Success</h2>
-            <h3 class="text-3xl md:text-5xl font-black text-gray-900 tracking-tight">Trusted by the best.</h3>
+            <h2 class="text-xs font-bold text-blue-500 uppercase tracking-[0.2em] mb-4">Customer Success</h2>
+            <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight">Trusted by the best.</h3>
         </div>
 
         <!-- Infinite Scroll Container -->
@@ -491,15 +631,15 @@
                 <!-- Original Set -->
                 <div class="flex gap-8 px-4">
                     <!-- Testimonial 1 (5 Stars) -->
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=1" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">John Doe</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">iPhone 15 Pro Max</p>
+                                <h4 class="text-white font-bold text-lg">John Doe</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">iPhone 15 Pro Max</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;Absolutely incredible service! My iPhone screen was replaced in under 45 minutes and it looks brand new.&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;Absolutely incredible service! My iPhone screen was replaced in under 45 minutes and it looks brand new.&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
@@ -509,33 +649,33 @@
                         </div>
                     </div>
                     <!-- Testimonial 2 (4 Stars) -->
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=2" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">Sarah Wilson</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">Samsung S23 Ultra</p>
+                                <h4 class="text-white font-bold text-lg">Sarah Wilson</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">Samsung S23 Ultra</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;The AI booking assistant made scheduling so easy. I love that I could track my repair status in real-time!&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;The AI booking assistant made scheduling so easy. I love that I could track my repair status in real-time!&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
-                            <span class="material-symbols-outlined text-gray-300 text-sm">star</span>
+                            <span class="material-symbols-outlined text-gray-600 text-sm">star</span>
                         </div>
                     </div>
                     <!-- Testimonial 3 (5 Stars) -->
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=3" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">Michael Chen</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">MacBook Pro M2</p>
+                                <h4 class="text-white font-bold text-lg">Michael Chen</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">MacBook Pro M2</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;High-quality parts and professional staff. The 90-day warranty gives me real peace of mind.&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;High-quality parts and professional staff. The 90-day warranty gives me real peace of mind.&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
@@ -545,35 +685,35 @@
                         </div>
                     </div>
                     <!-- Testimonial 4 (3 Stars - Realistic touch) -->
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=4" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">Emma Thompson</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">Google Pixel 7</p>
+                                <h4 class="text-white font-bold text-lg">Emma Thompson</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">Google Pixel 7</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;The only repair shop I trust. Transparent pricing and no hidden fees. Highly recommended!&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;The only repair shop I trust. Transparent pricing and no hidden fees. Highly recommended!&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
-                            <span class="material-symbols-outlined text-gray-300 text-sm">star</span>
-                            <span class="material-symbols-outlined text-gray-300 text-sm">star</span>
+                            <span class="material-symbols-outlined text-gray-600 text-sm">star</span>
+                            <span class="material-symbols-outlined text-gray-600 text-sm">star</span>
                         </div>
                     </div>
                 </div>
                 <!-- Duplicate Set for Seamless Loop (Identical to above) -->
                 <div class="flex gap-8 px-4">
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=1" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">John Doe</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">iPhone 15 Pro Max</p>
+                                <h4 class="text-white font-bold text-lg">John Doe</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">iPhone 15 Pro Max</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;Absolutely incredible service! My iPhone screen was replaced in under 45 minutes and it looks brand new.&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;Absolutely incredible service! My iPhone screen was replaced in under 45 minutes and it looks brand new.&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
@@ -582,32 +722,32 @@
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                         </div>
                     </div>
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=2" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">Sarah Wilson</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">Samsung S23 Ultra</p>
+                                <h4 class="text-white font-bold text-lg">Sarah Wilson</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">Samsung S23 Ultra</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;The AI booking assistant made scheduling so easy. I love that I could track my repair status in real-time!&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;The AI booking assistant made scheduling so easy. I love that I could track my repair status in real-time!&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
-                            <span class="material-symbols-outlined text-gray-300 text-sm">star</span>
+                            <span class="material-symbols-outlined text-gray-600 text-sm">star</span>
                         </div>
                     </div>
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=3" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">Michael Chen</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">MacBook Pro M2</p>
+                                <h4 class="text-white font-bold text-lg">Michael Chen</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">MacBook Pro M2</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;High-quality parts and professional staff. The 90-day warranty gives me real peace of mind.&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;High-quality parts and professional staff. The 90-day warranty gives me real peace of mind.&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
@@ -616,29 +756,26 @@
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                         </div>
                     </div>
-                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=4" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
-                                <h4 class="text-gray-900 font-bold text-lg">Emma Thompson</h4>
-                                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">Google Pixel 7</p>
+                                <h4 class="text-white font-bold text-lg">Emma Thompson</h4>
+                                <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">Google Pixel 7</p>
                             </div>
                         </div>
-                        <p class="text-gray-700 text-xl leading-relaxed italic">&ldquo;The only repair shop I trust. Transparent pricing and no hidden fees. Highly recommended!&rdquo;</p>
+                        <p class="text-gray-300 text-xl leading-relaxed italic">&ldquo;The only repair shop I trust. Transparent pricing and no hidden fees. Highly recommended!&rdquo;</p>
                         <div class="mt-8 flex text-yellow-400 gap-1">
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
-                            <span class="material-symbols-outlined text-gray-300 text-sm">star</span>
-                            <span class="material-symbols-outlined text-gray-300 text-sm">star</span>
+                            <span class="material-symbols-outlined text-gray-600 text-sm">star</span>
+                            <span class="material-symbols-outlined text-gray-600 text-sm">star</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Gradient Overlays (SaaS style) -->
-            <div class="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#F3F4F6] to-transparent z-10 pointer-events-none"></div>
-            <div class="absolute inset-y-0 right-0 w-48 bg-gradient-to-l from-[#F3F4F6] to-transparent z-10 pointer-events-none"></div>
         </div>
 
         <style>
@@ -656,29 +793,39 @@
     </section>
 
     <!-- Final CTA Section (SaaS Redesign) -->
-    <section class="py-12 bg-[#F3F4F6] overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative bg-gray-900 rounded-[4rem] p-12 md:p-24 overflow-hidden">
-                <!-- Background Decoration -->
-                <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px]"></div>
-                <div class="absolute -bottom-32 -left-32 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[100px]"></div>
+    <section class="py-12 bg-[#020617] overflow-hidden relative">
+        <!-- Glow Effects -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="relative bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-[4rem] p-12 md:p-24 overflow-hidden">
 
                 <div class="relative z-10 max-w-4xl mx-auto text-center">
                     <h2 class="text-4xl md:text-7xl font-black text-white mb-8 leading-[1.1] tracking-tighter text-balance">
-                        Ready to restore your <span class="text-blue-500">peace of mind?</span>
+                        Stay updated on the latest <span class="text-blue-500">device tips & news.</span>
                     </h2>
-                    <p class="text-xl text-gray-400 mb-12 leading-relaxed max-w-xl mx-auto">
-                        Experience the future of repair. Book in seconds, track in real-time, and get back to your life with zero stress.
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed max-w-xl mx-auto">
+                        Get professional device advice, maintenance tips, and updates on our latest services delivered directly to your inbox.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                        <a href="/booking" class="w-full sm:w-64 group inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-gray-900 bg-white hover:bg-blue-500 hover:text-white rounded-2xl transition-all duration-300 active:scale-95 shadow-xl">
-                            <span class="material-symbols-outlined mr-2 group-hover:animate-bounce">bolt</span>
-                            Start Repair
-                        </a>
-                        <a href="/services" class="w-full sm:w-64 group inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-white/10 hover:bg-white/20 rounded-2xl transition-all duration-300 active:scale-95 backdrop-blur-md border border-white/20 hover:border-white/40 shadow-lg">
-                            <span class="material-symbols-outlined mr-2 group-hover:rotate-45 transition-transform duration-300">handyman</span>
-                            View Services
-                        </a>
+
+                    <!-- Subscription Form -->
+                    <div class="w-full max-w-[420px] mx-auto">
+                        <form action="/subscribe" method="POST" class="flex flex-col sm:flex-row gap-2.5 w-full items-stretch">
+                            @csrf
+                            <input type="email" name="email" placeholder="Enter your email" required
+                                class="flex-1 px-5 py-3.5 bg-white/5 text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 border border-white/10 text-sm placeholder-gray-400 transition-all backdrop-blur-md">
+                            <button type="submit" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all duration-300 active:scale-95 text-sm shrink-0 shadow-lg">
+                                Subscribe
+                            </button>
+                        </form>
+
+                        @if (session('subscribe_success'))
+                            <div class="w-full mt-3 p-2.5 bg-white/5 border border-white/10 text-green-400 rounded-xl text-xs text-center backdrop-blur-md">
+                                {{ session('subscribe_success') }}
+                            </div>
+                        @endif
+
+                        <p class="text-xs text-gray-400 text-center tracking-wide font-medium mt-4">Want to know more? Head over to your email</p>
                     </div>
                 </div>
             </div>

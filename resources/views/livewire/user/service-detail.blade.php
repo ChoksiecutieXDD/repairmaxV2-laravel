@@ -183,21 +183,21 @@
                 <div class="bg-white rounded-[2rem] border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group">
                     <div class="relative h-44 overflow-hidden bg-gray-50 shrink-0">
                         <img src="{{ asset($related->image_path) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-4 left-4 {{ $relBadgeClass }} px-2.5 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest bg-white shadow-sm">
-                            {{ $relCategoryName }}
-                        </span>
                     </div>
 
                     <div class="p-6 flex flex-col flex-1">
+                        <!-- Category Badge -->
+                        <span class="{{ $relBadgeClass }} px-2.5 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest inline-block mb-3.5 w-fit shadow-xs">
+                            {{ $relCategoryName }}
+                        </span>
+
                         <h4 class="text-base font-extrabold text-gray-900 tracking-tight mb-2 group-hover:text-blue-600 transition-colors">
                             {{ $related->name }}
                         </h4>
-                        <div class="relative h-12 overflow-hidden mb-4">
-                            <p class="text-xs text-gray-500 leading-relaxed font-medium">
-                                {{ $related->description }}
-                            </p>
-                            <div class="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
-                        </div>
+                        
+                        <p class="text-xs text-gray-500 leading-relaxed font-medium line-clamp-2 mb-4">
+                            {{ $related->description }}
+                        </p>
 
                         <div class="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto">
                             <div class="flex flex-col">

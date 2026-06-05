@@ -21,14 +21,14 @@
                 Your password has been successfully updated. You can now log in to your Repairmax account with your new credentials.
             </p>
 
-            <a href="/login" wire:navigate class="w-full bg-[#0B1120] text-white font-medium rounded-[1.25rem] px-4 py-3 hover:bg-gray-800 transition-colors shadow-sm block">
+            <a href="/login" wire:navigate class="w-full bg-blue-600 text-white font-bold rounded-[1.25rem] px-4 py-3 hover:bg-blue-500 transition-all shadow-lg hover:-translate-y-0.5 duration-200 block text-center">
                 Return to Log in
             </a>
         </div>
     </div>
     @else
     <div class="mb-10 text-center sm:text-left">
-        <h2 class="text-2xl font-semibold text-gray-900">Set new password</h2>
+        <h2 class="text-2xl font-bold text-gray-900">Set new password</h2>
         <p class="text-gray-600 mt-2">Please enter your new password below.</p>
     </div>
 
@@ -77,7 +77,7 @@
             <div class="relative">
                 <input :type="show ? 'text' : 'password'" id="password"
                     wire:model="password" @input="pwd = $event.target.value" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
 
                 <button type="button" @click="show = !show"
                     class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
@@ -111,7 +111,7 @@
                     </div>
                 </div>
 
-                <p class="mb-2 font-medium">Requirements:</p>
+                <p class="mb-2 font-medium text-gray-600">Requirements:</p>
                 <ul class="space-y-1.5">
                     <li class="flex items-center gap-2 transition-colors duration-300" :class="pwd.length >= 8 ? 'text-green-600' : 'text-gray-500'">
                         <span class="material-symbols-outlined text-[18px] select-none" x-text="pwd.length >= 8 ? 'check_circle' : 'radio_button_unchecked'"></span>
@@ -141,7 +141,7 @@
             <div class="relative">
                 <input :type="showConfirm ? 'text' : 'password'" id="password_confirmation"
                     wire:model="password_confirmation" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
 
                 <button type="button" @click="showConfirm = !showConfirm"
                     class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
@@ -154,7 +154,7 @@
 
         <div class="pt-6">
             <button type="submit"
-                class="w-full bg-[#0B1120] hover:bg-gray-800 text-gray-100 font-medium rounded-[1.25rem] px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center text-white"
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-[1.25rem] px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center"
                 wire:loading.attr="disabled">
                 <span wire:loading.remove>Reset Password</span>
                 <span wire:loading>Updating...</span>

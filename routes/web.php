@@ -125,6 +125,139 @@ Route::get('/help/ai-support', function () {
     return view('help.ai-support');
 })->name('help.ai-support');
 
+Route::get('/help/article/{slug}', function ($slug) {
+    $articles = [
+        'prepare-phone-repair' => [
+            'title' => 'How to prepare your phone for repair',
+            'category' => 'Getting Started & Guides',
+            'content' => '
+                <p class="mb-4">Before bringing or shipping your mobile device to Repairmax for diagnostics or repair, we recommend taking the following steps to protect your personal information and ensure a fast service turnaround:</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">1. Back Up Your Data</h4>
+                <p class="mb-4">Always create a full backup of your phone\'s data to iCloud (for iOS devices) or Google Drive (for Android devices). While our standard repairs (like screen or battery replacements) rarely cause data loss, unforeseen hardware interactions can occur, and having a secure backup keeps your data safe.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">2. Remove SIM Cards & MicroSD Cards</h4>
+                <p class="mb-4">Remove your physical SIM card and any external MicroSD memory cards. Keep them safely at home. If you use an eSIM, there is no need to delete or disable it.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">3. Remove Protective Cases and Accessories</h4>
+                <p class="mb-4">Take off any protective cases, phone grips, ring holders, or plug-in accessories. These can obstruct our technicians\' tools and assembly fixtures.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">4. Verify Power Status</h4>
+                <p class="mb-4">If possible, charge your device to at least 30% power. This allows our technicians to run pre-repair diagnostics immediately upon receiving your phone.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">5. Note Your Device Serial/IMEI Number</h4>
+                <p class="mb-4">Write down your device Serial Number or IMEI code (found by dialing *#06# or checking your SIM tray). This helps you easily verify your booking status.</p>
+            '
+        ],
+        'diagnostics-report' => [
+            'title' => 'Understanding the Repairmax diagnostics report',
+            'category' => 'Getting Started & Guides',
+            'content' => '
+                <p class="mb-4">When our professional technicians inspect your phone, they run an exhaustive 24-point diagnostic suite and generate an official Repairmax Diagnostics Report. Here is how to interpret your report findings:</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">1. Primary Failure Description</h4>
+                <p class="mb-4">This highlights the core issue you booked for (e.g. "Cracked front digitizer glass", "Battery health at 74% with voltage instability"). This is the main focus of our repair plan.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">2. Secondary Checks (Green/Yellow/Red status)</h4>
+                <ul class="list-disc pl-6 mb-4 space-y-2">
+                    <li><strong class="text-green-400">Green (Passed):</strong> Component functions within normal manufacturer tolerances (e.g. front camera, Wi-Fi module, charging port pin health).</li>
+                    <li><strong class="text-yellow-400">Yellow (Notice):</strong> Component shows wear or minor degradation but is still functional (e.g. slight display burn-in, weak vibration motor). Repairs are optional.</li>
+                    <li><strong class="text-red-400">Red (Failed):</strong> Component is broken, missing, or causing electrical short-circuits. Requires immediate attention to prevent system failure.</li>
+                </ul>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">3. Next Steps & Approval</h4>
+                <p class="mb-4">No repair is initiated without your explicit approval. The report will outline the exact parts cost and labor breakdown. You can choose to approve or reject proposed repairs directly through your booking dashboard or by replying to our SMS/email support line.</p>
+            '
+        ],
+        'liquid-damage' => [
+            'title' => 'What to do if your phone is liquid damaged',
+            'category' => 'Getting Started & Guides',
+            'content' => '
+                <p class="mb-4">Liquid damage is time-critical. As corrosion sets in, the likelihood of a successful repair decreases. If your phone has been exposed to water, coffee, or salt water, follow these critical emergency steps immediately:</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">1. Power Off Immediately</h4>
+                <p class="mb-4">Do not attempt to check if the phone is working. If it is on, turn it off right away. If it is already off, leave it off. Running electrical current through wet circuits causes immediate short-circuits and permanent chip damage.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">2. Dry the Exterior</h4>
+                <p class="mb-4">Wipe the device with a clean microfiber cloth or towel. Gently shake the phone to expel excess water from the charging port, speaker grilles, and headphone jack.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">3. Remove Trays & Accessories</h4>
+                <p class="mb-4">Take out the SIM tray immediately to let air enter. Remove any phone cases, screen protectors, or plug covers.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">4. Do NOT Use Rice or Hair Dryers</h4>
+                <p class="mb-4">Contrary to popular belief, raw rice does not dry out internal phone components quickly enough, and it deposits fine starch dust that damages mechanical parts. Hair dryers are even worse, as their heat melts interior adhesive and blows moisture deeper inside the device.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">5. Deliver to Repairmax Desk</h4>
+                <p class="mb-4">Bring your device to our service desk as soon as possible. Our technicians will open the device, perform a professional chemical wash to remove water residue, and replace components that have failed due to corrosion.</p>
+            '
+        ],
+        'warranty-policy' => [
+            'title' => 'How does the 90-Day Nationwide Warranty work?',
+            'category' => 'Warranty & Policies',
+            'content' => '
+                <p class="mb-4">Every screen replacement, battery replacement, and motherboard repair performed by Repairmax is automatically backed by our comprehensive 90-Day Nationwide Warranty. Here is what you need to know about your coverage:</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">1. What is Covered</h4>
+                <p class="mb-4">We cover any manufacturing defects in the parts we install, as well as workmanship issues related to our repair process. Examples include display touch-responsiveness issues, screen discoloration, battery failing to charge, or loose solder connections.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">2. What is Not Covered</h4>
+                <ul class="list-disc pl-6 mb-4 space-y-2">
+                    <li>Physical damage (dropped screens, internal glass cracks, impact cracks).</li>
+                    <li>Liquid ingress/damage after the repair date.</li>
+                    <li>Software modifications, rooting, jailbreaking, or software glitches.</li>
+                    <li>Repairs performed on the device by third parties after our service date.</li>
+                </ul>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">3. Claiming Your Warranty</h4>
+                <p class="mb-4">You can claim warranty at any Repairmax service desk nationwide. Simply bring your original booking reference number, phone, and receipt. Our team will verify the installation and replace the part free of charge if a defect is confirmed.</p>
+            '
+        ],
+        'payment-methods' => [
+            'title' => 'How to pay using GCash / Maya online',
+            'category' => 'Accounts & Payments',
+            'content' => '
+                <p class="mb-4">Repairmax supports secure, instant online payments through top Philippine mobile wallets (GCash and Maya). Paying online speeds up your checkout and allows for contactless device pickup or courier dispatch.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">1. Paying via Invoice link</h4>
+                <p class="mb-4">Once your repair is completed, you will receive an SMS and email notification containing a secure Repairmax Payment Link. Open the link to see your final bill breakdown and select your payment method.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">2. GCash Payment Steps</h4>
+                <p class="mb-4">Select GCash on the payment page. You will be redirected to the GCash portal. Enter your GCash mobile number, input the OTP sent to your phone, verify your MPIN, and confirm the transaction. The invoice status updates to Paid immediately.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">3. Maya QR & Checkout Steps</h4>
+                <p class="mb-4">Select Maya on the payment page. You can scan the displayed dynamic QR code using your Maya app, or log in with your Maya registered mobile number and password to pay from your wallet balance.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">4. Security Verification</h4>
+                <p class="mb-4">All online transactions are encrypted and processed through BSP-licensed payment gateways. Repairmax does not store your wallet passwords or PIN codes.</p>
+            '
+        ],
+        'receipt-details' => [
+            'title' => 'Getting a physical corporate receipt for your repair',
+            'category' => 'Accounts & Payments',
+            'content' => '
+                <p class="mb-4">If you are claiming a device repair under corporate expenses or need a BIR-compliant official receipt for tax write-offs, Repairmax provides physical receipts upon request.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">1. Requesting During Booking</h4>
+                <p class="mb-4">When booking online or checking in your device at our service desk, inform the representative that you require a Corporate Official Receipt. Provide your company’s registered name, TIN (Taxpayer Identification Number), and official billing address.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">2. Invoiced Items</h4>
+                <p class="mb-4">The receipt itemizes parts and labor separately, reflecting the 12% Value Added Tax (VAT) as mandated by Philippine tax regulations. This detail is crucial for company audit and expense approvals.</p>
+                
+                <h4 class="text-xl font-bold text-white mt-6 mb-3">3. Digital Invoices</h4>
+                <p class="mb-4">An electronic copy of your receipt is sent to your registered email immediately upon payment clearance, which can be printed and submitted directly to your finance department.</p>
+            '
+        ]
+    ];
+
+    if (!array_key_exists($slug, $articles)) {
+        abort(404);
+    }
+
+    return view('help.article', [
+        'article' => $articles[$slug]
+    ]);
+})->name('help.article');
+
 // Services & Booking Info
 Route::get('/services', function () {
     $services = \App\Models\FaultType::orderBy('name', 'asc')->get();
@@ -135,9 +268,6 @@ Route::get('/services/{id}', function ($id) {
     $relatedServices = \App\Models\FaultType::where('id', '!=', $id)->inRandomOrder()->take(3)->get();
     return view('service-detail', compact('service', 'relatedServices'));
 })->name('services.detail');
-Route::get('/pricing', function () {
-    return view('pricing');
-})->name('pricing');
 Route::redirect('/repairs', '/about-us');
 Route::get('/booking', function () {
     return view('booking');
@@ -365,7 +495,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Reports & Analytics
     Route::get('/reports', Reports::class)->name('reports');
-    Route::redirect('/reports-analytics', '/admin/reports');
+    Route::get('/reports-analytics', ReportsAnalytics::class)->name('reports-analytics');
     
     // Settings
     Route::get('/settings', Settings::class)->name('settings');

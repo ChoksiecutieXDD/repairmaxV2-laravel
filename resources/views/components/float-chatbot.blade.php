@@ -88,7 +88,7 @@
             this.isLoading = false;
         }
     }
-}" id="chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
+}" @open-chat.window="isOpen = true; activeTab = 'chat'; scrollToBottom()" id="chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
 
     <!-- Larger Chat Window with Brand Deep Charcoal Theme -->
     <div x-show="isOpen"
@@ -304,7 +304,7 @@
     <!-- Floating Toggle Button (Deep Charcoal) -->
     <button @click="isOpen = !isOpen; if(isOpen && activeTab === 'chat') scrollToBottom();"
         id="chat-toggle"
-        class="bg-[#0f172a] hover:bg-[#1e293b] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(15,23,42,0.35)] transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none cursor-pointer"
+        class="bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(37,99,235,0.35)] transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none cursor-pointer"
         :class="isOpen ? 'rotate-90' : ''">
         <span class="material-symbols-outlined text-2xl" x-text="isOpen ? 'close' : 'chat'">chat</span>
     </button>

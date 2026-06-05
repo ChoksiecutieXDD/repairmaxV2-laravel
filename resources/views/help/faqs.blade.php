@@ -1,17 +1,20 @@
 <x-layouts.landing title="Frequently Asked Questions | Repairmax">
-    <main class="pt-32 lg:pt-40 pb-24 md:pb-32 bg-[#F9FAFB]">
+    <main class="relative pt-32 lg:pt-40 pb-24 md:pb-32 overflow-hidden bg-[#020617]">
+        <!-- Glow Effects -->
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <!-- Hero Section -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Frequently Asked Questions</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">Frequently Asked Questions</h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium">
                 Quick answers to common questions about our repair workflow, pricing systems, warranty, and how we handle your tech.
             </p>
         </section>
 
         <!-- FAQs Portal with Real-Time Alpine Search -->
         <section x-data="{
-            searchQuery: '',
+            searchQuery: new URLSearchParams(window.location.search).get('q') || '',
             categories: [
                 {
                     name: 'General & Service',
@@ -72,7 +75,7 @@
             hasMatches(category) {
                 return category.faqs.some(faq => this.matches(faq));
             }
-        }" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        }" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
             <!-- Search Box -->
             <div class="mb-12 relative max-w-xl mx-auto">
@@ -80,7 +83,7 @@
                     <span class="material-symbols-outlined text-gray-400">search</span>
                 </div>
                 <input x-model="searchQuery" type="text" placeholder="Search FAQ database (e.g. warranty, time)..."
-                    class="w-full pl-14 pr-5 py-4 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-4 focus:ring-gray-900/5 focus:border-gray-900 transition-all text-base shadow-sm">
+                    class="w-full pl-14 pr-5 py-4 bg-white/5 border border-white/10 text-white rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-base shadow-sm placeholder-gray-500">
             </div>
 
             <!-- Categories and Accordions -->
@@ -88,23 +91,23 @@
                 <template x-for="cat in categories" :key="cat.name">
                     <div x-show="hasMatches(cat)" x-transition class="space-y-6 text-left">
                         
-                        <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
-                            <span class="material-symbols-outlined text-gray-500 text-xl" x-text="cat.icon"></span>
-                            <h3 class="text-sm font-black uppercase tracking-widest text-gray-400" x-text="cat.name"></h3>
+                        <div class="flex items-center gap-3 border-b border-white/5 pb-3">
+                            <span class="material-symbols-outlined text-white text-xl" x-text="cat.icon"></span>
+                            <h3 class="text-sm font-black uppercase tracking-widest text-white mb-0" x-text="cat.name"></h3>
                         </div>
 
                         <div class="space-y-4">
                             <template x-for="(faq, idx) in cat.faqs" :key="faq.q">
                                 <div x-show="matches(faq)" 
                                      x-data="{ open: false }" 
-                                     class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm transition-all duration-300"
-                                     :class="open ? 'shadow-md border-gray-300' : ''">
+                                     class="bg-white/[0.03] backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-2xl transition-all duration-300"
+                                     :class="open ? 'border-white/20' : ''">
                                     
                                     <!-- Accordion Header -->
                                     <button @click="open = !open" 
-                                            class="w-full px-6 py-5 flex items-center justify-between text-left font-bold text-gray-900 hover:bg-gray-50 transition-colors gap-4">
+                                            class="w-full px-6 py-5 flex items-center justify-between text-left font-bold text-white hover:bg-white/5 transition-colors gap-4">
                                         <span class="text-base md:text-lg" x-text="faq.q"></span>
-                                        <span class="material-symbols-outlined text-gray-500 transition-transform duration-300 select-none"
+                                        <span class="material-symbols-outlined text-gray-400 transition-transform duration-300 select-none"
                                               :class="open ? 'rotate-180' : ''">keyboard_arrow_down</span>
                                     </button>
 
@@ -117,7 +120,7 @@
                                          x-transition:leave="transition ease-in duration-200"
                                          x-transition:leave-start="opacity-100 max-h-screen"
                                          x-transition:leave-end="opacity-0 max-h-0"
-                                         class="px-6 pb-6 pt-1 text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-gray-50/50">
+                                         class="px-6 pb-6 pt-1 text-sm text-gray-300 leading-relaxed border-t border-white/5 bg-white/[0.01]">
                                         <p x-text="faq.a"></p>
                                     </div>
 
@@ -130,10 +133,10 @@
 
                 <!-- No Results Notice -->
                 <div x-show="categories.every(cat => !hasMatches(cat))" x-transition 
-                     class="bg-white rounded-3xl p-12 border border-gray-200 text-center max-w-xl mx-auto shadow-sm">
+                     class="bg-white/[0.03] backdrop-blur-md rounded-3xl p-12 border border-white/10 text-center max-w-xl mx-auto shadow-2xl">
                     <span class="material-symbols-outlined text-4xl text-gray-400 mb-4 block">search_off</span>
-                    <h4 class="text-lg font-bold text-gray-900 mb-2">No matching questions found</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">We couldn't find any results matching your search terms. Try using simpler words or browse our full Help Center.</p>
+                    <h4 class="text-lg font-bold text-white mb-2">No matching questions found</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">We couldn't find any results matching your search terms. Try using simpler words or browse our full Help Center.</p>
                 </div>
             </div>
 

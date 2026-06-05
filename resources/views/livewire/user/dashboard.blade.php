@@ -286,8 +286,11 @@
                                  @click="imageUrl = service.image_path; openLightbox = true"
                                  class="w-full h-full object-cover cursor-zoom-in group-hover:scale-110 transition-transform duration-500" 
                                  :alt="service.name">
-                            
-                            <!-- Badges -->
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-6 flex flex-col flex-1">
+                            <!-- Category Badge -->
                             <span :class="{
                                        'bg-blue-50 text-blue-600 border border-blue-100': service.category === 'screen',
                                        'bg-amber-50 text-amber-600 border border-amber-100': service.category === 'power',
@@ -295,19 +298,13 @@
                                        'bg-purple-50 text-purple-600 border border-purple-100': service.category === 'software',
                                        'bg-indigo-50 text-indigo-600 border border-indigo-100': service.category === 'hardware'
                                    }"
-                                  class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm bg-white"
+                                  class="px-3.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider inline-block mb-3.5 w-fit shadow-xs"
                                   x-text="service.categoryName">
                             </span>
-                        </div>
 
-                        <!-- Card Body -->
-                        <div class="p-6 flex flex-col flex-1">
                             <h3 class="text-lg font-black text-gray-900 tracking-tight mb-2 group-hover:text-blue-600 transition-colors" x-text="service.name"></h3>
                             
-                            <div class="relative h-16 overflow-hidden mb-4">
-                                <p class="text-xs text-gray-500 leading-relaxed font-medium" x-text="service.description"></p>
-                                <div class="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
-                            </div>
+                            <p class="text-xs text-gray-500 leading-relaxed font-medium line-clamp-2 mb-4" x-text="service.description"></p>
                             
                             <!-- Price & Call to Actions -->
                             <div class="flex items-center justify-between pt-4 border-t border-brand-100 mt-auto">

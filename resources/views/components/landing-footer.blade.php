@@ -1,9 +1,9 @@
-<footer class="bg-gray-900 text-gray-400 py-12 md:py-24 border-t border-gray-800 font-sans">
+<footer class="bg-gradient-to-b from-[#0f172a] to-[#020617] text-gray-400 py-12 md:py-24 font-sans">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
             <div class="col-span-2 lg:col-span-1 text-center md:text-left">
-                <a href="/" class="text-2xl font-bold text-gray-100 tracking-tight mb-4 inline-block">
+                <a href="/" class="font-[Montserrat] inline-block text-2xl font-normal text-gray-100 tracking-tight mb-4">
                     Repairmax
                 </a>
                 <p class="text-sm leading-relaxed mb-6">
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="col-span-1 text-center md:text-left">
+            <div class="col-span-1 text-center md:text-right">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Platform</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="/services" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Services</a></li>
@@ -41,7 +41,7 @@
                 </ul>
             </div>
 
-            <div class="col-span-1 text-center md:text-left">
+            <div class="col-span-1 text-center md:text-right">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Account</h3>
                 <ul class="space-y-3 text-sm">
                     <li>
@@ -59,7 +59,7 @@
                 </ul>
             </div>
 
-            <div class="col-span-2 text-center md:text-left lg:col-span-1">
+            <div class="col-span-2 text-center md:text-right lg:col-span-1">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Legal</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="/legal-policy#privacy" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Privacy Policy</a></li>

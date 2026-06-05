@@ -21,14 +21,14 @@
                 Welcome to Repairmax! Your account for <span class="font-medium text-gray-900">{{ $email }}</span> has been successfully created.
             </p>
 
-            <a href="/login" wire:navigate class="w-full bg-[#0B1120] text-white font-medium rounded-[1.25rem] px-4 py-3 hover:bg-gray-800 transition-colors shadow-sm block">
+            <a href="/login" wire:navigate class="w-full bg-blue-600 text-white font-bold rounded-[1.25rem] px-4 py-3 hover:bg-blue-500 transition-all shadow-lg hover:-translate-y-0.5 duration-200 block text-center">
                 Return to Log in
             </a>
         </div>
     </div>
     @else
     <div class="mb-10 text-center sm:text-left">
-        <h2 class="text-2xl font-semibold text-gray-900">Create an account</h2>
+        <h2 class="text-2xl font-bold text-gray-900">Create an account</h2>
         <p class="text-gray-600 mt-2">Enter your details below to register.</p>
     </div>
 
@@ -38,14 +38,14 @@
             <div class="col-span-12 sm:col-span-6 relative">
                 <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
                 <input type="text" id="first_name" wire:model="first_name" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
                 @error('first_name') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div class="col-span-12 sm:col-span-6 relative">
                 <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
                 <input type="text" id="last_name" wire:model="last_name" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
                 @error('last_name') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
             </div>
         </div>
@@ -53,7 +53,7 @@
         <div class="relative">
             <label for="email" class="block text-sm font-medium text-gray-700 mb-2 mt-4">Email Address</label>
             <input type="email" id="email" wire:model="email" required
-                class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
             @error('email') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
         </div>
 
@@ -94,7 +94,7 @@
             <div class="relative">
                 <input :type="show ? 'text' : 'password'" id="password" name="password" autocomplete="new-password"
                     wire:model="password" @input="pwd = $event.target.value" required
-                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-gray-800 transition-colors">
+                    class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-[1.25rem] px-4 py-3 pr-12 outline-none focus:outline-none focus:ring-0 focus:border-blue-500 transition-colors placeholder-gray-400">
 
                 <button type="button" @click="show = !show"
                     class="absolute inset-y-0 right-0 px-3 py-0 flex items-center bg-transparent border-none shadow-none focus:ring-0 outline-none hover:bg-transparent hover:shadow-none hover:translate-y-0 text-gray-400 hover:text-gray-600 cursor-pointer">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
 
-                <p class="mb-2 font-medium">Requirements:</p>
+                <p class="mb-2 font-medium text-gray-600">Requirements:</p>
                 <ul class="space-y-1.5">
                     <li class="flex items-center gap-2 transition-colors duration-300" :class="pwd.length >= 8 ? 'text-green-600' : 'text-gray-500'">
                         <span class="material-symbols-outlined text-[18px] select-none" x-text="pwd.length >= 8 ? 'check_circle' : 'radio_button_unchecked'">
@@ -163,8 +163,8 @@
             <div class="pt-6">
                     <button type="submit"
                     :disabled="score < 2"
-                    :class="score < 2 ? 'opacity-50 cursor-not-allowed bg-gray-600' : 'bg-gray-900 hover:bg-gray-800 text-gray-100'"
-                    class="w-full font-medium rounded-[1.25rem] px-4 py-3 transition-colors shadow-sm relative flex justify-center items-center text-white"
+                    :class="score < 2 ? 'opacity-50 cursor-not-allowed bg-blue-800' : 'bg-blue-600 hover:bg-blue-500 text-white'"
+                    class="w-full font-bold rounded-[1.25rem] px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center text-white"
                     wire:loading.attr="disabled">
                     <span wire:loading.remove>Register Account</span>
                     <span wire:loading>Creating Account...</span>
@@ -176,7 +176,7 @@
 
     <div class="mt-8 text-center text-sm text-gray-600">
         Already have an account?
-        <a href="/login" wire:navigate class="font-semibold text-gray-900 hover:text-gray-700 underline underline-offset-4 transition-colors">
+        <a href="/login" wire:navigate class="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
             Log in here
         </a>
     </div>
