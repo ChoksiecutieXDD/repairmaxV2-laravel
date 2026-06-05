@@ -24,9 +24,6 @@ require __DIR__.'/../vendor/autoload.php';
 */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-// Force session driver to 'array' just in case anything tries to initialize it
-config(['session.driver' => 'array']);
-
 // Resolve the Console Kernel
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 
