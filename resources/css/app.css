@@ -2,6 +2,7 @@
 
 /* Import Tailwind v4 */
 @import 'tailwindcss';
+@custom-variant dark (.dark &, &.dark);
 
 /* Standard Laravel view paths for Tailwind to scan */
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -194,7 +195,7 @@
 @layer components {
 
     /* --- Buttons --- */
-    button:not(nav button),
+    button:not(nav button):not(header button):not(aside button),
     .btn {
         border-radius: 1.25rem;
         border: 1px solid transparent;
@@ -212,25 +213,25 @@
 
     /* Primary Action Style */
     .btn-primary,
-    button:not([class*="bg-"]):not(nav button) {
+    button:not([class*="bg-"]):not(nav button):not(header button):not(aside button) {
         background-color: var(--accent);
         color: var(--bg-alt);
         box-shadow: var(--shadow-sm);
     }
 
-    button:not(.bg-transparent):not(.bg-white):not(nav button):hover,
+    button:not(.bg-transparent):not(.bg-white):not(nav button):not(header button):not(aside button):hover,
     .btn:hover {
         background-color: var(--accent-hover);
         box-shadow: var(--shadow-md);
         transform: translateY(-1px);
     }
 
-    button:not(nav button) .material-symbols-outlined,
+    button:not(nav button):not(header button):not(aside button) .material-symbols-outlined,
     .btn .material-symbols-outlined {
         font-size: 1.25rem;
     }
 
-    button:not(nav button):focus-visible,
+    button:not(nav button):not(header button):not(aside button):focus-visible,
     .btn:focus-visible,
     a:focus-visible {
         outline: 2px solid var(--gray-500);

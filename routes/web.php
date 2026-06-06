@@ -31,6 +31,7 @@ use App\Livewire\User\SystemSettings;
 use App\Livewire\User\Notifications;
 use App\Livewire\User\ServiceDetail;
 use App\Livewire\User\BookedDetails;
+use App\Livewire\User\Services as UserServices;
 
 // Livewire Components (Admin)
 use App\Livewire\Admin\Dashboard as AdminDashboard;
@@ -530,6 +531,7 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::get('/booked-details/{id}', BookedDetails::class)->name('booked-details');
 
     // Services Details (User-specific)
+    Route::get('/services', UserServices::class)->name('services');
     Route::get('/services/{id}', ServiceDetail::class)->name('services.detail');
 });
 

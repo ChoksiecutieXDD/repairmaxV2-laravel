@@ -75,23 +75,8 @@
         {{-- Right Panel (Form) --}}
         <div class="w-full lg:w-7/12 flex flex-col justify-center px-4 sm:px-6 lg:px-16 py-12 lg:py-24 relative min-h-screen z-10">
 
-            <div class="hidden lg:block absolute top-16 left-24">
-                <a href="/" class="inline-flex items-center gap-2.5 text-sm font-medium text-gray-400 hover:text-white transition-colors group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                    </svg>
-                    Back to Home
-                </a>
-            </div>
-
             <div class="w-full max-w-lg mx-auto relative z-10">
                 <div class="lg:hidden mb-8">
-                    <a href="/" class="inline-flex items-center gap-2.5 text-sm font-medium text-gray-400 hover:text-white transition-colors mb-6 group">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                        </svg>
-                        Back to Home
-                    </a>
                     <div class="flex justify-center sm:justify-start">
                         <a href="/" class="transition-colors duration-300 hover:opacity-80 flex items-center gap-2.5">
                             <img src="{{ asset('img/logo-r-white.png') }}" alt="Repairmax Logo" class="h-8 w-auto">

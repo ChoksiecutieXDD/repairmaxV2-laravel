@@ -3,8 +3,8 @@
 
     <section id="intro" class="relative w-full min-h-screen flex items-center overflow-hidden pt-32 lg:pt-36 pb-20 bg-[#020617]">
         <!-- Premium Radial Glow Effects -->
-        <div class="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-900/15 rounded-full blur-[130px] pointer-events-none"></div>
-        <div class="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-0 right-1/4 w-150 h-150 bg-blue-900/15 rounded-full blur-[130px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/4 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="relative z-20 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -15,7 +15,7 @@
 
                     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-semibold text-white tracking-tighter drop-shadow-2xl leading-[1.1] text-balance">
                         We Fix Devices.<br>
-                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400">
+                        <span class="bg-clip-text text-transparent bg-linear-to-r from-indigo-400 via-blue-400 to-cyan-400">
                             You Stay Connected.
                         </span>
                     </h1>
@@ -55,7 +55,7 @@
 
                 <!-- Right Column: Status Tracker Mockup Card with Diagnostic Ring Graphic -->
                 <div class="lg:col-span-6 flex justify-center lg:justify-end fade-in-element">
-                    <div class="w-full max-w-[560px] bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-md shadow-2xl relative overflow-hidden">
+                    <div class="w-full max-w-140 bg-white/3 border border-white/10 rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-md shadow-2xl relative overflow-hidden">
                         
                         <!-- Card Header -->
                         <div class="flex items-center justify-between gap-4 pb-6 border-b border-white/5">
@@ -104,7 +104,7 @@
                             <!-- Timeline tracking (Right) -->
                             <div class="md:col-span-7 space-y-4 text-left relative pl-1">
                                 <!-- Timeline line connector -->
-                                <div class="absolute left-[13px] top-4 bottom-4 w-px bg-white/10"></div>
+                                <div class="absolute left-3.25 top-4 bottom-4 w-px bg-white/10"></div>
 
                                 <!-- Timeline Step 1 -->
                                 <div class="flex items-start gap-4 relative z-10">
@@ -167,7 +167,7 @@
             </div>
 
             <!-- Features Row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 sm:p-8 bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-[2.5rem] mt-16 max-w-7xl mx-auto fade-in-element">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 sm:p-8 bg-white/2 backdrop-blur-md border border-white/10 rounded-[2.5rem] mt-16 max-w-7xl mx-auto fade-in-element">
                 <!-- Quality Parts -->
                 <div class="flex items-center gap-4 text-left p-2">
                     <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/15">
@@ -262,8 +262,8 @@
     <!-- Platform Modules Section -->
     <section id="services" class="py-24 md:py-32 bg-[#020617] relative overflow-hidden">
         <!-- Glow Effects -->
-        <div class="absolute top-1/4 left-10 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-1/4 right-10 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/4 left-10 w-125 h-125 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-10 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-16 md:mb-24 max-w-3xl mx-auto text-center fade-in-element">
@@ -274,7 +274,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 fade-in-element">
                 <!-- Advanced Ticketing -->
-                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                <article class="group bg-white/3 backdrop-blur-md p-8 md:p-10 rounded-4xl border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
                         <span class="material-symbols-outlined text-blue-400 text-3xl">confirmation_number</span>
                     </div>
@@ -283,7 +283,7 @@
                 </article>
 
                 <!-- AI Chatbot -->
-                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                <article class="group bg-white/3 backdrop-blur-md p-8 md:p-10 rounded-4xl border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
                         <span class="material-symbols-outlined text-blue-400 text-3xl">smart_toy</span>
                     </div>
@@ -292,7 +292,7 @@
                 </article>
 
                 <!-- Dashboard -->
-                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                <article class="group bg-white/3 backdrop-blur-md p-8 md:p-10 rounded-4xl border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
                         <span class="material-symbols-outlined text-blue-400 text-3xl">analytics</span>
                     </div>
@@ -301,7 +301,7 @@
                 </article>
 
                 <!-- Notifications -->
-                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                <article class="group bg-white/3 backdrop-blur-md p-8 md:p-10 rounded-4xl border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
                         <span class="material-symbols-outlined text-blue-400 text-3xl">notifications_active</span>
                     </div>
@@ -310,7 +310,7 @@
                 </article>
 
                 <!-- Inventory -->
-                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                <article class="group bg-white/3 backdrop-blur-md p-8 md:p-10 rounded-4xl border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
                         <span class="material-symbols-outlined text-blue-400 text-3xl">inventory_2</span>
                     </div>
@@ -319,7 +319,7 @@
                 </article>
 
                 <!-- Invoicing -->
-                <article class="group bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2rem] border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
+                <article class="group bg-white/3 backdrop-blur-md p-8 md:p-10 rounded-4xl border border-white/10 hover:bg-white/10 hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-blue-500/15 group-hover:scale-110 transition-transform duration-500">
                         <span class="material-symbols-outlined text-blue-400 text-3xl">receipt_long</span>
                     </div>
@@ -370,8 +370,8 @@
     <!-- What We Can Repair Section -->
     <section id="repairs" class="py-24 md:py-32 bg-[#020617] relative overflow-hidden">
         <!-- Glow Effects -->
-        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/4 left-1/4 w-125 h-125 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="mb-16 md:mb-24 max-w-3xl mx-auto text-center fade-in-element">
@@ -382,8 +382,8 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 fade-in-element">
                 <!-- Screen Replacements -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/3 border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
+                    <div class="absolute inset-0 bg-linear-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-blue-600 group-hover:border-blue-500 transition-all duration-500 shadow-inner">
                             <span class="material-symbols-outlined text-gray-300 group-hover:text-white text-3xl transition-colors">smartphone</span>
@@ -394,8 +394,8 @@
                 </article>
 
                 <!-- Battery Issues -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/3 border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
+                    <div class="absolute inset-0 bg-linear-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-indigo-600 group-hover:border-indigo-500 transition-all duration-500 shadow-inner">
                             <span class="material-symbols-outlined text-gray-300 group-hover:text-white text-3xl transition-colors">battery_charging_full</span>
@@ -406,8 +406,8 @@
                 </article>
 
                 <!-- Charging Port -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/3 border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
+                    <div class="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-cyan-600 group-hover:border-cyan-500 transition-all duration-500 shadow-inner">
                             <span class="material-symbols-outlined text-gray-300 group-hover:text-white text-3xl transition-colors">usb</span>
@@ -418,8 +418,8 @@
                 </article>
 
                 <!-- Water Damage -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/3 border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
+                    <div class="absolute inset-0 bg-linear-to-br from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-blue-400 group-hover:border-blue-400 transition-all duration-500 shadow-inner">
                             <span class="material-symbols-outlined text-gray-300 group-hover:text-white text-3xl transition-colors">water_drop</span>
@@ -430,8 +430,8 @@
                 </article>
 
                 <!-- Camera & Lens -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/3 border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
+                    <div class="absolute inset-0 bg-linear-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-violet-600 group-hover:border-violet-500 transition-all duration-500 shadow-inner">
                             <span class="material-symbols-outlined text-gray-300 group-hover:text-white text-3xl transition-colors">photo_camera</span>
@@ -442,8 +442,8 @@
                 </article>
 
                 <!-- Audio & Speaker -->
-                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-slate-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <article class="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/3 border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-md overflow-hidden">
+                    <div class="absolute inset-0 bg-linear-to-br from-slate-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col items-center text-center">
                         <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 group-hover:bg-slate-600 group-hover:border-slate-500 transition-all duration-500 shadow-inner">
                             <span class="material-symbols-outlined text-gray-300 group-hover:text-white text-3xl transition-colors">volume_up</span>
@@ -486,7 +486,7 @@
                 }
              }">
         <!-- Glow Effects -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
              
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -499,7 +499,7 @@
                             What We Fix
                         </span>
                         <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight leading-[1.15]">
-                            Our Featured <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">Repair Services</span>
+                            Our Featured <span class="bg-clip-text text-transparent bg-linear-to-r from-blue-400 to-indigo-400">Repair Services</span>
                         </h2>
                         <p class="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
                             Browse our high-quality repair catalog. We offer quick, reliable, and premium repairs for screens, batteries, ports, and more.
@@ -543,9 +543,9 @@
                 <!-- Right Side: Single Card Display & Navigation -->
                 <div class="lg:col-span-7 flex flex-col items-center lg:items-end">
                     <!-- Card Display -->
-                    <div class="relative w-full max-w-lg min-h-[480px] flex items-center justify-center">
+                    <div class="relative w-full max-w-lg min-h-120 flex items-center justify-center">
                         <template x-for="(service, index) in services" :key="service.id">
-                            <div class="bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col group w-full transition-all duration-500 transform"
+                            <div class="bg-white/3 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-2xl hover:shadow-3xl hover:bg-white/5 hover:border-white/20 hover:-translate-y-2 overflow-hidden flex flex-col group w-full transition-all duration-500 transform cursor-pointer"
                                  :class="{
                                      'opacity-100 scale-100 translate-x-0 pointer-events-auto z-10 relative': activeIdx === index,
                                      'opacity-0 scale-95 -translate-x-12 pointer-events-none absolute inset-0': activeIdx > index,
@@ -581,10 +581,11 @@
                                             <span class="text-2xl font-black text-white mt-1" x-text="'₱' + service.base_price"></span>
                                         </div>
                                         <div class="flex items-center gap-2 shrink-0">
-                                            <a :href="'/services/' + service.id" class="inline-flex items-center justify-center px-4 py-3.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-[10px] active:scale-95 transition-all whitespace-nowrap">
-                                                Details
-                                            </a>
-                                            <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap">
+                                            <!-- Stretched Link to make the entire card container clickable -->
+                                            <a :href="'/services/' + service.id" class="after:absolute after:inset-0 after:z-10"></a>
+                                            
+                                            <!-- Book button sits on top of stretched link -->
+                                            <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap relative z-20">
                                                 Book
                                                 <span class="material-symbols-outlined text-[14px]">calendar_month</span>
                                             </a>
@@ -616,8 +617,8 @@
     <!-- Testimonials Section (SaaS Infinite Scroll) -->
     <section x-data="{}" class="pt-24 pb-12 bg-[#020617] overflow-hidden relative">
         <!-- Glow Effects -->
-        <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-125 h-125 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8 relative z-10">
             <h2 class="text-xs font-bold text-blue-500 uppercase tracking-[0.2em] mb-4">Customer Success</h2>
@@ -631,7 +632,7 @@
                 <!-- Original Set -->
                 <div class="flex gap-8 px-4">
                     <!-- Testimonial 1 (5 Stars) -->
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=1" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -649,7 +650,7 @@
                         </div>
                     </div>
                     <!-- Testimonial 2 (4 Stars) -->
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=2" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -667,7 +668,7 @@
                         </div>
                     </div>
                     <!-- Testimonial 3 (5 Stars) -->
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=3" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -685,7 +686,7 @@
                         </div>
                     </div>
                     <!-- Testimonial 4 (3 Stars - Realistic touch) -->
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=4" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -705,7 +706,7 @@
                 </div>
                 <!-- Duplicate Set for Seamless Loop (Identical to above) -->
                 <div class="flex gap-8 px-4">
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=1" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -722,7 +723,7 @@
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                         </div>
                     </div>
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=2" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -739,7 +740,7 @@
                             <span class="material-symbols-outlined text-gray-600 text-sm">star</span>
                         </div>
                     </div>
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=3" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -756,7 +757,7 @@
                             <span class="material-symbols-outlined fill-current text-sm" style="font-variation-settings: 'FILL' 1">star</span>
                         </div>
                     </div>
-                    <div class="w-[350px] md:w-[450px] bg-white/[0.03] backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
+                    <div class="w-87.5 md:w-112.5 bg-white/3 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 whitespace-normal">
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://i.pravatar.cc/150?u=4" class="w-14 h-14 rounded-full shadow-sm" alt="">
                             <div>
@@ -795,10 +796,10 @@
     <!-- Final CTA Section (SaaS Redesign) -->
     <section class="pt-12 pb-16 md:pb-24 bg-[#020617] overflow-hidden relative">
         <!-- Glow Effects -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="relative bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-[4rem] p-12 md:p-24 overflow-hidden">
+            <div class="relative bg-white/3 backdrop-blur-md border border-white/10 rounded-[4rem] p-12 md:p-24 overflow-hidden">
 
                 <div class="relative z-10 max-w-4xl mx-auto text-center">
                     <h2 class="text-4xl md:text-7xl font-black text-white mb-8 leading-[1.1] tracking-tighter text-balance">
@@ -809,7 +810,7 @@
                     </p>
 
                     <!-- Subscription Form -->
-                    <div class="w-full max-w-[420px] mx-auto">
+                    <div class="w-full max-w-105 mx-auto">
                         <form action="/subscribe" method="POST" class="flex flex-col sm:flex-row gap-2.5 w-full items-stretch">
                             @csrf
                             <input type="email" name="email" placeholder="Enter your email" required

@@ -787,16 +787,16 @@
 
                 <!-- Shop Address Card (Drop-off only) -->
                 @if($pickup_option === 'Drop-off')
-                <div x-data="{ showMap: false }" class="mt-4 p-5 bg-blue-50/50 border border-blue-100/60 rounded-[1.25rem] flex flex-col gap-4 animate-fade-in mb-6">
+                <div x-data="{ showMap: false }" class="mt-4 p-5 bg-blue-500/10 border border-blue-500/20 rounded-[1.25rem] flex flex-col gap-4 animate-fade-in mb-6">
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-start gap-3">
-                            <span class="material-symbols-outlined text-blue-500 text-[20px] shrink-0 mt-0.5">pin_drop</span>
+                            <span class="material-symbols-outlined text-blue-400 text-[20px] shrink-0 mt-0.5">pin_drop</span>
                             <div>
-                                <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-0.5">Shop Drop-off Location</h4>
-                                <p class="text-xs text-blue-700 font-medium leading-relaxed">Commonwealth Ave. Cor. IBP Road (Litex Junction), Quezon City, Metro Manila, Philippines</p>
+                                <h4 class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-0.5">Shop Drop-off Location</h4>
+                                <p class="text-xs text-blue-300 font-medium leading-relaxed">Commonwealth Ave. Cor. IBP Road (Litex Junction), Quezon City, Metro Manila, Philippines</p>
                             </div>
                         </div>
-                        <button type="button" @click="showMap = !showMap" class="text-xs font-black text-blue-600 hover:text-blue-800 flex items-center gap-1 bg-blue-100/50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-all shrink-0 border-none outline-none focus:outline-none cursor-pointer">
+                        <button type="button" @click="showMap = !showMap" class="text-xs font-black text-blue-300 hover:text-blue-400 flex items-center gap-1 bg-blue-500/20 hover:bg-blue-500/30 px-3 py-1.5 rounded-lg transition-all shrink-0 border-none outline-none focus:outline-none cursor-pointer">
                             <span class="material-symbols-outlined text-[16px]" x-show="!showMap">map</span>
                             <span class="material-symbols-outlined text-[16px]" x-show="showMap" x-cloak>close</span>
                             <span x-text="showMap ? 'Hide Map' : 'Show Map'">Show Map</span>
@@ -804,7 +804,7 @@
                     </div>
                     
                     <!-- Map Container -->
-                    <div x-show="showMap" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-[300px]" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-[300px]" x-transition:leave-end="opacity-0 max-h-0" class="overflow-hidden rounded-xl border border-blue-100 shadow-sm w-full h-[250px]">
+                    <div x-show="showMap" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-[300px]" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-[300px]" x-transition:leave-end="opacity-0 max-h-0" class="overflow-hidden rounded-xl border border-blue-500/20 shadow-sm w-full h-[250px]">
                         <iframe class="w-full h-full border-none" src="https://maps.google.com/maps?q=Commonwealth%20Ave.%20Cor.%20IBP%20Road%20(Litex%20Junction),%20Quezon%20City,%20Metro%20Manila,%20Philippines&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
@@ -812,15 +812,15 @@
 
                 <!-- Geomap address locator (Pickup only) -->
                 @if($pickup_option === 'Pickup')
-                <div x-data="pickupMapComponent($wire)" class="mt-4 p-5 bg-blue-50/50 border border-blue-100/60 rounded-[1.25rem] flex flex-col gap-4 animate-fade-in mb-6">
+                <div x-data="pickupMapComponent($wire)" class="mt-4 p-5 bg-blue-500/10 border border-blue-500/20 rounded-[1.25rem] flex flex-col gap-4 animate-fade-in mb-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-blue-500">pin_drop</span>
-                            <span class="text-xs font-bold text-blue-800 uppercase tracking-wider">Locate Pickup Address on Map</span>
+                            <span class="material-symbols-outlined text-blue-400">pin_drop</span>
+                            <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Locate Pickup Address on Map</span>
                         </div>
-                        <span class="text-[9px] font-black text-blue-600 bg-blue-100/65 px-2 py-0.5 rounded uppercase">Draggable Marker</span>
+                        <span class="text-[9px] font-black text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded uppercase">Draggable Marker</span>
                     </div>
-                    <div id="pickup-map" class="w-full h-[250px] rounded-xl border border-blue-100 shadow-sm overflow-hidden" wire:ignore></div>
+                    <div id="pickup-map" class="w-full h-[250px] rounded-xl border border-blue-500/20 shadow-sm overflow-hidden" wire:ignore></div>
                     <p class="text-[10px] text-gray-400 font-medium leading-relaxed">
                         Drag the marker or click on the map to set your exact location. This will automatically fill in your Barangay, Street and City inputs below.
                     </p>

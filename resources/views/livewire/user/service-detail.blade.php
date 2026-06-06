@@ -180,7 +180,7 @@
                     };
                 @endphp
                 
-                <div class="bg-white rounded-[2rem] border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group">
+                <div class="relative bg-white rounded-[2rem] border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group cursor-pointer">
                     <div class="relative h-44 overflow-hidden bg-gray-50 shrink-0">
                         <img src="{{ asset($related->image_path) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -205,10 +205,8 @@
                                 <span class="text-base font-black text-gray-900 mt-0.5">₱{{ number_format($related->base_price, 2) }}</span>
                             </div>
                             <div class="flex items-center gap-2 shrink-0">
-                                <a href="/user/services/{{ $related->id }}" class="inline-flex items-center justify-center px-3.5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-[10px] active:scale-95 transition-all">
-                                    Details
-                                </a>
-                                <a href="/user/book-appointment?service={{ urlencode($related->name) }}" class="inline-flex items-center justify-center gap-1 px-3.5 py-2.5 bg-gray-900 hover:bg-blue-650 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all">
+                                <a href="/user/services/{{ $related->id }}" class="after:absolute after:inset-0 after:z-10"></a>
+                                <a href="/user/book-appointment?service={{ urlencode($related->name) }}" class="inline-flex items-center justify-center gap-1 px-3.5 py-2.5 bg-gray-900 hover:bg-blue-650 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all relative z-20">
                                     Book
                                 </a>
                             </div>

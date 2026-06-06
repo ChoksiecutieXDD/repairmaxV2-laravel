@@ -191,7 +191,7 @@
                         }
                     @endphp
                     
-                    <div class="bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-2xl hover:shadow-3xl hover:bg-white/[0.05] hover:border-white/20 hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col group">
+                    <div class="relative bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-2xl hover:shadow-3xl hover:bg-white/[0.05] hover:border-white/20 hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col group cursor-pointer">
                         
                         <!-- Card Image -->
                         <div class="relative h-48 overflow-hidden bg-slate-950/20 shrink-0">
@@ -221,10 +221,8 @@
                                     <span class="text-lg font-black text-white mt-0.5">₱{{ number_format($related->base_price, 2) }}</span>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0">
-                                    <a href="/services/{{ $related->id }}" class="inline-flex items-center justify-center px-4 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-[10px] active:scale-95 transition-all whitespace-nowrap">
-                                        Details
-                                    </a>
-                                    <a href="/booking?service={{ urlencode($related->name) }}" class="inline-flex items-center justify-center gap-1 px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap">
+                                    <a href="/services/{{ $related->id }}" class="after:absolute after:inset-0 after:z-10"></a>
+                                    <a href="/booking?service={{ urlencode($related->name) }}" class="inline-flex items-center justify-center gap-1 px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap relative z-20">
                                         Book
                                         <span class="material-symbols-outlined text-[14px]">calendar_month</span>
                                     </a>
@@ -253,6 +251,11 @@
                   class="fixed inset-0 bg-gray-950/80 backdrop-blur-xl" 
                   @click="openLightbox = false"></div>
 
+             <!-- Close Button -->
+             <button @click="openLightbox = false" class="absolute top-6 right-6 sm:top-10 sm:right-10 text-white hover:text-red-500 transition-colors z-50 bg-transparent hover:bg-transparent shadow-none border-none p-0 cursor-pointer" aria-label="Close lightbox">
+                 <span class="material-symbols-outlined text-[36px] sm:text-[40px] font-bold">close</span>
+             </button>
+
              <!-- Content Card -->
              <div x-show="openLightbox"
                   x-transition:enter="ease-out duration-300"
@@ -262,11 +265,6 @@
                   x-transition:leave-start="opacity-100 scale-100"
                   x-transition:leave-end="opacity-0 scale-95"
                   class="relative bg-white/10 backdrop-blur-md rounded-[2.5rem] overflow-hidden max-w-2xl w-full p-4 border border-white/20 shadow-2xl flex flex-col items-center justify-center">
-                  
-                  <!-- Close Button -->
-                  <button @click="openLightbox = false" class="absolute top-6 right-6 text-red-500 hover:text-red-600 active:scale-90 transition-all z-10">
-                      <span class="material-symbols-outlined text-[36px] font-bold">close</span>
-                  </button>
 
                   <!-- Image -->
                   <img :src="activeImage" class="max-w-full max-h-[75vh] rounded-4xl object-contain shadow-2xl">

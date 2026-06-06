@@ -3,8 +3,8 @@
         <!-- Gradient Banner Header -->
         <section class="w-full bg-gradient-to-b from-[#0f172a] via-[#12183a] to-[#020617] pt-32 lg:pt-40 pb-32 md:pb-40 relative overflow-hidden">
             <!-- Glow Effects Inside Banner -->
-            <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-            <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute top-0 left-1/4 -translate-x-1/2 w-125 h-125 bg-blue-600/8 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute bottom-0 right-1/4 translate-x-1/2 w-125 h-125 bg-indigo-600/8 rounded-full blur-[140px] pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
                 <span class="text-xs font-black uppercase tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3.5 py-1.5 rounded-full inline-block mb-4 shadow-sm">
@@ -53,7 +53,7 @@
                         <!-- Interactive Mockup for Bento Visual Richness -->
                         <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-4 flex flex-col sm:flex-row gap-4 items-center w-full">
                             <div class="relative w-full">
-                                <span class="material-symbols-outlined absolute left-3 top-3 text-gray-500 text-[18px]">tag</span>
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-[18px]">tag</span>
                                 <input type="text" placeholder="e.g. BK-00001" disabled class="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-500 cursor-not-allowed">
                             </div>
                             <a href="{{ route('help.track') }}" class="w-full sm:w-auto px-5 py-2.5 bg-blue-600/80 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition-all shadow-md text-center shrink-0">
@@ -199,25 +199,25 @@
                             </p>
                             
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                                <div class="flex items-start gap-2.5">
-                                    <span class="material-symbols-outlined text-blue-400 text-[18px] mt-0.5">location_on</span>
+                                <div class="flex items-center gap-2.5">
+                                    <span class="material-symbols-outlined text-blue-400 text-[18px]">location_on</span>
                                     <div>
-                                        <p class="font-bold text-white">Litex, Quezon City</p>
-                                        <p class="text-gray-500 mt-0.5">Commonwealth Ave.</p>
+                                        <p class="font-bold text-white mb-0">Litex, Quezon City</p>
+                                        <p class="text-gray-500 mt-0.5 mb-0">Commonwealth Ave.</p>
                                     </div>
                                 </div>
-                                <div class="flex items-start gap-2.5">
-                                    <span class="material-symbols-outlined text-blue-400 text-[18px] mt-0.5">schedule</span>
+                                <div class="flex items-center gap-2.5">
+                                    <span class="material-symbols-outlined text-blue-400 text-[18px]">schedule</span>
                                     <div>
-                                        <p class="font-bold text-white">Mon – Sat: 9am – 6pm</p>
-                                        <p class="text-gray-500 mt-0.5">Sunday: Closed</p>
+                                        <p class="font-bold text-white mb-0">Mon – Sat: 9am – 6pm</p>
+                                        <p class="text-gray-500 mt-0.5 mb-0">Sunday: Closed</p>
                                     </div>
                                 </div>
-                                <div class="flex items-start gap-2.5">
-                                    <span class="material-symbols-outlined text-blue-400 text-[18px] mt-0.5">call</span>
+                                <div class="flex items-center gap-2.5">
+                                    <span class="material-symbols-outlined text-blue-400 text-[18px]">call</span>
                                     <div>
-                                        <p class="font-bold text-white">+63 912 345 6789</p>
-                                        <p class="text-gray-500 mt-0.5">Direct phone line</p>
+                                        <p class="font-bold text-white mb-0">+63 912 345 6789</p>
+                                        <p class="text-gray-550 mt-0.5 mb-0">Direct phone line</p>
                                     </div>
                                 </div>
                             </div>
