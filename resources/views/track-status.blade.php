@@ -9,7 +9,7 @@
             <div class="text-center max-w-3xl mx-auto">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">Track Your Repair</h1>
                 <p class="text-lg md:text-xl text-gray-400 leading-relaxed">
-                    Enter your Booking Reference Number and email to get real-time updates on your device status.
+                    Enter your Ticket Number and email to get real-time updates on your device status.
                 </p>
             </div>
         </section>
@@ -19,12 +19,12 @@
                 <form action="/track-status" method="POST" class="space-y-8">
                     @csrf
                     <div>
-                        <label class="block text-sm font-bold text-gray-300 mb-3">Booking Reference</label>
+                        <label class="block text-sm font-bold text-gray-300 mb-3">Ticket Number</label>
                         <div class="relative group">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <span class="material-symbols-outlined text-gray-400 group-focus-within:text-blue-500 transition-colors">tag</span>
                             </div>
-                            <input type="text" name="ticket_id" placeholder="e.g. BK-00001" required 
+                            <input type="text" name="ticket_id" placeholder="e.g. RM-00001" autocomplete="off" required 
                                 class="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-[1.25rem] outline-none focus:bg-white/10 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base text-white shadow-inner">
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <span class="material-symbols-outlined text-gray-400 group-focus-within:text-blue-500 transition-colors">mail</span>
                             </div>
-                            <input type="email" name="email" placeholder="hello@example.com" required 
+                            <input type="email" name="email" placeholder="hello@example.com" autocomplete="off" required 
                                 class="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-[1.25rem] outline-none focus:bg-white/10 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-base text-white shadow-inner">
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                     Need Help?
                 </h3>
                 <p class="text-gray-400 mb-4">
-                    If you can't find your booking reference, check your confirmation email or contact our support team.
+                    If you can't find your ticket number, check your confirmation email or contact our support team.
                 </p>
                 <a href="/contact" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-bold">
                     <span>Contact Support</span>

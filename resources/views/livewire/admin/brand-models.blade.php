@@ -293,7 +293,7 @@
             <p class="text-sm text-gray-500 mb-8 leading-relaxed">This action will delete the Brand. Exact models linked to this brand might lose their parent reference.</p>
             <div class="flex gap-3 justify-center">
                 <button wire:click="resetBrandFields" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
-                <button wire:click="deleteBrand" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all text-xs border-none cursor-pointer shadow-md shadow-red-100">Delete</button>
+                <button wire:click="deleteBrand" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
             </div>
         </div>
     </div>
@@ -310,7 +310,7 @@
             <p class="text-sm text-gray-500 mb-8 leading-relaxed">This action cannot be undone. Users will no longer see this model in booking dropdown options.</p>
             <div class="flex gap-3 justify-center">
                 <button wire:click="resetModelFields" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
-                <button wire:click="deleteModel" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all text-xs border-none cursor-pointer shadow-md shadow-red-100">Delete</button>
+                <button wire:click="deleteModel" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
             </div>
         </div>
     </div>

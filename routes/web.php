@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 // Mails
 use App\Mail\ContactEnquiry;
 use App\Mail\BookingConfirmationEmail;
+use App\Mail\TrackOtpEmail;
 
 // Livewire Components (Auth)
 use App\Livewire\Auth\Register;
@@ -86,31 +87,141 @@ Route::get('/help/track', function () {
     return view('help.track');
 })->name('help.track');
 
-Route::post('/help/track', function (Request $request) {
+Route::post('/help/track/send-otp', function (Request $request) {
+    $ticketId = $request->input('ticket_id');
+    $email    = $request->input('email');
+
+    // Step 1 — does this ticket even exist?
+    $ticketExists = \App\Models\Appointment::where('tracking_code', $ticketId)
+        ->orWhere('booking_number', $ticketId)
+        ->exists();
+
+    if (!$ticketExists) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Ticket number not found. Please check and try again.'
+        ], 404);
+    }
+
+    // Step 2 — does the ticket exist AND match this email?
+    $appointment = \App\Models\Appointment::where(function ($q) use ($ticketId) {
+            $q->where('tracking_code', $ticketId)
+              ->orWhere('booking_number', $ticketId);
+        })
+        ->whereHas('user', fn($uq) => $uq->where('email', $email))
+        ->first();
+
+    if (!$appointment) {
+        // Ticket exists but email doesn't match
+        return response()->json([
+            'success' => false,
+            'message' => 'The email address you entered is not linked to ticket ' . $ticketId . '. Please use the exact email you provided when you booked the repair.'
+        ], 422);
+    }
+
+    // Generate a 6-digit OTP
+    $otp = (string) mt_rand(100000, 999999);
+
+    session([
+        'track_otp'            => $otp,
+        'track_ticket_id'      => $ticketId,
+        'track_email'          => $email,
+        'track_otp_expires_at' => now()->addMinutes(10),
+        'track_verified'       => false
+    ]);
+
+    try {
+        Mail::to($email)->send(new TrackOtpEmail($otp, $ticketId));
+        return response()->json([
+            'success' => true,
+            'message' => 'Verification code sent to your email.'
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Track OTP sending failed: ' . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to send verification email. Please try again later.'
+        ], 500);
+    }
+});
+
+Route::post('/help/track/verify-otp', function (Request $request) {
+    $otp = $request->input('otp');
     $ticketId = $request->input('ticket_id');
     $email = $request->input('email');
-    
-    $appointment = \App\Models\Appointment::where(function ($query) use ($ticketId) {
-            $query->where('tracking_code', $ticketId)
-                  ->orWhere('booking_number', $ticketId);
+
+    $sessionOtp = session('track_otp');
+    $sessionTicketId = session('track_ticket_id');
+    $sessionEmail = session('track_email');
+    $expiresAt = session('track_otp_expires_at');
+
+    if (!$sessionOtp || !$expiresAt || now()->greaterThan($expiresAt)) {
+        return response()->json([
+            'success' => false,
+            'message' => 'OTP has expired. Please request a new code.'
+        ], 400);
+    }
+
+    if ($otp !== $sessionOtp || $ticketId !== $sessionTicketId || $email !== $sessionEmail) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Invalid verification code. Please try again.'
+        ], 400);
+    }
+
+    // Mark as verified
+    session([
+        'track_verified' => true,
+        'track_verified_ticket_id' => $ticketId,
+        'track_verified_email' => $email
+    ]);
+
+    return response()->json([
+        'success' => true
+    ]);
+});
+
+Route::post('/help/track', function (Request $request) {
+    $ticketId = $request->input('ticket_id');
+    $email    = $request->input('email');
+
+    // Check session verification
+    if (session('track_verified') !== true
+        || session('track_verified_ticket_id') !== $ticketId
+        || session('track_verified_email') !== $email) {
+        return view('help.track', [
+            'error'     => 'Verification required. Please complete the OTP check first.',
+            'ticket_id' => $ticketId,
+        ]);
+    }
+
+    // Search registered users AND guest bookings
+    $appointment = \App\Models\Appointment::where(function ($q) use ($ticketId) {
+            $q->where('tracking_code', $ticketId)
+              ->orWhere('booking_number', $ticketId);
         })
-        ->whereHas('user', function ($query) use ($email) {
-            $query->where('email', $email);
-        })->first();
+        ->where(function ($q) use ($email) {
+            // Registered user match
+            $q->whereHas('user', fn($uq) => $uq->where('email', $email))
+              // Guest booking match (public_email or email column)
+              ->orWhere('public_email', $email)
+              ->orWhere('email', $email);
+        })
+        ->first();
 
     if ($appointment) {
         return view('help.track', [
-            'status' => $appointment->status,
+            'status'      => $appointment->status,
             'appointment' => $appointment,
-            'ticket_id' => $ticketId,
-            'email' => $email
+            'ticket_id'   => $ticketId,
+            'email'       => $email,
         ]);
     }
 
     return view('help.track', [
-        'error' => 'No active repair found matching that Booking Reference and Email.',
+        'error'     => 'No repair found matching that Ticket Number and email. Please double-check and try again.',
         'ticket_id' => $ticketId,
-        'email' => $email
+        'email'     => $email,
     ]);
 });
 

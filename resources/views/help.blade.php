@@ -54,7 +54,7 @@
                         <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-4 flex flex-col sm:flex-row gap-4 items-center w-full">
                             <div class="relative w-full">
                                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-[18px]">tag</span>
-                                <input type="text" placeholder="e.g. BK-00001" disabled class="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-500 cursor-not-allowed">
+                                <input type="text" placeholder="e.g. RM-00001" disabled class="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-500 cursor-not-allowed">
                             </div>
                             <a href="{{ route('help.track') }}" class="w-full sm:w-auto px-5 py-2.5 bg-blue-600/80 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition-all shadow-md text-center shrink-0">
                                 Track Now
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="mt-8 pt-6 border-t border-white/5 flex items-center justify-between text-left">
-                        <span class="text-xs text-gray-500">Enter your Booking reference number to track live status.</span>
+                        <span class="text-xs text-gray-500">Enter your Ticket Number to track live status.</span>
                         <a href="{{ route('help.track') }}" class="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm font-bold transition-colors">
                             <span>Access Portal</span>
                             <span class="material-symbols-outlined text-[16px]">arrow_forward</span>

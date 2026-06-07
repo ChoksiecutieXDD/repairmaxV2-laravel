@@ -4,6 +4,11 @@
     searchQuery: '',
     userInput: '',
     isLoading: false,
+    sessionId: localStorage.getItem('chatbot_session_id') || (() => {
+        const id = 'sess_' + Math.random().toString(36).substring(2, 15);
+        localStorage.setItem('chatbot_session_id', id);
+        return id;
+    })(),
     messages: [
         { role: 'bot', content: 'Hi! I\'m Maxie, your Repairmax AI assistant. What kind of device issue are you experiencing today? I can help you diagnose it and set up a repair ticket.' }
     ],
@@ -75,7 +80,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']').getAttribute('content')
                 },
-                body: JSON.stringify({ message: userMsg })
+                body: JSON.stringify({ message: userMsg, session_id: this.sessionId })
             });
 
             const data = await response.json();

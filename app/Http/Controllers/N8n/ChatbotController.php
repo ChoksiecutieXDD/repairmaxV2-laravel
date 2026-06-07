@@ -5,6 +5,7 @@ namespace App\Http\Controllers\N8n;
 use App\Http\Controllers\Controller;
 use App\Models\ChatbotSession;
 use App\Models\ChatbotMessage;
+use App\Models\Appointment;
 use App\Services\N8nService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -65,6 +66,9 @@ class ChatbotController extends Controller
         // Extract response from n8n result
         $botResponse = $result['data']['message'] ?? 'I understood your message. Let me process that for you.';
 
+        // Intercept tool calls
+        $botResponse = $this->parseAndHandleToolCalls($botResponse);
+
         // Save bot response
         ChatbotMessage::create([
             'chatbot_session_id' => $sessionId,
@@ -78,6 +82,54 @@ class ChatbotController extends Controller
             'response' => $botResponse,
             'metadata' => $result['data']['metadata'] ?? [],
         ]);
+    }
+
+    /**
+     * Intercept and handle raw tool calls (e.g. track_booking) inside the bot's response text.
+     */
+    private function parseAndHandleToolCalls(string $text): string
+    {
+        if (preg_match('/\(function=track_booking>(\{.*?\})\)?/s', $text, $matches)) {
+            $jsonStr = $matches[1];
+            $params = json_decode($jsonStr, true);
+            
+            if ($params) {
+                $ref = $params['parameters0_Value'] ?? $params['booking_reference'] ?? null;
+                $email = $params['parameters1_Value'] ?? $params['email'] ?? null;
+                
+                if ($ref && $email) {
+                    $appointment = Appointment::where(function ($query) use ($ref) {
+                            $query->where('tracking_code', $ref)
+                                  ->orWhere('booking_number', $ref);
+                        })
+                        ->whereHas('user', function ($query) use ($email) {
+                            $query->where('email', $email);
+                        })->first();
+                    
+                    if ($appointment) {
+                        $statusReply = "Here is the status for your ticket **{$appointment->tracking_code}**:\n\n";
+                        $statusReply .= "- **Device**: {$appointment->device_brand} {$appointment->device_model}\n";
+                        $statusReply .= "- **Status**: " . ucfirst($appointment->status) . "\n";
+                        if ($appointment->fault_category) {
+                            $statusReply .= "- **Issue**: {$appointment->fault_category}\n";
+                        }
+                        if ($appointment->status === 'completed') {
+                            $statusReply .= "\nYour device is ready for pickup!";
+                        } else if (in_array(strtolower($appointment->status), ['scheduled', 'pending', 'in_progress', 'processing'])) {
+                            $statusReply .= "\nWe are currently working on it. We'll notify you once there's an update.";
+                        }
+                    } else {
+                        $statusReply = "No active repair booking found matching reference \"{$ref}\" and email \"{$email}\".";
+                    }
+                    
+                    $text = str_replace($matches[0], $statusReply, $text);
+                    $text = str_replace("Unfortunately, it seems there was an issue with my previous response. Let me try again.", "", $text);
+                    $text = trim($text);
+                }
+            }
+        }
+        
+        return $text;
     }
 
     /**

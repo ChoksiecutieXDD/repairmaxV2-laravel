@@ -232,7 +232,7 @@
                         Are you sure you want to delete <span class="font-bold text-gray-900">{{ $userToDeleteName }}</span>? This action cannot be undone and all associated data will be removed.
                     </p>
                     <div class="flex flex-col gap-3">
-                        <button wire:click="deleteUser" class="w-full py-4 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 shadow-lg shadow-red-200 transition-all">
+                        <button wire:click="deleteUser" class="w-full py-4 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 shadow-lg transition-all">
                             Yes, Delete Account
                         </button>
                         <button @click="showDelete = false" class="w-full py-4 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-all">

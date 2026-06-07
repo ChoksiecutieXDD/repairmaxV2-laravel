@@ -515,7 +515,7 @@
                     Cancel
                 </button>
                 <button type="button" @click="triggerLogout()" 
-                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-[1.25rem] hover:bg-red-700 transition-all shadow-lg shadow-red-200 dark:shadow-none text-sm">
+                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-[1.25rem] hover:bg-red-700 transition-all shadow-lg text-sm">
                     Logout
                 </button>
             </div>

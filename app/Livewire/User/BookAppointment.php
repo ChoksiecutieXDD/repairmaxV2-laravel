@@ -180,7 +180,7 @@ class BookAppointment extends Component
         $count = Appointment::count();
         $nextNumber = str_pad($count + 1, 5, '0', STR_PAD_LEFT);
         $this->tracking_code = 'RM-' . $nextNumber;
-        $this->booking_number = 'BK-' . $nextNumber;
+        $this->booking_number = 'RM-' . $nextNumber;
     }
 
     public function calculateAdditionalFee()
@@ -401,10 +401,7 @@ class BookAppointment extends Component
         $appointment->city           = $this->city;
         $appointment->additional_fee = $this->additional_fee;
         $appointment->quote          = $calculatedQuote;
-        $appointment->save();
-
-        // Dynamically save the actual auto-incremented ID as Book ID: #
-        $appointment->booking_number = 'Book ID: ' . $appointment->id;
+        $appointment->booking_number = $trackingCode;
         $appointment->save();
 
         // Create notifications for all admins

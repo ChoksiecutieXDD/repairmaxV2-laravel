@@ -18,6 +18,17 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <style>
+        /* Force browser autofill to blend with dark theme inputs */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 1000px #090d16 inset !important;
+            -webkit-text-fill-color: #ffffff !important;
+            transition: background-color 50000s ease-in-out 0s;
+        }
+    </style>
 
     @livewireStyles
     <script>

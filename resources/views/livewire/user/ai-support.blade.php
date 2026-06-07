@@ -183,7 +183,7 @@
                     Cancel
                 </button>
                 <button type="button" @click="$wire.deleteSession(sessionToDelete); deleteModal = false" 
-                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-all shadow-lg shadow-red-200">
+                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-all shadow-lg">
                     Delete
                 </button>
             </div>

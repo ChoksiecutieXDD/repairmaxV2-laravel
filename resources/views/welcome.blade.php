@@ -4,7 +4,10 @@
     <section id="intro" class="relative w-full min-h-screen flex items-center overflow-hidden pt-32 lg:pt-36 pb-20 bg-[#020617]">
         <!-- Premium Radial Glow Effects -->
         <div class="absolute top-0 right-1/4 w-150 h-150 bg-blue-900/15 rounded-full blur-[130px] pointer-events-none"></div>
-        <div class="absolute bottom-0 left-1/4 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-32 left-1/4 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <!-- Section Bottom Blending Overlay -->
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#020617] to-transparent pointer-events-none z-10"></div>
 
         <div class="relative z-20 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -209,6 +212,52 @@
                     <div>
                         <h4 class="text-sm font-bold text-white mb-0.5">Expert Support</h4>
                         <p class="text-xs text-gray-400 leading-normal mb-0">Our team is here to help you every step of the way.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Diagnostic Showcase Section -->
+            <div class="mt-32 flex flex-col items-center text-center w-full max-w-7xl mx-auto fade-in-element">
+                <!-- Top Badge -->
+                <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/20 inline-block mb-6">
+                    AI-Powered Diagnosis
+                </span>
+                
+                <!-- Centered Heading -->
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight max-w-3xl mb-6 px-4">
+                    Diagnose Symptoms Instantly with <span class="bg-clip-text text-transparent bg-linear-to-r from-blue-400 via-indigo-400 to-cyan-400">Maxie AI</span>
+                </h2>
+                
+                <!-- Centered Description -->
+                <p class="text-base md:text-lg text-gray-400 font-medium leading-relaxed max-w-2xl mb-14 font-sans px-4">
+                    Say goodbye to standard diagnostic delays. Tell Maxie what is wrong with your device, and get a precise diagnosis, parts list, and instant cost estimation in real-time.
+                </p>
+
+                <!-- Showcase Image stretched to match header/footer layout alignment -->
+                <div class="relative w-full px-4 sm:px-6 lg:px-8">
+                    <!-- Glow effect behind image, ending before bottom boundary to avoid cutoff -->
+                    <div class="absolute inset-x-0 top-0 bottom-40 bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500 blur-3xl opacity-20 pointer-events-none"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="relative overflow-hidden">
+                            <!-- The image itself, no rounded corners, matching layout margins perfectly -->
+                            <img src="{{ asset('img/landing-page-picture.png') }}" alt="Maxie AI Assistant interface" class="w-full h-auto shadow-2xl block">
+                            
+                            <!-- Bottom Blend Gradient Overlay (Smoothed) -->
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent pointer-events-none z-15"></div>
+                        </div>
+
+                        <!-- Glowing Sparkles Floating Button at the bottom center (outside overflow-hidden) -->
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20">
+                            <button @click="$dispatch('open-chat')" class="w-16 h-16 rounded-full bg-[#020617] flex items-center justify-center cursor-pointer border-none outline-none relative group/btn shadow-[0_0_25px_rgba(168,85,247,0.5)]">
+                                <!-- Gradient Border Glow effect -->
+                                <div class="absolute -inset-[2px] bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 rounded-full opacity-80 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                                <!-- Inner dark circle -->
+                                <div class="absolute inset-[1.5px] bg-[#0b0f19] rounded-full"></div>
+                                <!-- Icon -->
+                                <span class="material-symbols-outlined text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 text-3xl font-bold relative z-10 animate-pulse">auto_awesome</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

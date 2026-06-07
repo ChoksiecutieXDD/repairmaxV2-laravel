@@ -220,7 +220,7 @@
                 <button @click="openDeleteModal = false" type="button" class="w-1/2 bg-gray-105 text-gray-700 py-3.5 rounded-xl font-black text-sm hover:bg-gray-200 transition-all border-none cursor-pointer">
                     Cancel
                 </button>
-                <button wire:click="deleteRecord" type="button" class="w-1/2 bg-red-600 text-white py-3.5 rounded-xl font-black text-sm hover:bg-red-700 transition-all shadow-lg shadow-red-100 border-none cursor-pointer">
+                <button wire:click="deleteRecord" type="button" class="w-1/2 bg-red-600 text-white py-3.5 rounded-xl font-black text-sm hover:bg-red-700 transition-all shadow-lg border-none cursor-pointer">
                     Delete
                 </button>
             </div>
