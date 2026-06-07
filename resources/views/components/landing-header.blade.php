@@ -8,8 +8,8 @@
     }"
     @scroll.window="scrolled = (window.scrollY > 50)"
     id="main-header"
-    class="fixed top-0 w-full z-50 transition-all duration-300 border-b"
-    :class="isSolid ? 'bg-[#020617]/90 backdrop-blur-md border-white/5 shadow-sm' : 'bg-transparent border-transparent'">
+    class="fixed top-0 w-full z-50 transition-all duration-300"
+    :class="isSolid ? 'bg-[#020617]/90 backdrop-blur-md border-b border-white/5 shadow-sm' : 'bg-transparent border-b border-transparent'">
     <nav aria-label="Main Navigation" class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-6 items-center h-20">
 
         @php
