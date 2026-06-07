@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="col-span-1 text-center md:text-right">
+            <div class="col-span-1 text-center">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Platform</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="/services" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Services</a></li>
@@ -42,7 +42,7 @@
                 </ul>
             </div>
 
-            <div class="col-span-1 text-center md:text-right">
+            <div class="col-span-1 text-center">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Account</h3>
                 <ul class="space-y-3 text-sm">
                     <li>
@@ -60,7 +60,7 @@
                 </ul>
             </div>
 
-            <div class="col-span-2 text-center md:text-right lg:col-span-1">
+            <div class="col-span-2 text-center lg:col-span-1">
                 <h3 class="text-sm font-semibold text-gray-100 tracking-wider uppercase mb-4">Legal</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="/legal-policy#privacy" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Privacy Policy</a></li>
