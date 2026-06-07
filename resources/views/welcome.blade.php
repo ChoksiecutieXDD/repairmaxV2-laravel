@@ -13,7 +13,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 <!-- Left Column: Content and CTA -->
-                <div class="lg:col-span-6 text-center lg:text-left space-y-8 animate-fade-in-left">
+                <div class="lg:col-span-6 text-center lg:text-left space-y-8 fade-in-left">
 
 
                     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-semibold text-white tracking-tighter drop-shadow-2xl leading-[1.1] text-balance">
@@ -57,7 +57,7 @@
                 </div>
 
                 <!-- Right Column: Status Tracker Mockup Card with Diagnostic Ring Graphic -->
-                <div class="lg:col-span-6 flex justify-center lg:justify-end animate-fade-in-right">
+                <div class="lg:col-span-6 flex justify-center lg:justify-end fade-in-right">
                     <div class="w-full max-w-140 bg-white/3 border border-white/10 rounded-[2.5rem] p-6 sm:p-8 backdrop-blur-md shadow-2xl relative overflow-hidden">
                         
                         <!-- Card Header -->
