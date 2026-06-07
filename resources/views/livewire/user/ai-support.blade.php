@@ -64,7 +64,7 @@
                         <p class="text-xs text-green-600 font-medium tracking-tight">Repairmax Assistant</p>
                     </div>
                 </div>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full border border-blue-100">
+                <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full">
                     Active Session
                 </span>
             </div>
