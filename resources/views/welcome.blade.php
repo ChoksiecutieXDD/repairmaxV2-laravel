@@ -265,7 +265,7 @@
         </div>
     </section>
 
-    <section id="how-it-works" class="py-16 md:py-24 bg-[#020617]">
+    <section id="how-it-works" class="pt-16 md:pt-20 pb-16 md:pb-20 bg-[#020617]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16 fade-in-element">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">A Seamless Digital Process</h2>
@@ -309,7 +309,7 @@
     </section>
 
     <!-- Platform Modules Section -->
-    <section id="services" class="py-24 md:py-32 bg-[#020617] relative overflow-hidden">
+    <section id="services" class="pt-16 md:pt-20 pb-16 md:pb-20 bg-[#020617] relative overflow-hidden">
         <!-- Glow Effects -->
         <div class="absolute top-1/4 left-10 w-125 h-125 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute bottom-1/4 right-10 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -380,7 +380,7 @@
     </section>
 
     <!-- Advantage Section -->
-    <section id="why" class="py-24 md:py-32 bg-[#020617]">
+    <section id="why" class="pt-16 md:pt-20 pb-16 md:pb-20 bg-[#020617]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-20 fade-in-element">
                 <h2 class="text-xs font-bold text-blue-500 uppercase tracking-[0.2em] mb-4">Precision First</h2>
@@ -417,7 +417,7 @@
     </section>
 
     <!-- What We Can Repair Section -->
-    <section id="repairs" class="py-24 md:py-32 bg-[#020617] relative overflow-hidden">
+    <section id="repairs" class="pt-16 md:pt-20 pb-16 md:pb-20 bg-[#020617] relative overflow-hidden">
         <!-- Glow Effects -->
         <div class="absolute top-1/4 left-1/4 w-125 h-125 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute bottom-1/4 right-1/4 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -509,7 +509,7 @@
     @php
         $carouselServices = \App\Models\FaultType::orderBy('name', 'asc')->get();
     @endphp
-    <section class="py-24 relative overflow-hidden bg-[#020617]" 
+    <section class="pt-16 md:pt-20 pb-16 md:pb-20 relative overflow-hidden bg-[#020617]" 
              x-data="{ 
                 activeIdx: 0, 
                 services: {{ Js::from($carouselServices->map(fn($s) => [
@@ -664,7 +664,7 @@
     </section>
 
     <!-- Testimonials Section (SaaS Infinite Scroll) -->
-    <section x-data="{}" class="pt-24 pb-12 bg-[#020617] overflow-hidden relative">
+    <section x-data="{}" class="pt-16 md:pt-20 pb-12 bg-[#020617] overflow-hidden relative">
         <!-- Glow Effects -->
         <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-125 h-125 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-125 h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -843,7 +843,7 @@
     </section>
 
     <!-- Final CTA Section (SaaS Redesign) -->
-    <section class="pt-12 pb-16 md:pb-24 bg-[#020617] overflow-hidden relative">
+    <section class="pt-12 pb-16 md:pb-20 bg-[#020617] overflow-hidden relative">
         <!-- Glow Effects -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-blue-900/10 rounded-full blur-[130px] pointer-events-none"></div>
 
