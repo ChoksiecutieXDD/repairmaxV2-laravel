@@ -14,13 +14,13 @@
 
         <div class="flex flex-wrap gap-3 w-full lg:w-auto">
             <button wire:click="markAllAsRead" 
-                class="flex-1 lg:flex-none justify-center bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-5 py-3 rounded-xl font-bold shadow-sm transition-all duration-200 flex items-center gap-2 text-sm shrink-0">
+                class="flex-1 lg:flex-none justify-center bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-5 py-3 rounded-full font-bold shadow-sm transition-all duration-200 flex items-center gap-2 text-sm shrink-0">
                 <span class="material-symbols-outlined text-[20px] text-green-500">done_all</span>
                 Mark All Read
             </button>
             <button wire:click="deleteAllNotifications" 
                 onclick="return confirm('Are you sure you want to delete all notifications? This action cannot be undone.')"
-                class="flex-1 lg:flex-none justify-center bg-red-50 border border-red-200 text-red-700 hover:bg-red-100 px-5 py-3 rounded-xl font-bold shadow-sm transition-all duration-200 flex items-center gap-2 text-sm shrink-0">
+                class="flex-1 lg:flex-none justify-center bg-red-50 border border-red-200 text-red-700 hover:bg-red-100 px-5 py-3 rounded-full font-bold shadow-sm transition-all duration-200 flex items-center gap-2 text-sm shrink-0">
                 <span class="material-symbols-outlined text-[20px]">delete_sweep</span>
                 Delete All
             </button>
@@ -50,15 +50,15 @@
                 
                 <div class="flex gap-2">
                     <button wire:click="$set('filterRead', 'all')" 
-                        class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all border {{ $filterRead === 'all' ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        class="flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all border {{ $filterRead ==='all' ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
                         All
                     </button>
                     <button wire:click="$set('filterRead', 'unread')" 
-                        class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all border {{ $filterRead === 'unread' ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        class="flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all border {{ $filterRead ==='unread' ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
                         Unread
                     </button>
                     <button wire:click="$set('filterRead', 'read')" 
-                        class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all border {{ $filterRead === 'read' ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        class="flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all border {{ $filterRead ==='read' ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
                         Read
                     </button>
                 </div>
@@ -136,7 +136,7 @@
 
             <!-- Sidebar Footer Pagination -->
             @if($notifications->hasPages())
-                <div class="p-4 border-t border-gray-100 bg-gray-50/50 shrink-0">
+                <div class="laravel-pagination p-4 border-t border-gray-100 bg-gray-50/50 shrink-0">
                     {{ $notifications->links(data: ['scrollTo' => false]) }}
                 </div>
             @endif
@@ -278,7 +278,7 @@
 
                                     <div class="pt-4 border-t border-gray-100 flex justify-end">
                                         <a href="{{ route('admin.messages') }}" 
-                                            class="inline-flex items-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-xs font-black transition-all shadow-md shadow-indigo-100 tracking-wider uppercase">
+                                            class="inline-flex items-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-750 text-white rounded-full text-xs font-black transition-all shadow-md shadow-indigo-100 tracking-wider uppercase">
                                             <span class="material-symbols-outlined text-[16px]">reply</span>
                                             Open Messaging Hub
                                         </a>
@@ -320,7 +320,7 @@
 
                                     <div class="pt-4 border-t border-gray-100 flex justify-end">
                                         <a href="{{ route('admin.user-management') }}" 
-                                            class="inline-flex items-center gap-2 px-5 py-3 bg-purple-600 hover:bg-purple-750 text-white rounded-xl text-xs font-black transition-all shadow-md shadow-purple-100 tracking-wider uppercase">
+                                            class="inline-flex items-center gap-2 px-5 py-3 bg-purple-600 hover:bg-purple-750 text-white rounded-full text-xs font-black transition-all shadow-md shadow-purple-100 tracking-wider uppercase">
                                             <span class="material-symbols-outlined text-[16px]">manage_accounts</span>
                                             Open User Manager
                                         </a>

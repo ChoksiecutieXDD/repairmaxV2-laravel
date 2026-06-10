@@ -39,7 +39,7 @@
         </p>
         
         <button @click="acceptCookies()" 
-                class="shrink-0 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 active:scale-95 select-none">
+                class="shrink-0 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 active:scale-95 select-none">
             Accept and Close
         </button>
     </div>

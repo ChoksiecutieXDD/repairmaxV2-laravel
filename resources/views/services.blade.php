@@ -89,32 +89,32 @@
                 <div class="flex flex-wrap items-center justify-center gap-2.5 pt-2">
                     <button @click="selectedCategory = 'all'" 
                             :class="selectedCategory === 'all' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'"
-                            class="px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
+                            class="px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
                         All Repairs
                     </button>
                     <button @click="selectedCategory = 'screen'" 
                             :class="selectedCategory === 'screen' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'"
-                            class="px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
+                            class="px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
                         Screen & Display
                     </button>
                     <button @click="selectedCategory = 'power'" 
                             :class="selectedCategory === 'power' ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/20' : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'"
-                            class="px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
+                            class="px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
                         Power & Battery
                     </button>
                     <button @click="selectedCategory = 'audio'" 
                             :class="selectedCategory === 'audio' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20' : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'"
-                            class="px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
+                            class="px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
                         Audio & Sound
                     </button>
                     <button @click="selectedCategory = 'software'" 
                             :class="selectedCategory === 'software' ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/20' : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'"
-                            class="px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
+                            class="px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
                         Software & OS
                     </button>
                     <button @click="selectedCategory = 'hardware'" 
                             :class="selectedCategory === 'hardware' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'"
-                            class="px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
+                            class="px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-200 active:scale-95">
                         Hardware & Modules
                     </button>
                 </div>
@@ -164,7 +164,7 @@
                                     </div>
                                     <div class="flex items-center gap-2 shrink-0">
                                         <a :href="'/services/' + service.id" class="after:absolute after:inset-0 after:z-10"></a>
-                                        <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap relative z-20">
+                                        <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap relative z-20">
                                             Book
                                             <span class="material-symbols-outlined text-[14px]">calendar_month</span>
                                         </a>
@@ -182,7 +182,7 @@
                     <button type="button" 
                             @click="previousPage()" 
                             :disabled="currentPage === 1"
-                            class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-white/5 text-white disabled:text-gray-500 disabled:border-white/5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
+                            class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-white/5 text-white disabled:text-gray-500 disabled:border-white/5 rounded-full font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
                         <span class="material-symbols-outlined text-[16px]">arrow_back</span>
                         Previous
                     </button>
@@ -194,7 +194,7 @@
                     <button type="button" 
                             @click="nextPage()" 
                             :disabled="currentPage === totalPages"
-                            class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-white/5 text-white disabled:text-gray-500 disabled:border-white/5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
+                            class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-white/5 text-white disabled:text-gray-500 disabled:border-white/5 rounded-full font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
                         Next
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </button>
@@ -211,7 +211,7 @@
                     <p class="text-sm text-gray-400 max-w-sm mt-2 leading-relaxed font-medium">
                         We couldn't find any repairs matching "<span class="font-bold text-white" x-text="search"></span>". Try checking your spelling or adjusting your category shortcut filter.
                     </p>
-                    <button @click="search = ''; selectedCategory = 'all'" class="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl active:scale-95 transition-all shadow-md">
+                    <button @click="search = ''; selectedCategory = 'all'" class="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-full active:scale-95 transition-all shadow-md">
                         Clear Search & Filters
                     </button>
                 </div>

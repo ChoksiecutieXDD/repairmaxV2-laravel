@@ -40,7 +40,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-blue-600 text-white font-bold rounded-[1.25rem] transition-all shadow-lg shadow-blue-500/20 hover:bg-blue-500 hover:-translate-y-0.5 text-base md:text-lg">
+                    <button type="submit" class="w-full py-4 bg-blue-600 text-white font-bold rounded-full transition-all shadow-lg shadow-blue-500/20 hover:bg-blue-500 hover:-translate-y-0.5 text-base md:text-lg">
                         Check Status
                     </button>
                 </form>

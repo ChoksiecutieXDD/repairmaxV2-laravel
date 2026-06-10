@@ -44,7 +44,7 @@
                         {{ $service->name }}
                     </h1>
                 </div>
-                <a href="/services" class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-white/10 text-white hover:bg-white/20 border border-white/5 rounded-2xl text-xs font-black uppercase tracking-widest active:scale-95 transition-all shadow-none">
+                <a href="/services" class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-white/10 text-white hover:bg-white/20 border border-white/5 rounded-full text-xs font-black uppercase tracking-widest active:scale-95 transition-all shadow-none">
                     <span class="material-symbols-outlined text-[16px]">arrow_back</span>
                     Back to Services
                 </a>

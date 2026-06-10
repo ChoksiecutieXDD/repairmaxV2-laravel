@@ -25,7 +25,7 @@
                         </div>
                         <input type="text" name="q" placeholder="Search for answers (e.g. warranty, price, duration)..."
                             class="w-full pl-14 pr-32 py-4 bg-white/5 border border-white/10 text-white rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-base shadow-sm placeholder-gray-400">
-                        <button type="submit" class="absolute right-2 top-2 bottom-2 px-6 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold rounded-xl transition-all text-sm flex items-center gap-1.5 cursor-pointer">
+                        <button type="submit" class="absolute right-2 top-2 bottom-2 px-6 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold rounded-full transition-all text-sm flex items-center gap-1.5 cursor-pointer">
                             <span>Search</span>
                         </button>
                     </div>
@@ -56,7 +56,7 @@
                                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-[18px]">tag</span>
                                 <input type="text" placeholder="e.g. RM-00001" disabled class="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-500 cursor-not-allowed">
                             </div>
-                            <a href="{{ route('help.track') }}" class="w-full sm:w-auto px-5 py-2.5 bg-blue-600/80 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition-all shadow-md text-center shrink-0">
+                            <a href="{{ route('help.track') }}" class="w-full sm:w-auto px-5 py-2.5 bg-blue-600/80 hover:bg-blue-600 text-white text-xs font-bold rounded-full transition-all shadow-md text-center shrink-0">
                                 Track Now
                             </a>
                         </div>
@@ -103,7 +103,7 @@
                         </ul>
                     </div>
                     
-                    <a href="{{ route('help.faqs') }}" class="mt-8 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl transition-all shadow-md text-sm w-full text-center">
+                    <a href="{{ route('help.faqs') }}" class="mt-8 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold rounded-full transition-all shadow-md text-sm w-full text-center">
                         <span>Browse FAQ Database</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </a>
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     
-                    <a href="{{ route('help.ai-support') }}" class="mt-8 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md text-sm w-full text-center">
+                    <a href="{{ route('help.ai-support') }}" class="mt-8 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all shadow-md text-sm w-full text-center">
                         <span>Launch AI Support</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </a>
@@ -225,7 +225,7 @@
                         
                         <!-- Right: Actions -->
                         <div class="lg:col-span-5 flex flex-col sm:flex-row gap-4 justify-end w-full lg:w-auto">
-                            <a href="{{ route('help.contact') }}" class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md text-sm w-full lg:w-auto text-center">
+                            <a href="{{ route('help.contact') }}" class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all shadow-md text-sm w-full lg:w-auto text-center">
                                 <span>Submit Online Enquiry</span>
                                 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                             </a>

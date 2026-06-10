@@ -64,7 +64,7 @@
 
         <!-- Add Button -->
         <button wire:click="editRecord(0)" 
-            class="w-full md:w-auto bg-gray-900 text-white px-10 h-[60px] rounded-[1.25rem] font-black text-sm flex items-center justify-center gap-3 hover:bg-blue-600 transition-all shadow-xl hover:shadow-blue-100 active:scale-95 group whitespace-nowrap shrink-0">
+            class="w-full md:w-auto bg-gray-900 text-white px-10 h-[60px] rounded-full font-black text-sm flex items-center justify-center gap-3 hover:bg-blue-600 transition-all shadow-xl hover:shadow-blue-100 active:scale-95 group whitespace-nowrap shrink-0">
             <span class="material-symbols-outlined text-[24px] group-hover:rotate-90 transition-transform">add</span>
             Add New Service
         </button>
@@ -152,7 +152,7 @@
         </table>
         
         @if($records->hasPages())
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
+            <div class="laravel-pagination px-6 py-4 bg-gray-50 border-t border-gray-100">
                 {{ $records->links(data: ['scrollTo' => false]) }}
             </div>
         @endif
@@ -182,7 +182,7 @@
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col max-h-[85vh]">
+            class="relative bg-white modal-content rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col max-h-[85vh]">
             
             <!-- Fixed Header -->
             <div class="flex justify-between items-center px-10 pt-10 pb-6 shrink-0 border-b border-gray-100 bg-white">
@@ -330,7 +330,7 @@
 
                 <!-- Fixed Footer -->
                 <div class="px-10 py-6 border-t border-gray-100 bg-gray-50/50 shrink-0">
-                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-2xl font-black text-lg hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center justify-center gap-3 group">
+                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-full font-black text-lg hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center justify-center gap-3 group">
                         <span class="material-symbols-outlined text-[20px] group-hover:scale-125 transition-transform">{{ $editingId ? 'save' : 'add_task' }}</span>
                         {{ $editingId ? 'Save Changes' : 'Create Service' }}
                     </button>

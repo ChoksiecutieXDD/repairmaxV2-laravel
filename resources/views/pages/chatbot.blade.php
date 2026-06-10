@@ -99,16 +99,16 @@
                     <!-- Quick Actions -->
                     <h4 class="font-semibold text-gray-900 mb-3">Try asking:</h4>
                     <div class="space-y-2">
-                        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 text-sm text-gray-700 transition">
+                        <button class="w-full text-left px-3 py-2 rounded-full hover:bg-blue-50 text-sm text-gray-700 transition">
                             📱 "Where is my repair?"
                         </button>
-                        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 text-sm text-gray-700 transition">
+                        <button class="w-full text-left px-3 py-2 rounded-full hover:bg-blue-50 text-sm text-gray-700 transition">
                             📅 "Book an appointment"
                         </button>
-                        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 text-sm text-gray-700 transition">
+                        <button class="w-full text-left px-3 py-2 rounded-full hover:bg-blue-50 text-sm text-gray-700 transition">
                             💰 "What parts do you have?"
                         </button>
-                        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 text-sm text-gray-700 transition">
+                        <button class="w-full text-left px-3 py-2 rounded-full hover:bg-blue-50 text-sm text-gray-700 transition">
                             ❓ "How much does it cost?"
                         </button>
                     </div>

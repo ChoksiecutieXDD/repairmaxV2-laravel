@@ -45,11 +45,11 @@
 
                     <!-- Action Buttons -->
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-                        <a href="/booking" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-2xl transition-all duration-300 shadow-lg active:scale-95 shrink-0">
+                        <a href="/booking" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-full transition-all duration-300 shadow-lg active:scale-95 shrink-0">
                             <span class="material-symbols-outlined mr-2">calendar_month</span>
                             Book Your Repair
                         </a>
-                        <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-2xl transition-all duration-300 active:scale-95 shrink-0">
+                        <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-full transition-all duration-300 active:scale-95 shrink-0">
                             Create an Account
                             <span class="material-symbols-outlined ml-2 text-sm">arrow_forward</span>
                         </a>
@@ -582,7 +582,7 @@
 
                     <!-- View All Services CTA Button -->
                     <div class="pt-2 w-full">
-                        <a href="/services" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/10 bg-white/5 hover:bg-white/10 text-white rounded-2xl font-bold text-xs tracking-wider uppercase active:scale-95 transition-all shadow-md">
+                        <a href="/services" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/10 bg-white/5 hover:bg-white/10 text-white rounded-full font-bold text-xs tracking-wider uppercase active:scale-95 transition-all shadow-md">
                             <span class="material-symbols-outlined text-[16px]">menu_book</span>
                             View All Services
                         </a>
@@ -634,7 +634,7 @@
                                             <a :href="'/services/' + service.id" class="after:absolute after:inset-0 after:z-10"></a>
                                             
                                             <!-- Book button sits on top of stretched link -->
-                                            <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap relative z-20">
+                                            <a :href="'/booking?service=' + encodeURIComponent(service.name)" class="inline-flex items-center justify-center gap-1 px-4 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold text-[10px] shadow-sm active:scale-95 transition-all whitespace-nowrap relative z-20">
                                                 Book
                                                 <span class="material-symbols-outlined text-[14px]">calendar_month</span>
                                             </a>
@@ -859,18 +859,70 @@
                     </p>
 
                     <!-- Subscription Form -->
-                    <div class="w-full max-w-105 mx-auto">
-                        <form action="/subscribe" method="POST" class="flex flex-col sm:flex-row gap-2.5 w-full items-stretch">
-                            @csrf
-                            <input type="email" name="email" placeholder="Enter your email" required
+                    <div class="w-full max-w-105 mx-auto" x-data="{
+                        email: '',
+                        successMessage: '',
+                        errorMessage: '',
+                        loading: false,
+                        submitSubscribe() {
+                            if (!this.email) return;
+                            this.loading = true;
+                            this.successMessage = '';
+                            this.errorMessage = '';
+                            
+                            fetch('/subscribe', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({ email: this.email })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.json().then(err => { throw err; });
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                this.loading = false;
+                                if (data.success) {
+                                    this.successMessage = data.message;
+                                    this.email = '';
+                                } else {
+                                    this.errorMessage = data.message || 'Something went wrong. Please try again.';
+                                }
+                            })
+                            .catch(error => {
+                                this.loading = false;
+                                if (error && error.errors && error.errors.email) {
+                                    this.errorMessage = error.errors.email[0];
+                                } else {
+                                    this.errorMessage = 'Network error or invalid email. Please try again.';
+                                }
+                            });
+                        }
+                    }">
+                        <form @submit.prevent="submitSubscribe" class="flex flex-col sm:flex-row gap-2.5 w-full items-stretch">
+                            <input type="email" x-model="email" placeholder="Enter your email" required
                                 class="flex-1 px-5 py-3.5 bg-white/5 text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 border border-white/10 text-sm placeholder-gray-400 transition-all backdrop-blur-md">
-                            <button type="submit" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all duration-300 active:scale-95 text-sm shrink-0 shadow-lg">
-                                Subscribe
+                            <button type="submit" :disabled="loading" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all duration-300 active:scale-95 text-sm shrink-0 shadow-lg disabled:opacity-50">
+                                <span x-show="!loading">Subscribe</span>
+                                <span x-show="loading">Submitting...</span>
                             </button>
                         </form>
 
+                        <div x-show="successMessage" x-transition x-cloak class="w-full mt-3 p-2.5 bg-white/5 border border-white/10 text-green-400 rounded-xl text-xs text-center backdrop-blur-md">
+                            <span x-text="successMessage"></span>
+                        </div>
+
+                        <div x-show="errorMessage" x-transition x-cloak class="w-full mt-3 p-2.5 bg-white/5 border border-white/10 text-red-400 rounded-xl text-xs text-center backdrop-blur-md">
+                            <span x-text="errorMessage"></span>
+                        </div>
+
                         @if (session('subscribe_success'))
-                            <div class="w-full mt-3 p-2.5 bg-white/5 border border-white/10 text-green-400 rounded-xl text-xs text-center backdrop-blur-md">
+                            <div x-show="!successMessage && !errorMessage" class="w-full mt-3 p-2.5 bg-white/5 border border-white/10 text-green-400 rounded-xl text-xs text-center backdrop-blur-md">
                                 {{ session('subscribe_success') }}
                             </div>
                         @endif

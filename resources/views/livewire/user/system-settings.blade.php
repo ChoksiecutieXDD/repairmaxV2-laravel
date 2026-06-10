@@ -97,7 +97,7 @@
                 <div id="two-factor" class="pt-6 border-t border-gray-100">
                     <p class="text-sm font-bold text-gray-800 mb-1">2FA Security</p>
                     <p class="text-xs text-gray-500 mb-4">Add an extra layer of protection.</p>
-                    <button class="w-full py-3 bg-gray-900 text-white text-sm font-bold rounded-xl hover:bg-black transition-all shadow-lg shadow-gray-200">
+                    <button class="w-full py-3 bg-gray-900 text-white text-sm font-bold rounded-full hover:bg-black transition-all shadow-lg shadow-gray-200">
                         Enable 2FA
                     </button>
                 </div>
@@ -124,7 +124,7 @@
 
                 <div class="pt-6 border-t border-gray-100 flex flex-col items-center text-center">
                     <p class="text-sm font-bold text-red-600 mb-3">Danger Zone</p>
-                    <button @click="deleteModal = true" class="w-full py-3 bg-red-50 text-red-600 text-xs font-bold rounded-xl hover:bg-red-600 hover:text-white transition-all border border-red-100">
+                    <button @click="deleteModal = true" class="w-full py-3 bg-red-50 text-red-600 text-xs font-bold rounded-full hover:bg-red-600 hover:text-white transition-all border border-red-100">
                         Delete Account Permanently
                     </button>
                 </div>
@@ -203,7 +203,7 @@
             </div>
 
             <div class="mt-6 pt-4 border-t border-gray-100">
-                <button class="w-full py-3 bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm font-bold rounded-xl transition-all border border-gray-200">
+                <button class="w-full py-3 bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm font-bold rounded-full transition-all border border-gray-200">
                     Sign Out Other Devices
                 </button>
             </div>
@@ -239,11 +239,11 @@
 
             <div class="p-6 bg-gray-50 border-t border-gray-100 flex gap-3">
                 <button type="button" @click="deleteModal = false" 
-                    class="flex-1 py-4 bg-white text-gray-700 font-bold rounded-2xl border border-gray-200 hover:bg-gray-100 transition-all">
+                    class="flex-1 py-4 bg-white text-gray-700 font-bold rounded-full border border-gray-200 hover:bg-gray-100 transition-all">
                     Cancel
                 </button>
                 <button type="button" wire:click="deleteAccount" 
-                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-all shadow-lg">
+                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-all shadow-lg">
                     Delete
                 </button>
             </div>

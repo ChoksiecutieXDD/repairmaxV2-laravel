@@ -37,7 +37,7 @@
                             </div>
                         </div>
 
-                        <button type="button" id="open-modal-btn" class="w-full md:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-base flex items-center justify-center gap-2 whitespace-nowrap">
+                        <button type="button" id="open-modal-btn" class="w-full md:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-lg active:scale-95 text-base flex items-center justify-center gap-2 whitespace-nowrap">
                             <span class="material-symbols-outlined text-lg">search</span>
                             Check Repair Status
                         </button>
@@ -306,7 +306,7 @@
                                 class="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 text-white rounded-xl outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/60 transition-all text-sm placeholder-gray-500">
                         </div>
 
-                        <button id="send-code-btn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold rounded-xl transition-all shadow-lg text-sm flex items-center justify-center gap-2">
+                        <button id="send-code-btn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold rounded-full transition-all shadow-lg text-sm flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-base">send</span>
                             Send Verification Code
                         </button>
@@ -337,7 +337,7 @@
                             <input type="text" maxlength="1" class="otp-digit w-11 h-13 bg-white/5 border border-white/10 rounded-xl text-center text-xl font-black text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all" pattern="[0-9]*" inputmode="numeric">
                         </div>
 
-                        <button id="verify-otp-btn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold rounded-xl transition-all shadow-lg text-sm flex items-center justify-center gap-2 mb-4">
+                        <button id="verify-otp-btn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold rounded-full transition-all shadow-lg text-sm flex items-center justify-center gap-2 mb-4">
                             <span class="material-symbols-outlined text-base">verified_user</span>
                             Verify & View Status
                         </button>

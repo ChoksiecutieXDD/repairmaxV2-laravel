@@ -21,7 +21,7 @@
                 Welcome to Repairmax! Your account for <span class="font-medium text-white">{{ $email }}</span> has been successfully created.
             </p>
 
-            <a href="/login" wire:navigate class="w-full bg-blue-600 text-white font-bold rounded-[1.25rem] px-4 py-3 hover:bg-blue-500 transition-all shadow-lg hover:-translate-y-0.5 duration-200 block text-center">
+            <a href="/login" wire:navigate class="w-full bg-blue-600 text-white font-bold rounded-full px-4 py-3 hover:bg-blue-500 transition-all shadow-lg hover:-translate-y-0.5 duration-200 block text-center">
                 Return to Log in
             </a>
         </div>
@@ -164,7 +164,7 @@
                     <button type="submit"
                     :disabled="score < 2"
                     :class="score < 2 ? 'opacity-50 cursor-not-allowed bg-blue-800' : 'bg-blue-600 hover:bg-blue-500 text-white'"
-                    class="w-full font-bold rounded-[1.25rem] px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center text-white"
+                    class="w-full font-bold rounded-full px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center text-white"
                     wire:loading.attr="disabled">
                     <span wire:loading.remove>Register Account</span>
                     <span wire:loading>Creating Account...</span>

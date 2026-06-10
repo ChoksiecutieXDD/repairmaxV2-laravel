@@ -10,7 +10,7 @@
         <div class="system-stat-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">System Uptime</p>
-                <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center shadow-sm border border-green-100">
+                <div class="w-10 h-10 bg-green-50 dark:bg-green-500/10 rounded-xl flex items-center justify-center shadow-sm border border-green-100 dark:border-green-500/20">
                     <span class="material-symbols-outlined text-green-600 text-[20px]">cloud_done</span>
                 </div>
             </div>
@@ -26,7 +26,7 @@
         <div class="system-stat-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Total Users</p>
-                <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center shadow-sm border border-blue-100">
+                <div class="w-10 h-10 bg-blue-50 dark:bg-blue-500/10 rounded-xl flex items-center justify-center shadow-sm border border-blue-100 dark:border-blue-500/20">
                     <span class="material-symbols-outlined text-blue-600 text-[20px]">group</span>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         <div class="system-stat-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Pending Tasks</p>
-                <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center shadow-sm border border-orange-100">
+                <div class="w-10 h-10 bg-orange-50 dark:bg-orange-500/10 rounded-xl flex items-center justify-center shadow-sm border border-orange-100 dark:border-orange-500/20">
                     <span class="material-symbols-outlined text-orange-600 text-[20px]">assignment</span>
                 </div>
             </div>
@@ -55,7 +55,7 @@
         <div class="system-stat-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Storage Used</p>
-                <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center shadow-sm border border-purple-100">
+                <div class="w-10 h-10 bg-purple-50 dark:bg-purple-500/10 rounded-xl flex items-center justify-center shadow-sm border border-purple-100 dark:border-purple-500/20">
                     <span class="material-symbols-outlined text-purple-600 text-[20px]">storage</span>
                 </div>
             </div>
@@ -71,6 +71,11 @@
             appointmentTrend: @js($appointmentTrend),
             userGrowth: @js($userGrowth),
             init() {
+                const isDark = document.body.classList.contains('dark');
+                const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+                const tickColor = isDark ? '#64748b' : '#999';
+                const pointBorder = isDark ? '#0f172a' : '#fff';
+
                 // Appointment Trend Chart
                 new Chart(this.$refs.appointmentChart, {
                     type: 'line',
@@ -85,7 +90,7 @@
                             fill: true,
                             tension: 0.4,
                             pointBackgroundColor: '#3b82f6',
-                            pointBorderColor: '#fff',
+                            pointBorderColor: pointBorder,
                             pointBorderWidth: 2,
                             pointRadius: 5,
                             pointHoverRadius: 7,
@@ -98,12 +103,12 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
-                                ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                grid: { color: gridColor, drawBorder: false },
+                                ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                             },
                             x: {
                                 grid: { display: false, drawBorder: false },
-                                ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                             }
                         }
                     }
@@ -123,7 +128,7 @@
                             fill: true,
                             tension: 0.4,
                             pointBackgroundColor: '#10b981',
-                            pointBorderColor: '#fff',
+                            pointBorderColor: pointBorder,
                             pointBorderWidth: 2,
                             pointRadius: 5,
                             pointHoverRadius: 7,
@@ -136,28 +141,28 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
-                                ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                grid: { color: gridColor, drawBorder: false },
+                                ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                             },
                             x: {
                                 grid: { display: false, drawBorder: false },
-                                ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                             }
                         }
                     }
                 });
             }
          }">
-        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-            <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
+            <h3 class="text-sm font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-widest">
                 <span class="material-symbols-outlined text-gray-400">trending_up</span>
                 Appointments Trend
             </h3>
             <canvas x-ref="appointmentChart" height="100"></canvas>
         </div>
 
-        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-            <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
+            <h3 class="text-sm font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-widest">
                 <span class="material-symbols-outlined text-gray-400">group</span>
                 User Growth
             </h3>
@@ -168,35 +173,35 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-            <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
+            <h3 class="text-sm font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-widest">
                 <span class="material-symbols-outlined text-gray-400">event</span>
                 Today's Appointments
             </h3>
             <div class="space-y-2">
                 @forelse($todaysAppointments as $app)
-                <div class="flex items-center justify-between p-4 hover:bg-gray-50 rounded-[1.25rem] transition-all group">
+                <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-white/[0.04] rounded-[1.25rem] transition-all group">
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center font-black text-blue-600 text-xs shadow-sm">
+                        <div class="w-10 h-10 bg-blue-50 dark:bg-blue-500/10 rounded-xl flex items-center justify-center font-black text-blue-600 dark:text-blue-400 text-xs shadow-sm">
                             {{ substr($app->pref_time, 0, 5) }}
                         </div>
                         <div>
-                            <p class="font-black text-gray-900 text-sm tracking-tight leading-none">{{ $app->user->first_name ?? 'Guest' }} • {{ $app->device_brand }}</p>
+                            <p class="font-black text-gray-900 dark:text-white text-sm tracking-tight leading-none">{{ $app->user->first_name ?? 'Guest' }} • {{ $app->device_brand }}</p>
                             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1.5">{{ $app->fault_category }}</p>
                         </div>
                     </div>
-                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-black uppercase tracking-widest">{{ $app->status }}</span>
+                    <span class="px-3 py-1 bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 rounded-full text-[10px] font-black uppercase tracking-widest">{{ $app->status }}</span>
                 </div>
                 @empty
-                <div class="p-10 text-center text-gray-400 text-[10px] font-black uppercase tracking-[0.2em] italic bg-gray-50/50 rounded-[1.25rem]">
+                <div class="p-10 text-center text-gray-400 text-[10px] font-black uppercase tracking-[0.2em] italic bg-gray-50/50 dark:bg-white/[0.02] rounded-[1.25rem]">
                     No appointments scheduled for today
                 </div>
                 @endforelse
             </div>
         </div>
 
-        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-            <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
+            <h3 class="text-sm font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-widest">
                 <span class="material-symbols-outlined text-gray-400">health_and_safety</span>
                 Engine Health
             </h3>
@@ -213,7 +218,7 @@
                 @foreach($services as $service)
                 <div class="system-health-item">
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 shrink-0 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                        <div class="w-10 h-10 shrink-0 bg-white dark:bg-white/5 rounded-xl flex items-center justify-center shadow-sm">
                             <span class="material-symbols-outlined text-gray-400 group-hover:text-green-600 transition-colors text-[20px]">{{ $service['icon'] }}</span>
                         </div>
                         <div>

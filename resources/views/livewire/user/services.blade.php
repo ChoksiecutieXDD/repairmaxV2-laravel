@@ -18,33 +18,27 @@
         <!-- Category Filters -->
         <div class="flex flex-wrap items-center justify-center gap-2">
             <button type="button" wire:click="$set('selectedCategory', 'all')" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border
-                        {{ $selectedCategory === 'all' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
+                    class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border {{ $selectedCategory ==='all' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
                 All Repairs
             </button>
             <button type="button" wire:click="$set('selectedCategory', 'screen')" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border
-                        {{ $selectedCategory === 'screen' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
+                    class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border {{ $selectedCategory ==='screen' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
                 Screen & Display
             </button>
             <button type="button" wire:click="$set('selectedCategory', 'power')" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border
-                        {{ $selectedCategory === 'power' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
+                    class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border {{ $selectedCategory ==='power' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
                 Power & Battery
             </button>
             <button type="button" wire:click="$set('selectedCategory', 'audio')" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border
-                        {{ $selectedCategory === 'audio' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
+                    class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border {{ $selectedCategory ==='audio' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
                 Audio & Sound
             </button>
             <button type="button" wire:click="$set('selectedCategory', 'software')" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border
-                        {{ $selectedCategory === 'software' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
+                    class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border {{ $selectedCategory ==='software' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
                 Software & OS
             </button>
             <button type="button" wire:click="$set('selectedCategory', 'hardware')" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border
-                        {{ $selectedCategory === 'hardware' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
+                    class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 active:scale-95 border {{ $selectedCategory ==='hardware' ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 text-gray-650 dark:text-gray-400 border-gray-200 dark:border-white/5 hover:text-gray-900 hover:bg-gray-200 dark:hover:text-white dark:hover:bg-white/10' }}">
                 Hardware & Modules
             </button>
         </div>
@@ -138,7 +132,7 @@
                     <p class="text-xs text-gray-555 dark:text-gray-400 max-w-sm mt-2 leading-relaxed font-medium">
                         We couldn't find any repairs matching your search. Try adjusting your query or filters.
                     </p>
-                    <button type="button" wire:click="$set('search', ''); $set('selectedCategory', 'all')" class="mt-5 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl active:scale-95 transition-all shadow-md">
+                    <button type="button" wire:click="$set('search', ''); $set('selectedCategory', 'all')" class="mt-5 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-full active:scale-95 transition-all shadow-md">
                         Clear Search & Filters
                     </button>
                 </div>

@@ -66,7 +66,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0">
 
-            <div class="bg-white rounded-[2.5rem] shadow-2xl max-w-md w-full p-10 text-center transform transition-all" 
+            <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-md w-full p-10 text-center transform transition-all" 
                 @click.outside="deleteModal = false"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
@@ -82,10 +82,10 @@
                     This action is permanent and cannot be undone.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <button @click="deleteModal = false" class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors">
+                    <button @click="deleteModal = false" class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-bold rounded-full hover:bg-gray-200 transition-colors">
                         Cancel
                     </button>
-                    <button wire:click="deleteAccount" class="flex-1 px-6 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg">
+                    <button wire:click="deleteAccount" class="flex-1 px-6 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors shadow-lg">
                         Delete
                     </button>
                 </div>
@@ -104,7 +104,7 @@
             x-transition:leave-end="opacity-0"
             @keydown.escape.window="cropperModal = false; destroyCropper()">
 
-            <div class="bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full my-auto overflow-hidden flex flex-col max-h-[90vh] transform transition-all" 
+            <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-2xl w-full my-auto overflow-hidden flex flex-col max-h-[90vh] transform transition-all" 
                 @click.outside="cropperModal = false; destroyCropper()"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 scale-95 translate-y-10"
@@ -126,10 +126,10 @@
                 </div>
 
                 <div class="px-6 py-6 border-t border-gray-100 flex flex-col sm:flex-row gap-3 shrink-0 bg-white">
-                    <button @click="cropperModal = false; destroyCropper()" class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors">
+                    <button @click="cropperModal = false; destroyCropper()" class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-bold rounded-full hover:bg-gray-200 transition-colors">
                         Cancel
                     </button>
-                    <button @click="saveCrop()" class="flex-1 px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
+                    <button @click="saveCrop()" class="flex-1 px-6 py-3 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
                         Apply Crop
                     </button>
                 </div>
@@ -205,7 +205,7 @@
 
                     <div class="mt-4 flex flex-col items-center gap-2 w-full">
                         <button type="button" @click="$refs.fileInput.click()"
-                            class="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900 w-full max-w-[200px] py-2.5 rounded-xl font-semibold transition-colors border border-gray-200 text-sm">
+                            class="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900 w-full max-w-[200px] py-2.5 rounded-full font-semibold transition-colors border border-gray-200 text-sm">
                             <span class="material-symbols-outlined text-[18px]">photo_camera</span>
                             Change Photo
                         </button>
@@ -278,7 +278,7 @@
                         </div>
 
                         <div class="flex justify-end pt-8">
-                            <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 rounded-xl font-bold transition-all shadow-xl hover:shadow-gray-200 transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed" wire:loading.attr="disabled">
+                            <button type="submit" class="flex items-center justify-center gap-2 bg-gray-900 text-white hover:bg-black w-full sm:w-auto px-10 py-4 rounded-full font-bold transition-all shadow-xl hover:shadow-gray-200 transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed" wire:loading.attr="disabled">
                                 <span class="material-symbols-outlined text-[20px]" wire:loading.remove wire:target="saveChanges">check_circle</span>
                                 <span class="material-symbols-outlined text-[20px] animate-spin" wire:loading wire:target="saveChanges">progress_activity</span>
                                 <span wire:loading.remove wire:target="saveChanges">Save Changes</span>
@@ -426,7 +426,7 @@
                 </h3>
                 <p class="text-sm text-red-600/80 font-medium">This will erase all your history and records. This action cannot be undone.</p>
             </div>
-            <button @click="deleteModal = true" class="bg-red-600 text-white hover:bg-red-700 px-8 py-3 rounded-xl font-bold transition-all shadow-md active:scale-95 whitespace-nowrap text-sm">
+            <button @click="deleteModal = true" class="bg-red-600 text-white hover:bg-red-700 px-8 py-3 rounded-full font-bold transition-all shadow-md active:scale-95 whitespace-nowrap text-sm">
                 Destroy Account
             </button>
         </div>

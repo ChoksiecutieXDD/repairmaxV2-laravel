@@ -5,11 +5,11 @@
             <p class="text-gray-500 mt-1">Generate business and operational reports.</p>
         </div>
         <div class="flex gap-2">
-            <button wire:click="exportReport" class="inline-flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded-lg font-bold shadow-md transition-colors">
+            <button wire:click="exportReport" class="inline-flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded-full font-bold shadow-md transition-colors">
                 <span class="material-symbols-outlined text-[20px]">download</span>
                 Export Repairs
             </button>
-            <button wire:click="exportAppointmentReport" class="inline-flex items-center gap-2 bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg font-bold shadow-md transition-colors">
+            <button wire:click="exportAppointmentReport" class="inline-flex items-center gap-2 bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-full font-bold shadow-md transition-colors">
                 <span class="material-symbols-outlined text-[20px]">download</span>
                 Export Appointments
             </button>

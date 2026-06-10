@@ -480,45 +480,57 @@ Route::post('/contact/send', function (Request $request) {
         'message' => 'required|string',
     ]);
 
-    Mail::to('repairmaxsample@gmail.com')->send(
-        new ContactEnquiry(
-            $validated['from_email'],
-            $validated['subject'],
-            $validated['message']
-        )
-    );
+    try {
+        Mail::to('repairmaxsample@gmail.com')->send(
+            new ContactEnquiry(
+                $validated['from_email'],
+                $validated['subject'],
+                $validated['message']
+            )
+        );
 
-    // Get sender user if authenticated
-    $senderId = Auth::check() ? Auth::id() : null;
+        // Get sender user if authenticated
+        $senderId = Auth::check() ? Auth::id() : null;
 
-    // Create a message record if user is authenticated
-    if ($senderId) {
-        $contactMessage = \App\Models\Message::create([
-            'user_id' => $senderId,
-            'subject' => $validated['subject'],
-            'message' => $validated['message'],
-            'is_read' => false,
-            'admin_read' => false,
+        // Create a message record if user is authenticated
+        if ($senderId) {
+            $contactMessage = \App\Models\Message::create([
+                'user_id' => $senderId,
+                'subject' => $validated['subject'],
+                'message' => $validated['message'],
+                'is_read' => false,
+                'admin_read' => false,
+            ]);
+
+            // Notify all admins of new contact message
+            $admins = \App\Models\User::where('role', 'admin')->get();
+            $user = Auth::user();
+            foreach ($admins as $admin) {
+                \App\Models\Notification::create([
+                    'user_id' => $admin->id,
+                    'admin_id' => $admin->id,
+                    'title' => 'New Contact Message',
+                    'message' => $user->first_name . ' ' . $user->last_name . ' sent a contact inquiry: ' . $validated['subject'],
+                    'type' => 'contact_inquiry',
+                    'related_model' => 'Message',
+                    'related_id' => $contactMessage->id,
+                    'is_read' => false,
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your enquiry has been sent! Our technicians will get back to you within 24 hours.'
         ]);
 
-        // Notify all admins of new contact message
-        $admins = \App\Models\User::where('role', 'admin')->get();
-        $user = Auth::user();
-        foreach ($admins as $admin) {
-            \App\Models\Notification::create([
-                'user_id' => $admin->id,
-                'admin_id' => $admin->id,
-                'title' => 'New Contact Message',
-                'message' => $user->first_name . ' ' . $user->last_name . ' sent a contact inquiry: ' . $validated['subject'],
-                'type' => 'contact_inquiry',
-                'related_model' => 'Message',
-                'related_id' => $contactMessage->id,
-                'is_read' => false,
-            ]);
-        }
+    } catch (\Exception $e) {
+        \Log::error('Contact form error: ' . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Sorry, there was an error sending your message. Please try again later.'
+        ], 500);
     }
-
-    return back()->with('success', 'Your enquiry has been sent! Our technicians will get back to you shortly.');
 })->name('contact.send');
 
 // DEBUG ROUTE - Remove in production
@@ -659,6 +671,30 @@ Route::post('/subscribe', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
     ]);
+
+    $emailError = null;
+    try {
+        Log::info('Newsletter subscription attempt for: ' . $request->email);
+        Mail::to($request->email)->send(new \App\Mail\NewsletterSubscriptionEmail($request->email));
+        Log::info('Newsletter subscription email sent successfully to: ' . $request->email);
+    } catch (\Exception $e) {
+        $emailError = $e->getMessage();
+        Log::error('Newsletter Subscription Email failed: ' . $e->getMessage());
+    }
+
+    if ($request->expectsJson() || $request->ajax() || $request->headers->get('Content-Type') === 'application/json') {
+        if ($emailError) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Subscription saved but email could not be sent. Error: ' . $emailError
+            ], 500);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Thank you for subscribing! Check your inbox.'
+        ]);
+    }
+
     return back()->with('subscribe_success', 'Thank you for subscribing! Check your inbox.');
 });
 

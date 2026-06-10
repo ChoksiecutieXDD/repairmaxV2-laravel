@@ -169,7 +169,7 @@
 
             <!-- Book Repair Button -->
             <a href="/booking" id="book-btn"
-                class="hidden lg:flex px-6 py-2.5 text-sm md:text-base font-bold rounded-[1.25rem] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 items-center gap-1.5"
+                class="hidden lg:flex px-6 py-2.5 text-sm md:text-base font-bold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 items-center gap-1.5"
                 role="menuitem">
                 Book Repair
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
@@ -198,7 +198,7 @@
             @endforeach
 
             <a href="/booking" id="book-btn"
-                class="px-6 py-2.5 text-sm md:text-base font-bold rounded-[1.25rem] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1.5"
+                class="px-6 py-2.5 text-sm md:text-base font-bold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1.5"
                 role="menuitem">
                 Book Repair
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>

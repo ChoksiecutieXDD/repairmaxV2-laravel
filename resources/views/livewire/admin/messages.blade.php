@@ -52,7 +52,7 @@
 
                 <!-- Pagination -->
                 @if($messages->hasPages())
-                    <div class="px-6 py-4 border-t border-gray-100">
+                    <div class="laravel-pagination px-6 py-4 border-t border-gray-100">
                         {{ $messages->links(data: ['scrollTo' => false]) }}
                     </div>
                 @endif
@@ -98,7 +98,7 @@
                         <div class="flex gap-2 mt-4">
                             <button 
                                 wire:click="sendReply"
-                                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full transition-colors"
                             >
                                 Send Reply
                             </button>

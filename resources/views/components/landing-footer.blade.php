@@ -17,7 +17,7 @@
                     <ul class="space-y-3 text-sm">
                         @foreach($screenServices as $service)
                             <li>
-                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">
+                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 transition-all duration-300">
                                     {{ $service->name }}
                                 </a>
                             </li>
@@ -31,7 +31,7 @@
                     <ul class="space-y-3 text-sm">
                         @foreach($powerServices as $service)
                             <li>
-                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">
+                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 transition-all duration-300">
                                     {{ $service->name }}
                                 </a>
                             </li>
@@ -45,7 +45,7 @@
                     <ul class="space-y-3 text-sm">
                         @foreach($audioServices as $service)
                             <li>
-                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">
+                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 transition-all duration-300">
                                     {{ $service->name }}
                                 </a>
                             </li>
@@ -59,7 +59,7 @@
                     <ul class="space-y-3 text-sm">
                         @foreach($softwareServices as $service)
                             <li>
-                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">
+                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 transition-all duration-300">
                                     {{ $service->name }}
                                 </a>
                             </li>
@@ -73,7 +73,7 @@
                     <ul class="space-y-3 text-sm">
                         @foreach($hardwareServices as $service)
                             <li>
-                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">
+                                <a href="/services/{{ $service->id }}" class="hover:text-gray-100 transition-all duration-300">
                                     {{ $service->name }}
                                 </a>
                             </li>
@@ -116,11 +116,11 @@
                 </div>
                 
                 <div class="flex flex-wrap items-center justify-center md:justify-end gap-x-6 gap-y-2 text-xs xl:text-sm text-gray-400">
-                    <a href="mailto:repairmaxsample@gmail.com" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300 flex items-center gap-2">
+                    <a href="mailto:repairmaxsample@gmail.com" class="hover:text-gray-100 transition-all duration-300 flex items-center gap-2">
                         <span class="material-symbols-outlined text-[16px] text-blue-400">mail</span>
                         <span class="truncate">repairmaxsample@gmail.com</span>
                     </a>
-                    <a href="tel:+639123456789" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300 flex items-center gap-2">
+                    <a href="tel:+639123456789" class="hover:text-gray-100 transition-all duration-300 flex items-center gap-2">
                         <span class="material-symbols-outlined text-[16px] text-blue-400">call</span>
                         <span>+63 912 345 6789</span>
                     </a>
@@ -134,23 +134,23 @@
 
         <div class="border-t border-gray-800 pt-8 flex flex-col gap-6">
             <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-3 text-sm text-gray-400">
-                <a href="/about-us" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">About Us</a>
-                <a href="/services" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Our Services</a>
-                <a href="/booking" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Book a Repair</a>
+                <a href="/about-us" class="hover:text-gray-100 transition-all duration-300">About Us</a>
+                <a href="/services" class="hover:text-gray-100 transition-all duration-300">Our Services</a>
+                <a href="/booking" class="hover:text-gray-100 transition-all duration-300">Book a Repair</a>
                 
                 <span class="text-gray-700 hidden md:inline">&bull;</span>
                 
-                <a href="/help/faqs" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">FAQ</a>
-                <a href="/help/track" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Track Status</a>
-                <a href="/help/contact" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Contact Us</a>
-                <a href="/help/ai-support" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">AI Support</a>
+                <a href="/help/faqs" class="hover:text-gray-100 transition-all duration-300">FAQ</a>
+                <a href="/help/track" class="hover:text-gray-100 transition-all duration-300">Track Status</a>
+                <a href="/help/contact" class="hover:text-gray-100 transition-all duration-300">Contact Us</a>
+                <a href="/help/ai-support" class="hover:text-gray-100 transition-all duration-300">AI Support</a>
                 
                 <span class="text-gray-700 hidden md:inline">&bull;</span>
                 
-                <a href="/legal-policy#privacy" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Privacy Policy</a>
-                <a href="/legal-policy#terms" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Terms of Service</a>
-                <a href="/legal-policy#refund" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Refund Policy</a>
-                <a href="/legal-policy#warranty" class="hover:text-gray-100 hover:underline underline-offset-4 transition-all duration-300">Warranty Info</a>
+                <a href="/legal-policy#privacy" class="hover:text-gray-100 transition-all duration-300">Privacy Policy</a>
+                <a href="/legal-policy#terms" class="hover:text-gray-100 transition-all duration-300">Terms of Service</a>
+                <a href="/legal-policy#refund" class="hover:text-gray-100 transition-all duration-300">Refund Policy</a>
+                <a href="/legal-policy#warranty" class="hover:text-gray-100 transition-all duration-300">Warranty Info</a>
             </div>
 
             <div class="pt-6 border-t border-gray-800/40 flex flex-col md:flex-row justify-between items-center gap-4">

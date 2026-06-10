@@ -29,10 +29,10 @@
                     {{ session('success_message') }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <a href="{{ route('home') }}" class="px-8 py-3.5 bg-blue-600 text-white font-bold rounded-[1.25rem] hover:bg-blue-700 transition-all text-sm shadow-md">
+                    <a href="{{ route('home') }}" class="px-8 py-3.5 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-all text-sm shadow-md">
                         Back to Home
                     </a>
-                    <a href="/help/track" class="px-8 py-3.5 bg-white/5 border border-white/10 text-white font-bold rounded-[1.25rem] hover:bg-white/10 transition-all text-sm">
+                    <a href="/help/track" class="px-8 py-3.5 bg-white/5 border border-white/10 text-white font-bold rounded-full hover:bg-white/10 transition-all text-sm">
                         Track Repair
                     </a>
                 </div>

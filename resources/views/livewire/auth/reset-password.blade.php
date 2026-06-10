@@ -21,7 +21,7 @@
                 Your password has been successfully updated. You can now log in to your Repairmax account with your new credentials.
             </p>
 
-            <a href="/login" wire:navigate class="w-full bg-blue-600 text-white font-bold rounded-[1.25rem] px-4 py-3 hover:bg-blue-500 transition-all shadow-lg hover:-translate-y-0.5 duration-200 block text-center">
+            <a href="/login" wire:navigate class="w-full bg-blue-600 text-white font-bold rounded-full px-4 py-3 hover:bg-blue-500 transition-all shadow-lg hover:-translate-y-0.5 duration-200 block text-center">
                 Return to Log in
             </a>
         </div>
@@ -162,7 +162,7 @@
 
         <div class="pt-6">
             <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-[1.25rem] px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center"
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center"
                 wire:loading.attr="disabled">
                 <span wire:loading.remove>Reset Password</span>
                 <span wire:loading>Updating...</span>

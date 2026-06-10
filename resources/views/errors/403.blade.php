@@ -36,14 +36,14 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                    <button @click="window.history.back()" class="w-full sm:w-auto px-8 py-4 bg-brand-100 text-brand-900 hover:bg-white font-bold rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                    <button @click="window.history.back()" class="w-full sm:w-auto px-8 py-4 bg-brand-100 text-brand-900 hover:bg-white font-bold rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                         Retreat to Safety
                     </button>
                     @guest
-                    <a href="{{ route('login') }}" class="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-brand-700 text-brand-300 hover:text-brand-50 hover:border-brand-500 hover:bg-brand-800 font-bold rounded-lg transition-all duration-300 text-center">
+                    <a href="{{ route('login') }}" class="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-brand-700 text-brand-300 hover:text-brand-50 hover:border-brand-500 hover:bg-brand-800 font-bold rounded-full transition-all duration-300 text-center">
                         Authenticate
                     </a>
                     @endguest

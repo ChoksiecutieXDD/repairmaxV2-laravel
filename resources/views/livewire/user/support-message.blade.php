@@ -33,7 +33,7 @@
             <div class="flex gap-3">
                 <button 
                     type="submit" 
-                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-colors flex items-center gap-2"
                 >
                     <span class="material-symbols-outlined text-[20px]">send</span>
                     Send Message
@@ -41,7 +41,7 @@
                 <button 
                     type="reset" 
                     wire:click="$set('subject', '');$set('message', '')"
-                    class="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-6 rounded-lg transition-colors"
+                    class="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-6 rounded-full transition-colors"
                 >
                     Clear
                 </button>

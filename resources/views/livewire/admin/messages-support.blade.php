@@ -97,8 +97,8 @@
                 </div>
 
                 <div class="flex justify-end gap-3 pt-6 border-t border-gray-100">
-                    <button @click="show = false" class="px-6 py-2 text-gray-700 font-bold hover:bg-gray-100 rounded-xl transition-colors">Close</button>
-                    <button class="px-6 py-2 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg">Reply</button>
+                    <button @click="show = false" class="px-6 py-2 text-gray-700 font-bold hover:bg-gray-100 rounded-full transition-colors">Close</button>
+                    <button class="px-6 py-2 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-all shadow-lg">Reply</button>
                 </div>
             </div>
         @endif

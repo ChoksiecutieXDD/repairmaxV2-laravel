@@ -361,10 +361,10 @@
                     <h3 class="text-2xl font-black mb-4">Have Questions About Pricing?</h3>
                     <p class="mb-8 text-lg opacity-90">Get a free quote or speak with our team today</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="/help/contact" class="px-8 py-4 bg-white text-blue-600 font-bold rounded-[1.25rem] hover:bg-gray-100 transition-all">
+                        <a href="/help/contact" class="px-8 py-4 bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transition-all">
                             Contact Us
                         </a>
-                        <a href="/booking" class="px-8 py-4 bg-blue-700 text-white font-bold rounded-[1.25rem] hover:bg-blue-800 transition-all border border-blue-500">
+                        <a href="/booking" class="px-8 py-4 bg-blue-700 text-white font-bold rounded-full hover:bg-blue-800 transition-all border border-blue-500">
                             Book Now
                         </a>
                     </div>

@@ -198,7 +198,7 @@
                 <p class="text-gray-400 mb-8 max-w-2xl mx-auto text-base md:text-lg">
                     Ready to get your device back to factory condition? Let our automated system find the perfect time slot for you.
                 </p>
-                <a href="/booking" class="inline-flex items-center justify-center px-8 py-3.5 text-base md:text-lg font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-2xl transition-all duration-300 shadow-lg hover:-translate-y-1">
+                <a href="/booking" class="inline-flex items-center justify-center px-8 py-3.5 text-base md:text-lg font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-full transition-all duration-300 shadow-lg hover:-translate-y-1">
                     <span class="material-symbols-outlined mr-2">calendar_month</span>
                     Book an Appointment
                 </a>

@@ -6,11 +6,11 @@
             <p class="text-gray-500 mt-1">Manage all registered users and their access levels.</p>
         </div>
         <div class="flex gap-3">
-            <button type="button" wire:click="openCreateUserModal" class="inline-flex items-center gap-2 bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg font-bold shadow-md transition-colors">
+            <button type="button" wire:click="openCreateUserModal" class="inline-flex items-center gap-2 bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-full font-bold shadow-md transition-colors">
                 <span class="material-symbols-outlined text-[20px]">person_add</span>
                 Create User
             </button>
-            <button type="button" wire:click="openCreateAdminModal" class="inline-flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded-lg font-bold shadow-md transition-colors">
+            <button type="button" wire:click="openCreateAdminModal" class="inline-flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded-full font-bold shadow-md transition-colors">
                 <span class="material-symbols-outlined text-[20px]">add</span>
                 Create Admin
             </button>
@@ -60,7 +60,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0">
             
-            <div class="bg-white rounded-[1.25rem] shadow-2xl max-w-md w-full overflow-hidden transform transition-all"
+            <div class="bg-white modal-content rounded-[1.25rem] shadow-2xl max-w-md w-full overflow-hidden transform transition-all"
                 @click.outside="showAdmin = false"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
@@ -121,8 +121,8 @@
                     </div>
 
                     <div class="flex gap-3 pt-4">
-                        <button type="button" @click="showAdmin = false" class="flex-1 px-4 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-all">Cancel</button>
-                        <button type="submit" class="flex-1 px-4 py-3 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 shadow-lg shadow-green-200 transition-all flex items-center justify-center gap-2">
+                        <button type="button" @click="showAdmin = false" class="flex-1 px-4 py-3 bg-gray-100 text-gray-600 rounded-full font-bold hover:bg-gray-200 transition-all">Cancel</button>
+                        <button type="submit" class="flex-1 px-4 py-3 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 shadow-lg shadow-green-200 transition-all flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-sm">check</span>
                             Create Admin
                         </button>
@@ -142,7 +142,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0">
             
-            <div class="bg-white rounded-[1.25rem] shadow-2xl max-w-md w-full overflow-hidden transform transition-all"
+            <div class="bg-white modal-content rounded-[1.25rem] shadow-2xl max-w-md w-full overflow-hidden transform transition-all"
                 @click.outside="showUser = false"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
@@ -193,8 +193,8 @@
                     </div>
 
                     <div class="flex gap-3 pt-4">
-                        <button type="button" @click="showUser = false" class="flex-1 px-4 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-all">Cancel</button>
-                        <button type="submit" class="flex-1 px-4 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all flex items-center justify-center gap-2">
+                        <button type="button" @click="showUser = false" class="flex-1 px-4 py-3 bg-gray-100 text-gray-600 rounded-full font-bold hover:bg-gray-200 transition-all">Cancel</button>
+                        <button type="submit" class="flex-1 px-4 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-sm">check</span>
                             Create User
                         </button>
@@ -214,7 +214,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0">
             
-            <div class="bg-white rounded-[1.25rem] shadow-2xl max-w-sm w-full overflow-hidden transform transition-all"
+            <div class="bg-white modal-content rounded-[1.25rem] shadow-2xl max-w-sm w-full overflow-hidden transform transition-all"
                 @click.outside="showDelete = false"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
@@ -232,10 +232,10 @@
                         Are you sure you want to delete <span class="font-bold text-gray-900">{{ $userToDeleteName }}</span>? This action cannot be undone and all associated data will be removed.
                     </p>
                     <div class="flex flex-col gap-3">
-                        <button wire:click="deleteUser" class="w-full py-4 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 shadow-lg transition-all">
+                        <button wire:click="deleteUser" class="w-full py-4 bg-red-600 text-white rounded-full font-bold hover:bg-red-700 shadow-lg transition-all">
                             Yes, Delete Account
                         </button>
-                        <button @click="showDelete = false" class="w-full py-4 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-all">
+                        <button @click="showDelete = false" class="w-full py-4 bg-gray-100 text-gray-600 rounded-full font-bold hover:bg-gray-200 transition-all">
                             No, Keep User
                         </button>
                     </div>
@@ -351,7 +351,7 @@
         </div>
 
         @if($users->hasPages())
-            <div class="px-8 py-4 border-t border-gray-100 bg-gray-50/30">
+            <div class="laravel-pagination px-8 py-4 border-t border-gray-100 bg-gray-50/30">
                 {{ $users->links(data: ['scrollTo' => false]) }}
             </div>
         @endif

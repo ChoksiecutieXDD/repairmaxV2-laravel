@@ -26,20 +26,20 @@ class Settings extends Component
     // General Settings
     public $businessName = 'Repairmax';
     public $businessEmail = 'repairmaxsample@gmail.com';
-    public $businessPhone = '+63 2 1234 5678';
-    public $businessAddress = '123 Main Street, Business District, City';
-    public $businessCity = '';
-    public $businessState = '';
-    public $businessZipCode = '';
-    public $businessWebsite = '';
+    public $businessPhone = '+63 912 345 6789';
+    public $businessAddress = 'Commonwealth Ave. Cor. IBP Road (Litex Junction), Brgy. Payatas, Quezon City, 1119';
+    public $businessCity = 'Quezon City';
+    public $businessState = 'Metro Manila';
+    public $businessZipCode = '1119';
+    public $businessWebsite = 'https://repairmax.online/';
     public $businessLogo = '';
 
     // Email Settings
-    public $smtpHost = 'smtp.gmail.com';
+    public $smtpHost = 'smtp-relay.brevo.com';
     public $smtpPort = '587';
-    public $smtpUsername = '';
+    public $smtpUsername = 'adddb0001@smtp-brevo.com';
     public $smtpPassword = '';
-    public $emailFromAddress = '';
+    public $emailFromAddress = 'repairmaxsample@gmail.com';
     public $emailFromName = 'Repairmax';
     public $emailNotificationsEnabled = true;
 

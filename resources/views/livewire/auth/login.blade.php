@@ -46,7 +46,7 @@
         </div>
 
         <div class="pt-4">
-            <button type="submit" class="w-full bg-blue-600 text-white hover:bg-blue-500 font-bold rounded-[1.25rem] px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center">
+            <button type="submit" class="w-full bg-blue-600 text-white hover:bg-blue-500 font-bold rounded-full px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center">
                 <span wire:loading.remove wire:target="login">Sign In</span>
                 <span wire:loading wire:target="login">Signing in...</span>
             </button>
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="bg-white/5 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                        <button type="button" @click="open = false" class="inline-flex w-full justify-center rounded-[1.25rem] bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:w-auto">
+                        <button type="button" @click="open = false" class="inline-flex w-full justify-center rounded-full bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:w-auto">
                             Try Again
                         </button>
                     </div>

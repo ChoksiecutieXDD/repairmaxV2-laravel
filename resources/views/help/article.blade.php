@@ -66,11 +66,11 @@
                     <div class="border-t border-white/5 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
                         <span>Was this article helpful?</span>
                         <div class="flex gap-3">
-                            <button class="px-4 py-2 bg-white/5 hover:bg-green-500/20 hover:text-green-400 border border-white/10 rounded-xl transition-all duration-200 flex items-center gap-1.5 cursor-pointer">
+                            <button class="px-4 py-2 bg-white/5 hover:bg-green-500/20 hover:text-green-400 border border-white/10 rounded-full transition-all duration-200 flex items-center gap-1.5 cursor-pointer">
                                 <span class="material-symbols-outlined text-base">thumb_up</span>
                                 Yes
                             </button>
-                            <button class="px-4 py-2 bg-white/5 hover:bg-red-500/20 hover:text-red-400 border border-white/10 rounded-xl transition-all duration-200 flex items-center gap-1.5 cursor-pointer">
+                            <button class="px-4 py-2 bg-white/5 hover:bg-red-500/20 hover:text-red-400 border border-white/10 rounded-full transition-all duration-200 flex items-center gap-1.5 cursor-pointer">
                                 <span class="material-symbols-outlined text-base">thumb_down</span>
                                 No
                             </button>

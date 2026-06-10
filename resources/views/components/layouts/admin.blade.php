@@ -42,7 +42,8 @@
         }
         body.dark .bg-gray-50:not(.modal-content):not(.modal-content *),
         body.dark .bg-gray-50\/30:not(.modal-content):not(.modal-content *),
-        body.dark .bg-gray-50\/50:not(.modal-content):not(.modal-content *) {
+        body.dark .bg-gray-50\/50:not(.modal-content):not(.modal-content *),
+        body.dark .bg-gray-50\/70:not(.modal-content):not(.modal-content *) {
             background-color: rgba(255, 255, 255, 0.02) !important;
             border-color: rgba(255, 255, 255, 0.05) !important;
         }
@@ -163,6 +164,10 @@
             background-color: rgba(245, 158, 11, 0.1) !important;
             color: #fbbf24 !important;
         }
+        body.dark .bg-red-50 {
+            background-color: rgba(239, 68, 68, 0.1) !important;
+            color: #f87171 !important;
+        }
         /* Inputs & forms styling */
         body.dark input,
         body.dark select,
@@ -192,11 +197,137 @@
         }
         /* Table rows hover and headers */
         body.dark thead.bg-gray-50,
-        body.dark tr.bg-gray-50 {
+        body.dark tr.bg-gray-50,
+        body.dark tr.bg-gray-50\/50,
+        body.dark tr.bg-gray-50\/70,
+        body.dark thead.bg-gray-50\/70,
+        body.dark thead.bg-gray-50\/50 {
             background-color: rgba(255, 255, 255, 0.04) !important;
         }
-        body.dark tr.hover\:bg-gray-50:hover {
+        body.dark .bg-blue-50\/50 {
+            background-color: rgba(59, 130, 246, 0.15) !important;
+        }
+        /* Fix: too-bright hover states in dark mode */
+        body.dark tr.hover\:bg-gray-50:hover,
+        body.dark tr.hover\:bg-gray-50\/80:hover,
+        body.dark tr.hover\:bg-gray-50\/50:hover,
+        body.dark tr.hover\:bg-gray-50\/60:hover,
+        body.dark div.hover\:bg-gray-50:hover,
+        body.dark div.hover\:bg-gray-50\/60:hover,
+        body.dark div.hover\:bg-gray-50\/50:hover,
+        body.dark div.hover\:bg-gray-50\/80:hover,
+        body.dark a.hover\:bg-gray-50:hover,
+        body.dark a.hover\:bg-gray-50\/50:hover,
+        body.dark a.hover\:bg-gray-50\/80:hover,
+        body.dark button.hover\:bg-gray-50:hover,
+        body.dark button.hover\:bg-gray-50\/50:hover,
+        body.dark button.hover\:bg-gray-50\/80:hover,
+        body.dark li.hover\:bg-gray-50:hover,
+        body.dark .hover\:bg-gray-50:hover,
+        body.dark .hover\:bg-gray-50\/30:hover,
+        body.dark .hover\:bg-gray-50\/50:hover,
+        body.dark .hover\:bg-gray-50\/60:hover,
+        body.dark .hover\:bg-gray-50\/80:hover,
+        body.dark .hover\:bg-gray-100:hover,
+        body.dark .hover\:bg-gray-100\/50:hover,
+        body.dark .hover\:bg-gray-100\/80:hover,
+        body.dark .hover\:bg-gray-200:hover {
             background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+        /* Fix: white shadow glow on hover in dark mode */
+        body.dark .hover\:shadow-md:hover,
+        body.dark .hover\:shadow-lg:hover {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6) !important;
+        }
+        body.dark .transition-shadow:hover,
+        body.dark .shadow-md {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+        }
+        /* Fix: white avatar border ring and status dot ring in dark mode */
+        body.dark img.border.border-gray-200,
+        body.dark img.rounded-full.border,
+        body.dark img.border-white {
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        body.dark span.border-white,
+        body.dark span.border-2.border-white,
+        body.dark .border-white:not(img) {
+            border-color: #0e1223 !important; /* blends with dark theme row/card backgrounds */
+        }
+        /* Fix: badge white borders in dark mode */
+        body.dark .border-green-100 {
+            border-color: rgba(16, 185, 129, 0.2) !important;
+        }
+        body.dark .border-blue-100 {
+            border-color: rgba(59, 130, 246, 0.2) !important;
+        }
+        body.dark .border-orange-100 {
+            border-color: rgba(249, 115, 22, 0.2) !important;
+        }
+        body.dark .border-purple-100 {
+            border-color: rgba(139, 92, 246, 0.2) !important;
+        }
+        body.dark .border-amber-100,
+        body.dark .border-yellow-100 {
+            border-color: rgba(245, 158, 11, 0.2) !important;
+        }
+        body.dark .border-red-100 {
+            border-color: rgba(239, 68, 68, 0.2) !important;
+        }
+
+        /* System Overview Component overrides in dark mode */
+        body.dark .system-stat-card {
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+            color: #ffffff !important;
+        }
+        body.dark .system-stat-card:hover {
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6) !important;
+        }
+        body.dark .system-health-item {
+            background-color: rgba(255, 255, 255, 0.02) !important;
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+        body.dark .system-health-item:hover {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        body.dark .system-alert-item {
+            background-color: rgba(255, 255, 255, 0.02) !important;
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Pagination overrides in dark mode */
+        body.dark .laravel-pagination a,
+        body.dark .laravel-pagination button,
+        body.dark .laravel-pagination span {
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            border-color: transparent !important;
+            color: #cbd5e1 !important;
+            border-radius: 0.75rem !important; /* matches user nav links (rounded-xl) */
+        }
+        body.dark .laravel-pagination a:hover,
+        body.dark .laravel-pagination button:not([disabled]):hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-color: transparent !important;
+            color: #ffffff !important;
+        }
+        body.dark .laravel-pagination span[aria-current="page"] > span,
+        body.dark .laravel-pagination span[aria-current="page"] > button,
+        body.dark .laravel-pagination [aria-current="page"] .relative.inline-flex.items-center {
+            background-color: rgba(59, 130, 246, 0.2) !important;
+            border-color: rgba(59, 130, 246, 0.3) !important;
+            color: #60a5fa !important;
+        }
+        body.dark .laravel-pagination .relative.inline-flex.items-center.border:focus,
+        body.dark .laravel-pagination .relative.inline-flex.items-center.border:active,
+        body.dark .laravel-pagination .relative.inline-flex.items-center.border:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
+            ring: none !important;
+            --tw-ring-color: transparent !important;
+            border-color: transparent !important;
         }
     </style>
 </head>
@@ -394,7 +525,7 @@
  
                 <!-- Mobile Toggle Hamburger Button -->
                 <button @click="sidebarOpen = !sidebarOpen"
-                    class="lg:hidden inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 rounded-[1.25rem] transition-colors text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 shrink-0">
+                    class="lg:hidden inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 shrink-0">
                     <span class="material-symbols-outlined text-[26px]">menu</span>
                 </button>
  
@@ -416,12 +547,12 @@
                 <div class="ml-auto flex items-center gap-3 z-20">
                     @auth
                     <!-- Theme Toggle Button -->
-                    <button @click="toggleTheme()" class="inline-flex items-center justify-center p-2 rounded-xl text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none shrink-0">
+                    <button @click="toggleTheme()" class="inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none shrink-0">
                         <span class="material-symbols-outlined text-[24px]" x-text="darkMode ? 'light_mode' : 'dark_mode'"></span>
                     </button>
  
                     <!-- Admin Notification Bell -->
-                    <a href="{{ route('admin.notifications') }}" class="relative inline-flex items-center justify-center p-2 rounded-xl text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all group shrink-0 mr-1 bg-transparent border-0 shadow-none">
+                    <a href="{{ route('admin.notifications') }}" class="relative inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all group shrink-0 mr-1 bg-transparent border-0 shadow-none">
                         <span class="material-symbols-outlined text-[24px]">notifications</span>
                         <div class="absolute top-1.5 right-1.5">
                             @livewire('notification-badge', ['type' => 'admin'])
@@ -430,7 +561,7 @@
  
                     <!-- Admin Dropdown Menu -->
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-3 p-1.5 hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl transition-all focus:outline-none group bg-transparent border-0 shadow-none">
+                        <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-3 p-1.5 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-all focus:outline-none group bg-transparent border-0 shadow-none">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->first_name ?? auth()->user()->name ?? 'Admin') }}&background=2563eb&color=ffffff&bold=true"
                                 alt="Profile"
                                 class="w-9 h-9 rounded-full border border-gray-700/50 object-cover shadow-sm bg-gray-900 shrink-0 group-hover:border-gray-500 transition-colors">
@@ -484,7 +615,7 @@
  
                     <!-- Dedicated Logout Trigger Button -->
                     <button @click="logoutModal = true" 
-                        class="inline-flex items-center justify-center p-2 rounded-xl text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none shrink-0 ml-1.5 cursor-pointer" 
+                        class="inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none shrink-0 ml-1.5 cursor-pointer" 
                         title="Logout">
                         <span class="material-symbols-outlined text-[24px]">logout</span>
                     </button>
@@ -534,11 +665,11 @@
 
             <div class="p-6 bg-gray-50 flex gap-3">
                 <button type="button" @click="logoutModal = false" 
-                    class="flex-1 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-[1.25rem] hover:bg-gray-50 transition-all text-sm">
+                    class="flex-1 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50 transition-all text-sm">
                     Cancel
                 </button>
                 <button type="button" @click="triggerLogout()" 
-                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-[1.25rem] hover:bg-red-700 transition-all shadow-lg text-sm">
+                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-all shadow-lg text-sm">
                     Logout
                 </button>
             </div>

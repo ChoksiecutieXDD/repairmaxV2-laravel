@@ -17,7 +17,7 @@
                     <span class="material-symbols-outlined text-gray-400">forum</span>
                     History
                 </h2>
-                <button wire:click="startNewChat" class="bg-gray-900 text-white p-1.5 rounded-lg hover:bg-gray-800 transition-all flex items-center justify-center focus:outline-none shadow-sm" title="New Chat">
+                <button wire:click="startNewChat" class="bg-gray-900 text-white p-1.5 rounded-full hover:bg-gray-800 transition-all flex items-center justify-center focus:outline-none shadow-sm" title="New Chat">
                     <span class="material-symbols-outlined text-[20px]">add</span>
                 </button>
             </div>
@@ -117,7 +117,7 @@
                         class="flex-1 px-4 py-3 bg-gray-50 border border-brand-200 rounded-xl focus:bg-white focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15 dark:focus:!border-blue-500 dark:focus:!ring-4 dark:focus:!ring-blue-500/25 transition-all text-sm"
                         required>
 
-                    <button type="submit" class="p-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 hover:shadow-md transition-all flex items-center justify-center focus:outline-none">
+                    <button type="submit" class="p-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 hover:shadow-md transition-all flex items-center justify-center focus:outline-none">
                         <span class="material-symbols-outlined text-[20px]">send</span>
                     </button>
                 </form>
@@ -179,11 +179,11 @@
 
             <div class="p-6 bg-gray-50 border-t border-brand-100 flex gap-3">
                 <button type="button" @click="deleteModal = false" 
-                    class="flex-1 py-4 bg-white text-gray-700 font-bold rounded-2xl border border-brand-200 hover:bg-gray-100 transition-all">
+                    class="flex-1 py-4 bg-white text-gray-700 font-bold rounded-full border border-brand-200 hover:bg-gray-100 transition-all">
                     Cancel
                 </button>
                 <button type="button" @click="$wire.deleteSession(sessionToDelete); deleteModal = false" 
-                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-all shadow-lg">
+                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-all shadow-lg">
                     Delete
                 </button>
             </div>

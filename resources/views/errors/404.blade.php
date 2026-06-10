@@ -34,13 +34,13 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                    <a href="{{ route('home') }}" class="w-full sm:w-auto px-8 py-4 bg-white text-gray-900 hover:bg-gray-100 font-bold rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group border-none">
+                    <a href="{{ route('home') }}" class="w-full sm:w-auto px-8 py-4 bg-white text-gray-900 hover:bg-gray-100 font-bold rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group border-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform group-hover:-translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                         </svg>
                         Return to Base
                     </a>
-                    <a href="{{ route('contact') }}" class="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-slate-800 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-900 font-bold rounded-lg transition-all duration-300 text-center">
+                    <a href="{{ route('contact') }}" class="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-slate-800 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-900 font-bold rounded-full transition-all duration-300 text-center">
                         Report Issue
                     </a>
                 </div>

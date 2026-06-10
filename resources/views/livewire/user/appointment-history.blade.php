@@ -9,7 +9,7 @@
         </div>
         <button
             wire:click="exportRecords()"
-            class="flex items-center gap-2 bg-white border border-brand-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-bold shadow-sm transition-colors shrink-0">
+            class="flex items-center gap-2 bg-white border border-brand-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-full font-bold shadow-sm transition-colors shrink-0">
             <span class="material-symbols-outlined text-[20px]">download</span>
             Export Records
         </button>
@@ -85,7 +85,7 @@
                             <div class="flex items-center justify-end gap-2">
                                 @if(strtolower($item->status) === 'completed' && $item->invoice_number)
                                 <div class="group relative">
-                                    <a href="javascript:void(0)" class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200/30 hover:scale-105 transition-all cursor-pointer">
+                                    <a href="javascript:void(0)" class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200/30 hover:scale-105 transition-all cursor-pointer">
                                         <span class="material-symbols-outlined text-[18px]">receipt</span>
                                     </a>
                                     <div class="absolute right-0 bottom-full mb-2 hidden group-hover:flex flex-col gap-0.5 bg-white dark:bg-[#0d1527] border border-gray-200/60 dark:border-white/5 text-gray-800 dark:text-gray-200 text-xs rounded-xl shadow-xl z-20 whitespace-nowrap p-1 min-w-[120px] transition-all">
@@ -95,7 +95,7 @@
                                 </div>
                                 @endif
                                 <div class="group relative">
-                                    <a href="javascript:void(0)" class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-200/30 hover:scale-105 transition-all cursor-pointer">
+                                    <a href="javascript:void(0)" class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-200/30 hover:scale-105 transition-all cursor-pointer">
                                         <span class="material-symbols-outlined text-[18px]">receipt_long</span>
                                     </a>
                                     <div class="absolute right-0 bottom-full mb-2 hidden group-hover:flex flex-col gap-0.5 bg-white dark:bg-[#0d1527] border border-gray-200/60 dark:border-white/5 text-gray-800 dark:text-gray-200 text-xs rounded-xl shadow-xl z-20 whitespace-nowrap p-1 min-w-[120px] transition-all">
@@ -153,7 +153,7 @@
             </table>
         </div>
 
-        <div class="px-6 py-4 border-t border-brand-100 bg-white">
+        <div class="laravel-pagination px-6 py-4 border-t border-brand-100 bg-white">
             {{ $history->links(data: ['scrollTo' => false]) }}
         </div>
 

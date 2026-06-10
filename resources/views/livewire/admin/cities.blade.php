@@ -6,7 +6,7 @@
         </div>
         <!-- Add Button -->
         <button wire:click="$set('isEditMode', true)" 
-            class="bg-gray-900 text-white px-8 h-[52px] rounded-[1.25rem] font-black text-sm flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-md active:scale-95 group whitespace-nowrap shrink-0 border-none outline-none">
+            class="bg-gray-900 text-white px-8 h-[52px] rounded-full font-black text-sm flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-md active:scale-95 group whitespace-nowrap shrink-0 border-none outline-none">
             <span class="material-symbols-outlined text-[20px]">add</span>
             Add Supported City
         </button>
@@ -79,7 +79,7 @@
             </tbody>
         </table>
         
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
+        <div class="laravel-pagination px-6 py-4 bg-gray-50 border-t border-gray-100">
             {{ $cities->links(data: ['scrollTo' => false]) }}
         </div>
     </div>
@@ -97,7 +97,7 @@
              x-transition:leave="ease-in duration-200"
              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
              x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-             class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col z-10">
+             class="relative bg-white modal-content rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col z-10">
             
             <div class="flex justify-between items-center px-10 pt-10 pb-6 border-b border-gray-100">
                 <div class="flex items-center gap-3.5">
@@ -144,8 +144,8 @@
                 </div>
 
                 <div class="px-10 py-6 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3 rounded-b-[2.5rem]">
-                    <button type="button" wire:click="resetFields" class="px-6 py-3.5 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
-                    <button type="submit" class="px-8 py-3.5 bg-gray-900 hover:bg-blue-600 text-white font-bold rounded-xl transition-all shadow-md active:scale-95 text-xs border-none cursor-pointer">
+                    <button type="button" wire:click="resetFields" class="px-6 py-3.5 border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
+                    <button type="submit" class="px-8 py-3.5 bg-gray-900 hover:bg-blue-600 text-white font-bold rounded-full transition-all shadow-md active:scale-95 text-xs border-none cursor-pointer">
                         {{ $editingCityId ? 'Save Changes' : 'Add Territory' }}
                     </button>
                 </div>
@@ -156,15 +156,15 @@
     <!-- Confirm Delete Modal -->
     @if($confirmingDeletionId)
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md">
-        <div class="bg-white rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100 animate-scale-in">
+        <div class="bg-white modal-content rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100 animate-scale-in">
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5">
                 <span class="material-symbols-outlined text-[36px]">delete_forever</span>
             </div>
             <h3 class="text-xl font-black text-gray-900 mb-2">Remove Supported City?</h3>
             <p class="text-sm text-gray-500 mb-8 leading-relaxed">This action cannot be undone. Users will no longer be able to select this city.</p>
             <div class="flex gap-3 justify-center">
-                <button wire:click="cancelDelete" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Keep it</button>
-                <button wire:click="delete" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
+                <button wire:click="cancelDelete" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Keep it</button>
+                <button wire:click="delete" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
             </div>
         </div>
     </div>

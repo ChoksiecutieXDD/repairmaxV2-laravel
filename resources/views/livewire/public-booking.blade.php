@@ -21,7 +21,7 @@
             <!-- Modal Header -->
             <div class="px-8 pt-12 pb-6 flex flex-col items-center text-center bg-white relative">
                 <button type="button" @click="infoModal = false"
-                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
+                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all focus:outline-none focus:ring-0 group">
                     <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
                 <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
@@ -65,7 +65,7 @@
                 </section>
             </div>
             <div class="p-6 bg-gray-50 border-t border-gray-100">
-                <button type="button" @click="infoModal = false" class="w-full py-4 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all">Got it, thanks!</button>
+                <button type="button" @click="infoModal = false" class="w-full py-4 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-all">Got it, thanks!</button>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
             <!-- Modal Header -->
             <div class="px-8 pt-12 pb-8 flex flex-col items-center text-center bg-white relative border-b border-gray-50">
                 <button type="button" @click="calendarModal = false"
-                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
+                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all focus:outline-none focus:ring-0 group">
                     <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
                 <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-5 shadow-sm border border-blue-100/50">
@@ -105,8 +105,7 @@
             <!-- Week Navigator -->
             <div class="flex items-center justify-between px-8 py-4 bg-gray-50/50 border-b border-gray-100">
                 <button type="button" wire:click="prevWeek" @disabled($calendar_week_offset <=0)
-                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-[1.25rem] border border-gray-200 transition-all 
-                    {{ $calendar_week_offset <= 0 ? 'text-gray-300 cursor-not-allowed bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm' }}">
+                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full border border-gray-200 transition-all {{ $calendar_week_offset <= 0 ?'text-gray-300 cursor-not-allowed bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm' }}">
                     <span class="material-symbols-outlined text-[18px] leading-none">chevron_left</span>
                     Previous Week
                 </button>
@@ -122,7 +121,7 @@
                     @endif
                 </div>
                 <button type="button" wire:click="nextWeek"
-                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-[1.25rem] border border-gray-200 bg-white text-gray-900 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm transition-all">
+                    class="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full border border-gray-200 bg-white text-gray-900 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm transition-all">
                     Next Week
                     <span class="material-symbols-outlined text-[18px] leading-none">chevron_right</span>
                 </button>
@@ -175,8 +174,7 @@
                                         wire:click="selectDateAndTime({{ $dayIndex }}, '{{ $slot }}')"
                                         @click="calendarModal = false"
                                         @endif
-                                        class="w-full h-11 rounded-[1.25rem] border-2 text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5
-                                                            {{ $isSelected ? 'bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-500/20'
+                                        class="w-full h-11 rounded-full border-2 text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 {{ $isSelected ?'bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-500/20'
                                                                 : ($isFull ? 'bg-red-50 border-red-100 text-red-300 cursor-not-allowed'
                                                                 : 'bg-gray-50 border-gray-100 text-gray-400 hover:bg-green-50 hover:border-green-300 hover:text-green-600 cursor-pointer') }}">
                                         @if($isSelected)
@@ -198,7 +196,7 @@
 
             <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center shrink-0">
                 <p class="text-xs text-gray-400 font-medium">Selecting a slot closes this modal and fills in your booking.</p>
-                <button type="button" @click="calendarModal = false" class="px-6 py-3 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all text-sm">Close</button>
+                <button type="button" @click="calendarModal = false" class="px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-all text-sm">Close</button>
             </div>
         </div>
     </div>
@@ -225,7 +223,7 @@
             <!-- Modal Header -->
             <div class="px-8 pt-10 pb-6 flex flex-col items-center text-center bg-white relative border-b border-gray-100">
                 <button type="button" @click="reviewModal = false"
-                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-[1.25rem] transition-all focus:outline-none focus:ring-0 group">
+                    class="absolute top-6 right-6 p-2 bg-gray-50 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all focus:outline-none focus:ring-0 group">
                     <span class="material-symbols-outlined text-[20px] leading-none group-hover:rotate-90 transition-transform duration-300">close</span>
                 </button>
                 <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center mb-4 shadow-sm border border-blue-100/50">
@@ -410,11 +408,11 @@
             <!-- Modal Footer -->
             <div class="p-6 bg-gray-50 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
                 <button type="button" @click="reviewModal = false"
-                    class="w-full sm:w-1/2 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-[1.25rem] hover:bg-gray-50 transition-all text-sm">
+                    class="w-full sm:w-1/2 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50 transition-all text-sm">
                     Edit Details
                 </button>
                 <button type="button" wire:click="submit" wire:loading.attr="disabled"
-                    class="w-full sm:w-1/2 py-4 bg-gray-900 text-white font-bold rounded-[1.25rem] hover:bg-black transition-all text-sm flex items-center justify-center gap-2">
+                    class="w-full sm:w-1/2 py-4 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-all text-sm flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-[18px] leading-none" wire:loading.remove wire:target="submit">check_circle</span>
                     <span class="material-symbols-outlined text-[18px] animate-spin leading-none" wire:loading wire:target="submit">progress_activity</span>
                     Confirm Booking
@@ -639,7 +637,7 @@
                                         <p class="text-xs text-blue-600 dark:text-blue-300 font-medium leading-relaxed">Commonwealth Ave. Cor. IBP Road (Litex Junction), Quezon City, Metro Manila, Philippines</p>
                                     </div>
                                 </div>
-                                <button type="button" @click="showMap = !showMap" class="text-xs font-black text-blue-700 hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-400 flex items-center gap-1 bg-blue-100 hover:bg-blue-200 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 px-3 py-1.5 rounded-lg transition-all shrink-0 border-none outline-none focus:outline-none cursor-pointer">
+                                <button type="button" @click="showMap = !showMap" class="text-xs font-black text-blue-700 hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-400 flex items-center gap-1 bg-blue-100 hover:bg-blue-200 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 px-3 py-1.5 rounded-full transition-all shrink-0 border-none outline-none focus:outline-none cursor-pointer">
                                     <span class="material-symbols-outlined text-[16px]" x-show="!showMap">map</span>
                                     <span class="material-symbols-outlined text-[16px]" x-show="showMap" x-cloak>close</span>
                                     <span x-text="showMap ? 'Hide Map' : 'Show Map'">Show Map</span>
@@ -1068,9 +1066,7 @@
                             <button type="button"
                                  @if(!$isFull) wire:click="selectTime('{{ $slot }}')" @endif
                                  @disabled($isFull)
-                                 class="py-4 px-2 rounded-[1.25rem] border-2 font-black text-sm transition-all flex items-center justify-center gap-2 outline-none
-                                                             {{ $isSelected
-                                                                 ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-900/30 scale-[1.02]'
+                                 class="py-4 px-2 rounded-full border-2 font-black text-sm transition-all flex items-center justify-center gap-2 outline-none {{ $isSelected ?'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-900/30 scale-[1.02]'
                                                                  : ($isFull
                                                                      ? 'border-red-500/20 bg-red-950/10 text-red-400/40 cursor-not-allowed opacity-50'
                                                                      : 'border-white/10 bg-white/3 text-gray-300 hover:bg-white/5 hover:border-white/20 hover:scale-[1.02] cursor-pointer') }}">
@@ -1089,7 +1085,7 @@
 
             <!-- Submit -->
             <div class="pt-6 border-t border-white/5 flex justify-end">
-                <button type="submit" class="flex items-center justify-center gap-2 bg-blue-600 text-white hover:bg-blue-500 w-full sm:w-auto px-10 py-4 text-base rounded-[1.25rem] font-bold transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-500/20 disabled:opacity-70" wire:loading.attr="disabled">
+                <button type="submit" class="flex items-center justify-center gap-2 bg-blue-600 text-white hover:bg-blue-500 w-full sm:w-auto px-10 py-4 text-base rounded-full font-bold transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-500/20 disabled:opacity-70" wire:loading.attr="disabled">
                     <span class="material-symbols-outlined text-[20px] leading-none" wire:loading.remove wire:target="prepareReview">rate_review</span>
                     <span class="material-symbols-outlined text-[20px] animate-spin leading-none" wire:loading wire:target="prepareReview">progress_activity</span>
                     Review Details

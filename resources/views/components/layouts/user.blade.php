@@ -38,6 +38,38 @@
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.35) !important;
             outline: none !important;
         }
+
+        /* Pagination overrides in dark mode */
+        body.dark .laravel-pagination a,
+        body.dark .laravel-pagination button,
+        body.dark .laravel-pagination span {
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            border-color: transparent !important;
+            color: #cbd5e1 !important;
+            border-radius: 0.75rem !important; /* matches user nav links (rounded-xl) */
+        }
+        body.dark .laravel-pagination a:hover,
+        body.dark .laravel-pagination button:not([disabled]):hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-color: transparent !important;
+            color: #ffffff !important;
+        }
+        body.dark .laravel-pagination span[aria-current="page"] > span,
+        body.dark .laravel-pagination span[aria-current="page"] > button,
+        body.dark .laravel-pagination [aria-current="page"] .relative.inline-flex.items-center {
+            background-color: rgba(59, 130, 246, 0.2) !important;
+            border-color: rgba(59, 130, 246, 0.3) !important;
+            color: #60a5fa !important;
+        }
+        body.dark .laravel-pagination .relative.inline-flex.items-center.border:focus,
+        body.dark .laravel-pagination .relative.inline-flex.items-center.border:active,
+        body.dark .laravel-pagination .relative.inline-flex.items-center.border:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
+            ring: none !important;
+            --tw-ring-color: transparent !important;
+            border-color: transparent !important;
+        }
     </style>
 </head>
 
@@ -274,7 +306,7 @@
             <div class="relative flex items-center px-4 md:px-8 w-full h-full">
  
                 <button @click="sidebarOpen = !sidebarOpen"
-                    class="lg:hidden inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 rounded-[1.25rem] transition-colors text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 shrink-0">
+                    class="lg:hidden inline-flex items-center justify-center w-10 h-10 bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 shrink-0">
                     <span class="material-symbols-outlined text-[26px]">menu</span>
                 </button>
  
@@ -291,12 +323,12 @@
                 <div class="ml-auto flex items-center gap-3 z-20">
                     @auth
                     <!-- Theme Toggle Button -->
-                    <button @click="toggleTheme()" class="inline-flex items-center justify-center p-2 rounded-xl text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100 shrink-0">
+                    <button @click="toggleTheme()" class="inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100 shrink-0">
                         <span class="material-symbols-outlined text-[24px]" x-text="darkMode ? 'light_mode' : 'dark_mode'"></span>
                     </button>
  
                     <!-- Notification Bell -->
-                    <a href="{{ route('user.notifications') }}" class="relative inline-flex items-center justify-center p-2 rounded-xl text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all group shrink-0 mr-1 bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100">
+                    <a href="{{ route('user.notifications') }}" class="relative inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-gray-950 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all group shrink-0 mr-1 bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100">
                         <span class="material-symbols-outlined text-[24px]">notifications</span>
                         <div class="absolute top-1.5 right-1.5">
                             @livewire('notification-badge', ['type' => 'user'])
@@ -304,7 +336,7 @@
                     </a>
  
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-3 p-1.5 hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl transition-all focus:outline-none group bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100">
+                        <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-3 p-1.5 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-all focus:outline-none group bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100">
                             @if(auth()->user()->profile_picture)
                                 <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}"
                                     alt="Profile"
@@ -368,7 +400,7 @@
 
                     <!-- Logout Button Beside User UI -->
                     <button @click="logoutModal = true" 
-                        class="inline-flex items-center justify-center p-2 rounded-xl text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100 shrink-0 ml-1.5 cursor-pointer" 
+                        class="inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all bg-transparent border-0 shadow-none hover:shadow-none hover:translate-y-0 active:scale-100 shrink-0 ml-1.5 cursor-pointer" 
                         title="Logout">
                         <span class="material-symbols-outlined text-[24px]">logout</span>
                     </button>
@@ -417,11 +449,11 @@
 
             <div class="p-6 bg-gray-50 flex gap-3">
                 <button type="button" @click="logoutModal = false" 
-                    class="flex-1 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-[1.25rem] hover:bg-gray-50 transition-all text-sm">
+                    class="flex-1 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50 transition-all text-sm">
                     Cancel
                 </button>
                 <button type="button" @click="triggerLogout()" 
-                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-[1.25rem] hover:bg-red-700 transition-all shadow-lg text-sm">
+                    class="flex-1 py-4 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-all shadow-lg text-sm">
                     Logout
                 </button>
             </div>

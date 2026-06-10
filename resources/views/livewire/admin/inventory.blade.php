@@ -6,7 +6,7 @@
         </div>
         <!-- Add Button -->
         <button wire:click="editRecord(0)" 
-            class="bg-gray-900 text-white px-8 h-[52px] rounded-[1.25rem] font-black text-sm flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-md active:scale-95 group whitespace-nowrap shrink-0 border-none outline-none cursor-pointer">
+            class="bg-gray-900 text-white px-8 h-[52px] rounded-full font-black text-sm flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-md active:scale-95 group whitespace-nowrap shrink-0 border-none outline-none cursor-pointer">
             <span class="material-symbols-outlined text-[20px]">add</span>
             Add Inventory Item
         </button>
@@ -105,7 +105,7 @@
         </table>
         
         @if($records->hasPages())
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
+            <div class="laravel-pagination px-6 py-4 bg-gray-50 border-t border-gray-100">
                 {{ $records->links(data: ['scrollTo' => false]) }}
             </div>
         @endif
@@ -123,7 +123,7 @@
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
             x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-            class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-md p-10 transform transition-all overflow-hidden flex flex-col z-10">
+            class="relative bg-white modal-content rounded-[2.5rem] shadow-2xl w-full max-w-md p-10 transform transition-all overflow-hidden flex flex-col z-10">
             
             <div class="flex justify-between items-center mb-8">
                 <div class="flex items-center gap-4">
@@ -184,7 +184,7 @@
                 </div>
 
                 <div class="pt-6">
-                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-2xl font-black text-lg hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center justify-center gap-3 group border-none cursor-pointer">
+                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-full font-black text-lg hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center justify-center gap-3 group border-none cursor-pointer">
                         <span class="material-symbols-outlined text-[20px] group-hover:scale-125 transition-transform">{{ $editingId ? 'save' : 'add_task' }}</span>
                         {{ $editingId ? 'Save Changes' : 'Create Item' }}
                     </button>
@@ -205,7 +205,7 @@
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-sm p-8 transform transition-all overflow-hidden text-center z-10">
+            class="relative bg-white modal-content rounded-[2.5rem] shadow-2xl w-full max-w-sm p-8 transform transition-all overflow-hidden text-center z-10">
             
             <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-5">
                 <span class="material-symbols-outlined text-red-650 text-[36px]">delete_forever</span>
@@ -217,10 +217,10 @@
             </p>
 
             <div class="flex items-center gap-3">
-                <button @click="openDeleteModal = false" type="button" class="w-1/2 bg-gray-105 text-gray-700 py-3.5 rounded-xl font-black text-sm hover:bg-gray-200 transition-all border-none cursor-pointer">
+                <button @click="openDeleteModal = false" type="button" class="w-1/2 bg-gray-105 text-gray-700 py-3.5 rounded-full font-black text-sm hover:bg-gray-200 transition-all border-none cursor-pointer">
                     Cancel
                 </button>
-                <button wire:click="deleteRecord" type="button" class="w-1/2 bg-red-600 text-white py-3.5 rounded-xl font-black text-sm hover:bg-red-700 transition-all shadow-lg border-none cursor-pointer">
+                <button wire:click="deleteRecord" type="button" class="w-1/2 bg-red-600 text-white py-3.5 rounded-full font-black text-sm hover:bg-red-700 transition-all shadow-lg border-none cursor-pointer">
                     Delete
                 </button>
             </div>

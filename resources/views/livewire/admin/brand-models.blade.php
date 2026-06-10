@@ -18,7 +18,7 @@
                     <h2 class="text-lg font-bold text-gray-900">Brands</h2>
                     <p class="text-xs text-gray-400 mt-0.5">Device Manufacturers</p>
                 </div>
-                <button wire:click="$set('showBrandModal', true)" class="bg-gray-900 hover:bg-blue-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-sm transition-all border-none outline-none cursor-pointer">
+                <button wire:click="$set('showBrandModal', true)" class="bg-gray-900 hover:bg-blue-600 text-white text-xs font-bold px-4 py-2.5 rounded-full flex items-center gap-1.5 shadow-sm transition-all border-none outline-none cursor-pointer">
                     <span class="material-symbols-outlined text-[16px]">add</span>
                     New Brand
                 </button>
@@ -28,7 +28,7 @@
                 <!-- Search bar for Brands -->
                 <div class="relative w-full h-11">
                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
-                    <input type="text" wire:model.live="brandSearch" placeholder="Search brands..." class="w-full h-full pl-11 pr-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all text-xs font-bold text-gray-900 shadow-sm placeholder:text-gray-400">
+                    <input type="text" wire:model.live="brandSearch" placeholder="Search brands..." class="w-full h-full pl-11 pr-4 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-500/20 focus:border-blue-400 dark:focus:border-blue-500 transition-all text-xs font-bold text-gray-900 dark:text-white shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500">
                 </div>
 
                 @if (session()->has('brand_message'))
@@ -42,7 +42,7 @@
                 <div class="border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                     <table class="w-full border-collapse">
                         <thead>
-                            <tr class="bg-gray-50/70 border-b border-gray-100">
+                            <tr class="bg-gray-50/70 dark:bg-white/[0.04] border-b border-gray-100 dark:border-white/5">
                                 <th class="px-4 py-3 text-left text-[9px] font-black text-gray-400 uppercase tracking-widest">Brand Name</th>
                                 <th class="px-4 py-3 text-center text-[9px] font-black text-gray-400 uppercase tracking-widest w-24">Actions</th>
                             </tr>
@@ -76,7 +76,7 @@
                     </table>
                     
                     @if($brands->hasPages())
-                        <div class="px-4 py-3 bg-gray-50 border-t border-gray-100">
+                        <div class="laravel-pagination px-4 py-3 bg-gray-50 border-t border-gray-100">
                             {{ $brands->links(data: ['scrollTo' => false]) }}
                         </div>
                     @endif
@@ -91,7 +91,7 @@
                     <h2 class="text-lg font-bold text-gray-900">Exact Models</h2>
                     <p class="text-xs text-gray-400 mt-0.5">Device Model Directory</p>
                 </div>
-                <button wire:click="$set('showModelModal', true)" class="bg-gray-900 hover:bg-blue-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-sm transition-all border-none outline-none cursor-pointer">
+                <button wire:click="$set('showModelModal', true)" class="bg-gray-900 hover:bg-blue-600 text-white text-xs font-bold px-4 py-2.5 rounded-full flex items-center gap-1.5 shadow-sm transition-all border-none outline-none cursor-pointer">
                     <span class="material-symbols-outlined text-[16px]">add</span>
                     New Model
                 </button>
@@ -102,10 +102,10 @@
                 <div class="flex flex-col sm:flex-row gap-3 w-full">
                     <div class="relative flex-1 h-11">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
-                        <input type="text" wire:model.live="modelSearch" placeholder="Search models..." class="w-full h-full pl-11 pr-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all text-xs font-bold text-gray-900 shadow-sm placeholder:text-gray-400">
+                        <input type="text" wire:model.live="modelSearch" placeholder="Search models..." class="w-full h-full pl-11 pr-4 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-500/20 focus:border-blue-400 dark:focus:border-blue-500 transition-all text-xs font-bold text-gray-900 dark:text-white shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500">
                     </div>
                     <div class="relative w-full sm:w-48 h-11">
-                        <select wire:model.live="filterBrandId" class="w-full h-full pl-4 pr-10 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all text-xs font-bold text-gray-900 shadow-sm appearance-none cursor-pointer">
+                        <select wire:model.live="filterBrandId" class="w-full h-full pl-4 pr-10 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-500/20 focus:border-blue-400 dark:focus:border-blue-500 transition-all text-xs font-bold text-gray-900 dark:text-white shadow-sm appearance-none cursor-pointer">
                             <option value="">All Brands</option>
                             @foreach($allBrands as $b)
                                 <option value="{{ $b->id }}">{{ $b->name }}</option>
@@ -126,7 +126,7 @@
                 <div class="border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                     <table class="w-full border-collapse">
                         <thead>
-                            <tr class="bg-gray-50/70 border-b border-gray-100">
+                            <tr class="bg-gray-50/70 dark:bg-white/[0.04] border-b border-gray-100 dark:border-white/5">
                                 <th class="px-4 py-3 text-left text-[9px] font-black text-gray-400 uppercase tracking-widest">Model Name</th>
                                 <th class="px-4 py-3 text-left text-[9px] font-black text-gray-400 uppercase tracking-widest w-36">Brand</th>
                                 <th class="px-4 py-3 text-center text-[9px] font-black text-gray-400 uppercase tracking-widest w-24">Actions</th>
@@ -164,7 +164,7 @@
                     </table>
                     
                     @if($models->hasPages())
-                        <div class="px-4 py-3 bg-gray-50 border-t border-gray-100">
+                        <div class="laravel-pagination px-4 py-3 bg-gray-50 border-t border-gray-100">
                             {{ $models->links(data: ['scrollTo' => false]) }}
                         </div>
                     @endif
@@ -186,7 +186,7 @@
              x-transition:leave="ease-in duration-200"
              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
              x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-             class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col z-10">
+             class="relative bg-white modal-content rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col z-10">
             
             <div class="flex justify-between items-center px-10 pt-10 pb-6 border-b border-gray-100">
                 <div class="flex items-center gap-3.5">
@@ -213,8 +213,8 @@
                 </div>
 
                 <div class="px-10 py-6 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3 rounded-b-[2.5rem]">
-                    <button type="button" wire:click="resetBrandFields" class="px-6 py-3.5 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
-                    <button type="submit" class="px-8 py-3.5 bg-gray-900 hover:bg-blue-600 text-white font-bold rounded-xl transition-all shadow-md active:scale-95 text-xs border-none cursor-pointer">
+                    <button type="button" wire:click="resetBrandFields" class="px-6 py-3.5 border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
+                    <button type="submit" class="px-8 py-3.5 bg-gray-900 hover:bg-blue-600 text-white font-bold rounded-full transition-all shadow-md active:scale-95 text-xs border-none cursor-pointer">
                         {{ $editingBrandId ? 'Save Changes' : 'Create Brand' }}
                     </button>
                 </div>
@@ -232,7 +232,7 @@
              x-transition:leave="ease-in duration-200"
              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
              x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-             class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col z-10">
+             class="relative bg-white modal-content rounded-[2.5rem] shadow-2xl w-full max-w-md transform transition-all overflow-hidden flex flex-col z-10">
             
             <div class="flex justify-between items-center px-10 pt-10 pb-6 border-b border-gray-100">
                 <div class="flex items-center gap-3.5">
@@ -273,8 +273,8 @@
                 </div>
 
                 <div class="px-10 py-6 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3 rounded-b-[2.5rem]">
-                    <button type="button" wire:click="resetModelFields" class="px-6 py-3.5 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
-                    <button type="submit" class="px-8 py-3.5 bg-gray-900 hover:bg-blue-600 text-white font-bold rounded-xl transition-all shadow-md active:scale-95 text-xs border-none cursor-pointer">
+                    <button type="button" wire:click="resetModelFields" class="px-6 py-3.5 border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
+                    <button type="submit" class="px-8 py-3.5 bg-gray-900 hover:bg-blue-600 text-white font-bold rounded-full transition-all shadow-md active:scale-95 text-xs border-none cursor-pointer">
                         {{ $editingModelId ? 'Save Changes' : 'Create Model' }}
                     </button>
                 </div>
@@ -285,15 +285,15 @@
     <!-- 3. Confirm Delete Brand Modal -->
     @if($confirmingBrandDeletionId)
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md">
-        <div class="bg-white rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100 animate-scale-in">
+        <div class="bg-white modal-content rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100 animate-scale-in">
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5">
                 <span class="material-symbols-outlined text-[36px]">delete_forever</span>
             </div>
             <h3 class="text-xl font-black text-gray-900 mb-2">Remove Brand?</h3>
             <p class="text-sm text-gray-500 mb-8 leading-relaxed">This action will delete the Brand. Exact models linked to this brand might lose their parent reference.</p>
             <div class="flex gap-3 justify-center">
-                <button wire:click="resetBrandFields" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
-                <button wire:click="deleteBrand" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
+                <button wire:click="resetBrandFields" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
+                <button wire:click="deleteBrand" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
             </div>
         </div>
     </div>
@@ -302,15 +302,15 @@
     <!-- 4. Confirm Delete Model Modal -->
     @if($confirmingModelDeletionId)
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md">
-        <div class="bg-white rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100 animate-scale-in">
+        <div class="bg-white modal-content rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100 animate-scale-in">
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5">
                 <span class="material-symbols-outlined text-[36px]">delete_forever</span>
             </div>
             <h3 class="text-xl font-black text-gray-900 mb-2">Remove Device Model?</h3>
             <p class="text-sm text-gray-500 mb-8 leading-relaxed">This action cannot be undone. Users will no longer see this model in booking dropdown options.</p>
             <div class="flex gap-3 justify-center">
-                <button wire:click="resetModelFields" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
-                <button wire:click="deleteModel" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
+                <button wire:click="resetModelFields" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-100 transition-all text-xs bg-white cursor-pointer shadow-sm">Cancel</button>
+                <button wire:click="deleteModel" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all text-xs border-none cursor-pointer shadow-md">Delete</button>
             </div>
         </div>
     </div>

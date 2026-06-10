@@ -11,7 +11,7 @@
                 <p class="text-xs text-blue-100">Powered by n8n</p>
             </div>
         </div>
-        <button wire:click="toggleHistory" class="p-2 hover:bg-blue-500 rounded-lg transition">
+        <button wire:click="toggleHistory" class="p-2 hover:bg-blue-500 rounded-full transition">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
@@ -24,7 +24,7 @@
         <div class="w-64 bg-gray-900 text-white border-r border-gray-700 flex flex-col p-4 overflow-hidden">
             <button 
                 wire:click="createSession" 
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mb-4 flex items-center justify-center gap-2 transition"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full mb-4 flex items-center justify-center gap-2 transition"
             >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -37,7 +37,7 @@
                 <div class="group">
                     <button 
                         wire:click="selectSession({{ $session['id'] }})"
-                        class="w-full text-left p-3 rounded-lg hover:bg-gray-800 transition {{ $currentSession === $session['id'] ? 'bg-gray-800 border-l-2 border-blue-500' : '' }}"
+                        class="w-full text-left p-3 rounded-full hover:bg-gray-800 transition {{ $currentSession === $session['id'] ? 'bg-gray-800 border-l-2 border-blue-500' : '' }}"
                     >
                         <p class="text-sm font-medium truncate">{{ $session['title'] }}</p>
                         <p class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($session['created_at'])->diffForHumans() }}</p>
@@ -70,7 +70,7 @@
                         <h3 class="text-lg font-semibold text-gray-600 mb-2">Start a new conversation</h3>
                         <button 
                             wire:click="createSession" 
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition"
                         >
                             New Chat
                         </button>
@@ -128,7 +128,7 @@
                     <button 
                         type="submit"
                         @if($isLoading) disabled @endif
-                        class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg transition flex items-center gap-2"
+                        class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-full transition flex items-center gap-2"
                     >
                         @if($isLoading)
                             <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">

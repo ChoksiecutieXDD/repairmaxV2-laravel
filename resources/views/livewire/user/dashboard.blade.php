@@ -29,7 +29,7 @@
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Welcome back, {{ Auth::user()->first_name ?? Auth::user()->name ?? 'User' }}!</h1>
             <p class="text-gray-500 mt-1">Here's a quick overview of your device repairs.</p>
         </div>
-        <a href="/user/book-appointment" class="inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-lg font-semibold transition-colors shadow-md">
+        <a href="/user/book-appointment" class="inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-full font-semibold transition-colors shadow-md">
             <span class="material-symbols-outlined text-[20px]">add</span>
             New Repair
         </a>
@@ -151,7 +151,7 @@
         </div>
 
         <div class="px-6 py-4 border-t border-brand-100 bg-gray-50 text-center sm:hidden">
-            <a href="/user/upcoming-appointments" class="text-sm text-blue-600 font-bold block w-full py-2 bg-white rounded-lg border border-brand-200 shadow-sm">
+            <a href="/user/upcoming-appointments" class="text-sm text-blue-600 font-bold block w-full py-2 bg-white rounded-full border border-brand-200 shadow-sm">
                 View All Appointments
             </a>
         </div>

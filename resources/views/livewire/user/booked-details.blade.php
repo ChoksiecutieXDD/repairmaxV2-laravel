@@ -2,7 +2,7 @@
     <!-- Top Nav / Back & Actions Header -->
     <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl border border-brand-200 shadow-sm">
         <div class="flex items-center gap-3">
-            <a href="{{ route('user.upcoming-appointments') }}" class="w-10 h-10 rounded-xl bg-gray-50 hover:bg-gray-100 flex items-center justify-center border border-brand-200 transition-colors text-gray-500 hover:text-gray-900" title="Back to Upcoming Appointments">
+            <a href="{{ route('user.upcoming-appointments') }}" class="w-10 h-10 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center border border-brand-200 transition-colors text-gray-500 hover:text-gray-900" title="Back to Upcoming Appointments">
                 <span class="material-symbols-outlined text-[20px]">arrow_back</span>
             </a>
             <div>
@@ -328,11 +328,11 @@
                     </div>
                     <div class="p-6 flex flex-col gap-3">
                         <div class="grid grid-cols-2 gap-3">
-                            <button wire:click="openEdit" class="inline-flex items-center justify-center gap-2 bg-white border border-brand-200 hover:bg-gray-50 text-gray-700 px-4 py-3 rounded-2xl text-xs font-bold transition-all shadow-sm">
+                            <button wire:click="openEdit" class="inline-flex items-center justify-center gap-2 bg-white border border-brand-200 hover:bg-gray-50 text-gray-700 px-4 py-3 rounded-full text-xs font-bold transition-all shadow-sm">
                                 <span class="material-symbols-outlined text-[18px] text-blue-500">edit</span>
                                 Edit Details
                             </button>
-                            <button wire:click="openReschedule" class="inline-flex items-center justify-center gap-2 bg-white border border-brand-200 hover:bg-gray-50 text-gray-700 px-4 py-3 rounded-2xl text-xs font-bold transition-all shadow-sm">
+                            <button wire:click="openReschedule" class="inline-flex items-center justify-center gap-2 bg-white border border-brand-200 hover:bg-gray-50 text-gray-700 px-4 py-3 rounded-full text-xs font-bold transition-all shadow-sm">
                                 <span class="material-symbols-outlined text-[18px] text-indigo-500">calendar_month</span>
                                 Reschedule
                             </button>
@@ -341,7 +341,7 @@
                             <button 
                                 wire:click="cancelAppointment"
                                 wire:confirm="Are you sure you want to cancel this scheduled appointment?"
-                                class="w-full inline-flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-4 py-3.5 rounded-2xl text-xs font-black transition-all">
+                                class="w-full inline-flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-4 py-3.5 rounded-full text-xs font-black transition-all">
                                 <span class="material-symbols-outlined text-[18px]">cancel</span>
                                 Cancel Scheduled Repair
                             </button>
@@ -401,10 +401,10 @@
             </div>
 
             <div class="bg-gray-50 border-t border-brand-200 px-6 py-4 flex justify-end gap-3">
-                <button wire:click="closeModals()" class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-brand-300 rounded-lg hover:bg-gray-50 transition-colors">
+                <button wire:click="closeModals()" class="px-4 py-2 text-sm font-bold text-gray-700 bg-white border border-brand-300 rounded-full hover:bg-gray-50 transition-colors">
                     Cancel
                 </button>
-                <button wire:click="saveEdit()" class="px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                <button wire:click="saveEdit()" class="px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors">
                     Save Changes
                 </button>
             </div>
@@ -427,8 +427,7 @@
                 <!-- Week Navigator -->
                 <div class="flex items-center justify-between py-2 border-b border-brand-100">
                     <button type="button" wire:click="prevWeek" @disabled($calendar_week_offset <= 0)
-                        class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl border border-brand-200 transition-all 
-                        {{ $calendar_week_offset <= 0 ? 'text-gray-300 cursor-not-allowed bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50 hover:border-brand-300' }}">
+                        class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full border border-brand-200 transition-all {{ $calendar_week_offset <= 0 ?'text-gray-300 cursor-not-allowed bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50 hover:border-brand-300' }}">
                         <span class="material-symbols-outlined text-[16px] leading-none">chevron_left</span>
                         Prev Week
                     </button>
@@ -444,7 +443,7 @@
                         @endif
                     </div>
                     <button type="button" wire:click="nextWeek"
-                        class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl border border-brand-200 bg-white text-gray-900 hover:bg-gray-50 hover:border-brand-300 transition-all">
+                        class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full border border-brand-200 bg-white text-gray-900 hover:bg-gray-50 hover:border-brand-300 transition-all">
                         Next Week
                         <span class="material-symbols-outlined text-[16px] leading-none">chevron_right</span>
                     </button>
@@ -520,9 +519,7 @@
                         <button type="button"
                             @if(!$isFull) wire:click="selectRescheduleTime('{{ $slot }}')" @endif
                             @disabled($isFull)
-                            class="py-4 px-2 rounded-2xl border-2 font-black text-sm transition-all flex items-center justify-center gap-2 outline-none
-                                {{ $isSelected
-                                    ? 'border-blue-500 bg-white text-blue-700 shadow-md ring-2 ring-blue-100 scale-[1.02]'
+                            class="py-4 px-2 rounded-full border-2 font-black text-sm transition-all flex items-center justify-center gap-2 outline-none {{ $isSelected ?'border-blue-500 bg-white text-blue-700 shadow-md ring-2 ring-blue-100 scale-[1.02]'
                                     : ($isFull
                                         ? 'border-red-100 bg-red-50 text-red-300 cursor-not-allowed opacity-50'
                                         : 'border-brand-100 bg-gray-50/50 text-gray-500 hover:bg-white hover:border-brand-300 hover:scale-[1.02] cursor-pointer') }}">
@@ -551,11 +548,11 @@
             </div>
 
             <div class="bg-gray-50 border-t border-brand-200 px-6 py-4 flex justify-end gap-3">
-                <button wire:click="closeModals()" class="px-5 py-2.5 text-sm font-bold text-gray-700 bg-white border border-brand-300 rounded-xl hover:bg-gray-50 hover:border-brand-400 transition-all">
+                <button wire:click="closeModals()" class="px-5 py-2.5 text-sm font-bold text-gray-700 bg-white border border-brand-300 rounded-full hover:bg-gray-50 hover:border-brand-400 transition-all">
                     Cancel
                 </button>
                 <button wire:click="saveReschedule()" @disabled(!$rescheduleDate || !$rescheduleTime)
-                    class="px-5 py-2.5 text-sm font-bold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-md shadow-blue-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="px-5 py-2.5 text-sm font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all shadow-md shadow-blue-100 disabled:opacity-50 disabled:cursor-not-allowed">
                     Save Changes
                 </button>
             </div>

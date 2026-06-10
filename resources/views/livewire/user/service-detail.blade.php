@@ -34,7 +34,7 @@
             </h2>
         </div>
 
-        <a href="/user/dashboard" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-gray-900 hover:bg-gray-800 text-white rounded-2xl text-xs font-black uppercase tracking-wider active:scale-95 transition-all shadow-md shadow-gray-200/50">
+        <a href="/user/dashboard" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-gray-900 hover:bg-gray-800 text-white rounded-full text-xs font-black uppercase tracking-wider active:scale-95 transition-all shadow-md shadow-gray-200/50">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
             Back to Dashboard
         </a>

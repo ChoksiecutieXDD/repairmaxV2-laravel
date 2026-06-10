@@ -31,83 +31,72 @@
 
     <!-- Tabs Navigation -->
     <div x-data="{ activeTab: @entangle('activeTab') }" class="space-y-6">
-        <div class="bg-white p-1.5 rounded-[1.25rem] border border-gray-200 shadow-sm w-full overflow-x-auto no-scrollbar">
+        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm w-full overflow-x-auto no-scrollbar">
             <div class="flex min-w-full space-x-1">
                 <button @click="activeTab = 'overview'" 
-                    :class="activeTab === 'overview' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'overview' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">grid_view</span>
                     Overview
                 </button>
                 <button @click="activeTab = 'general'" 
-                    :class="activeTab === 'general' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'general' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">business</span>
                     General
                 </button>
                 <button @click="activeTab = 'email'" 
-                    :class="activeTab === 'email' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'email' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">mail</span>
                     Email SMTP
                 </button>
                 <button @click="activeTab = 'notifications'" 
-                    :class="activeTab === 'notifications' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'notifications' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">notifications</span>
                     Notifications
                 </button>
-                <button @click="activeTab = 'payment'" 
-                    :class="activeTab === 'payment' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
-                    <span class="material-symbols-outlined text-[20px]">payment</span>
-                    Payment
-                </button>
-                <button @click="activeTab = 'hours'" 
-                    :class="activeTab === 'hours' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
-                    <span class="material-symbols-outlined text-[20px]">schedule</span>
-                    Hours
-                </button>
+
                 <button @click="activeTab = 'security'" 
-                    :class="activeTab === 'security' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'security' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">security</span>
                     Security
                 </button>
                 <button @click="activeTab = 'system'" 
-                    :class="activeTab === 'system' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'system' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">tune</span>
                     System Controls
                 </button>
                 <button @click="activeTab = 'chatbot'" 
-                    :class="activeTab === 'chatbot' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'chatbot' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">smart_toy</span>
                     n8n Chatbot
                 </button>
                 <button @click="activeTab = 'resources'" 
-                    :class="activeTab === 'resources' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'resources' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">database</span>
                     Resources
                 </button>
                 <button @click="activeTab = 'health'" 
-                    :class="activeTab === 'health' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    :class="activeTab === 'health' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-900/10'" 
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">monitoring</span>
                     Health Pulse
                 </button>
                 <button @click="activeTab = 'env'" 
                     :class="activeTab === 'env' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">lock</span>
                     Env Vars
                 </button>
                 <button @click="activeTab = 'maintenance'" 
                     :class="activeTab === 'maintenance' ? 'bg-gray-900 text-white shadow-lg transform scale-105' : 'text-gray-500 hover:bg-gray-50'" 
-                    class="px-6 py-3 rounded-[1rem] font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
+                    class="px-6 py-3 rounded-full font-black transition-all duration-300 flex items-center gap-2 text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[20px]">build</span>
                     Maintenance
                 </button>
@@ -181,6 +170,11 @@
                     appointmentTrend: @js($appointmentTrend),
                     userGrowth: @js($userGrowth),
                     init() {
+                        const isDark = document.body.classList.contains('dark');
+                        const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+                        const tickColor = isDark ? '#64748b' : '#999';
+                        const pointBorder = isDark ? '#0f172a' : '#fff';
+
                         // Appointment Trend Chart
                         new Chart(this.$refs.appointmentChart, {
                             type: 'line',
@@ -195,7 +189,7 @@
                                     fill: true,
                                     tension: 0.4,
                                     pointBackgroundColor: '#3b82f6',
-                                    pointBorderColor: '#fff',
+                                    pointBorderColor: pointBorder,
                                     pointBorderWidth: 2,
                                     pointRadius: 5,
                                     pointHoverRadius: 7,
@@ -208,12 +202,12 @@
                                 scales: {
                                     y: {
                                         beginAtZero: true,
-                                        grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
-                                        ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                        grid: { color: gridColor, drawBorder: false },
+                                        ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                                     },
                                     x: {
                                         grid: { display: false, drawBorder: false },
-                                        ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                        ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                                     }
                                 }
                             }
@@ -233,7 +227,7 @@
                                     fill: true,
                                     tension: 0.4,
                                     pointBackgroundColor: '#10b981',
-                                    pointBorderColor: '#fff',
+                                    pointBorderColor: pointBorder,
                                     pointBorderWidth: 2,
                                     pointRadius: 5,
                                     pointHoverRadius: 7,
@@ -246,28 +240,28 @@
                                 scales: {
                                     y: {
                                         beginAtZero: true,
-                                        grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
-                                        ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                        grid: { color: gridColor, drawBorder: false },
+                                        ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                                     },
                                     x: {
                                         grid: { display: false, drawBorder: false },
-                                        ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                                        ticks: { color: tickColor, font: { size: 10, weight: 'bold' } }
                                     }
                                 }
                             }
                         });
                     }
                  }">
-                <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-                    <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
+                    <h3 class="text-sm font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-widest">
                         <span class="material-symbols-outlined text-gray-400">trending_up</span>
                         Appointments Trend
                     </h3>
                     <canvas x-ref="appointmentChart" height="100"></canvas>
                 </div>
 
-                <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-                    <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
+                    <h3 class="text-sm font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-widest">
                         <span class="material-symbols-outlined text-gray-400">group</span>
                         User Growth
                     </h3>
@@ -278,7 +272,7 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
+                <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
                     <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
                         <span class="material-symbols-outlined text-gray-400">event</span>
                         Today's Appointments
@@ -305,7 +299,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
+                <div class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 shadow-sm p-6">
                     <h3 class="text-sm font-black text-gray-900 mb-6 flex items-center gap-2 uppercase tracking-widest">
                         <span class="material-symbols-outlined text-gray-400">health_and_safety</span>
                         Engine Health
@@ -343,7 +337,7 @@
         </div>
 
         <!-- General Settings Tab -->
-        <div x-show="activeTab === 'general'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
+        <div x-show="activeTab === 'general'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
             <div>
                 <h2 class="text-xl font-bold text-gray-900">Business Information</h2>
                 <p class="text-gray-500 text-sm mt-1">Basic identification and contact details for your business.</p>
@@ -371,7 +365,7 @@
                 </div>
             </div>
             <div class="pt-6 border-t border-gray-100 flex justify-end">
-                <button wire:click="saveGeneralSettings" class="px-10 py-3 bg-gray-900 text-white rounded-[1.25rem] font-black text-sm hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center gap-2">
+                <button wire:click="saveGeneralSettings" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2">
                     <span class="material-symbols-outlined text-[20px]">save</span>
                     Save Changes
                 </button>
@@ -379,192 +373,296 @@
         </div>
 
         <!-- Email Settings Tab -->
-        <div x-show="activeTab === 'email'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
-            <div>
-                <h2 class="text-xl font-bold text-gray-900">Email Configuration</h2>
-                <p class="text-gray-500 text-sm mt-1">Configure SMTP settings for system outgoing emails.</p>
+        <div x-show="activeTab === 'email'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-blue-600">mail</span>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Email Configuration</h2>
+                    <p class="text-gray-500 text-sm mt-1">Configure SMTP settings for system outgoing emails.</p>
+                </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
-                    <input type="text" wire:model="smtpHost" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">SMTP Host</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">dns</span>
+                        <input type="text" wire:model="smtpHost" placeholder="smtp.mailtrap.io" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
-                    <input type="number" wire:model="smtpPort" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">SMTP Port</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">settings_ethernet</span>
+                        <input type="number" wire:model="smtpPort" placeholder="587" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Email Address</label>
-                    <input type="email" wire:model="emailFromAddress" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">From Email Address</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">alternate_email</span>
+                        <input type="email" wire:model="emailFromAddress" placeholder="noreply@repairmax.com" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Name</label>
-                    <input type="text" wire:model="emailFromName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">From Name</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">badge</span>
+                        <input type="text" wire:model="emailFromName" placeholder="Repairmax System" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
                 </div>
-                <div class="lg:col-span-2">
-                    <label class="flex items-center gap-3 cursor-pointer group">
-                        <div class="relative">
-                            <input type="checkbox" wire:model="emailNotificationsEnabled" class="sr-only peer" />
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                <div class="md:col-span-2 lg:col-span-2">
+                    <div class="flex items-center justify-between p-5 bg-gray-50 border border-gray-100 rounded-[1.25rem]">
+                        <div>
+                            <p class="text-sm font-black text-gray-900">Enable Email Notifications</p>
+                            <p class="text-xs font-bold text-gray-400 mt-0.5 uppercase tracking-widest">System-wide outgoing email delivery</p>
                         </div>
-                        <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900 transition-colors">Enable Email Notifications</span>
-                    </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" wire:model="emailNotificationsEnabled" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="pt-6 border-t border-gray-100 flex justify-end">
-                <button wire:click="saveEmailSettings" class="px-8 py-2.5 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-md active:scale-95">Save Changes</button>
+                <button wire:click="saveEmailSettings" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">save</span>
+                    Save Changes
+                </button>
             </div>
         </div>
 
         <!-- Notifications Settings Tab -->
-        <div x-show="activeTab === 'notifications'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
-            <div>
-                <h2 class="text-xl font-bold text-gray-900">Notification Preferences</h2>
-                <p class="text-gray-500 text-sm mt-1">Control how and when you receive system alerts.</p>
-            </div>
-            <div class="space-y-6 max-w-2xl">
-                <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" wire:model="appointmentReminders" class="w-5 h-5 border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
-                    <span class="text-sm font-medium text-gray-700">Send Appointment Reminders</span>
-                </label>
-                <div class="ml-8">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Reminder Time (hours before appointment)</label>
-                    <select wire:model="appointmentReminderTime" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <option value="1">1 hour</option>
-                        <option value="6">6 hours</option>
-                        <option value="12">12 hours</option>
-                        <option value="24">24 hours</option>
-                        <option value="48">48 hours</option>
-                    </select>
+        <div x-show="activeTab === 'notifications'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-orange-600">notifications_active</span>
                 </div>
-                <label class="flex items-center gap-3 cursor-pointer group">
-                    <div class="relative">
-                        <input type="checkbox" wire:model="statusUpdateNotifications" class="sr-only peer" />
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Notification Preferences</h2>
+                    <p class="text-gray-500 text-sm mt-1">Control how and when you receive system alerts and reminders.</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <!-- Appointment Reminders -->
+                <div class="flex items-center justify-between p-5 bg-gray-50 border border-gray-100 rounded-[1.25rem] hover:border-gray-200 transition-all">
+                    <div class="flex-1">
+                        <p class="text-sm font-black text-gray-900">Appointment Reminders</p>
+                        <p class="text-xs font-bold text-gray-400 mt-0.5 uppercase tracking-widest">Notify users before upcoming appointments</p>
+                        <div class="mt-3">
+                            <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Reminder Time</label>
+                            <select wire:model="appointmentReminderTime" class="w-full max-w-xs px-4 py-2.5 border border-gray-200 rounded-[1rem] bg-white text-sm font-bold text-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500">
+                                <option value="1">1 hour before</option>
+                                <option value="6">6 hours before</option>
+                                <option value="12">12 hours before</option>
+                                <option value="24">24 hours before</option>
+                                <option value="48">48 hours before</option>
+                            </select>
+                        </div>
                     </div>
-                    <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900 transition-colors">Send Status Update Notifications</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer group">
-                    <div class="relative">
-                        <input type="checkbox" wire:model="adminAlerts" class="sr-only peer" />
+                    <label class="relative inline-flex items-center cursor-pointer ml-6 mt-1">
+                        <input type="checkbox" wire:model="appointmentReminders" class="sr-only peer">
                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                    </label>
+                </div>
+
+                <!-- Status Update Notifications -->
+                <div class="flex items-center justify-between p-5 bg-gray-50 border border-gray-100 rounded-[1.25rem] hover:border-gray-200 transition-all">
+                    <div>
+                        <p class="text-sm font-black text-gray-900">Status Update Notifications</p>
+                        <p class="text-xs font-bold text-gray-400 mt-0.5 uppercase tracking-widest">Alert users when appointment status changes</p>
                     </div>
-                    <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900 transition-colors">Send Admin Alerts for New Orders</span>
-                </label>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" wire:model="statusUpdateNotifications" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                    </label>
+                </div>
+
+                <!-- Admin Alerts -->
+                <div class="flex items-center justify-between p-5 bg-gray-50 border border-gray-100 rounded-[1.25rem] hover:border-gray-200 transition-all">
+                    <div>
+                        <p class="text-sm font-black text-gray-900">Admin Alerts for New Bookings</p>
+                        <p class="text-xs font-bold text-gray-400 mt-0.5 uppercase tracking-widest">Notify admins when a new appointment is placed</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" wire:model="adminAlerts" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                    </label>
+                </div>
             </div>
             <div class="pt-6 border-t border-gray-100 flex justify-end">
-                <button wire:click="saveNotificationSettings" class="px-8 py-2.5 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-md active:scale-95">Save Changes</button>
+                <button wire:click="saveNotificationSettings" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">save</span>
+                    Save Changes
+                </button>
             </div>
         </div>
 
         <!-- Payment Settings Tab -->
-        <div x-show="activeTab === 'payment'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
-            <div>
-                <h2 class="text-xl font-bold text-gray-900">Payment Configuration</h2>
-                <p class="text-gray-500 text-sm mt-1">Manage your payment gateways and currency settings.</p>
+        <div x-show="activeTab === 'payment'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-green-600">payments</span>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Payment Configuration</h2>
+                    <p class="text-gray-500 text-sm mt-1">Manage your payment gateways, currency, and tax settings.</p>
+                </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Payment Gateway</label>
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">Payment Gateway</label>
                     <div class="relative">
-                        <select wire:model="paymentGateway" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">account_balance</span>
+                        <select wire:model="paymentGateway" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900 appearance-none">
                             <option value="stripe">Stripe</option>
                             <option value="paypal">PayPal</option>
+                            <option value="paymaya">PayMaya</option>
+                            <option value="gcash">GCash</option>
                         </select>
-                        <span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-sm">payments</span>
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Currency Code</label>
-                    <input type="text" wire:model="currencyCode" placeholder="PHP" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">Currency Code</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">currency_exchange</span>
+                        <input type="text" wire:model="currencyCode" placeholder="PHP" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Tax Percentage (%)</label>
-                    <input type="number" wire:model="taxPercentage" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">Tax Percentage (%)</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">percent</span>
+                        <input type="number" wire:model="taxPercentage" step="0.01" placeholder="12" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
                 </div>
             </div>
             <div class="pt-6 border-t border-gray-100 flex justify-end">
-                <button wire:click="savePaymentSettings" class="px-8 py-2.5 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-md active:scale-95">Save Changes</button>
+                <button wire:click="savePaymentSettings" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">save</span>
+                    Save Changes
+                </button>
             </div>
         </div>
 
         <!-- Business Hours Tab -->
-        <div x-show="activeTab === 'hours'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
-            <div>
-                <h2 class="text-xl font-bold text-gray-900">Business Operating Hours</h2>
-                <p class="text-gray-500 text-sm mt-1">Set your standard opening and closing times for each day.</p>
+        <div x-show="activeTab === 'hours'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-blue-600">schedule</span>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Business Operating Hours</h2>
+                    <p class="text-gray-500 text-sm mt-1">Set your standard opening and closing times for each day.</p>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 @foreach(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as $day)
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-gray-200 hover:bg-white transition-all duration-200">
-                        <label class="w-24 text-sm font-bold text-gray-700 capitalize">{{ $day }}</label>
+                    <div class="flex items-center justify-between px-5 py-4 bg-gray-50 rounded-[1.25rem] border border-gray-100 hover:border-gray-200 hover:bg-white transition-all duration-200">
                         <div class="flex items-center gap-3">
-                            <input type="time" wire:model="{{ $day }}Open" class="px-3 py-1.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm bg-white" />
-                            <span class="text-gray-400 font-medium text-xs">to</span>
-                            <input type="time" wire:model="{{ $day }}Close" class="px-3 py-1.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm bg-white" />
+                            <span class="material-symbols-outlined text-gray-400 text-[18px]">{{ in_array($day, ['saturday','sunday']) ? 'weekend' : 'work' }}</span>
+                            <label class="text-sm font-black text-gray-700 capitalize">{{ $day }}</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="time" wire:model="{{ $day }}Open" class="px-3 py-2 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none text-sm font-bold text-gray-900 bg-white" />
+                            <span class="text-gray-400 font-black text-xs">—</span>
+                            <input type="time" wire:model="{{ $day }}Close" class="px-3 py-2 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none text-sm font-bold text-gray-900 bg-white" />
                         </div>
                     </div>
                 @endforeach
             </div>
             <div class="pt-6 border-t border-gray-100 flex justify-end">
-                <button wire:click="saveBusinessHours" class="px-8 py-2.5 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-md active:scale-95">Save Changes</button>
+                <button wire:click="saveBusinessHours" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">save</span>
+                    Save Changes
+                </button>
             </div>
         </div>
 
         <!-- Security Settings Tab -->
-        <div x-show="activeTab === 'security'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
-            <div>
-                <h2 class="text-xl font-bold text-gray-900">Security Configuration</h2>
-                <p class="text-gray-500 text-sm mt-1">Enhance your application security with advanced authentication rules.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Min Password Length</label>
-                    <input type="number" wire:model="passwordMinLength" min="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+        <div x-show="activeTab === 'security'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-red-600">security</span>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Session Timeout (min)</label>
-                    <input type="number" wire:model="sessionTimeout" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Max Login Attempts</label>
-                    <input type="number" wire:model="maxLoginAttempts" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Password Expiry (days)</label>
-                    <input type="number" wire:model="passwordExpireDays" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <h2 class="text-xl font-bold text-gray-900">Security Configuration</h2>
+                    <p class="text-gray-500 text-sm mt-1">Enhance your application security with advanced authentication rules.</p>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-8 border-y border-gray-100">
-                <label class="flex items-center gap-3 cursor-pointer group">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">Min Password Length</label>
                     <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">password</span>
+                        <input type="number" wire:model="passwordMinLength" min="6" placeholder="8" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">Session Timeout (min)</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">timer</span>
+                        <input type="number" wire:model="sessionTimeout" placeholder="120" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">Max Login Attempts</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">block</span>
+                        <input type="number" wire:model="maxLoginAttempts" placeholder="5" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5 ml-1">Password Expiry (days)</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">event_busy</span>
+                        <input type="number" wire:model="passwordExpireDays" placeholder="90" class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-[1.25rem] bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all outline-none font-bold text-gray-900" />
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="flex items-center justify-between p-5 bg-gray-50 border border-gray-100 rounded-[1.25rem] hover:border-gray-200 transition-all">
+                    <div>
+                        <p class="text-sm font-black text-gray-900">Require Numbers</p>
+                        <p class="text-xs font-bold text-gray-400 mt-0.5 uppercase tracking-widest">Passwords must contain digits</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" wire:model="passwordRequireNumbers" class="sr-only peer" />
                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-5 bg-gray-50 border border-gray-100 rounded-[1.25rem] hover:border-gray-200 transition-all">
+                    <div>
+                        <p class="text-sm font-black text-gray-900">Require Special Chars</p>
+                        <p class="text-xs font-bold text-gray-400 mt-0.5 uppercase tracking-widest">Must include !@#$%^&*</p>
                     </div>
-                    <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900 transition-colors">Require numbers</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer group">
-                    <div class="relative">
+                    <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" wire:model="passwordRequireSpecialChars" class="sr-only peer" />
                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-5 bg-gray-50 border border-gray-100 rounded-[1.25rem] hover:border-gray-200 transition-all">
+                    <div>
+                        <p class="text-sm font-black text-gray-900">Require 2FA</p>
+                        <p class="text-xs font-bold text-gray-400 mt-0.5 uppercase tracking-widest">Two-factor auth for admins</p>
                     </div>
-                    <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900 transition-colors">Require special characters</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer group">
-                    <div class="relative">
+                    <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" wire:model="twoFactorAuthRequired" class="sr-only peer" />
                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
-                    </div>
-                    <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900 transition-colors">Require 2FA for Admins</span>
-                </label>
+                    </label>
+                </div>
             </div>
-            <div class="pt-6 flex justify-end">
-                <button wire:click="saveSecuritySettings" class="px-8 py-2.5 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-md active:scale-95">Save Changes</button>
+            <div class="pt-6 border-t border-gray-100 flex justify-end">
+                <button wire:click="saveSecuritySettings" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">save</span>
+                    Save Changes
+                </button>
             </div>
         </div>
 
         <!-- System Controls Tab -->
-        <div x-show="activeTab === 'system'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
+        <div x-show="activeTab === 'system'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
                     <span class="material-symbols-outlined text-blue-600">tune</span>
@@ -638,7 +736,7 @@
                 </div>
             </div>
             <div class="pt-6 border-t border-gray-100 flex justify-end">
-                <button wire:click="saveSystemSettings" class="px-10 py-3 bg-gray-900 text-white rounded-[1.25rem] font-black text-sm hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center gap-2 border-none cursor-pointer">
+                <button wire:click="saveSystemSettings" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2 border-none cursor-pointer">
                     <span class="material-symbols-outlined text-[20px]">save</span>
                     Save System Settings
                 </button>
@@ -646,7 +744,7 @@
         </div>
 
         <!-- n8n Chatbot Tab -->
-        <div x-show="activeTab === 'chatbot'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
+        <div x-show="activeTab === 'chatbot'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center">
                     <span class="material-symbols-outlined text-purple-600">smart_toy</span>
@@ -698,7 +796,7 @@
                 <!-- Connection Testing UI -->
                 <div class="pt-4 flex flex-col gap-4">
                     <button wire:click="testN8nConnection"
-                        class="px-6 py-3 bg-gray-900 hover:bg-purple-600 text-white rounded-[1.25rem] font-bold text-xs shadow-md transition-all active:scale-95 flex items-center gap-2 w-fit border-none cursor-pointer">
+                        class="px-6 py-3 bg-gray-900 hover:bg-purple-600 text-white rounded-full font-bold text-xs shadow-md transition-all active:scale-95 flex items-center gap-2 w-fit border-none cursor-pointer">
                         <span class="material-symbols-outlined text-[18px]">cell_tower</span>
                         <span wire:loading.remove wire:target="testN8nConnection">Test Connection to n8n Webhook</span>
                         <span wire:loading wire:target="testN8nConnection" class="flex items-center gap-1">
@@ -719,7 +817,7 @@
                 </div>
             </div>
             <div class="pt-6 border-t border-gray-100 flex justify-end">
-                <button wire:click="saveSystemSettings" class="px-10 py-3 bg-gray-900 text-white rounded-[1.25rem] font-black text-sm hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center gap-2 border-none cursor-pointer">
+                <button wire:click="saveSystemSettings" class="px-10 py-3 bg-gray-900 text-white rounded-full font-black text-sm hover:bg-blue-600 transition-all  active:scale-95 flex items-center gap-2 border-none cursor-pointer">
                     <span class="material-symbols-outlined text-[20px]">save</span>
                     Save System Settings
                 </button>
@@ -727,7 +825,7 @@
         </div>
 
         <!-- Resources & Queues Tab -->
-        <div x-show="activeTab === 'resources'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
+        <div x-show="activeTab === 'resources'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
                     <span class="material-symbols-outlined text-green-600">database</span>
@@ -781,7 +879,7 @@
         </div>
 
         <!-- Health Pulse Tab -->
-        <div x-show="activeTab === 'health'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
+        <div x-show="activeTab === 'health'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center">
                     <span class="material-symbols-outlined text-rose-600">monitoring</span>
@@ -851,7 +949,7 @@
         </div>
 
         <!-- Environment Variables Tab -->
-        <div x-show="activeTab === 'env'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
+        <div x-show="activeTab === 'env'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
                     <span class="material-symbols-outlined text-amber-600">lock</span>
@@ -909,7 +1007,7 @@
         </div>
 
         <!-- System Maintenance Tab -->
-        <div x-show="activeTab === 'maintenance'" class="bg-white rounded-[1.25rem] border border-gray-200 p-8 shadow-sm space-y-8">
+        <div x-show="activeTab === 'maintenance'" class="bg-white dark:bg-slate-900 rounded-[1.25rem] border border-gray-200 dark:border-white/5 p-8 shadow-sm space-y-8">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
                     <span class="material-symbols-outlined text-indigo-600">build</span>
@@ -935,7 +1033,7 @@
                             </p>
                         </div>
                         <button wire:click="clearCache"
-                            class="w-full mt-6 py-3 bg-gray-900 hover:bg-indigo-600 text-white rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none">
+                            class="w-full mt-6 py-3 bg-gray-900 hover:bg-indigo-600 text-white rounded-full font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none">
                             Run Clear Cache
                         </button>
                     </div>
@@ -952,7 +1050,7 @@
                             </p>
                         </div>
                         <button wire:click="optimizeApp"
-                            class="w-full mt-6 py-3 bg-gray-900 hover:bg-indigo-600 text-white rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none">
+                            class="w-full mt-6 py-3 bg-gray-900 hover:bg-indigo-600 text-white rounded-full font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none">
                             Run Optimize App
                         </button>
                     </div>
@@ -1021,7 +1119,7 @@
                             </div>
                         </div>
                         <button wire:click="updateEnvironmentSettings"
-                            class="w-full mt-6 py-3 bg-gray-900 hover:bg-amber-600 text-white rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none">
+                            class="w-full mt-6 py-3 bg-gray-900 hover:bg-amber-600 text-white rounded-full font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none">
                             Save Environment Configuration
                         </button>
                     </div>
@@ -1040,7 +1138,7 @@
                             </div>
                         </div>
                         <button wire:click="clearLogs"
-                            class="w-full md:w-fit mt-6 px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none self-end">
+                            class="w-full md:w-fit mt-6 px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold text-xs shadow-md transition-all cursor-pointer border-none focus:outline-none self-end">
                             Clear log file
                         </button>
                     </div>

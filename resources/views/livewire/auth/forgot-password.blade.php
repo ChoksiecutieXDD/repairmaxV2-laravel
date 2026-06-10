@@ -19,7 +19,7 @@
             </div>
 
             <div class="pt-4 space-y-4">
-                <a href="/login" wire:navigate class="block w-full text-center bg-blue-600 text-white hover:bg-blue-500 font-bold rounded-[1.25rem] px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200">
+                <a href="/login" wire:navigate class="block w-full text-center bg-blue-600 text-white hover:bg-blue-500 font-bold rounded-full px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200">
                     Return to Log in
                 </a>
             </div>
@@ -48,7 +48,7 @@
 
         <div class="pt-2">
             <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-[1.25rem] px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center"
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full px-4 py-3 transition-all shadow-lg hover:-translate-y-0.5 duration-200 relative flex justify-center items-center"
                 wire:loading.attr="disabled">
                 <span wire:loading.remove>Send password reset link</span>
                 <span wire:loading>Sending link...</span>

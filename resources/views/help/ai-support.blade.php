@@ -38,10 +38,10 @@
                         </p>
                         
                         <div class="flex flex-wrap gap-4">
-                            <a href="{{ route('login') }}" class="px-8 py-4 text-sm font-bold text-gray-900 bg-white hover:bg-gray-100 rounded-2xl transition-all duration-300 shadow-md active:scale-95">
+                            <a href="{{ route('login') }}" class="px-8 py-4 text-sm font-bold text-gray-900 bg-white hover:bg-gray-100 rounded-full transition-all duration-300 shadow-md active:scale-95">
                                 Log In to Chat
                             </a>
-                            <a href="{{ route('register') }}" class="px-8 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white/5 rounded-2xl transition-all duration-300">
+                            <a href="{{ route('register') }}" class="px-8 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white/5 rounded-full transition-all duration-300">
                                 Create Free Account
                             </a>
                         </div>

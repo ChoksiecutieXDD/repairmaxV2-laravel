@@ -15,7 +15,7 @@
         <!-- Main Layout Stack -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="space-y-10">
-                
+
                 <!-- Top: Branch details & Map -->
                 <div class="bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-2xl text-left space-y-8">
                     <div>
@@ -80,28 +80,70 @@
                     </div>
                 </div>
 
-                <!-- Bottom: Enquiry Form -->
-                <div class="bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-2xl text-left">
+                <!-- Bottom: Enquiry Form (AJAX - no page reload) -->
+                <div class="bg-white/[0.03] backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-2xl text-left"
+                     x-data="{
+                         fromEmail: '',
+                         subject: '',
+                         message: '',
+                         loading: false,
+                         successMessage: '',
+                         errorMessage: '',
+                         submitEnquiry() {
+                             this.loading = true;
+                             this.successMessage = '';
+                             this.errorMessage = '';
+                             fetch('/contact/send', {
+                                 method: 'POST',
+                                 headers: {
+                                     'Content-Type': 'application/json',
+                                     'Accept': 'application/json',
+                                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                 },
+                                 body: JSON.stringify({
+                                     from_email: this.fromEmail,
+                                     subject: this.subject,
+                                     message: this.message
+                                 })
+                             })
+                             .then(response => response.json().then(data => ({ status: response.status, data })))
+                             .then(({ status, data }) => {
+                                 this.loading = false;
+                                 if (status === 200 && data.success) {
+                                     this.successMessage = data.message;
+                                     this.fromEmail = '';
+                                     this.subject = '';
+                                     this.message = '';
+                                 } else {
+                                     this.errorMessage = data.message || 'Something went wrong. Please try again.';
+                                 }
+                             })
+                             .catch(() => {
+                                 this.loading = false;
+                                 this.errorMessage = 'Network error. Please check your connection and try again.';
+                             });
+                         }
+                     }">
                     <div class="mb-8">
                         <h3 class="text-2xl font-bold text-white tracking-tight">Send an Enquiry</h3>
                         <p class="text-sm text-gray-400 mt-1">Fill out the form below and our hardware team will reach out within 24 hours.</p>
                     </div>
 
-                    @if (session('success'))
-                    <div x-data="{ showBanner: true }"
-                        x-show="showBanner"
-                        x-init="setTimeout(() => showBanner = false, 6000)"
-                        x-transition:leave="transition ease-in duration-300 transform"
-                        x-transition:leave-start="opacity-100 translate-y-0"
-                        x-transition:leave-end="opacity-0 -translate-y-4"
-                        class="mb-6 p-4 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl flex items-start gap-3 shadow-sm">
+                    <!-- Success Message -->
+                    <div x-show="successMessage" x-transition x-cloak
+                         class="mb-6 p-4 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl flex items-start gap-3 shadow-sm">
                         <span class="material-symbols-outlined shrink-0 text-green-400" style="font-size: 24px;">check_circle</span>
-                        <span class="font-medium text-sm leading-relaxed mt-0.5">{{ session('success') }}</span>
+                        <span class="font-medium text-sm leading-relaxed mt-0.5" x-text="successMessage"></span>
                     </div>
-                    @endif
 
-                    <form action="/contact/send" method="POST" class="space-y-6">
-                        @csrf
+                    <!-- Error Message -->
+                    <div x-show="errorMessage" x-transition x-cloak
+                         class="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl flex items-start gap-3 shadow-sm">
+                        <span class="material-symbols-outlined shrink-0 text-red-400" style="font-size: 24px;">error</span>
+                        <span class="font-medium text-sm leading-relaxed mt-0.5" x-text="errorMessage"></span>
+                    </div>
+
+                    <form @submit.prevent="submitEnquiry" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-bold text-gray-400 mb-2 ml-1">Recipient Department</label>
@@ -114,7 +156,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <span class="material-symbols-outlined text-gray-400 group-focus-within:text-white transition-colors">mail</span>
                                     </div>
-                                    <input type="email" name="from_email" placeholder="hello@example.com" required
+                                    <input type="email" x-model="fromEmail" placeholder="hello@example.com" required
                                         class="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 text-white rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm shadow-sm placeholder-gray-500">
                                 </div>
                             </div>
@@ -126,20 +168,22 @@
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <span class="material-symbols-outlined text-gray-400 group-focus-within:text-white transition-colors">description</span>
                                 </div>
-                                <input type="text" name="subject" placeholder="e.g. Samsung Screen Replacement Quote Request" required
+                                <input type="text" x-model="subject" placeholder="e.g. Samsung Screen Replacement Quote Request" required
                                     class="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 text-white rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm shadow-sm placeholder-gray-500">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-sm font-bold text-gray-400 mb-2 ml-1">Detailed Message</label>
-                            <textarea name="message" rows="5" placeholder="Specify your exact device model, serial number (if any), and symptoms..." required
+                            <textarea x-model="message" rows="5" placeholder="Specify your exact device model, serial number (if any), and symptoms..." required
                                 class="w-full px-4 py-3.5 bg-white/5 border border-white/10 text-white rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all resize-none text-sm shadow-sm placeholder-gray-500"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5 duration-200">
-                            <span class="material-symbols-outlined text-lg">send</span>
-                            Submit Enquiry Form
+                        <button type="submit" :disabled="loading"
+                            class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5 duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0">
+                            <span class="material-symbols-outlined text-lg" x-show="!loading">send</span>
+                            <span x-show="!loading">Submit Enquiry Form</span>
+                            <span x-show="loading">Sending...</span>
                         </button>
                     </form>
                 </div>
