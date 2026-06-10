@@ -69,6 +69,15 @@ use App\Http\Controllers\ChatbotController;
 Route::post('/api/chatbot', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
 Route::post('/api/chatbot/track', [ChatbotController::class, 'trackTicket'])->name('chatbot.track');
 
+Route::get('/clear-cache-prod', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        return 'All caches cleared successfully!';
+    } catch (\Exception $e) {
+        return 'Error clearing cache: ' . $e->getMessage();
+    }
+});
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');

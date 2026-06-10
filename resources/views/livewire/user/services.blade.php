@@ -104,6 +104,30 @@
                         </div>
                     @endforeach
                 </div>
+
+                @if($services->hasPages())
+                    <div class="mt-8 flex justify-between items-center bg-white dark:bg-white/3 border border-gray-200/80 dark:border-white/10 shadow-lg p-4" style="border-radius: 1.5rem;">
+                        <button type="button" 
+                                wire:click="previousPage" 
+                                @if($services->onFirstPage()) disabled @endif
+                                class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-gray-100 dark:disabled:bg-white/5 text-white disabled:text-gray-400 dark:disabled:text-gray-500 disabled:border-gray-200 dark:disabled:border-white/5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-gray-100 dark:disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
+                            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                            Previous
+                        </button>
+                        
+                        <span class="text-xs font-bold text-gray-500 dark:text-gray-400">
+                            Page {{ $services->currentPage() }} of {{ $services->lastPage() }}
+                        </span>
+                        
+                        <button type="button" 
+                                wire:click="nextPage" 
+                                @if(!$services->hasMorePages()) disabled @endif
+                                class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-gray-100 dark:disabled:bg-white/5 text-white disabled:text-gray-400 dark:disabled:text-gray-500 disabled:border-gray-200 dark:disabled:border-white/5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-gray-100 dark:disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
+                            Next
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                        </button>
+                    </div>
+                @endif
             @else
                 <!-- Empty State -->
                 <div class="flex flex-col items-center justify-center text-center py-20 px-4 bg-white dark:bg-white/3 border border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl" style="border-radius: 2rem;">

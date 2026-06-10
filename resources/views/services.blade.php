@@ -2,10 +2,16 @@
     <main class="relative pt-24 lg:pt-28 pb-16 md:pb-24 overflow-hidden" 
           x-data="{
 
-               search: '',
-               selectedCategory: 'all',
+               search: (new URLSearchParams(window.location.search)).get('search') || '',
+               selectedCategory: (new URLSearchParams(window.location.search)).get('selectedCategory') || 'all',
                openLightbox: false,
                imageUrl: '',
+               currentPage: 1,
+               perPage: 15,
+               init() {
+                   this.$watch('search', value => this.currentPage = 1);
+                   this.$watch('selectedCategory', value => this.currentPage = 1);
+               },
                services: [
                    @foreach($services as $service)
                    {
@@ -31,6 +37,24 @@
                        const matchesCategory = this.selectedCategory === 'all' || s.category === this.selectedCategory;
                        return matchesSearch && matchesCategory;
                    });
+               },
+               get paginatedServices() {
+                   const start = (this.currentPage - 1) * this.perPage;
+                   const end = start + this.perPage;
+                   return this.filteredServices.slice(start, end);
+               },
+               get totalPages() {
+                   return Math.ceil(this.filteredServices.length / this.perPage);
+               },
+               nextPage() {
+                   if (this.currentPage < this.totalPages) {
+                       this.currentPage++;
+                   }
+               },
+               previousPage() {
+                   if (this.currentPage > 1) {
+                       this.currentPage--;
+                   }
                }
             }">
 
@@ -103,8 +127,8 @@
             <div class="relative min-h-100">
                 
                 <!-- Card Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-show="filteredServices.length > 0">
-                    <template x-for="service in filteredServices" :key="service.id">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-show="paginatedServices.length > 0">
+                    <template x-for="service in paginatedServices" :key="service.id">
                         <div class="relative bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-2xl hover:shadow-3xl hover:bg-white/[0.05] hover:border-white/20 hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col group cursor-pointer">
                             
                             <!-- Card Image -->
@@ -149,6 +173,31 @@
                             </div>
                         </div>
                     </template>
+                </div>
+
+                <!-- Pagination Controls -->
+                <div class="mt-12 flex justify-between items-center bg-white/[0.03] backdrop-blur-md border border-white/10 shadow-2xl p-4 rounded-2xl"
+                     x-show="totalPages > 1"
+                     x-cloak>
+                    <button type="button" 
+                            @click="previousPage()" 
+                            :disabled="currentPage === 1"
+                            class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-white/5 text-white disabled:text-gray-500 disabled:border-white/5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
+                        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                        Previous
+                    </button>
+                    
+                    <span class="text-xs font-bold text-gray-400">
+                        Page <span x-text="currentPage"></span> of <span x-text="totalPages"></span>
+                    </span>
+                    
+                    <button type="button" 
+                            @click="nextPage()" 
+                            :disabled="currentPage === totalPages"
+                            class="px-5 py-2.5 bg-blue-600 border border-blue-500 disabled:bg-white/5 text-white disabled:text-gray-500 disabled:border-white/5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:bg-blue-500 disabled:hover:bg-white/5 active:scale-95 disabled:active:scale-100 flex items-center gap-1.5 shadow-sm disabled:shadow-none">
+                        Next
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </button>
                 </div>
 
                 <!-- Empty State -->

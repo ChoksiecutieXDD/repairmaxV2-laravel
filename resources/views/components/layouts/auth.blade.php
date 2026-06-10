@@ -97,6 +97,7 @@
 
     <x-ui.toast />
     <x-ui.confirm />
+    <x-cookie-consent />
 </body>
 
 </html>

@@ -519,11 +519,11 @@
                     'image_path' => asset($s->image_path),
                     'base_price' => number_format($s->base_price, 2),
                     'categoryName' => (str_contains(strtolower($s->name), 'screen') || str_contains(strtolower($s->name), 'glass') || str_contains(strtolower($s->name), 'lcd')) ? 'Screen & Display' :
-                                      ((str_contains(strtolower($s->name), 'battery') || str_contains(strtolower($s->name), 'charge') || str_contains(strtolower($s->name), 'power')) ? 'Power & Charging' :
+                                      ((str_contains(strtolower($s->name), 'battery') || str_contains(strtolower($s->name), 'charg') || str_contains(strtolower($s->name), 'power')) ? 'Power & Charging' :
                                       ((str_contains(strtolower($s->name), 'audio') || str_contains(strtolower($s->name), 'speaker') || str_contains(strtolower($s->name), 'microphone')) ? 'Audio & Sound' :
                                       ((str_contains(strtolower($s->name), 'software') || str_contains(strtolower($s->name), 'system') || str_contains(strtolower($s->name), 'boot') || str_contains(strtolower($s->name), 'data')) ? 'Software & Systems' : 'Hardware & Modules'))),
                     'badgeClass' => (str_contains(strtolower($s->name), 'screen') || str_contains(strtolower($s->name), 'glass') || str_contains(strtolower($s->name), 'lcd')) ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
-                                    ((str_contains(strtolower($s->name), 'battery') || str_contains(strtolower($s->name), 'charge') || str_contains(strtolower($s->name), 'power')) ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                                    ((str_contains(strtolower($s->name), 'battery') || str_contains(strtolower($s->name), 'charg') || str_contains(strtolower($s->name), 'power')) ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
                                     ((str_contains(strtolower($s->name), 'audio') || str_contains(strtolower($s->name), 'speaker') || str_contains(strtolower($s->name), 'microphone')) ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
                                     ((str_contains(strtolower($s->name), 'software') || str_contains(strtolower($s->name), 'system') || str_contains(strtolower($s->name), 'boot') || str_contains(strtolower($s->name), 'data')) ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20')))
                 ])) }},

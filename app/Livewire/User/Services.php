@@ -7,6 +7,7 @@ use App\Models\FaultType;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\WithPagination;
 
 use Livewire\Attributes\Url;
 
@@ -15,6 +16,8 @@ use Livewire\Attributes\Url;
 #[Lazy]
 class Services extends Component
 {
+    use WithPagination;
+
     public function placeholder()
     {
         return view('livewire.user.services-placeholder');
@@ -24,6 +27,16 @@ class Services extends Component
     public $search = '';
     #[Url]
     public $selectedCategory = 'all';
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedCategory()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -41,7 +54,8 @@ class Services extends Component
         }
 
         return view('livewire.user.services', [
-            'services' => $query->get()
+            'services' => $query->paginate(15)
         ]);
     }
 }
+

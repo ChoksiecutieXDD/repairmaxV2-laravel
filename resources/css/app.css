@@ -230,6 +230,102 @@
         justify-content: center;
         vertical-align: middle;
     }
+
+    /* --- Form Inputs --- */
+    :where(input[type="text"]),
+    :where(input[type="email"]),
+    :where(input[type="password"]),
+    :where(input[type="tel"]),
+    :where(input[type="number"]),
+    :where(textarea),
+    :where(select) {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 1.25rem;
+        background-color: var(--bg-alt);
+        color: var(--text-dark);
+        transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        font-family: inherit;
+    }
+
+    :where(input:focus),
+    :where(textarea:focus),
+    :where(select:focus) {
+        outline: none;
+        border-color: var(--gray-400);
+        box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
+    }
+
+    /* --- Browser Autofill Overrides --- */
+    /* Light Mode / Default Autofill */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    textarea:-webkit-autofill:active,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus,
+    select:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+        -webkit-text-fill-color: var(--text-dark) !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* --- Caret Color & Color Scheme for Dark Inputs --- */
+    /* color-scheme: dark tells the browser to render its native UI (autocomplete
+       suggestion text, autofill ghost text, scrollbars) in dark mode with white text */
+    .dark input[type="text"],
+    .dark input[type="email"],
+    .dark input[type="password"],
+    .dark input[type="tel"],
+    .dark input[type="number"],
+    .dark textarea,
+    .dark select,
+    input.text-white,
+    input[type="text"].text-white,
+    input[type="email"].text-white,
+    input[type="password"].text-white,
+    input[type="tel"].text-white,
+    input[type="number"].text-white,
+    textarea.text-white {
+        caret-color: #ffffff;
+        color: #ffffff;
+        color-scheme: dark;
+    }
+
+    /* Dark Mode & Dark Inputs Autofill */
+    .dark input:-webkit-autofill,
+    .dark input:-webkit-autofill:hover, 
+    .dark input:-webkit-autofill:focus, 
+    .dark input:-webkit-autofill:active,
+    .dark textarea:-webkit-autofill,
+    .dark textarea:-webkit-autofill:hover,
+    .dark textarea:-webkit-autofill:focus,
+    .dark textarea:-webkit-autofill:active,
+    .dark select:-webkit-autofill,
+    .dark select:-webkit-autofill:hover,
+    .dark select:-webkit-autofill:focus,
+    .dark select:-webkit-autofill:active,
+    input.text-white:-webkit-autofill,
+    input.text-white:-webkit-autofill:hover,
+    input.text-white:-webkit-autofill:focus,
+    input.text-white:-webkit-autofill:active,
+    textarea.text-white:-webkit-autofill,
+    textarea.text-white:-webkit-autofill:hover,
+    textarea.text-white:-webkit-autofill:focus,
+    textarea.text-white:-webkit-autofill:active,
+    select.text-white:-webkit-autofill,
+    select.text-white:-webkit-autofill:hover,
+    select.text-white:-webkit-autofill:focus,
+    select.text-white:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #0f172a inset !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
 }
 
 /* ==========================================================================
@@ -281,29 +377,7 @@
         outline-offset: 2px;
     }
 
-    /* --- Form Inputs --- */
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    textarea,
-    select {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: 1px solid var(--border-color);
-        border-radius: 1.25rem;
-        background-color: var(--bg-alt);
-        color: var(--text-dark);
-        transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-        font-family: inherit;
-    }
 
-    input:focus,
-    textarea:focus,
-    select:focus {
-        outline: none;
-        border-color: var(--gray-400);
-        box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
-    }
 
     /* --- Cards --- */
     .card {

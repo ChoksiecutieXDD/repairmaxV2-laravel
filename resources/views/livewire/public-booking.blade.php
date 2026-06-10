@@ -559,22 +559,22 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
                         <label for="first_name" class="block text-sm font-bold text-gray-300 mb-2 ml-1">First Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="first_name" wire:model="first_name" placeholder="e.g. Jane" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
+                        <input type="text" id="first_name" wire:model="first_name" placeholder="e.g. Jane" autocomplete="given-name" style="color-scheme: dark; caret-color: #fff" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
                         @error('first_name') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label for="last_name" class="block text-sm font-bold text-gray-300 mb-2 ml-1">Last Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="last_name" wire:model="last_name" placeholder="e.g. Doe" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
+                        <input type="text" id="last_name" wire:model="last_name" placeholder="e.g. Doe" autocomplete="family-name" style="color-scheme: dark; caret-color: #fff" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
                         @error('last_name') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label for="email" class="block text-sm font-bold text-gray-300 mb-2 ml-1">Email Address <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" wire:model="email" placeholder="e.g. jane@example.com" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
+                        <input type="email" id="email" wire:model="email" placeholder="e.g. jane@example.com" autocomplete="email" style="color-scheme: dark; caret-color: #fff" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
                         @error('email') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label for="phone" class="block text-sm font-bold text-gray-300 mb-2 ml-1">Phone Number <span class="text-red-500">*</span></label>
-                        <input type="tel" id="phone" wire:model="phone" placeholder="e.g. (555) 123-4567" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
+                        <input type="tel" id="phone" wire:model="phone" placeholder="e.g. (555) 123-4567" autocomplete="tel" style="color-scheme: dark; caret-color: #fff" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
                         @error('phone') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
                     </div>
 

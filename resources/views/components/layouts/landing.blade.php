@@ -113,6 +113,8 @@
         })();
     </script>
 
+    <x-cookie-consent />
+
     @livewireScripts
 </body>
 

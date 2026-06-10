@@ -24,7 +24,7 @@ return new class extends Migration
             
             if (str_contains($lowerName, 'screen') || str_contains($lowerName, 'glass') || str_contains($lowerName, 'lcd')) {
                 $category = 'screen';
-            } elseif (str_contains($lowerName, 'battery') || str_contains($lowerName, 'charge') || str_contains($lowerName, 'power')) {
+            } elseif (str_contains($lowerName, 'battery') || str_contains($lowerName, 'charg') || str_contains($lowerName, 'power')) {
                 $category = 'power';
             } elseif (str_contains($lowerName, 'audio') || str_contains($lowerName, 'speaker') || str_contains($lowerName, 'microphone')) {
                 $category = 'audio';
