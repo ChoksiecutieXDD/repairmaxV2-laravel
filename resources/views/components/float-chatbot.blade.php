@@ -220,7 +220,7 @@
                         x-model="userInput" 
                         @keydown.enter="sendMessage()"
                         placeholder="Ask Maxie anything..." 
-                        class="flex-1 bg-transparent border-none text-xs focus:ring-0 py-2.5 font-semibold text-gray-700 placeholder-gray-400">
+                        class="flex-1 bg-transparent border-none text-xs focus:outline-none focus:ring-0 py-2.5 font-semibold text-gray-700 placeholder-gray-400">
                     <button @click="sendMessage()"
                         :disabled="isLoading || !userInput.trim()"
                         class="bg-transparent! border-none! shadow-none! p-0! text-[#0f172a] disabled:text-gray-300 transition-colors flex items-center justify-center focus:outline-none cursor-pointer">
@@ -254,7 +254,7 @@
                     <input type="text" 
                         x-model="searchQuery" 
                         placeholder="Search FAQs..." 
-                        class="flex-1 bg-transparent border-none text-xs focus:ring-0 p-0 text-gray-700 py-1.5 font-semibold placeholder-gray-400">
+                        class="flex-1 bg-transparent border-none text-xs focus:outline-none focus:ring-0 p-0 text-gray-700 py-1.5 font-semibold placeholder-gray-400">
                     <button x-show="searchQuery" @click="searchQuery = ''" class="bg-transparent! border-none! shadow-none! p-0! text-gray-400 hover:text-gray-600 transition-colors cursor-pointer pr-1 flex items-center justify-center">
                         <span class="material-symbols-outlined text-base">close</span>
                     </button>
