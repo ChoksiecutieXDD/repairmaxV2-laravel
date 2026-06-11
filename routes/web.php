@@ -227,13 +227,7 @@ Route::post('/help/track', function (Request $request) {
             $q->where('tracking_code', $ticketId)
               ->orWhere('booking_number', $ticketId);
         })
-        ->where(function ($q) use ($email) {
-            // Registered user match
-            $q->whereHas('user', fn($uq) => $uq->where('email', $email))
-              // Guest booking match (public_email or email column)
-              ->orWhere('public_email', $email)
-              ->orWhere('email', $email);
-        })
+        ->whereHas('user', fn($uq) => $uq->where('email', $email))
         ->first();
 
     if ($appointment) {
