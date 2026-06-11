@@ -185,17 +185,6 @@ document.addEventListener('alpine:init', () => {
                             <span class="material-symbols-outlined text-gray-400 group-hover:text-[#0f172a] text-base transition-all duration-200 group-hover:translate-x-0.5">chevron_right</span>
                         </div>
 
-                        <!-- Switch to Live Agent -->
-                        <div @click="activeTab = 'live'" class="flex justify-between items-center px-4 py-3.5 hover:bg-orange-50 cursor-pointer transition-all duration-200 group">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-orange-500 text-base bg-orange-50 p-1.5 rounded-lg group-hover:bg-orange-100">support_agent</span>
-                                <div>
-                                    <p class="text-xs font-bold text-gray-800 group-hover:text-orange-600 transition-colors leading-tight">Switch to Live Agent</p>
-                                    <p class="text-[9px] font-semibold text-gray-400 leading-tight">Talk to a human support rep</p>
-                                </div>
-                            </div>
-                            <span class="material-symbols-outlined text-orange-300 group-hover:text-orange-500 text-base transition-all duration-200 group-hover:translate-x-0.5">chevron_right</span>
-                        </div>
 
                         <div @click="activeTab = 'help'" class="flex justify-between items-center px-4 py-3.5 hover:bg-gray-50 cursor-pointer transition-all duration-200 group">
                             <div class="flex items-center gap-3">
@@ -248,11 +237,6 @@ document.addEventListener('alpine:init', () => {
                         <span class="text-[9px] text-blue-600 font-extrabold uppercase tracking-wider">Online | AI Assistant</span>
                     </div>
                 </div>
-                <button @click="activeTab = 'live'"
-                    class="flex items-center gap-1 bg-orange-50 border border-orange-100 text-orange-500 rounded-full px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wider cursor-pointer hover:bg-orange-100 transition-colors mr-7 shadow-none! border-none!">
-                    <span class="material-symbols-outlined text-sm leading-none">support_agent</span>
-                    Live Agent
-                </button>
                 <button @click="isOpen = false" class="bg-transparent! border-none! shadow-none! p-0! text-gray-400 hover:text-gray-600 transition-colors cursor-pointer absolute right-4 flex items-center justify-center">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
@@ -335,100 +319,6 @@ document.addEventListener('alpine:init', () => {
             </div>
         </div>
 
-        <!-- ═══════════════════════════════════════ -->
-        <!-- TAB 4: LIVE AGENT                       -->
-        <!-- ═══════════════════════════════════════ -->
-        <div x-show="activeTab === 'live'" class="flex-1 flex flex-col overflow-hidden bg-gray-50">
-            <div class="bg-white border-b border-gray-100 p-4.5 flex items-center gap-3 relative shadow-xs">
-                <button @click="activeTab = 'home'" class="bg-transparent! border-none! shadow-none! p-0! text-gray-500 hover:text-gray-800 transition-colors cursor-pointer flex items-center justify-center">
-                    <span class="material-symbols-outlined text-xl">arrow_back</span>
-                </button>
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-orange-500 text-lg bg-orange-50 p-1.5 rounded-lg border border-orange-100">support_agent</span>
-                    <div>
-                        <span class="font-extrabold text-sm text-gray-900 block leading-tight">Live Agent</span>
-                        <span class="text-[9px] text-orange-500 font-extrabold uppercase tracking-wider">Human Support</span>
-                    </div>
-                </div>
-                <button @click="isOpen = false" class="bg-transparent! border-none! shadow-none! p-0! text-gray-400 hover:text-gray-600 transition-colors cursor-pointer absolute right-4 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-xl">close</span>
-                </button>
-            </div>
-
-            <div class="flex-1 p-5 overflow-y-auto flex flex-col gap-4 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
-
-                <!-- Availability Banner -->
-                <div class="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100 rounded-2xl p-4 flex items-start gap-3">
-                    <div class="bg-orange-100 rounded-full p-2 mt-0.5 flex-shrink-0">
-                        <span class="material-symbols-outlined text-orange-500 text-lg leading-none">schedule</span>
-                    </div>
-                    <div>
-                        <p class="text-xs font-extrabold text-gray-800 mb-1">Live agents are available</p>
-                        <p class="text-[10px] font-semibold text-gray-500 leading-relaxed">Mon – Fri &nbsp;|&nbsp; 8:00 AM – 6:00 PM<br>Sat &nbsp;|&nbsp; 9:00 AM – 4:00 PM</p>
-                        <p class="text-[10px] font-semibold text-orange-500 mt-1.5">Avg. response time: ~5 minutes</p>
-                    </div>
-                </div>
-
-                <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest px-1">Choose a channel</p>
-
-                <!-- Facebook Messenger -->
-                <a href="https://m.me/repairmaxonline" target="_blank" class="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-4 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all duration-300 no-underline group cursor-pointer">
-                    <div class="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #0078FF 0%, #A033FF 100%);">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.32 5.356 3.393 7.036V22l3.104-1.702A10.57 10.57 0 0 0 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2zm1.076 12.48l-2.548-2.714-4.977 2.714 5.474-5.808 2.61 2.714 4.916-2.714-5.475 5.808z"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-xs font-extrabold text-gray-900 group-hover:text-blue-600 transition-colors">Facebook Messenger</p>
-                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5">Chat with us on Facebook</p>
-                    </div>
-                    <span class="material-symbols-outlined text-gray-300 group-hover:text-blue-400 text-base transition-colors">open_in_new</span>
-                </a>
-
-                <!-- Phone Call -->
-                <a href="tel:+639123456789" class="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-4 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all duration-300 no-underline group cursor-pointer">
-                    <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                        <span class="material-symbols-outlined text-white text-xl">call</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-xs font-extrabold text-gray-900 group-hover:text-emerald-600 transition-colors">Call Us</p>
-                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5">+63 912 345 6789</p>
-                    </div>
-                    <span class="material-symbols-outlined text-gray-300 group-hover:text-emerald-400 text-base transition-colors">chevron_right</span>
-                </a>
-
-                <!-- Email -->
-                <a href="mailto:repairmaxsample@gmail.com" class="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-4 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all duration-300 no-underline group cursor-pointer">
-                    <div class="w-11 h-11 bg-blue-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                        <span class="material-symbols-outlined text-white text-xl">mail</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-xs font-extrabold text-gray-900 group-hover:text-blue-600 transition-colors">Send an Email</p>
-                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5">repairmaxsample@gmail.com</p>
-                    </div>
-                    <span class="material-symbols-outlined text-gray-300 group-hover:text-blue-400 text-base transition-colors">chevron_right</span>
-                </a>
-
-                <!-- Walk In -->
-                <div class="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-4">
-                    <div class="w-11 h-11 bg-rose-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                        <span class="material-symbols-outlined text-white text-xl">store</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-xs font-extrabold text-gray-900">Walk In</p>
-                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5 leading-relaxed">Commonwealth Ave. Cor. IBP Rd,<br>Brgy. Payatas, Quezon City 1119</p>
-                    </div>
-                </div>
-
-                <!-- Back to AI nudge -->
-                <button @click="activeTab = 'chat'; scrollToBottom();"
-                    class="bg-transparent! shadow-none! border border-gray-200 rounded-2xl p-3.5 flex items-center justify-center gap-2 w-full text-xs font-bold text-gray-400 hover:text-gray-600 hover:border-gray-300 transition-all cursor-pointer">
-                    <span class="material-symbols-outlined text-base">smart_toy</span>
-                    Or continue chatting with Maxie (AI)
-                </button>
-
-            </div>
-        </div>
 
         <!-- ═══════════════════════════════════════ -->
         <!-- BOTTOM TAB BAR                          -->
@@ -456,12 +346,6 @@ document.addEventListener('alpine:init', () => {
                 <span class="text-[9px] uppercase tracking-wider font-extrabold">FAQs</span>
             </button>
 
-            <button @click="activeTab = 'live'"
-                class="flex flex-col items-center gap-0.5 bg-transparent! border-none! shadow-none! p-0! cursor-pointer focus:outline-none transition-all duration-200"
-                :class="activeTab === 'live' ? 'text-orange-500' : 'text-gray-400 hover:text-orange-400'">
-                <span class="material-symbols-outlined text-xl">support_agent</span>
-                <span class="text-[9px] uppercase tracking-wider font-extrabold">Live</span>
-            </button>
 
         </div>
 
