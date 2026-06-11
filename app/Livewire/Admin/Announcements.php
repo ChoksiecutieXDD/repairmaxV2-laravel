@@ -16,6 +16,7 @@ class Announcements extends Component
 
     public $editingAnnouncementId = null;
     public $isEditMode = false;
+    public $showModal = false;
     public $confirmingDeletionId = null;
 
     protected $rules = [
@@ -31,7 +32,15 @@ class Announcements extends Component
         $this->is_active = true;
         $this->editingAnnouncementId = null;
         $this->isEditMode = false;
+        $this->showModal = false;
         $this->confirmingDeletionId = null;
+    }
+
+    public function openCreateModal()
+    {
+        $this->resetFields();
+        $this->showModal = true;
+        $this->isEditMode = false;
     }
 
     public function save()
@@ -68,6 +77,7 @@ class Announcements extends Component
         $this->style = $announcement->style;
         $this->is_active = $announcement->is_active;
         $this->isEditMode = true;
+        $this->showModal = true;
     }
 
     public function toggleStatus($id)

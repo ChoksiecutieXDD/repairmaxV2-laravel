@@ -519,16 +519,16 @@
 
     @if($this->activeAnnouncement)
         <div class="mb-8 p-6 rounded-3xl border flex items-start gap-4 animate-fade-in shadow-sm
-            @if($this->activeAnnouncement->style === 'warning') bg-amber-50 border-amber-200 text-amber-900
-            @elseif($this->activeAnnouncement->style === 'success') bg-emerald-50 border-emerald-200 text-emerald-900
-            @elseif($this->activeAnnouncement->style === 'danger') bg-red-50 border-red-200 text-red-900
-            @else bg-blue-50 border-blue-200 text-blue-900
+            @if($this->activeAnnouncement->style === 'warning') bg-amber-50 border-amber-200 text-amber-900 dark:bg-amber-950/20 dark:border-amber-900/50 dark:text-amber-300
+            @elseif($this->activeAnnouncement->style === 'success') bg-emerald-50 border-emerald-200 text-emerald-900 dark:bg-emerald-950/20 dark:border-emerald-900/50 dark:text-emerald-300
+            @elseif($this->activeAnnouncement->style === 'danger') bg-red-50 border-red-200 text-red-900 dark:bg-red-950/20 dark:border-red-900/50 dark:text-red-300
+            @else bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-950/20 dark:border-blue-900/50 dark:text-blue-300
             @endif">
             <span class="material-symbols-outlined text-[28px] shrink-0 mt-0.5
-                @if($this->activeAnnouncement->style === 'warning') text-amber-600
-                @elseif($this->activeAnnouncement->style === 'success') text-emerald-600
-                @elseif($this->activeAnnouncement->style === 'danger') text-red-600
-                @else text-blue-600
+                @if($this->activeAnnouncement->style === 'warning') text-amber-600 dark:text-amber-400
+                @elseif($this->activeAnnouncement->style === 'success') text-emerald-600 dark:text-emerald-400
+                @elseif($this->activeAnnouncement->style === 'danger') text-red-600 dark:text-red-400
+                @else text-blue-600 dark:text-blue-400
                 @endif">
                 @if($this->activeAnnouncement->style === 'warning') warning
                 @elseif($this->activeAnnouncement->style === 'success') check_circle
@@ -537,8 +537,20 @@
                 @endif
             </span>
             <div class="flex-1">
-                <h4 class="text-sm font-black uppercase tracking-wider mb-1">Notice Update</h4>
-                <p class="text-sm leading-relaxed font-semibold whitespace-pre-line">{{ $this->activeAnnouncement->content }}</p>
+                <h4 class="text-sm font-black uppercase tracking-wider mb-1
+                    @if($this->activeAnnouncement->style === 'warning') text-amber-900 dark:text-amber-200
+                    @elseif($this->activeAnnouncement->style === 'success') text-emerald-900 dark:text-emerald-200
+                    @elseif($this->activeAnnouncement->style === 'danger') text-red-900 dark:text-red-200
+                    @else text-blue-900 dark:text-blue-200
+                    @endif">Notice Update</h4>
+                <div class="max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                    <p class="text-sm leading-relaxed font-semibold whitespace-pre-line
+                        @if($this->activeAnnouncement->style === 'warning') text-amber-850 dark:text-amber-300
+                        @elseif($this->activeAnnouncement->style === 'success') text-emerald-850 dark:text-emerald-300
+                        @elseif($this->activeAnnouncement->style === 'danger') text-red-850 dark:text-red-300
+                        @else text-blue-850 dark:text-blue-300
+                        @endif">{{ $this->activeAnnouncement->content }}</p>
+                </div>
             </div>
         </div>
     @endif
@@ -567,8 +579,14 @@
                     </div>
                     <div>
                         <label for="email" class="block text-sm font-bold text-gray-300 mb-2 ml-1">Email Address <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" wire:model="email" placeholder="e.g. jane@example.com" autocomplete="email" style="color-scheme: dark; caret-color: #fff" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
+                        <input type="email" id="email" wire:model.blur="email" placeholder="e.g. jane@example.com" autocomplete="email" style="color-scheme: dark; caret-color: #fff" class="w-full px-4 py-3.5 border border-white/10 rounded-[1.25rem] bg-white/5 text-white placeholder-gray-500 focus:bg-white/10 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-sm font-medium" required>
                         @error('email') <span class="text-xs text-red-500 mt-1 block ml-1">{{ $message }}</span> @enderror
+                        @if($this->hasOngoingBookings)
+                            <div class="mt-2.5 p-3 rounded-xl border bg-blue-500/10 border-blue-500/20 text-blue-400 flex items-start gap-2 animate-fade-in">
+                                <span class="material-symbols-outlined text-[16px] leading-none shrink-0 mt-0.5 text-blue-400">info</span>
+                                <p class="text-xs font-semibold leading-tight">You currently have ongoing booking(s) under this email.</p>
+                            </div>
+                        @endif
                     </div>
                     <div>
                         <label for="phone" class="block text-sm font-bold text-gray-300 mb-2 ml-1">Phone Number <span class="text-red-500">*</span></label>

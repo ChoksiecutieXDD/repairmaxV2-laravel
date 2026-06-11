@@ -279,7 +279,17 @@ class PublicBooking extends Component
         $rules = [
             'first_name'     => 'required|string|max:255',
             'last_name'      => 'required|string|max:255',
-            'email'          => 'required|email|max:255|unique:users,email,' . (Auth::id() ?? 'NULL') . ',id',
+            'email'          => [
+                'required',
+                'email',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    $user = User::where('email', $value)->first();
+                    if ($user && $user->role !== 'guest') {
+                        $fail('This email is already registered to a user account. Please log in to book.');
+                    }
+                }
+            ],
             'phone'          => 'required|string|max:20',
             'city'           => 'required|string|exists:supported_cities,name',
             'barangay'       => 'required|string|max:255',
@@ -461,6 +471,28 @@ class PublicBooking extends Component
         Session::flash('message', 'Your appointment booking is completed successfully!');
 
         return redirect()->route('booking');
+    }
+
+    #[Computed]
+    public function hasOngoingBookings()
+    {
+        if (empty($this->email)) {
+            return false;
+        }
+
+        $loggedUser = Auth::user();
+        if ($loggedUser && $this->email === $loggedUser->email) {
+            return false;
+        }
+
+        $user = User::where('email', $this->email)->first();
+        if ($user && $user->role !== 'guest') {
+            return false;
+        }
+
+        return Appointment::whereHas('user', function($q) {
+            $q->where('email', $this->email);
+        })->whereNotIn('status', ['Completed', 'Cancelled'])->exists();
     }
 
     public function render()

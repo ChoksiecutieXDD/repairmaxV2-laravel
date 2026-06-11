@@ -1,11 +1,11 @@
-<div class="w-full" x-data="{ openModal: @entangle('isEditMode') }">
+<div class="w-full" x-data="{ openModal: @entangle('showModal') }">
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Announcements</h1>
             <p class="text-gray-500 mt-1">Manage public notices, alert banners, and updates shown on the booking pages.</p>
         </div>
         <!-- Add Button -->
-        <button wire:click="$set('isEditMode', true)" 
+        <button wire:click="openCreateModal" 
             class="bg-gray-900 text-white px-8 h-[52px] rounded-full font-black text-sm flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-md active:scale-95 group whitespace-nowrap shrink-0 border-none outline-none">
             <span class="material-symbols-outlined text-[20px]">add</span>
             New Announcement
@@ -34,7 +34,7 @@
                 @forelse($announcements as $announcement)
                     <tr class="hover:bg-gray-50/50 transition-all group">
                         <td class="px-6 py-4">
-                            <div class="text-sm font-semibold text-gray-800 leading-relaxed whitespace-pre-wrap">{{ $announcement->content }}</div>
+                            <div class="max-h-32 overflow-y-auto pr-2 custom-scrollbar text-sm font-semibold text-gray-800 leading-relaxed whitespace-pre-wrap">{{ $announcement->content }}</div>
                             <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1.5 font-mono">Created: {{ $announcement->created_at->format('M d, Y h:i A') }}</div>
                         </td>
                         <td class="px-6 py-4">

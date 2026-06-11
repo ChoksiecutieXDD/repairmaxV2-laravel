@@ -299,7 +299,21 @@ class BookAppointment extends Component
         $rules = [
             'first_name'     => 'required|string|max:255',
             'last_name'      => 'required|string|max:255',
-            'email'          => 'required|email|max:255|unique:users,email,' . Auth::id(),
+            'email'          => [
+                'required',
+                'email',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    $loggedUser = Auth::user();
+                    if ($loggedUser && $value === $loggedUser->email) {
+                        return;
+                    }
+                    $user = User::where('email', $value)->first();
+                    if ($user && $user->role !== 'guest') {
+                        $fail('This email is already registered to a user account.');
+                    }
+                }
+            ],
             'phone'          => 'required|string|max:20',
             'city'           => 'required|string|exists:supported_cities,name',
             'barangay'       => 'required|string|max:255',
@@ -373,20 +387,42 @@ class BookAppointment extends Component
         }
 
         // Re-save or update user profile with latest contact details
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        if ($user) {
-            $user->first_name = $this->first_name;
-            $user->last_name  = $this->last_name;
-            $user->email      = $this->email;
-            $user->phone      = $this->phone;
-            $user->address    = $this->address;
-            $user->barangay   = $this->barangay;
-            $user->city       = $this->city;
-            $user->alt_address = $this->alt_address;
-            $user->alt_barangay = $this->alt_barangay;
-            $user->alt_city   = $this->alt_city;
-            $user->save();
+        /** @var \App\Models\User $loggedUser */
+        $loggedUser = Auth::user();
+        $targetUserId = Auth::id();
+
+        if ($loggedUser) {
+            if ($this->email === $loggedUser->email) {
+                $loggedUser->first_name = $this->first_name;
+                $loggedUser->last_name  = $this->last_name;
+                $loggedUser->phone      = $this->phone;
+                $loggedUser->address    = $this->address;
+                $loggedUser->barangay   = $this->barangay;
+                $loggedUser->city       = $this->city;
+                $loggedUser->alt_address = $this->alt_address;
+                $loggedUser->alt_barangay = $this->alt_barangay;
+                $loggedUser->alt_city   = $this->alt_city;
+                $loggedUser->save();
+                $targetUserId = $loggedUser->id;
+            } else {
+                $guestUser = User::firstOrNew(['email' => $this->email]);
+                $guestUser->first_name = $this->first_name;
+                $guestUser->last_name  = $this->last_name;
+                $guestUser->phone      = $this->phone;
+                $guestUser->address    = $this->address;
+                $guestUser->barangay   = $this->barangay;
+                $guestUser->city       = $this->city;
+                $guestUser->alt_address = $this->alt_address;
+                $guestUser->alt_barangay = $this->alt_barangay;
+                $guestUser->alt_city   = $this->alt_city;
+                if (!$guestUser->exists) {
+                    $guestUser->role = 'guest';
+                    $guestUser->is_verified = false;
+                    $guestUser->password = \Illuminate\Support\Facades\Hash::make(Str::random(16));
+                }
+                $guestUser->save();
+                $targetUserId = $guestUser->id;
+            }
         }
 
         $photoPaths = [];
@@ -425,7 +461,7 @@ class BookAppointment extends Component
         $calculatedQuote = $basePrice + $this->additional_fee;
 
         $appointment = new Appointment();
-        $appointment->user_id        = Auth::id();
+        $appointment->user_id        = $targetUserId;
         $appointment->tracking_code  = $trackingCode;
         $appointment->device_brand   = $finalBrand;
         $appointment->device_model   = $finalModel;
@@ -468,8 +504,31 @@ class BookAppointment extends Component
         return redirect()->route('user.dashboard');
     }
 
+    #[Computed]
+    public function hasOngoingBookings()
+    {
+        if (empty($this->email)) {
+            return false;
+        }
+
+        $loggedUser = Auth::user();
+        if ($loggedUser && $this->email === $loggedUser->email) {
+            return false;
+        }
+
+        $user = User::where('email', $this->email)->first();
+        if ($user && $user->role !== 'guest') {
+            return false;
+        }
+
+        return Appointment::whereHas('user', function($q) {
+            $q->where('email', $this->email);
+        })->whereNotIn('status', ['Completed', 'Cancelled'])->exists();
+    }
+
     public function render()
     {
         return view('livewire.user.book-appointment');
     }
 }
+
