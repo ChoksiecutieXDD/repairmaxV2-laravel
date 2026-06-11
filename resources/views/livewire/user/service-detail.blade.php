@@ -34,7 +34,7 @@
             </h2>
         </div>
 
-        <a href="/user/dashboard" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-gray-900 hover:bg-gray-800 text-white rounded-full text-xs font-black uppercase tracking-wider active:scale-95 transition-all shadow-md shadow-gray-200/50">
+        <a href="/user/dashboard" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-gray-900 hover:bg-gray-800 text-white rounded-full text-xs font-black uppercase tracking-wider active:scale-95 transition-all shadow-md dark:shadow-none">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
             Back to Dashboard
         </a>
@@ -147,7 +147,7 @@
                 <span class="text-[8px] text-gray-400 font-bold uppercase mt-1 block font-semibold">Includes Free Diagnosis</span>
             </div>
             
-            <a href="/user/book-appointment?service={{ urlencode($service->name) }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-900 hover:bg-blue-600 text-white rounded-2xl font-black text-sm tracking-wide shadow-lg shadow-gray-200 active:scale-95 transition-all">
+            <a href="/user/book-appointment?service={{ urlencode($service->name) }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-900 hover:bg-blue-600 text-white rounded-2xl font-black text-sm tracking-wide shadow-lg dark:shadow-none active:scale-95 transition-all">
                 <span class="material-symbols-outlined text-[20px]">calendar_month</span>
                 Book This Repair Slot
             </a>

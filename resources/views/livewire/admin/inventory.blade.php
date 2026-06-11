@@ -184,7 +184,7 @@
                 </div>
 
                 <div class="pt-6">
-                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-full font-black text-lg hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center justify-center gap-3 group border-none cursor-pointer">
+                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-full font-black text-lg hover:bg-blue-600 transition-all shadow-xl dark:shadow-none active:scale-95 flex items-center justify-center gap-3 group border-none cursor-pointer">
                         <span class="material-symbols-outlined text-[20px] group-hover:scale-125 transition-transform">{{ $editingId ? 'save' : 'add_task' }}</span>
                         {{ $editingId ? 'Save Changes' : 'Create Item' }}
                     </button>

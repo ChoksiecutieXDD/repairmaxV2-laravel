@@ -418,7 +418,7 @@
         </div>
 
         <!-- Danger Zone -->
-        <div class="bg-red-50 border border-red-100 rounded-2xl p-8 md:p-10 mb-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div class="bg-red-50 border border-red-200 rounded-2xl p-8 md:p-10 mb-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div>
                 <h3 class="text-xl font-bold text-red-800 mb-2 flex items-center gap-2 font-sans">
                     <span class="material-symbols-outlined text-2xl">dangerous</span>

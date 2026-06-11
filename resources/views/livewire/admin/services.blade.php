@@ -330,7 +330,7 @@
 
                 <!-- Fixed Footer -->
                 <div class="px-10 py-6 border-t border-gray-100 bg-gray-50/50 shrink-0">
-                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-full font-black text-lg hover:bg-blue-600 transition-all shadow-xl shadow-gray-200 active:scale-95 flex items-center justify-center gap-3 group">
+                    <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-full font-black text-lg hover:bg-blue-600 transition-all shadow-xl dark:shadow-none active:scale-95 flex items-center justify-center gap-3 group">
                         <span class="material-symbols-outlined text-[20px] group-hover:scale-125 transition-transform">{{ $editingId ? 'save' : 'add_task' }}</span>
                         {{ $editingId ? 'Save Changes' : 'Create Service' }}
                     </button>

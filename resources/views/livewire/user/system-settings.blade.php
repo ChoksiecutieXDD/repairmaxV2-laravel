@@ -97,7 +97,7 @@
                 <div id="two-factor" class="pt-6 border-t border-gray-100">
                     <p class="text-sm font-bold text-gray-800 mb-1">2FA Security</p>
                     <p class="text-xs text-gray-500 mb-4">Add an extra layer of protection.</p>
-                    <button class="w-full py-3 bg-gray-900 text-white text-sm font-bold rounded-full hover:bg-black transition-all shadow-lg shadow-gray-200">
+                    <button class="w-full py-3 bg-gray-900 text-white text-sm font-bold rounded-full hover:bg-black transition-all shadow-lg dark:shadow-none">
                         Enable 2FA
                     </button>
                 </div>
@@ -124,7 +124,7 @@
 
                 <div class="pt-6 border-t border-gray-100 flex flex-col items-center text-center">
                     <p class="text-sm font-bold text-red-600 mb-3">Danger Zone</p>
-                    <button @click="deleteModal = true" class="w-full py-3 bg-red-50 text-red-600 text-xs font-bold rounded-full hover:bg-red-600 hover:text-white transition-all border border-red-100">
+                    <button @click="deleteModal = true" class="w-full py-3 bg-red-50 text-red-600 text-xs font-bold rounded-full hover:bg-red-600 hover:text-white transition-all border border-red-200">
                         Delete Account Permanently
                     </button>
                 </div>
