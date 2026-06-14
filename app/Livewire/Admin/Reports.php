@@ -5,11 +5,13 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\On;
 use App\Models\Repair;
 use App\Models\Appointment;
 use App\Models\User;
 use App\Models\InventoryItem;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 #[Layout('components.layouts.admin')]
 #[Title('Reports | Repairmax')]
@@ -18,11 +20,252 @@ class Reports extends Component
     public $reportType = 'summary';
     public $startDate;
     public $endDate;
+    public $timeframe = 'weekly';
+
+    protected $listeners = ['appointmentCompleted' => 'refreshReports', 'appointmentFinanceUpdated' => 'refreshReports'];
 
     public function mount()
     {
         $this->startDate = now()->startOfMonth()->format('Y-m-d');
         $this->endDate = now()->format('Y-m-d');
+    }
+
+    public function refreshReports()
+    {
+        // This method is triggered by event when appointment is completed
+        $this->dispatch('$refresh');
+    }
+
+    public function updatedTimeframe($value)
+    {
+        // Just by updating this property, Livewire automatically re-renders the component
+        // No need to dispatch anything - the reactive binding handles it
+    }
+
+    public function getSalesAndProfitData($timeframe)
+    {
+        $query = Appointment::whereRaw('LOWER(status) = ?', ['completed']);
+
+        // Determine database driver and use appropriate date format function
+        $driver = DB::getDriverName();
+        
+        $dateFormat = match(true) {
+            $driver === 'sqlite' => match($timeframe) {
+                'weekly' => "strftime('%Y-W%W', created_at)",
+                'monthly' => "strftime('%Y-%m', created_at)",
+                'yearly' => "strftime('%Y', created_at)",
+                default => "strftime('%Y-%m-%d', created_at)", // daily
+            },
+            default => match($timeframe) { // MySQL
+                'weekly' => "DATE_FORMAT(created_at, '%Y-W%w')",
+                'monthly' => "DATE_FORMAT(created_at, '%Y-%m')",
+                'yearly' => "DATE_FORMAT(created_at, '%Y')",
+                default => "DATE_FORMAT(created_at, '%Y-%m-%d')", // daily
+            }
+        };
+
+        $data = $query->select(
+                DB::raw("$dateFormat as period"),
+                DB::raw('SUM(final_cost) as sales'),
+                DB::raw('SUM(COALESCE(service_cost, 0)) as service_charge'),
+                DB::raw('SUM(COALESCE(parts_cost, 0)) as parts_cost'),
+                DB::raw('SUM(COALESCE(service_cost, 0) + COALESCE(parts_cost, 0)) as total_costs'),
+                DB::raw('SUM(final_cost) - SUM(COALESCE(service_cost, 0) + COALESCE(parts_cost, 0)) as profit'),
+                DB::raw('COUNT(*) as appointments_count')
+            )
+            ->groupByRaw("$dateFormat")
+            ->orderBy('period')
+            ->get();
+
+        if ($data->isEmpty()) {
+            return [
+                'sales' => 0,
+                'service_charge' => 0,
+                'parts_cost' => 0,
+                'total_costs' => 0,
+                'profit' => 0,
+                'profit_margin' => 0,
+                'appointments_count' => 0,
+            ];
+        }
+
+        $totalSales = (float) $data->sum('sales');
+        $totalProfit = (float) $data->sum('profit');
+        $margin = $totalSales > 0 ? round(($totalProfit / $totalSales) * 100, 1) : 0;
+
+        return [
+            'sales' => $totalSales,
+            'service_charge' => (float) $data->sum('service_charge'),
+            'parts_cost' => (float) $data->sum('parts_cost'),
+            'total_costs' => (float) $data->sum('total_costs'),
+            'profit' => $totalProfit,
+            'profit_margin' => $margin,
+            'appointments_count' => (int) $data->sum('appointments_count'),
+        ];
+    }
+
+    public function getProfitTrend()
+    {
+        $labels = [];
+        $data = [];
+        $baseDate = now();
+
+        if ($this->timeframe === 'daily') {
+            // Per Hour for today
+            for ($hour = 0; $hour < 24; $hour++) {
+                $startTime = $baseDate->copy()->setHour($hour)->setMinute(0)->setSecond(0);
+                $endTime = $baseDate->copy()->setHour($hour)->setMinute(59)->setSecond(59);
+                $labels[] = ($hour + 1) . ':00';
+
+                $profit = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereBetween('created_at', [$startTime, $endTime])
+                    ->selectRaw('SUM(COALESCE(profit, 0)) as profit')
+                    ->value('profit') ?? 0;
+
+                $data[] = (float) $profit;
+            }
+        } elseif ($this->timeframe === 'weekly') {
+            // Per Day for this week (Mon-Sun)
+            $weekStart = $baseDate->copy()->startOfWeek();
+            for ($day = 0; $day < 7; $day++) {
+                $currentDay = $weekStart->copy()->addDays($day);
+                $labels[] = 'Day ' . ($day + 1);
+
+                $profit = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereDate('created_at', $currentDay->format('Y-m-d'))
+                    ->selectRaw('SUM(COALESCE(profit, 0)) as profit')
+                    ->value('profit') ?? 0;
+
+                $data[] = (float) $profit;
+            }
+        } elseif ($this->timeframe === 'monthly') {
+            // Per Week for this month
+            $monthStart = $baseDate->copy()->startOfMonth();
+            $monthEnd = $baseDate->copy()->endOfMonth();
+            $weekCount = 0;
+
+            for ($week = 0; $week < 4; $week++) {
+                $weekStart = $monthStart->copy()->addWeeks($week)->startOfWeek();
+                $weekEnd = $weekStart->copy()->endOfWeek();
+
+                // Ensure we don't go beyond the month
+                if ($weekStart > $monthEnd) break;
+                if ($weekEnd > $monthEnd) $weekEnd = $monthEnd;
+
+                $labels[] = 'Week ' . ($week + 1);
+                $weekCount++;
+
+                $profit = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereBetween('created_at', [$weekStart, $weekEnd])
+                    ->selectRaw('SUM(COALESCE(profit, 0)) as profit')
+                    ->value('profit') ?? 0;
+
+                $data[] = (float) $profit;
+            }
+        } else { // yearly
+            // Per Month for this year
+            for ($month = 1; $month <= 12; $month++) {
+                $monthStart = $baseDate->copy()->setMonth($month)->startOfMonth();
+                $monthEnd = $monthStart->copy()->endOfMonth();
+                $labels[] = $month . ' Month';
+
+                $profit = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereBetween('created_at', [$monthStart, $monthEnd])
+                    ->selectRaw('SUM(COALESCE(profit, 0)) as profit')
+                    ->value('profit') ?? 0;
+
+                $data[] = (float) $profit;
+            }
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data,
+        ];
+    }
+
+    public function getRevenueTrendWithCosts()
+    {
+        $labels = [];
+        $sales = [];
+        $costs = [];
+        $baseDate = now();
+
+        if ($this->timeframe === 'daily') {
+            // Per Hour for today
+            for ($hour = 0; $hour < 24; $hour++) {
+                $startTime = $baseDate->copy()->setHour($hour)->setMinute(0)->setSecond(0);
+                $endTime = $baseDate->copy()->setHour($hour)->setMinute(59)->setSecond(59);
+                $labels[] = ($hour + 1) . ':00';
+
+                $appointmentData = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereBetween('created_at', [$startTime, $endTime])
+                    ->selectRaw('SUM(COALESCE(final_cost, 0)) as revenue, SUM(COALESCE(service_cost, 0) + COALESCE(parts_cost, 0)) as costs')
+                    ->first();
+
+                $sales[] = (float) ($appointmentData->revenue ?? 0);
+                $costs[] = (float) ($appointmentData->costs ?? 0);
+            }
+        } elseif ($this->timeframe === 'weekly') {
+            // Per Day for this week (Mon-Sun)
+            $weekStart = $baseDate->copy()->startOfWeek();
+            for ($day = 0; $day < 7; $day++) {
+                $currentDay = $weekStart->copy()->addDays($day);
+                $labels[] = 'Day ' . ($day + 1);
+
+                $appointmentData = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereDate('created_at', $currentDay->format('Y-m-d'))
+                    ->selectRaw('SUM(COALESCE(final_cost, 0)) as revenue, SUM(COALESCE(service_cost, 0) + COALESCE(parts_cost, 0)) as costs')
+                    ->first();
+
+                $sales[] = (float) ($appointmentData->revenue ?? 0);
+                $costs[] = (float) ($appointmentData->costs ?? 0);
+            }
+        } elseif ($this->timeframe === 'monthly') {
+            // Per Week for this month
+            $monthStart = $baseDate->copy()->startOfMonth();
+            $monthEnd = $baseDate->copy()->endOfMonth();
+
+            for ($week = 0; $week < 4; $week++) {
+                $weekStart = $monthStart->copy()->addWeeks($week)->startOfWeek();
+                $weekEnd = $weekStart->copy()->endOfWeek();
+
+                // Ensure we don't go beyond the month
+                if ($weekStart > $monthEnd) break;
+                if ($weekEnd > $monthEnd) $weekEnd = $monthEnd;
+
+                $labels[] = 'Week ' . ($week + 1);
+
+                $appointmentData = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereBetween('created_at', [$weekStart, $weekEnd])
+                    ->selectRaw('SUM(COALESCE(final_cost, 0)) as revenue, SUM(COALESCE(service_cost, 0) + COALESCE(parts_cost, 0)) as costs')
+                    ->first();
+
+                $sales[] = (float) ($appointmentData->revenue ?? 0);
+                $costs[] = (float) ($appointmentData->costs ?? 0);
+            }
+        } else { // yearly
+            // Per Month for this year
+            for ($month = 1; $month <= 12; $month++) {
+                $monthStart = $baseDate->copy()->setMonth($month)->startOfMonth();
+                $monthEnd = $monthStart->copy()->endOfMonth();
+                $labels[] = $month . ' Month';
+
+                $appointmentData = Appointment::whereRaw('LOWER(status) = ?', ['completed'])
+                    ->whereBetween('created_at', [$monthStart, $monthEnd])
+                    ->selectRaw('SUM(COALESCE(final_cost, 0)) as revenue, SUM(COALESCE(service_cost, 0) + COALESCE(parts_cost, 0)) as costs')
+                    ->first();
+
+                $sales[] = (float) ($appointmentData->revenue ?? 0);
+                $costs[] = (float) ($appointmentData->costs ?? 0);
+            }
+        }
+
+        return [
+            'labels' => $labels,
+            'sales' => $sales,
+            'costs' => $costs,
+        ];
     }
 
     public function render()
@@ -36,10 +279,10 @@ class Reports extends Component
 
         $appointmentStats = [
             'total' => Appointment::count(),
-            'pending' => Appointment::where('status', 'pending')->count(),
-            'scheduled' => Appointment::where('status', 'scheduled')->count(),
-            'completed' => Appointment::where('status', 'completed')->count(),
-            'cancelled' => Appointment::where('status', 'cancelled')->count(),
+            'pending' => Appointment::whereRaw('LOWER(status) = ?', ['pending'])->count(),
+            'scheduled' => Appointment::whereRaw('LOWER(status) = ?', ['scheduled'])->count(),
+            'completed' => Appointment::whereRaw('LOWER(status) = ?', ['completed'])->count(),
+            'cancelled' => Appointment::whereRaw('LOWER(status) = ?', ['cancelled'])->count(),
         ];
 
         $userStats = [
@@ -54,6 +297,11 @@ class Reports extends Component
             'out_of_stock' => InventoryItem::where('quantity', '<=', 0)->count(),
             'total_value' => InventoryItem::sum(\DB::raw('quantity * unit_price')),
         ];
+
+        // Get sales and profit data
+        $salesAndProfitData = $this->getSalesAndProfitData($this->timeframe);
+        $profitTrend = $this->getProfitTrend();
+        $revenueTrendWithCosts = $this->getRevenueTrendWithCosts();
 
         $recentRepairs = Repair::with('user')
             ->orderBy('created_at', 'desc')
@@ -71,88 +319,13 @@ class Reports extends Component
             'userStats',
             'inventoryStats',
             'recentRepairs',
-            'recentAppointments'
+            'recentAppointments',
+            'salesAndProfitData',
+            'profitTrend',
+            'revenueTrendWithCosts'
         ), [
             'metrics' => $this->getMetrics()
         ]));
-    }
-
-    public function getRevenueTrend()
-    {
-        $days = [];
-        $revenue = [];
-
-        for ($i = 6; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i)->format('Y-m-d');
-            $days[] = Carbon::parse($date)->format('M d');
-
-            // Calculate daily revenue (estimated from appointments)
-            $dayRevenue = Appointment::whereDate('created_at', $date)
-                ->where('status', 'Completed')
-                ->count() * 50; // Assume $50 per repair
-
-            $revenue[] = $dayRevenue;
-        }
-
-        return [
-            'labels' => $days,
-            'data' => $revenue,
-        ];
-    }
-
-    public function getRepairStatusDistribution()
-    {
-        $pending = Appointment::where('status', 'Pending')->count();
-        $inProgress = Appointment::where('status', 'In Progress')->count();
-        $completed = Appointment::where('status', 'Completed')->count();
-        $cancelled = Appointment::where('status', 'Cancelled')->count();
-
-        return [
-            'labels' => ['Pending', 'In Progress', 'Completed', 'Cancelled'],
-            'data' => [$pending, $inProgress, $completed, $cancelled],
-            'backgroundColor' => ['#FBBF24', '#3B82F6', '#10B981', '#EF4444'],
-        ];
-    }
-
-    public function getServiceTypeTrends()
-    {
-        $days = [];
-        $phones = [];
-        $laptops = [];
-        $tablets = [];
-
-        for ($i = 6; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i)->format('Y-m-d');
-            $days[] = Carbon::parse($date)->format('M d');
-
-            $phones[] = Appointment::whereDate('created_at', $date)
-                ->where(function($q) {
-                    $q->where('device_model', 'like', '%Phone%')
-                      ->orWhere('device_brand', 'like', '%Phone%')
-                      ->orWhere('device_model', 'like', '%iPhone%');
-                })->count();
-
-            $laptops[] = Appointment::whereDate('created_at', $date)
-                ->where(function($q) {
-                    $q->where('device_model', 'like', '%Laptop%')
-                      ->orWhere('device_brand', 'like', '%Laptop%')
-                      ->orWhere('device_model', 'like', '%MacBook%');
-                })->count();
-
-            $tablets[] = Appointment::whereDate('created_at', $date)
-                ->where(function($q) {
-                    $q->where('device_model', 'like', '%Tablet%')
-                      ->orWhere('device_brand', 'like', '%Tablet%')
-                      ->orWhere('device_model', 'like', '%iPad%');
-                })->count();
-        }
-
-        return [
-            'labels' => $days,
-            'phones' => $phones,
-            'laptops' => $laptops,
-            'tablets' => $tablets,
-        ];
     }
 
     public function getAverageRepairTime()
@@ -184,9 +357,6 @@ class Reports extends Component
             'satisfaction' => 96,
             'repeatCustomers' => User::count() > 0 ? round((User::where('created_at', '<', Carbon::now()->subMonths(3))->count() / User::count() * 100), 1) : 0,
             'warrantyRate' => 2.1,
-            'revenueTrend' => $this->getRevenueTrend(),
-            'statusDistribution' => $this->getRepairStatusDistribution(),
-            'serviceTrends' => $this->getServiceTypeTrends(),
         ];
     }
 
