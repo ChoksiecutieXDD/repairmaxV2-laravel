@@ -334,7 +334,7 @@ class BookAppointment extends Component
             'pickup_option'  => 'required|string|in:Drop-off,Pickup',
             'address'        => 'required|string|max:500',
             'other_details'  => 'nullable|string|max:1000',
-            'payment_method' => 'required|string|in:Cash,GCash',
+            'payment_method' => 'required|string|in:Cash,Online',
         ];
 
         if ($this->device_brand === 'Other') {

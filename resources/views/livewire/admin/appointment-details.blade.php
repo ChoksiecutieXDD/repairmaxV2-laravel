@@ -647,28 +647,6 @@
                                 <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                                <p class="text-xs font-bold text-gray-600 mb-1">💰 Final Cost</p>
-                                <p class="text-sm font-bold text-blue-700">₱@{{ (formServiceCost + formPartsUnitPrice).toFixed(2) }}</p>
-                            </div>
-                            <div class="bg-purple-50 rounded-lg p-3 border border-purple-200">
-                                <p class="text-xs font-bold text-gray-600 mb-1">🎯 Total Profit</p>
-                                <p class="text-sm font-bold text-purple-700">₱@{{ (formServiceCost + (formPartsUnitPrice - formPartsCost)).toFixed(2) }}</p>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                                <p class="text-xs font-bold text-gray-600 mb-1">💼 Service Profit</p>
-                                <p class="text-sm font-bold text-blue-700">₱@{{ formServiceCost.toFixed(2) }}</p>
-                            </div>
-                            <div class="bg-red-50 rounded-lg p-3 border border-red-200">
-                                <p class="text-xs font-bold text-gray-600 mb-1">📦 Parts Profit</p>
-                                <p class="text-sm font-bold text-red-700">₱@{{ (formPartsUnitPrice - formPartsCost).toFixed(2) }}</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
 

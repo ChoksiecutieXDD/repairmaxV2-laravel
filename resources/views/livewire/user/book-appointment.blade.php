@@ -1,4 +1,4 @@
-<div class="w-full" x-data="{ infoModal: false, calendarModal: false, reviewModal: @entangle('showReviewModal') }">
+<div class="w-full" x-data="{ infoModal: false, calendarModal: false, reviewModal: @entangle('showReviewModal'), payMethod: 'Cash', showQrModal: false, reviewStep: 1 }" x-init="$watch('reviewModal', val => { if(val) { reviewStep = 1; showQrModal = false; } })">
 
     <!-- ===== INFO MODAL ===== -->
     <div x-show="infoModal"
@@ -11,7 +11,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0">
         <div class="fixed inset-0" @click="infoModal = false"></div>
-        <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-2xl w-full relative overflow-hidden flex flex-col max-h-[90vh] transform transition-all"
+        <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-2xl w-full relative overflow-hidden flex flex-col max-h-[85dvh] transform transition-all"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-95 translate-y-4"
             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -30,7 +30,7 @@
                 <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Repair Guidelines</h3>
                 <p class="text-sm text-gray-400 font-medium mt-2">Essential steps for a smooth repair process</p>
             </div>
-            <div class="p-8 overflow-y-auto space-y-10">
+            <div class="shrink min-h-0 p-8 overflow-y-auto space-y-10">
                 <section>
                     <h4 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-6 px-1">What Happens Next?</h4>
                     <ul class="space-y-6">
@@ -81,7 +81,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0">
         <div class="fixed inset-0" @click="calendarModal = false"></div>
-        <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-4xl w-full relative overflow-hidden flex flex-col max-h-[92vh] transform transition-all"
+        <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-4xl w-full relative overflow-hidden flex flex-col max-h-[85dvh] transform transition-all"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-95 translate-y-10"
             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -128,7 +128,7 @@
                 </button>
             </div>
 
-            <div class="p-8 overflow-y-auto">
+            <div class="shrink min-h-0 p-8 overflow-y-auto">
                 <!-- Legend -->
                 <div class="flex items-center gap-6 mb-6 px-1">
                     <div class="flex items-center gap-2 text-xs font-bold text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-green-400 inline-block"></span> Available</div>
@@ -215,7 +215,7 @@
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0">
     <div class="fixed inset-0" @click="reviewModal = false"></div>
-    <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-2xl w-full relative overflow-hidden flex flex-col max-h-[90vh] transform transition-all"
+    <div class="bg-white modal-content rounded-[2.5rem] shadow-2xl max-w-2xl w-full relative overflow-hidden flex flex-col max-h-[85dvh] transform transition-all"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -232,12 +232,14 @@
             <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-4 shadow-sm border border-blue-100/50">
                 <span class="material-symbols-outlined text-[32px] leading-none">rate_review</span>
             </div>
-            <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Review Details</h3>
-            <p class="text-sm text-gray-400 font-medium mt-1">Please verify your booking details before submitting</p>
+            <h3 class="text-2xl font-black text-gray-900 tracking-tighter" x-text="reviewStep === 1 ? 'Review Details' : 'Payment Method'"></h3>
+            <p class="text-sm text-gray-400 font-medium mt-1" x-text="reviewStep === 1 ? 'Please verify your booking details before proceeding' : 'Select how you want to pay'"></p>
         </div>
 
         <!-- Modal Content (Scrollable) -->
-        <div class="p-8 overflow-y-auto space-y-6">
+        <div class="shrink min-h-0 p-8 overflow-y-auto space-y-6">
+            <!-- Step 1: Details -->
+            <div x-show="reviewStep === 1" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-4" x-transition:enter-end="opacity-100 translate-x-0" class="space-y-6">
             <!-- Reference Codes Grid (Logistics vs Substance) -->
             <div class="bg-blue-50/30 dark:bg-blue-500/10 border border-blue-100/50 dark:border-blue-500/20 rounded-[1.25rem] p-4 text-left">
                 <span class="text-[9px] uppercase font-black tracking-widest text-blue-600 dark:text-blue-400 block">Ticket Number</span>
@@ -399,63 +401,72 @@
                     </div>
                 </div>
             </div>
+            </div> <!-- End Step 1 -->
 
+            <!-- Step 2: Payment Method -->
+            <div x-show="reviewStep === 2" style="display: none;" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-4" x-transition:enter-end="opacity-100 translate-x-0">
             <!-- Payment Method Selection -->
-            <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 mt-2">
-                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
+            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-3xl p-5 border border-gray-100 dark:border-gray-700 mt-2">
+                <h4 class="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-1.5">
                     <span class="material-symbols-outlined text-[16px]">account_balance_wallet</span> Payment Method
                 </h4>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <label class="cursor-pointer">
-                        <input type="radio" wire:model.live="payment_method" value="Cash" class="peer sr-only">
-                        <div class="rounded-xl border-2 p-4 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 bg-white border-gray-200 hover:border-blue-300 flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[24px] peer-checked:text-blue-500 text-gray-400">payments</span>
+                        <input type="radio" x-model="payMethod" value="Cash" class="peer sr-only">
+                        <div class="rounded-xl border-2 p-4 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[24px] peer-checked:text-blue-500 text-gray-400 dark:text-gray-500">payments</span>
                             <div>
-                                <h5 class="font-bold text-gray-900 text-sm">Cash on Hand</h5>
-                                <p class="text-[10px] text-gray-500 font-medium mt-0.5">Pay at the shop</p>
+                                <h5 class="font-bold text-gray-900 dark:text-white text-sm">Cash on Hand</h5>
+                                <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium mt-0.5">Pay at the shop</p>
                             </div>
                         </div>
                     </label>
 
                     <label class="cursor-pointer">
-                        <input type="radio" wire:model.live="payment_method" value="GCash" class="peer sr-only">
-                        <div class="rounded-xl border-2 p-4 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 bg-white border-gray-200 hover:border-blue-300 flex items-center gap-3">
+                        <input type="radio" x-model="payMethod" value="Online" class="peer sr-only">
+                        <div class="rounded-xl border-2 p-4 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 flex items-center gap-3">
                             <!-- GCash Icon -->
-                            <span class="material-symbols-outlined text-[24px] peer-checked:text-blue-500 text-gray-400">qr_code_scanner</span>
+                            <span class="material-symbols-outlined text-[24px] peer-checked:text-blue-500 text-gray-400 dark:text-gray-500">qr_code_scanner</span>
                             <div>
-                                <h5 class="font-bold text-gray-900 text-sm">GCash Payment</h5>
-                                <p class="text-[10px] text-gray-500 font-medium mt-0.5">Scan to pay online</p>
+                                <h5 class="font-bold text-gray-900 dark:text-white text-sm">Online Payment</h5>
+                                <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium mt-0.5">Scan to pay online</p>
                             </div>
                         </div>
                     </label>
                 </div>
-
-                <!-- GCash QR Code Display -->
-                <div x-show="$wire.payment_method === 'GCash'" x-collapse class="mt-4">
-                    <div class="bg-white p-5 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center">
-                        <p class="text-xs font-bold text-gray-600 mb-3">Please scan the QR code below to proceed with your payment.</p>
-                        <div class="bg-blue-600 p-2 rounded-xl">
-                            <img src="{{ asset('img/gcash-qr.jpg') }}" alt="GCash QR Code" class="max-w-[220px] w-full rounded-lg shadow-sm border border-gray-100">
-                        </div>
-                        <p class="text-[10px] text-gray-400 mt-3 max-w-[250px]">Please save a screenshot of your transaction receipt and show it to our staff.</p>
-                    </div>
-                </div>
             </div>
+            </div> <!-- End Step 2 -->
         </div>
 
         <!-- Modal Footer -->
-        <div class="p-6 bg-gray-50 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
-            <button type="button" @click="reviewModal = false"
-                class="w-full sm:w-1/2 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50 transition-all text-sm">
-                Edit Details
-            </button>
-            <button type="button" wire:click="submit" wire:loading.attr="disabled"
-                class="w-full sm:w-1/2 py-4 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-all text-sm flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-[18px] leading-none" wire:loading.remove wire:target="submit">check_circle</span>
-                <span class="material-symbols-outlined text-[18px] animate-spin leading-none" wire:loading wire:target="submit">progress_activity</span>
-                Confirm Booking
-            </button>
+        <div class="p-6 bg-gray-50 dark:bg-[#151a28] border-t border-gray-100 dark:border-gray-800">
+            <!-- Step 1 Buttons -->
+            <div x-show="reviewStep === 1" class="flex flex-col sm:flex-row gap-3 w-full">
+                <button type="button" @click="reviewModal = false"
+                    class="w-full sm:w-1/2 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-bold rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-sm">
+                    Edit Details
+                </button>
+                <button type="button" @click="reviewStep = 2"
+                    class="w-full sm:w-1/2 py-4 bg-gray-900 dark:bg-blue-600 text-white font-bold rounded-full hover:bg-black dark:hover:bg-blue-700 transition-all text-sm flex items-center justify-center gap-2">
+                    Next
+                    <span class="material-symbols-outlined text-[18px] leading-none">arrow_forward</span>
+                </button>
+            </div>
+
+            <!-- Step 2 Buttons -->
+            <div x-show="reviewStep === 2" style="display: none;" class="flex flex-col sm:flex-row gap-3 w-full">
+                <button type="button" @click="reviewStep = 1"
+                    class="w-full sm:w-1/2 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-bold rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-sm">
+                    Back
+                </button>
+                <button type="button" @click="payMethod === 'Online' ? showQrModal = true : ($wire.payment_method = 'Cash', $wire.submit())" wire:loading.attr="disabled"
+                    class="w-full sm:w-1/2 py-4 bg-gray-900 dark:bg-blue-600 text-white font-bold rounded-full hover:bg-black dark:hover:bg-blue-700 transition-all text-sm flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[18px] leading-none" wire:loading.remove>check_circle</span>
+                    <span class="material-symbols-outlined text-[18px] animate-spin leading-none" wire:loading>progress_activity</span>
+                    Confirm Booking
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -599,6 +610,72 @@
         </div>
     </div>
 @endif
+
+    <!-- GCash QR Code Centered Modal -->
+    <div x-show="showQrModal" style="display: none;" class="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-6 bg-gray-900/80 backdrop-blur-sm"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0">
+        
+        <div class="bg-white dark:bg-[#121622] p-6 sm:p-8 rounded-[2rem] border border-gray-200 dark:border-gray-800 flex flex-col items-center justify-center text-center shadow-2xl max-w-sm w-full max-h-[90dvh] overflow-y-auto transform transition-all"
+            @click.away="showQrModal = false"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-8 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave-end="opacity-0 translate-y-8 sm:translate-y-0 sm:scale-95">
+            
+            <div class="w-16 h-16 bg-blue-50 dark:bg-blue-500/10 rounded-2xl flex items-center justify-center mb-4 border border-blue-100 dark:border-blue-500/20 shadow-sm">
+                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[32px]">qr_code_scanner</span>
+            </div>
+            
+            <h3 class="text-xl font-black text-gray-900 dark:text-white mb-2">Scan to Pay</h3>
+            
+            <div class="mb-5 bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 w-full shadow-sm">
+                <p class="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-[14px]">receipt_long</span> Estimated Total
+                </p>
+                <p class="text-2xl font-black text-blue-600 dark:text-blue-400">
+                    @if($fault_category === 'Other')
+                        &#8369;{{ number_format($pickupFee, 2) }} + Quote
+                    @elseif($basePrice)
+                        &#8369;{{ number_format($basePrice + $pickupFee, 2) }}
+                    @else
+                        &#8369;{{ number_format($pickupFee, 2) }}
+                    @endif
+                </p>
+            </div>
+
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-5">Please scan the GCash QR code below to proceed with your payment.</p>
+            
+            <div class="bg-blue-600 p-2 sm:p-3 rounded-2xl w-full flex justify-center shadow-inner relative overflow-hidden">
+                <img src="{{ asset('img/Payment_QR_Gcash.jpg') }}" alt="GCash QR Code" class="max-w-full h-auto max-h-[35vh] object-contain rounded-xl shadow-sm border border-blue-400/30 bg-white">
+            </div>
+            
+            <div class="bg-blue-50 dark:bg-blue-500/10 p-3 rounded-xl mt-4 border border-blue-100 dark:border-blue-500/20 w-full">
+                <p class="text-xs text-blue-800 dark:text-blue-300 font-bold flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">info</span>
+                    Save a screenshot of your receipt.
+                </p>
+            </div>
+
+            <!-- Buttons for Online Payment -->
+            <div class="flex flex-col gap-3 w-full mt-6">
+                <button type="button" @click="$wire.payment_method = 'Online'; $wire.submit()" wire:loading.attr="disabled" class="w-full py-3.5 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30">
+                    <span class="material-symbols-outlined text-[20px] leading-none" wire:loading.remove>check_circle</span>
+                    <span class="material-symbols-outlined text-[20px] animate-spin leading-none" wire:loading>progress_activity</span>
+                    I have already paid
+                </button>
+                <button type="button" @click="showQrModal = false" class="w-full py-3.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700 transition-all text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
 
 <!-- ===== MAIN FORM (full-width single column) ===== -->
 <div class="">
