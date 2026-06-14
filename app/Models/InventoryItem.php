@@ -16,6 +16,8 @@ class InventoryItem extends Model
         'sku',
         'quantity',
         'unit_price',
+        'cost_price',
+        'selling_price',
     ];
 
     public function brand()

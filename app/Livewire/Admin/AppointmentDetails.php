@@ -31,8 +31,9 @@ class AppointmentDetails extends Component
 
     // Finance update
     public $showFinanceModal = false;
-    public $formQuote = 0;
-    public $formFinalCost = '';
+    public $formServiceCost = 0;
+    public $formPartsUnitPrice = 0;
+    public $formPartsCost = 0;
     public $formAdditionalFee = 0;
     public $formInvoiceNumber = '';
 
@@ -246,6 +247,14 @@ HTML;
         ]);
 
         try {
+            // If marking as Completed, require costs to be filled
+            if (strtolower($this->newStatus) === 'completed') {
+                if (!$this->appointment->service_cost || !$this->appointment->parts_unit_price || !$this->appointment->parts_cost) {
+                    $this->dispatch('toast', message: 'Please enter Service Cost, Parts Unit Price, and Parts Cost before marking as Completed.', type: 'error');
+                    return;
+                }
+            }
+
             $this->appointment->update(['status' => $this->newStatus]);
 
             // Create a notification for the user
@@ -264,6 +273,11 @@ HTML;
             $this->loadAppointment();
             $this->showStatusModal = false;
             session()->flash('message', 'Status successfully updated!');
+            
+            // Dispatch event for real-time reports update
+            if (strtolower($this->newStatus) === 'completed') {
+                $this->dispatch('appointmentCompleted');
+            }
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to update status: ' . $e->getMessage());
         }
@@ -302,6 +316,8 @@ HTML;
     {
         $this->formQuote = $this->appointment->quote;
         $this->formFinalCost = $this->appointment->final_cost ?? '';
+        $this->formServiceCost = $this->appointment->service_cost ?? 0;
+        $this->formPartsCost = $this->appointment->parts_cost ?? 0;
         $this->formAdditionalFee = $this->appointment->additional_fee;
         $this->formInvoiceNumber = $this->appointment->invoice_number ?? '';
         $this->showFinanceModal = true;
@@ -311,16 +327,32 @@ HTML;
     public function updateFinance()
     {
         $this->validate([
-            'formQuote' => 'required|numeric|min:0',
-            'formFinalCost' => 'nullable|numeric|min:0',
-            'formAdditionalFee' => 'required|numeric|min:0',
+            'formServiceCost' => 'required|numeric|min:0',
+            'formPartsUnitPrice' => 'required|numeric|min:0',
+            'formPartsCost' => 'required|numeric|min:0',
+            'formAdditionalFee' => 'nullable|numeric|min:0',
             'formInvoiceNumber' => 'nullable|string|max:255',
         ]);
 
         try {
+            // Calculate Final Cost (auto) = Service Cost + Parts Unit Price
+            $finalCost = $this->formServiceCost + $this->formPartsUnitPrice;
+            
+            // Calculate Profits
+            $serviceProfit = $this->formServiceCost; // Service charge is the profit from service
+            $partsProfit = $this->formPartsUnitPrice - $this->formPartsCost; // Parts Unit Price - Cost = Profit
+            $totalProfit = $serviceProfit + $partsProfit; // Total = Service Profit + Parts Profit
+            
+            // Total Cost for reference
+            $totalCost = $this->formPartsCost; // Just the cost price of parts
+
             $this->appointment->update([
-                'quote' => $this->formQuote,
-                'final_cost' => ($this->formFinalCost !== '' && $this->formFinalCost !== null) ? $this->formFinalCost : null,
+                'final_cost' => $finalCost,
+                'service_cost' => $this->formServiceCost,
+                'parts_unit_price' => $this->formPartsUnitPrice,
+                'parts_cost' => $this->formPartsCost,
+                'total_cost' => $totalCost,
+                'profit' => $totalProfit,
                 'additional_fee' => $this->formAdditionalFee,
                 'invoice_number' => $this->formInvoiceNumber ?: null,
                 'pricing_confirmed' => true,
@@ -328,7 +360,11 @@ HTML;
 
             $this->loadAppointment();
             $this->showFinanceModal = false;
-            $this->dispatch('toast', message: 'Financial details successfully updated!', type: 'success');
+            $partsMessage = '(Service: ₱' . number_format($serviceProfit, 2) . ' + Parts: ₱' . number_format($partsProfit, 2) . ')';
+            $this->dispatch('toast', message: 'Financial details updated! Total Profit: ₱' . number_format($totalProfit, 2) . ' ' . $partsMessage, type: 'success');
+            
+            // Dispatch event for real-time reports update
+            $this->dispatch('appointmentFinanceUpdated');
         } catch (\Exception $e) {
             $this->dispatch('toast', message: 'Failed to update financial details: ' . $e->getMessage(), type: 'error');
         }

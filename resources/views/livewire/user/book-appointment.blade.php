@@ -399,6 +399,49 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Payment Method Selection -->
+            <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 mt-2">
+                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">account_balance_wallet</span> Payment Method
+                </h4>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label class="cursor-pointer">
+                        <input type="radio" wire:model.live="payment_method" value="Cash" class="peer sr-only">
+                        <div class="rounded-xl border-2 p-4 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 bg-white border-gray-200 hover:border-blue-300 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[24px] peer-checked:text-blue-500 text-gray-400">payments</span>
+                            <div>
+                                <h5 class="font-bold text-gray-900 text-sm">Cash on Hand</h5>
+                                <p class="text-[10px] text-gray-500 font-medium mt-0.5">Pay at the shop</p>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="radio" wire:model.live="payment_method" value="GCash" class="peer sr-only">
+                        <div class="rounded-xl border-2 p-4 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 bg-white border-gray-200 hover:border-blue-300 flex items-center gap-3">
+                            <!-- GCash Icon -->
+                            <span class="material-symbols-outlined text-[24px] peer-checked:text-blue-500 text-gray-400">qr_code_scanner</span>
+                            <div>
+                                <h5 class="font-bold text-gray-900 text-sm">GCash Payment</h5>
+                                <p class="text-[10px] text-gray-500 font-medium mt-0.5">Scan to pay online</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- GCash QR Code Display -->
+                <div x-show="$wire.payment_method === 'GCash'" x-collapse class="mt-4">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center">
+                        <p class="text-xs font-bold text-gray-600 mb-3">Please scan the QR code below to proceed with your payment.</p>
+                        <div class="bg-blue-600 p-2 rounded-xl">
+                            <img src="{{ asset('img/gcash-qr.jpg') }}" alt="GCash QR Code" class="max-w-[220px] w-full rounded-lg shadow-sm border border-gray-100">
+                        </div>
+                        <p class="text-[10px] text-gray-400 mt-3 max-w-[250px]">Please save a screenshot of your transaction receipt and show it to our staff.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Modal Footer -->

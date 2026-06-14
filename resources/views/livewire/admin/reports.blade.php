@@ -1,4 +1,4 @@
-<div class="w-full">
+<div class="w-full" wire:key="reports-{{ $timeframe }}">
     <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Reports</h1>
@@ -19,6 +19,82 @@
     @if (session()->has('success'))
         <div class="mb-4 p-4 rounded-lg bg-green-50 border border-green-200 text-green-700">{{ session('success') }}</div>
     @endif
+
+    @if (session()->has('error'))
+        <div class="mb-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">{{ session('error') }}</div>
+    @endif
+
+    <!-- Timeframe Selector for Sales & Profit -->
+    <div class="mb-6 flex gap-2 border-b pb-4">
+        <button wire:click="$set('timeframe', 'daily')" 
+                class="px-4 py-2 {{ $timeframe === 'daily' ? 'bg-blue-600 text-white' : 'bg-gray-200' }} rounded">
+            Daily
+        </button>
+        <button wire:click="$set('timeframe', 'weekly')" 
+                class="px-4 py-2 {{ $timeframe === 'weekly' ? 'bg-blue-600 text-white' : 'bg-gray-200' }} rounded">
+            Weekly
+        </button>
+        <button wire:click="$set('timeframe', 'monthly')" 
+                class="px-4 py-2 {{ $timeframe === 'monthly' ? 'bg-blue-600 text-white' : 'bg-gray-200' }} rounded">
+            Monthly
+        </button>
+        <button wire:click="$set('timeframe', 'yearly')" 
+                class="px-4 py-2 {{ $timeframe === 'yearly' ? 'bg-blue-600 text-white' : 'bg-gray-200' }} rounded">
+            Yearly
+        </button>
+    </div>
+
+    <!-- Sales & Profit Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg shadow">
+            <div class="text-sm font-semibold opacity-90">Total Sales</div>
+            <div class="text-3xl font-bold">₱{{ number_format($salesAndProfitData['sales'], 2) }}</div>
+            <div class="text-xs opacity-75 mt-1">{{ $salesAndProfitData['appointments_count'] }} repairs</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 rounded-lg shadow">
+            <div class="text-sm font-semibold opacity-90">Total Costs</div>
+            <div class="text-3xl font-bold">₱{{ number_format($salesAndProfitData['total_costs'], 2) }}</div>
+            <div class="text-xs opacity-75 mt-1">Service + Parts</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-4 rounded-lg shadow">
+            <div class="text-sm font-semibold opacity-90">Total Profit</div>
+            <div class="text-3xl font-bold">₱{{ number_format($salesAndProfitData['profit'], 2) }}</div>
+            <div class="text-xs opacity-75 mt-1">{{ $salesAndProfitData['profit_margin'] }}% margin</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-4 rounded-lg shadow">
+            <div class="text-sm font-semibold opacity-90">Service Charge</div>
+            <div class="text-3xl font-bold">₱{{ number_format($salesAndProfitData['service_charge'], 2) }}</div>
+            <div class="text-xs opacity-75 mt-1">Labor cost</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-red-500 to-red-600 text-white p-4 rounded-lg shadow">
+            <div class="text-sm font-semibold opacity-90">Parts Cost</div>
+            <div class="text-3xl font-bold">₱{{ number_format($salesAndProfitData['parts_cost'], 2) }}</div>
+            <div class="text-xs opacity-75 mt-1">Inventory used</div>
+        </div>
+    </div>
+
+    <!-- Sales & Profit Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Revenue vs Costs Chart -->
+        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6" 
+             data-chart="salesAndCosts"
+             data-chart-data='{!! json_encode($revenueTrendWithCosts) !!}'>
+            <h3 class="text-lg font-bold text-gray-900 mb-6">Sales vs Costs</h3>
+            <canvas id="salesAndCostsChart"></canvas>
+        </div>
+
+        <!-- Profit Trend Chart -->
+        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6"
+             data-chart="profitTrend"
+             data-chart-data='{!! json_encode($profitTrend) !!}'>
+            <h3 class="text-lg font-bold text-gray-900 mb-6">Profit Trend</h3>
+            <canvas id="profitTrendChart"></canvas>
+        </div>
+    </div>
 
     @if (session()->has('error'))
         <div class="mb-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">{{ session('error') }}</div>
@@ -173,39 +249,7 @@
         </div>
     </div>
 
-    <!-- Charts -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-        <!-- Revenue Trend -->
-        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-            <h3 class="text-lg font-bold text-gray-900 mb-6">Revenue Trend (7 Days)</h3>
-            <canvas id="revenueChart"></canvas>
-        </div>
 
-        <!-- Repair Status Distribution -->
-        <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6">
-            <h3 class="text-lg font-bold text-gray-900 mb-6">Repair Status Distribution</h3>
-            <canvas id="statusChart"></canvas>
-        </div>
-    </div>
-
-    <!-- Service Type Trends -->
-    <div class="bg-white rounded-[1.25rem] border border-gray-200 shadow-sm p-6 mb-10">
-        <h3 class="text-lg font-bold text-gray-900 mb-6">Service Type Trends (7 Days)</h3>
-        <canvas id="serviceChart"></canvas>
-    </div>
-
-    <!-- Hidden Data Container for Charts -->
-    <div id="chartData" class="hidden"
-        data-revenue-labels="{{ Js::from($metrics['revenueTrend']['labels'] ?? []) }}"
-        data-revenue-data="{{ Js::from($metrics['revenueTrend']['data'] ?? []) }}"
-        data-status-labels="{{ Js::from($metrics['statusDistribution']['labels'] ?? []) }}"
-        data-status-data="{{ Js::from($metrics['statusDistribution']['data'] ?? []) }}"
-        data-status-colors="{{ Js::from($metrics['statusDistribution']['backgroundColor'] ?? []) }}"
-        data-service-labels="{{ Js::from($metrics['serviceTrends']['labels'] ?? []) }}"
-        data-service-phones="{{ Js::from($metrics['serviceTrends']['phones'] ?? []) }}"
-        data-service-laptops="{{ Js::from($metrics['serviceTrends']['laptops'] ?? []) }}"
-        data-service-tablets="{{ Js::from($metrics['serviceTrends']['tablets'] ?? []) }}"
-    ></div>
 
     <!-- Recent Data -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -290,160 +334,159 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    let charts = {};
+
+    function initializeCharts() {
         try {
-            const dataContainer = document.getElementById('chartData');
-            if (!dataContainer) return;
+            console.log('initializeCharts called');
+            
+            // Destroy existing charts before creating new ones
+            Object.values(charts).forEach(chart => {
+                if (chart && typeof chart.destroy === 'function') {
+                    chart.destroy();
+                }
+            });
+            charts = {};
 
-            const parseData = (attr) => JSON.parse(dataContainer.getAttribute(attr) || '[]');
-
-            // Revenue Trend Chart
-            const revenueCtx = document.getElementById('revenueChart');
-            if (revenueCtx) {
-                new Chart(revenueCtx.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: parseData('data-revenue-labels'),
-                        datasets: [{
-                            label: 'Revenue ($)',
-                            data: parseData('data-revenue-data'),
-                            borderColor: '#3B82F6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            fill: true,
-                            pointBackgroundColor: '#3B82F6',
-                            pointBorderColor: '#fff',
-                            pointRadius: 5,
-                            pointHoverRadius: 7,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                display: true,
-                                labels: {
-                                    color: '#6B7280',
-                                    font: { size: 12, weight: '600' }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: { color: '#E5E7EB' },
-                                ticks: { color: '#6B7280' }
-                            },
-                            x: {
-                                grid: { display: false },
-                                ticks: { color: '#6B7280' }
-                            }
-                        }
-                    }
-                });
+            // Wait for Chart library to be available
+            if (typeof Chart === 'undefined') {
+                setTimeout(initializeCharts, 100);
+                return;
             }
 
-            // Repair Status Distribution Chart
-            const statusCtx = document.getElementById('statusChart');
-            if (statusCtx) {
-                new Chart(statusCtx.getContext('2d'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: parseData('data-status-labels'),
-                        datasets: [{
-                            data: parseData('data-status-data'),
-                            backgroundColor: parseData('data-status-colors'),
-                            borderColor: '#fff',
-                            borderWidth: 2,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: '#6B7280',
-                                    font: { size: 12, weight: '600' },
-                                    padding: 15
+            // Profit Trend Chart
+            const profitTrendContainer = document.querySelector('[data-chart="profitTrend"]');
+            if (profitTrendContainer) {
+                const profitTrendCtx = document.getElementById('profitTrendChart');
+                const chartDataJson = profitTrendContainer.getAttribute('data-chart-data');
+                console.log('Profit Trend Data:', chartDataJson);
+                const chartData = chartDataJson ? JSON.parse(chartDataJson) : null;
+                console.log('Profit Trend Parsed:', chartData);
+                
+                if (profitTrendCtx && chartData && chartData.labels && chartData.labels.length > 0) {
+                    console.log('Creating Profit Trend chart with labels:', chartData.labels);
+                    charts.profitTrend = new Chart(profitTrendCtx.getContext('2d'), {
+                        type: 'bar',
+                        data: {
+                            labels: chartData.labels,
+                            datasets: [{
+                                label: 'Profit',
+                                data: chartData.data,
+                                backgroundColor: '#a855f7',
+                                borderColor: '#9333ea',
+                                borderWidth: 2,
+                                borderRadius: 6,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    labels: { color: '#6B7280', font: { size: 12, weight: '600' } }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: '#E5E7EB' },
+                                    ticks: { color: '#6B7280', callback: function(value) { return '₱' + value.toLocaleString(); } }
+                                },
+                                x: {
+                                    grid: { display: false },
+                                    ticks: { color: '#6B7280' }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+                }
             }
 
-            // Service Type Trends Chart
-            const serviceCtx = document.getElementById('serviceChart');
-            if (serviceCtx) {
-                new Chart(serviceCtx.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: parseData('data-service-labels'),
-                        datasets: [
-                            {
-                                label: 'Phones',
-                                data: parseData('data-service-phones'),
-                                borderColor: '#3B82F6',
-                                backgroundColor: 'rgba(59, 130, 246, 0.05)',
-                                borderWidth: 2,
-                                tension: 0.4,
-                                pointBackgroundColor: '#3B82F6',
-                                pointRadius: 4,
+            // Sales vs Costs Chart
+            const salesAndCostsContainer = document.querySelector('[data-chart="salesAndCosts"]');
+            if (salesAndCostsContainer) {
+                const salesAndCostsCtx = document.getElementById('salesAndCostsChart');
+                const chartDataJson = salesAndCostsContainer.getAttribute('data-chart-data');
+                console.log('Sales & Costs Data:', chartDataJson);
+                const chartData = chartDataJson ? JSON.parse(chartDataJson) : null;
+                console.log('Sales & Costs Parsed:', chartData);
+                
+                if (salesAndCostsCtx && chartData && chartData.labels && chartData.labels.length > 0) {
+                    console.log('Creating Sales & Costs chart with labels:', chartData.labels);
+                    charts.salesAndCosts = new Chart(salesAndCostsCtx.getContext('2d'), {
+                        type: 'bar',
+                        data: {
+                            labels: chartData.labels,
+                            datasets: [
+                                {
+                                    label: 'Sales',
+                                    data: chartData.sales || [],
+                                    backgroundColor: '#10b981',
+                                    borderColor: '#059669',
+                                    borderWidth: 2,
+                                    borderRadius: 6,
+                                },
+                                {
+                                    label: 'Costs',
+                                    data: chartData.costs || [],
+                                    backgroundColor: '#ef4444',
+                                    borderColor: '#dc2626',
+                                    borderWidth: 2,
+                                    borderRadius: 6,
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    labels: { color: '#6B7280', font: { size: 12, weight: '600' } }
+                                }
                             },
-                            {
-                                label: 'Laptops',
-                                data: parseData('data-service-laptops'),
-                                borderColor: '#10B981',
-                                backgroundColor: 'rgba(16, 185, 129, 0.05)',
-                                borderWidth: 2,
-                                tension: 0.4,
-                                pointBackgroundColor: '#10B981',
-                                pointRadius: 4,
-                            },
-                            {
-                                label: 'Tablets',
-                                data: parseData('data-service-tablets'),
-                                borderColor: '#F59E0B',
-                                backgroundColor: 'rgba(245, 158, 11, 0.05)',
-                                borderWidth: 2,
-                                tension: 0.4,
-                                pointBackgroundColor: '#F59E0B',
-                                pointRadius: 4,
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                display: true,
-                                labels: {
-                                    color: '#6B7280',
-                                    font: { size: 12, weight: '600' }
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: '#E5E7EB' },
+                                    ticks: { color: '#6B7280', callback: function(value) { return '₱' + value.toLocaleString(); } }
+                                },
+                                x: {
+                                    grid: { display: false },
+                                    ticks: { color: '#6B7280' }
                                 }
                             }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: { color: '#E5E7EB' },
-                                ticks: { color: '#6B7280' }
-                            },
-                            x: {
-                                grid: { display: false },
-                                ticks: { color: '#6B7280' }
-                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         } catch (error) {
             console.error('Error initializing charts:', error);
         }
+    }
+
+    // Initialize on DOMContentLoaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initializeCharts, 300);
+        });
+    } else {
+        setTimeout(initializeCharts, 300);
+    }
+
+    // Reinitialize when Livewire updates
+    document.addEventListener('livewire:updated', () => {
+        console.log('Livewire updated event fired');
+        setTimeout(initializeCharts, 100);
     });
+
+    // Also listen for Livewire updates using the newer event system
+    if (typeof Livewire !== 'undefined' && Livewire.hook) {
+        Livewire.hook('updated', () => {
+            console.log('Livewire hook updated fired');
+            setTimeout(initializeCharts, 100);
+        });
+    }
+</script>
 </script>

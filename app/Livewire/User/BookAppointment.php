@@ -47,6 +47,7 @@ class BookAppointment extends Component
     public $tracking_code  = '';
     public $booking_number = '';
     public $showReviewModal = false;
+    public $payment_method = 'Cash';
 
     // Pickup and Address details
     public $address        = '';
@@ -333,6 +334,7 @@ class BookAppointment extends Component
             'pickup_option'  => 'required|string|in:Drop-off,Pickup',
             'address'        => 'required|string|max:500',
             'other_details'  => 'nullable|string|max:1000',
+            'payment_method' => 'required|string|in:Cash,GCash',
         ];
 
         if ($this->device_brand === 'Other') {
@@ -456,6 +458,7 @@ class BookAppointment extends Component
         if (!empty($this->other_details)) {
             $fullDescription .= "\n\nOther Details / Special Instructions:\n" . $this->other_details;
         }
+        $fullDescription .= "\n\nPayment Method:\n" . $this->payment_method;
 
         $this->calculateAdditionalFee();
         $selectedFault = ($finalCategory && $finalCategory !== 'Other') ? \App\Models\FaultType::where('name', $finalCategory)->first() : null;

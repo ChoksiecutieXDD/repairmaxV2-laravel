@@ -594,37 +594,82 @@
                 <h2 class="text-2xl font-bold text-gray-900">Edit Costs</h2>
             </div>
 
-            <form wire:submit.prevent="updateFinance" class="space-y-6">
-                <div>
-                    <label class="block text-sm font-bold text-gray-750 mb-2">Estimated Quote (₱)</label>
-                    <input type="number" step="0.01" wire:model="formQuote" class="w-full px-4 py-3.5 border border-gray-250 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-400 outline-none text-sm transition-all bg-gray-50/50">
-                    @error('formQuote')
-                        <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+            <form wire:submit.prevent="updateFinance" class="space-y-4">
+                <div class="border-b pb-4">
+                    <p class="text-xs font-bold text-gray-500 uppercase mb-3">Service & Parts Breakdown</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-750 mb-2">Service Cost (₱)</label>
+                            <input type="number" step="0.01" wire:model.live="formServiceCost" class="w-full px-3 py-2.5 border border-blue-250 rounded-lg focus:ring-4 focus:ring-blue-100 focus:border-blue-400 outline-none text-sm transition-all bg-blue-50/30">
+                            @error('formServiceCost')
+                                <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-750 mb-2">Parts Unit Price (₱)</label>
+                            <input type="number" step="0.01" wire:model.live="formPartsUnitPrice" class="w-full px-3 py-2.5 border border-green-250 rounded-lg focus:ring-4 focus:ring-green-100 focus:border-green-400 outline-none text-sm transition-all bg-green-50/30">
+                            @error('formPartsUnitPrice')
+                                <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-bold text-gray-750 mb-2">Final Cost (₱) - Leave blank if pending/TBD</label>
-                    <input type="number" step="0.01" placeholder="TBD" wire:model="formFinalCost" class="w-full px-4 py-3.5 border border-gray-250 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-400 outline-none text-sm transition-all bg-gray-50/50">
-                    @error('formFinalCost')
-                        <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                <div class="border-b pb-4">
+                    <p class="text-xs font-bold text-gray-500 uppercase mb-3">Costs & Profits</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-750 mb-2">Parts Cost (₱)</label>
+                            <input type="number" step="0.01" wire:model.live="formPartsCost" class="w-full px-3 py-2.5 border border-red-250 rounded-lg focus:ring-4 focus:ring-red-100 focus:border-red-400 outline-none text-sm transition-all bg-red-50/30">
+                            @error('formPartsCost')
+                                <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-750 mb-2">Additional Fees (₱)</label>
+                            <input type="number" step="0.01" wire:model="formAdditionalFee" class="w-full px-3 py-2.5 border border-gray-250 rounded-lg focus:ring-4 focus:ring-blue-100 focus:border-blue-400 outline-none text-sm transition-all bg-gray-50/50">
+                            @error('formAdditionalFee')
+                                <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-bold text-gray-750 mb-2">Additional Fees (₱)</label>
-                    <input type="number" step="0.01" wire:model="formAdditionalFee" class="w-full px-4 py-3.5 border border-gray-250 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-400 outline-none text-sm transition-all bg-gray-50/50">
-                    @error('formAdditionalFee')
-                        <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                <div class="border-b pb-4">
+                    <p class="text-xs font-bold text-gray-500 uppercase mb-3">Invoice & Calculations</p>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-750 mb-2">Invoice Number</label>
+                            <input type="text" placeholder="e.g. INV-00001" wire:model="formInvoiceNumber" class="w-full px-3 py-2.5 border border-gray-250 rounded-lg focus:ring-4 focus:ring-blue-100 focus:border-blue-400 outline-none text-sm transition-all bg-gray-50/50">
+                            @error('formInvoiceNumber')
+                                <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                <div>
-                    <label class="block text-sm font-bold text-gray-750 mb-2">Invoice Number</label>
-                    <input type="text" placeholder="e.g. INV-00001" wire:model="formInvoiceNumber" class="w-full px-4 py-3.5 border border-gray-250 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-400 outline-none text-sm transition-all bg-gray-50/50">
-                    @error('formInvoiceNumber')
-                        <p class="text-red-650 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                                <p class="text-xs font-bold text-gray-600 mb-1">💰 Final Cost</p>
+                                <p class="text-sm font-bold text-blue-700">₱@{{ (formServiceCost + formPartsUnitPrice).toFixed(2) }}</p>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-3 border border-purple-200">
+                                <p class="text-xs font-bold text-gray-600 mb-1">🎯 Total Profit</p>
+                                <p class="text-sm font-bold text-purple-700">₱@{{ (formServiceCost + (formPartsUnitPrice - formPartsCost)).toFixed(2) }}</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                                <p class="text-xs font-bold text-gray-600 mb-1">💼 Service Profit</p>
+                                <p class="text-sm font-bold text-blue-700">₱@{{ formServiceCost.toFixed(2) }}</p>
+                            </div>
+                            <div class="bg-red-50 rounded-lg p-3 border border-red-200">
+                                <p class="text-xs font-bold text-gray-600 mb-1">📦 Parts Profit</p>
+                                <p class="text-sm font-bold text-red-700">₱@{{ (formPartsUnitPrice - formPartsCost).toFixed(2) }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">
@@ -634,7 +679,7 @@
                     <button type="submit" wire:loading.attr="disabled" class="flex-1 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-colors shadow-lg flex items-center justify-center gap-2">
                         <span wire:loading.remove wire:target="updateFinance" class="material-symbols-outlined text-[20px]">save</span>
                         <span wire:loading wire:target="updateFinance" class="material-symbols-outlined text-[20px] animate-spin text-white">progress_activity</span>
-                        <span wire:loading.remove wire:target="updateFinance">Save Changes</span>
+                        <span wire:loading.remove wire:target="updateFinance">Save Costs & Profits</span>
                         <span wire:loading wire:target="updateFinance">Saving...</span>
                     </button>
                 </div>
